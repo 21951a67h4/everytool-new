@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Track the latest updates and new features on EveryTool.tech - Free Online Calculators, Converters & Dev Tools" />
+  <meta name="keywords" content="updates, changelog, new features, EveryTool.tech, online tools" />
+  <title>Updates & Changelog – EveryTool.tech</title>
+  
+  <link rel="icon" type="image/svg+xml" href="assets/SVG/favicon.svg">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/favicon.png">
+  
+  <link rel="canonical" href="/updates.html" />
+  
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/updates.html">
+  <meta property="og:title" content="Updates & Changelog – EveryTool.tech">
+  <meta property="og:description" content="Track the latest updates and new features on EveryTool.tech - Free Online Calculators, Converters & Dev Tools">
+  <meta property="og:image" content="/assets/logo(icon).png">
+  <meta property="og:site_name" content="EveryTool.tech">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="/updates.html">
+  <meta name="twitter:title" content="Updates & Changelog – EveryTool.tech">
+  <meta name="twitter:description" content="Track the latest updates and new features on EveryTool.tech">
+  <meta name="twitter:image" content="/assets/logo(icon).png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* Import Font Awesome for icons */
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
+    
+    /* Core Variables */
+    :root {
+      --primary: #4361EE;
+      --primary-dark: #2945c8;
+      --secondary: #7209B7;
+      --text-primary: #1F2937;
+      --text-secondary: #4B5563;
+      --text-white: #ffffff;
+      
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F9FAFB;
+      --bg-accent: #F3F4F6;
+      --border-color: #E5E7EB;
+      
+      --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-xl: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      
+      --radius-md: 0.75rem;
+      --radius-lg: 1.5rem;
+      
+      --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      
+      /* Update-specific colors */
+      --update-new: #10B981;
+      --update-improvement: #3B82F6;
+      --update-feature: #8B5CF6;
+      --update-seo: #6366F1;
+      --update-launch: #EC4899;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Main Container */
+    .updates-main {
+      padding-top: 80px;
+      min-height: 100vh;
+    }
+
+    /* Hero Section - MODIFIED */
+    .updates-hero {
+      background: var(--bg-primary);
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .updates-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%234361EE" opacity="0.08"/><circle cx="75" cy="75" r="1" fill="%234361EE" opacity="0.08"/><circle cx="50" cy="10" r="0.5" fill="%234361EE" opacity="0.08"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.5;
+    }
+
+    .updates-hero__container {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .updates-hero__title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+    .gradient-text {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .updates-hero__subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    /* Timeline Section */
+    .updates-timeline {
+      padding: 3rem 2rem;
+      background: var(--bg-secondary);
+    }
+    .updates-timeline__container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Update Cards */
+    .update-card {
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      transition: var(--transition-all);
+      border: 1px solid var(--border-color);
+    }
+    .update-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .update-card__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .update-card__month-year {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .update-card__badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.375rem 0.75rem;
+      border-radius: var(--radius-md);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-white);
+      transition: var(--transition-all); /* MODIFIED: Added transition */
+    }
+    /* MODIFIED: Added badge hover effect */
+    .update-card__badge:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.1);
+    }
+
+    .update-card__badge--new { background: var(--update-new); }
+    .update-card__badge--improvement { background: var(--update-improvement); }
+    .update-card__badge--launch { background: var(--update-launch); }
+
+    .update-card__content { padding: 1.5rem; }
+    .update-card__title { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1.5rem; }
+    .update-card__list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+
+    .update-card__item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem;
+      border-radius: var(--radius-md);
+      background: var(--bg-secondary);
+      transition: var(--transition-all); /* MODIFIED: Added transition */
+    }
+    /* MODIFIED: Added item hover effect */
+    .update-card__item:hover {
+        transform: translateX(5px);
+        background: var(--bg-accent);
+    }
+
+    .update-item__details {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .update-card__item i {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 0.8rem;
+      color: var(--text-white);
+      transition: var(--transition-all); /* MODIFIED: Added transition */
+    }
+    /* MODIFIED: Added icon hover effect */
+    .update-card__item:hover i {
+        transform: scale(1.15) rotate(10deg);
+    }
+
+    .update-card__item--new i { background: var(--update-new); }
+    .update-card__item--improvement i { background: var(--update-improvement); }
+    .update-card__item--feature i { background: var(--update-feature); }
+    .update-card__item--seo i { background: var(--update-seo); }
+
+    .update-card__item span {
+      color: var(--text-primary);
+      line-height: 1.6;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .update-card__item strong { color: var(--primary); font-weight: 600; }
+    .update-item__date {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+      padding-left: 1rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .updates-main { padding-top: 70px; }
+      .updates-hero { padding: 3rem 1rem; }
+      .updates-hero__title { font-size: 2.5rem; }
+      .updates-timeline { padding: 2rem 1rem; }
+      
+      .update-card__header {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+      .update-card__item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .update-item__date {
+        padding-left: 0;
+        margin-top: 0.5rem;
+        width: 100%;
+        text-align: right;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="updates-main">
+    <section class="updates-hero">
+      <div class="updates-hero__container">
+          <h1 class="updates-hero__title gradient-text">Updates & Changelog</h1>
+          <p class="updates-hero__subtitle">Everything that changed on EveryTool.tech is listed here. Track new features, improvements, and bug fixes as they happen.</p>
+      </div>
+    </section>
+
+    <section class="updates-timeline">
+      <div class="updates-timeline__container">
+
+          <div class="update-card">
+            <div class="update-card__header">
+              <div class="update-card__month-year"><time datetime="2025-08">August 2025</time></div>
+              <div class="update-card__badge update-card__badge--launch">
+                <i class="fas fa-rocket"></i>
+                <span>Official Launch</span>
+              </div>
+            </div>
+            <div class="update-card__content">
+              <h3 class="update-card__title">EveryTool.tech is Now Live</h3>
+              <ul class="update-card__list">
+                <li class="update-card__item update-card__item--new">
+                  <div class="update-item__details">
+                      <i class="fas fa-wrench"></i>
+                      <span><strong>25+ Free Tools</strong> including calculators, converters, and more.</span>
+                  </div>
+                  <time class="update-item__date" datetime="2025-08-01">Aug 01, 2025</time>
+                </li>
+                <li class="update-card__item update-card__item--feature">
+                  <div class="update-item__details">
+                      <i class="fas fa-lock-open"></i>
+                      <span><strong>No Sign Up Required</strong> — access everything instantly.</span>
+                  </div>
+                  <time class="update-item__date" datetime="2025-08-01">Aug 01, 2025</time>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="update-card">
+            <div class="update-card__header">
+              <div class="update-card__month-year"><time datetime="2025-07">July 2025</time></div>
+              <div class="update-card__badge update-card__badge--improvement">
+                <i class="fas fa-code"></i>
+                <span>Final Development</span>
+              </div>
+            </div>
+            <div class="update-card__content">
+              <h3 class="update-card__title">Tools & Pages Finalized</h3>
+              <ul class="update-card__list">
+                <li class="update-card__item update-card__item--new">
+                  <div class="update-item__details">
+                      <i class="fas fa-check-double"></i>
+                      <span>Finished <strong>25+ production-ready tools</strong> with full functionality.</span>
+                  </div>
+                  <time class="update-item__date" datetime="2025-07-15">Jul 15, 2025</time>
+                </li>
+                <li class="update-card__item update-card__item--feature">
+                  <div class="update-item__details">
+                      <i class="fas fa-globe"></i>
+                      <span>Added final versions of <strong>About</strong>, <strong>Privacy Policy</strong>, and <strong>Updates</strong> pages.</span>
+                  </div>
+                  <time class="update-item__date" datetime="2025-07-14">Jul 14, 2025</time>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="universal-search-deploy.js" defer></script>
+  <script src="universal-back-to-top.js" defer></script>
+
+  <script>
+    // Load header and footer using fetch
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load header
+      fetch('header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header-placeholder').innerHTML = html;
+        })
+        .catch(error => {
+          console.error('Error loading header:', error);
+          // Fallback: try relative path
+          return fetch('./header.html')
+            .then(response => response.text())
+            .then(html => {
+              document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(err => console.error('Failed to load header:', err));
+        });
+
+      // Load footer
+      fetch('footer.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('footer-placeholder').innerHTML = html;
+        })
+        .catch(error => {
+          console.error('Error loading footer:', error);
+          // Fallback: try relative path
+          return fetch('./footer.html')
+            .then(response => response.text())
+            .then(html => {
+              document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(err => console.error('Failed to load footer:', err));
+        });
+    });
+  </script>
+</body>
+</html>

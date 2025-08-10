@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Calculator | Add, Subtract & Calculate Time Durations | EveryTool.tech</title>
+    <meta name="description" content="Effortlessly calculate time durations, add or subtract hours, minutes, and seconds with our free online Time Calculator. Perfect for time tracking and scheduling.">
+    <meta name="keywords" content="time calculator, time duration calculator, time addition calculator, time subtraction calculator, time tracking, time scheduling, time management">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Time Calculator | EveryTool.tech">
+    <meta property="og:description" content="Effortlessly calculate time durations, add or subtract hours, minutes, and seconds with our free online Time Calculator. Perfect for time tracking and scheduling.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/time-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../FAQ section/faq.css">
+    <link rel="stylesheet" href="tool.css">
+    <link rel="stylesheet" href="../styles/footer.css">
+</head>
+<body data-tool-name="Time Calculator" data-meta-description="Effortlessly calculate time durations, add or subtract hours, minutes, and seconds with our free online Time Calculator. Perfect for time tracking and scheduling.">
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">All-in-One Time Calculator</h1>
+                    <p class="tool-hero__description">
+                        Calculate time durations, add or subtract time, total your work hours, and even find your running pace. Our free, comprehensive tool handles all your time-related calculations with precision and ease.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-clock"></i>
+                            <span>Add & Subtract Time</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-hourglass-half"></i>
+                            <span>Calculate Duration</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-file-invoice"></i>
+                            <span>Work Hours Log</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-running"></i>
+                            <span>Pace Calculator</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Start Calculating
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn Time Math
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Your Time Management Hub</h2>
+                    <p class="tool-display__description">
+                        Select a tab below to start with your calculation.
+                    </p>
+                </div>
+                <!-- Time Calculator Custom Interface -->
+                <div class="time-calc-tabs">
+                    <button class="time-calc-tab-button active" data-tab="time-calculator">Time Calculator</button>
+                    <button class="time-calc-tab-button" data-tab="timesheet">Time Sheet Calculator</button>
+                    <button class="time-calc-tab-button" data-tab="pace">Pace Calculator</button>
+                </div>
+
+                <!-- Tab 1: Time Calculator (Duration & Add/Subtract) -->
+                <div id="time-calculator" class="time-calc-tab-content active">
+                    <div class="calc-section">
+                        <h4>Calculate Time Duration</h4>
+                        <div class="time-input-row">
+                            <label for="start-time">Start Time:</label>
+                            <input type="time" id="start-time" value="09:00">
+                            <label for="end-time">End Time:</label>
+                            <input type="time" id="end-time" value="17:30">
+                            <label><input type="checkbox" id="next-day"> End is next day</label>
+                        </div>
+                        <button class="tool-display__button" id="calculate-duration-btn">Calculate Duration</button>
+                    </div>
+
+                    <div class="calc-section">
+                        <h4>Add or Subtract Time</h4>
+                         <div class="time-input-row">
+                            <label>Start Time:</label>
+                            <input type="time" id="initial-time" value="10:00">
+                            <select id="add-subtract-op">
+                                <option value="add">+</option>
+                                <option value="subtract">−</option>
+                            </select>
+                            <input type="number" id="op-hours" placeholder="Hours" min="0">
+                            <label>h</label>
+                            <input type="number" id="op-minutes" placeholder="Minutes" min="0">
+                            <label>m</label>
+                            <input type="number" id="op-seconds" placeholder="Seconds" min="0">
+                            <label>s</label>
+                        </div>
+                        <button class="tool-display__button" id="calculate-add-sub-btn">Calculate New Time</button>
+                    </div>
+                     <div id="time-calc-result" style="display:none;"></div>
+                </div>
+
+                <!-- Tab 2: Time Sheet Calculator -->
+                <div id="timesheet" class="time-calc-tab-content">
+                    <div class="calc-section">
+                         <div class="timesheet-row timesheet-header">
+                            <span>Time In</span>
+                            <span>Time Out</span>
+                            <span>Break (minutes)</span>
+                            <span></span>
+                        </div>
+                        <div id="timesheet-entries"></div>
+                        <button class="tool-display__button" id="add-timesheet-entry-btn"><i class="fas fa-plus"></i> Add Entry</button>
+                        <hr style="margin: 20px 0;">
+                        <button class="tool-display__button tool-button--primary" id="calculate-timesheet-btn">Calculate Total Hours</button>
+                        <div id="timesheet-result" style="display:none;"></div>
+                    </div>
+                </div>
+                
+                <!-- Tab 3: Pace Calculator -->
+                <div id="pace" class="time-calc-tab-content">
+                    <div class="calc-section">
+                        <h4>Calculate Pace, Time, or Distance</h4>
+                        <div class="pace-input-row">
+                            <label>Distance:</label>
+                            <input type="number" id="pace-distance" placeholder="e.g., 10">
+                            <select id="pace-distance-unit">
+                                <option value="km">Kilometers</option>
+                                <option value="mi">Miles</option>
+                            </select>
+                        </div>
+                        <div class="pace-input-row">
+                            <label>Time:</label>
+                             <input type="number" id="pace-hours" placeholder="h" min="0" style="width: 70px;">
+                             <input type="number" id="pace-minutes" placeholder="m" min="0" style="width: 70px;">
+                             <input type="number" id="pace-seconds" placeholder="s" min="0" style="width: 70px;">
+                        </div>
+                        <button class="tool-display__button" id="calculate-pace-btn">Calculate</button>
+                         <div id="pace-result" style="display:none;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Mastering Time: A Practical Guide to Time Calculation</h2>
+                <p class="tool-blog__subtitle">
+                    From calculating your work hours to planning your next run, understand the simple math behind managing time effectively.
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">The Universal Language of Time</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Time is a constant, yet calculating it can often be tricky. Unlike the decimal system we use for money, time operates on a base-60 system (60 seconds in a minute, 60 minutes in an hour) and a base-12 or base-24 system for the day. This complexity is why a dedicated <strong>time calculator</strong> is such a useful tool. It handles the conversions and carrying-over automatically, whether you're figuring out the duration of a flight, adding up hours on a timesheet, or calculating the time difference across zones. Understanding the principles behind these calculations can empower you to manage your schedule with greater confidence.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Calculating Duration: The Difference Between Two Times</h3>
+                    <div class="blog-section__content">
+                        <p>The most common time calculation is finding the duration between a start and an end time. The most reliable way to do this is to convert both times into a single, consistent unit, like minutes from midnight.</p>
+                        <p><strong>Example:</strong> Find the duration between 9:20 AM and 5:45 PM.</p>
+                        <ol>
+                            <li><strong>Convert to 24-Hour Format:</strong> 9:20 AM remains 09:20. 5:45 PM becomes 17:45.</li>
+                            <li><strong>Convert to Total Minutes:</strong>
+                                <ul>
+                                    <li>Start Time: (9 hours × 60) + 20 minutes = 540 + 20 = 560 minutes.</li>
+                                    <li>End Time: (17 hours × 60) + 45 minutes = 1020 + 45 = 1065 minutes.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Subtract:</strong> 1065 - 560 = 505 minutes.</li>
+                            <li><strong>Convert Back to Hours and Minutes:</strong>
+                                <ul>
+                                    <li>Hours: 505 ÷ 60 = 8 with a remainder.</li>
+                                    <li>Minutes: The remainder is 505 % 60 = 25 minutes.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <p>The total duration is 8 hours and 25 minutes. Our calculator handles this instantly, and the "End is next day" checkbox correctly adds 24 hours (1440 minutes) to the end time before calculating.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Adding and Subtracting Time Durations</h3>
+                    <div class="blog-section__content">
+                        <p>This is similar to elementary school math, but instead of carrying over at 10, you carry over at 60.
+                        <p><strong>Example:</strong> What time is it 5 hours and 40 minutes after 10:30 AM?</p>
+                        <ul>
+                            <li><strong>Add the minutes:</strong> 30 + 40 = 70 minutes. Since 70 is more than 60, this is 1 hour and 10 minutes.</li>
+                            <li><strong>Add the hours:</strong> 10 + 5 = 15 hours.</li>
+                            <li><strong>Combine and Carry Over:</strong> Add the 1 hour from the minutes calculation to the 15 hours: 15 + 1 = 16 hours. The remaining minutes are 10.</li>
+                            <li><strong>Final Time:</strong> The time is 16:10, which is 4:10 PM.</li>
+                        </ul>
+                        <p>Subtraction works in reverse, "borrowing" 60 minutes from the hour column when needed. A time calculator eliminates the risk of mental math errors in this process.</p>
+                    </div>
+                </div>
+                
+                 <div class="blog-section">
+                    <h3 class="blog-section__title">Practical Application: The Time Sheet Calculator</h3>
+                    <div class="blog-section__content">
+                        <p>For hourly workers and freelancers, accuracy is money. A time sheet calculator streamlines the process of calculating work hours. It's essentially a series of duration calculations. For each work entry:</p>
+                        <ol>
+                            <li>It calculates the total duration between "Time In" and "Time Out".</li>
+                            <li>It subtracts the specified "Break Duration" (usually in minutes).</li>
+                            <li>It sums the net duration from all entries to give you a grand total of hours worked.</li>
+                        </ol>
+                         <p>This is far more accurate and efficient than manual calculation, especially when dealing with varied shifts and break times. It ensures you are paid fairly for every minute worked.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">For the Athlete: Demystifying Pace Calculation</h3>
+                    <div class="blog-section__content">
+                        <p>Pace is a measure of time per unit of distance, crucial for runners, swimmers, and cyclists. The formula is simple:
+                         <p style="text-align: center; font-size: 1.1rem; font-family: 'Courier New', monospace; background-color: #f4f4f4; padding: 15px; border-radius: 5px;">
+                            Pace = Total Time / Total Distance
+                        </p>
+                        <p>The challenge is in the units. For example, if you run 5 kilometers in 28 minutes and 30 seconds:</p>
+                         <ul>
+                            <li><strong>Convert Time to a Single Unit:</strong> 28 minutes + (30/60) minutes = 28.5 minutes.</li>
+                            <li><strong>Calculate Pace:</strong> 28.5 minutes / 5 km = 5.7 minutes per km.</li>
+                            <li><strong>Convert Decimal to Seconds:</strong> 0.7 minutes × 60 = 42 seconds.</li>
+                            <li><strong>Final Pace:</strong> 5 minutes and 42 seconds per kilometer.</li>
+                        </ul>
+                         <p>Our Pace Calculator mode handles these unit conversions for you, whether you're working in kilometers or miles, allowing you to easily calculate your pace, project your finish time for a race, or determine the distance you can cover at a certain pace.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Find quick answers to common questions about our time calculator</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I calculate a duration that crosses midnight?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>In the "Calculate Time Duration" section, simply check the box labeled "End is next day". This tells the calculator to add 24 hours to the end time before computing the difference, ensuring you get the correct duration.</p>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <div class="faq-question">
+                        How does the Time Sheet Calculator work?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can add multiple work shifts using the "Add Entry" button. For each shift, enter your start time ("Time In") and end time ("Time Out"), along with any unpaid break time in minutes. The calculator finds the duration of each shift, subtracts the break, and then sums the totals from all entries to give you a grand total of hours worked.</p>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <div class="faq-question">
+                        Can I use the Pace Calculator to find my marathon time?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. Instead of filling in the "Time" fields, leave them blank. Enter your average pace (e.g., 5 minutes 30 seconds per kilometer) and the marathon distance (42.195 km or 26.2 miles). The calculator will compute your projected total race time.</p>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <div class="faq-question">
+                        What's the difference between 12-hour and 24-hour format?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>12-hour format</strong> uses numbers from 1 to 12 with AM (ante meridiem, before noon) and PM (post meridiem, after noon) to denote the time of day. <strong>24-hour format</strong> (or military time) uses numbers from 00:00 to 23:59, eliminating any ambiguity. Our calculator uses standard `input type="time"` which may show 12-hr or 24-hr format based on your system, but calculations are always done in 24-hr format for accuracy.</p>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <div class="faq-question">
+                        Are the results always shown in hours, minutes, and seconds?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, for clarity, the primary result is shown in a formatted way (X Hours, Y Minutes, Z Seconds). However, for the "Time Duration" calculator, we also provide the result converted into other total units (e.g., Total Minutes, Total Seconds) for easy use in other calculations or data entry.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+    <script src="../scripts/footer.js" defer></script>
+
+    <!-- Scripts -->
+    <script src="../universal-search-deploy.js"></script>
+    <script src="../scripts/page-loader.js" defer></script>
+    <script src="../scripts/time-calculator.js" defer></script>
+    <script src="../FAQ section/faq.js" defer></script>
+    <script src="../view.js" defer></script>
+</body>
+</html>

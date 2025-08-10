@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | EveryTool.tech</title>
+    <link rel="stylesheet" href="FAQ section/faq.css">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #3F37C9;
+            --text-primary: #1F2937;
+            --text-yellow: #ffe066;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --border-light: #dfe1e5;
+            --border-dark: #cdd1d5;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex: 1;
+            padding-top: 80px;
+            margin-top: 0;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .about-hero {
+            background: linear-gradient(135deg, rgba(67,97,238,0.05), rgba(63,55,201,0.1));
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('assets/pattern.svg') repeat;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .about-hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(67,97,238,0.1);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-hero-badge i {
+            margin-right: 0.5rem;
+        }
+
+        .about-hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .about-hero-title .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.25rem);
+            color: var(--text-primary);
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .about-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .about-card {
+            background: var(--bg-primary);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid var(--border-light);
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .about-card-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(67,97,238,0.1);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-card-icon i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .about-card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .about-card-content {
+            color: var(--text-primary);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .about-profile {
+            background: var(--bg-primary);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            margin: 4rem auto;
+            max-width: 800px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            border: 1px solid var(--border-light);
+        }
+
+        .about-profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-profile-content {
+            flex: 1;
+        }
+
+        .about-profile-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .about-profile-role {
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-profile-bio {
+            color: var(--text-primary);
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-profile-bio:hover {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .about-profile-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .about-profile-social a {
+            color: var(--text-primary);
+            opacity: 0.6;
+            transition: var(--transition);
+        }
+
+        .about-profile-social a:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .about-profile {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+            }
+
+            .about-profile-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .about-profile-social {
+                justify-content: center;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* New Section Styles */
+        .about-features {
+            background: linear-gradient(135deg, rgba(67,97,238,0.02), rgba(63,55,201,0.05));
+            padding: 6rem 0;
+            margin: 4rem 0;
+        }
+
+        .about-features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .about-feature-card {
+            background: var(--bg-primary);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid var(--border-light);
+        }
+
+        .about-feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .about-feature-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(67,97,238,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .about-feature-icon i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .about-feature-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .about-feature-description {
+            color: var(--text-primary);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .about-cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 6rem 2rem;
+            text-align: center;
+            color: white;
+            margin: 4rem 0;
+            border-radius: 1rem;
+        }
+
+        .about-cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-cta-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-cta-description {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .about-cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .about-cta-button {
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .about-cta-button--primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .about-cta-button--secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            border-radius: 50px;
+        }
+
+        .about-cta-button--primary:hover {
+            background:var(--text-yellow);
+            color: var(--primary);
+            border-radius: 50px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .about-cta-button--secondary:hover {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow-md);
+            border-radius: 0.5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-primary);
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .about-cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-cta-button {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+        }
+
+        .journey-section {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow-md);
+        }
+        .journey-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 2.5rem;
+        }
+        .journey-timeline {
+            position: relative;
+            margin-left: 30px;
+            padding-left: 30px;
+            border-left: 3px solid var(--primary);
+        }
+        .journey-item {
+            position: relative;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+        }
+        .journey-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .journey-item::before {
+            content: '';
+            position: absolute;
+            left: -41px;
+            top: 10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 0 4px var(--bg-secondary);
+        }
+        .journey-content {
+            background: var(--bg-primary);
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            transition: var(--transition);
+        }
+        .journey-content:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .journey-date {
+            font-size: 1rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .journey-content h3 {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .journey-content p {
+            color: var(--text-primary);
+            opacity: 0.85;
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        @media (max-width: 600px) {
+            .journey-section {
+                padding: 1rem;
+            }
+            .journey-timeline {
+                margin-left: 10px;
+                padding-left: 15px;
+            }
+            .journey-content {
+                padding: 1rem;
+            }
+            .journey-item::before {
+                left: -25px;
+            }
+        }
+        </style>
+        <style>
+        /* header Styles */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div id="header-placeholder"></div>
+
+    <main class="main-content">
+        <section class="about-hero">
+            <div class="about-hero-content">
+                <div class="about-hero-badge animate-fade-up">
+                    <i class="fas fa-rocket"></i>
+                    <span>Building the Future of Online Tools</span>
+                </div>
+                <h1 class="about-hero-title animate-fade-up">
+                    About <span class="gradient-text">EveryTool.tech</span>
+                </h1>
+                <p class="about-hero-subtitle animate-fade-up">
+                    We're on a mission to make powerful tools accessible to everyone. 
+                    Simple, fast, and free - that's our promise.
+                </p>
+            </div>
+        </section>
+
+        <div class="about-profile animate-fade-up">
+            <img src="assets/varshith.jpg" alt="Gubba Varshith" class="about-profile-image">
+            <div class="about-profile-content">
+                <h2 class="about-profile-name">Gubba Varshith</h2>
+                <div class="about-profile-role">Founder & Builder</div>
+                <p class="about-profile-bio">
+                    Hi! I'm Varshith, the creator of EveryTool.tech. I'm passionate about building simple, 
+                    useful tools that help people get things done faster. My background is in web development 
+                    and product design, and I love turning ideas into real, user-friendly products.
+                </p>
+                <div class="about-profile-social">
+                    <a href="https://www.instagram.com/gubba_varshith/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/gubba-varshith-0000000000/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/gubba-varshith" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <section class="about-section">
+            <div class="about-grid">
+                <div class="about-card animate-fade-up">
+                    <div class="about-card-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="about-card-title">Our Mission</h3>
+                    <p class="about-card-content">
+                        To provide high-quality, free tools that help people work more efficiently. 
+                        We believe in making technology accessible to everyone, regardless of their technical expertise.
+                    </p>
+                </div>
+
+                <div class="about-card animate-fade-up">
+                    <div class="about-card-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="about-card-title">Our Values</h3>
+                    <p class="about-card-content">
+                        Simplicity, accessibility, and user experience are at the core of everything we do. 
+                        We're committed to creating tools that are both powerful and easy to use.
+                    </p>
+                </div>
+
+                <div class="about-card animate-fade-up">
+                    <div class="about-card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="about-card-title">Our Community</h3>
+                    <p class="about-card-content">
+                        We're building a community of users who share our vision. 
+                        Your feedback and suggestions help us improve and grow.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Features Section -->
+        <section class="about-features">
+            <div class="about-section">
+                <h2 class="section-title">Why Choose <span class="gradient-text">EveryTool.tech</span></h2>
+                <p class="section-subtitle">We're committed to providing the best tools and experience for our users</p>
+                
+                <div class="about-features-grid">
+                    <div class="about-feature-card animate-fade-up">
+                        <div class="about-feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3 class="about-feature-title">Lightning Fast</h3>
+                        <p class="about-feature-description">
+                            Our tools are optimized for speed and performance, ensuring you get results instantly.
+                        </p>
+                    </div>
+
+                    <div class="about-feature-card animate-fade-up">
+                        <div class="about-feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="about-feature-title">Privacy First</h3>
+                        <p class="about-feature-description">
+                            Your data stays on your device. We don't store or process your files on our servers.
+                        </p>
+                    </div>
+
+                    <div class="about-feature-card animate-fade-up">
+                        <div class="about-feature-icon">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <h3 class="about-feature-title">Easy to Use</h3>
+                        <p class="about-feature-description">
+                            Clean, intuitive interfaces that make complex tasks simple and straightforward.
+                        </p>
+                    </div>
+
+                    <div class="about-feature-card animate-fade-up">
+                        <div class="about-feature-icon">
+                            <i class="fas fa-sync"></i>
+                        </div>
+                        <h3 class="about-feature-title">Always Updated</h3>
+                        <p class="about-feature-description">
+                            Regular updates and new features to keep our tools at the cutting edge.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New CTA Section -->
+        <section class="about-cta">
+            <div class="about-cta-content">
+                <h2 class="about-cta-title">Ready to Get Started?</h2>
+                <p class="about-cta-description">
+                    Join thousands of users who trust EveryTool.tech for their daily tasks.
+                    Start using our tools today and experience the difference.
+                </p>
+                <div class="about-cta-buttons">
+                    <a href="/tools-hub-page/index.html" class="about-cta-button about-cta-button--primary">
+                        Explore Tools
+                    </a>
+                    <a href="coming-soon.html" class="about-cta-button about-cta-button--secondary">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section class="journey-section">
+        <h2 class="journey-title">Our Journey</h2>
+        <div class="journey-timeline">
+            <div class="journey-item">
+                <div class="journey-content">
+                    <div class="journey-date">2021</div>
+                    <h3>Idea & Vision</h3>
+                    <p>EveryTool.tech was conceived as a vision to provide free, accessible, and powerful tools for everyone.</p>
+                </div>
+            </div>
+            <div class="journey-item">
+                <div class="journey-content">
+                    <div class="journey-date">2022</div>
+                    <h3>Development Begins</h3>
+                    <p>Started building the platform, focusing on user experience and a growing collection of essential tools.</p>
+                </div>
+            </div>
+            <div class="journey-item">
+                <div class="journey-content">
+                    <div class="journey-date">2023</div>
+                    <h3>Public Launch</h3>
+                    <p>Launched EveryTool.tech to the public, quickly gaining thousands of users and positive feedback.</p>
+                </div>
+            </div>
+            <div class="journey-item">
+                <div class="journey-content">
+                    <div class="journey-date">2024</div>
+                    <h3>Continuous Growth</h3>
+                    <p>Expanded our toolset, improved performance, and built a vibrant community of users and contributors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <div id="footer-placeholder"></div>
+
+    <script src="view.js"></script>
+    <script src="FAQ section/faq.js"></script>
+    <script>
+        // Load header and footer
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Initialize FAQ functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.faqManager) {
+                window.faqManager.init();
+            }
+        });
+
+        // Scroll-triggered animation for journey items
+        window.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.journey-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            items.forEach(item => observer.observe(item));
+        });
+
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+        const progressCircle = document.getElementById('progress');
+        const circumference = 2 * Math.PI * 20;
+
+        function updateProgress() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = scrollTop / scrollHeight;
+            const offset = circumference - scrollPercent * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+        }
+    </script>
+
+<!-- CRITICAL: Universal Search Functionality - DO NOT REMOVE -->
+<script src="universal-search-deploy.js"></script>
+</body>
+</html> 

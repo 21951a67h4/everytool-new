@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon - Everytool</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #3F37C9;
+            --primary-darker: #1f37a8;
+            --primary-light: #6b83f1;
+            --primary-lighter: #94a5f4;
+            --secondary: #7209B7;
+            --secondary-dark: #560BAD;
+            --accent: #F72585;
+            --accent-dark: #B5179E;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-light: #9CA3AF;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --bg-dark: #111827;
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            --gradient-light: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.75rem;
+            --radius-gv: 50px;
+            --radius-lg: 1.5rem;
+            --radius-xl: 2rem;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 12rem 2rem 8rem;
+            position: relative;
+            overflow: hidden;
+            background: var(--gradient-primary);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+            max-width: 1000px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        p {
+            font-size: 1.25rem;
+            line-height: 1.7;
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin: 3rem 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .countdown-item {
+            background: rgba(67, 97, 238, 0.1);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            min-width: 100px;
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(67, 97, 238, 0.2);
+            background: rgba(67, 97, 238, 0.15);
+        }
+
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            opacity: 0.95;
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 4rem 0;
+            padding: 0 1rem;
+        }
+
+        .feature-card {
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(67, 97, 238, 0.2);
+            background: rgba(67, 97, 238, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #E2E8F0;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            color: #FFFFFF;
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: white;
+        }
+
+        .feature-description {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+        .notify-form {
+            padding-top: 2rem;
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .notify-input {
+            padding: 1.2rem 1.5rem;
+            width: 350px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-gv);
+            background: rgba(67, 97, 238, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.15);
+            transform-origin: center;
+        }
+
+        .notify-input:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.2);
+        }
+
+        .notify-input:focus {
+            transform: translateY(-2px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.6);
+            outline: none;
+            background: rgba(67, 97, 238, 0.15);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.25);
+        }
+
+        .notify-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .notify-input:focus::placeholder {
+            opacity: 0.5;
+            transform: translateX(10px);
+        }
+
+        .notify-button {
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: var(--radius-gv);
+            background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.2);
+            position: relative;
+            overflow: hidden;
+            transform-origin: center;
+        }
+
+        .notify-button:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.3);
+            background: #ffffff;
+        }
+
+        .notify-button:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .notify-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.4),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .notify-button:hover::before {
+            left: 100%;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .notify-input.error {
+            animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+            border-color: rgba(255, 82, 82, 0.6);
+        }
+
+        .notify-form.success .notify-input {
+            border-color: rgba(82, 255, 82, 0.6);
+        }
+
+        .notify-form.success .notify-button {
+            background: linear-gradient(135deg, #52ff52 0%, #00cc00 100%);
+            color: white;
+        }
+
+        .social-links {
+            margin-top: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 1.2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.8;
+        }
+
+        .social-links a:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+            opacity: 1;
+        }
+
+        @media (max-width: 900px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .countdown {
+                gap: 1rem;
+            }
+            
+            .countdown-item {
+                min-width: 80px;
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .main-content {
+                padding: 8rem 1rem 4rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            p {
+                font-size: 1.1rem;
+            }
+            
+            .notify-form {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .notify-input {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .notify-button {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .countdown {
+                flex-wrap: wrap;
+            }
+            
+            .countdown-item {
+                min-width: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div id="header-placeholder"></div>
+
+    <main class="main-content">
+        <div class="container">
+            <h1>Something Amazing is Coming Soon</h1>
+            <p>We're crafting something extraordinary that will transform your experience. Join our waitlist to be the first to know when we launch!</p>
+            
+            <div class="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-number">30</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number">12</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number">45</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number">20</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+
+            <div class="notify-form">
+                <input type="email" class="notify-input" placeholder="Enter your email for updates">
+                <button class="notify-button">Notify Me</button>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="feature-title">Lightning Fast</h3>
+                    <p class="feature-description">Experience unprecedented speed and performance with our cutting-edge technology.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Secure & Reliable</h3>
+                    <p class="feature-description">Your data is protected with enterprise-grade security and 99.9% uptime guarantee.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3 class="feature-title">Intuitive Design</h3>
+                    <p class="feature-description">Enjoy a seamless experience with our thoughtfully designed interface.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script>
+        // Error handling utility
+        const handleError = (error, fallbackValue = '00') => {
+            console.error('Countdown Error:', error);
+            return fallbackValue;
+        };
+
+        // Format number to always have 2 digits
+        const formatNumber = (num) => {
+            try {
+                return num.toString().padStart(2, '0');
+            } catch (error) {
+                return handleError(error);
+            }
+        };
+
+        // Validate date
+        const validateDate = (date) => {
+            if (!(date instanceof Date) || isNaN(date)) {
+                throw new Error('Invalid date provided');
+            }
+            return date;
+        };
+
+        // Set custom launch date (Year, Month (0-11), Day, Hour, Minute, Second)
+        let launchDate;
+        try {
+            launchDate = validateDate(new Date(2025, 5, 22, 15, 50, 0)); // May 23, 2025 at 3:50 PM, Month 5 = June (0=January, 1=February, 2=March, 3=April, 4=May, 5=June)
+        } catch (error) {
+            console.error('Invalid launch date:', error);
+            // Fallback to 30 days from now
+            launchDate = new Date();
+            launchDate.setDate(launchDate.getDate() + 30);
+        }
+
+        function updateCountdown() {
+            try {
+                const now = new Date();
+                const difference = launchDate - now;
+
+                if (difference < 0) {
+                    clearInterval(countdownInterval);
+                    const countdownElement = document.querySelector('.countdown');
+                    if (countdownElement) {
+                        countdownElement.innerHTML = '<h2>We\'re Live!</h2>';
+                    }
+                    return;
+                }
+
+                // Calculate time units
+                const totalSeconds = Math.floor(difference / 1000);
+                const days = Math.floor(totalSeconds / (24 * 60 * 60));
+                const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
+                const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+                const seconds = totalSeconds % 60;
+
+                const countdownNumbers = document.querySelectorAll('.countdown-number');
+                if (countdownNumbers.length === 4) {
+                    countdownNumbers[0].textContent = formatNumber(days);
+                    countdownNumbers[1].textContent = formatNumber(hours);
+                    countdownNumbers[2].textContent = formatNumber(minutes);
+                    countdownNumbers[3].textContent = formatNumber(seconds);
+                } else {
+                    throw new Error('Countdown elements not found');
+                }
+            } catch (error) {
+                handleError(error);
+                // Attempt to recover by resetting the countdown
+                const countdownElement = document.querySelector('.countdown');
+                if (countdownElement) {
+                    countdownElement.innerHTML = `
+                        <div class="countdown-item">
+                            <div class="countdown-number">00</div>
+                            <div class="countdown-label">Days</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number">00</div>
+                            <div class="countdown-label">Hours</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number">00</div>
+                            <div class="countdown-label">Minutes</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number">00</div>
+                            <div class="countdown-label">Seconds</div>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Initialize countdown
+        let countdownInterval;
+        try {
+            updateCountdown(); // Initial call
+            countdownInterval = setInterval(updateCountdown, 1000);
+        } catch (error) {
+            handleError(error);
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('unload', () => {
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+        });
+
+        // Function to load HTML content
+        async function loadHTML(url, elementId) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const html = await response.text();
+                document.getElementById(elementId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading ${url}:`, error);
+            }
+        }
+
+        // Load header and footer
+        document.addEventListener('DOMContentLoaded', () => {
+            loadHTML('header.html', 'header-placeholder');
+            loadHTML('footer.html', 'footer-placeholder');
+        });
+
+        // Add form validation and animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('.notify-form');
+            const input = document.querySelector('.notify-input');
+            const button = document.querySelector('.notify-button');
+
+            function validateEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const email = input.value.trim();
+                
+                if (!email) {
+                    input.classList.add('error');
+                    setTimeout(() => input.classList.remove('error'), 500);
+                    return;
+                }
+
+                if (!validateEmail(email)) {
+                    input.classList.add('error');
+                    setTimeout(() => input.classList.remove('error'), 500);
+                    return;
+                }
+
+                // Simulate success state
+                form.classList.add('success');
+                button.textContent = 'Subscribed!';
+                input.value = '';
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    form.classList.remove('success');
+                    button.textContent = 'Join Waitlist';
+                }, 3000);
+            });
+
+            input.addEventListener('input', () => {
+                input.classList.remove('error');
+            });
+        });
+    </script>
+</body>
+</html> 

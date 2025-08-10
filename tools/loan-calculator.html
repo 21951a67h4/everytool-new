@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan EMI Calculator | Calculate Your Monthly Payments | EveryTool.tech</title>
+    <meta name="description" content="Calculate your loan EMI instantly with our free Loan EMI Calculator. Get accurate monthly payments, total interest, and complete repayment schedule. Try it now!">
+    <meta name="keywords" content="loan emi calculator, emi calculator, loan calculator, monthly payment calculator, interest calculator, loan repayment calculator">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Loan EMI Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate your loan EMI instantly with our free Loan EMI Calculator. Get accurate monthly payments, total interest, and complete repayment schedule.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/calculators/loan-emi-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tool CSS -->
+    <link rel="stylesheet" href="tool.css">
+
+    <!-- Add in <head> if not present -->
+    <link rel="stylesheet" href="../FAQ section/faq.css">
+
+    
+    <style>
+        /* Core Variables */
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --primary-darker: #1f37a8;
+            --primary-light: #6b83f1;
+            --primary-lighter: #94a5f4;
+            --secondary: #7209B7;
+            --secondary-dark: #560BAD;
+            --accent: #F72585;
+            --accent-dark: #B5179E;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-light: #9CA3AF;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --bg-dark: #111827;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1.5rem;
+            --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        /* Header Placeholder */
+        #header-placeholder {
+            height: 64px;
+        }
+
+        /* Tool Hero Section */
+        .tool-hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="%234361EE" opacity="0.1"/></svg>');
+            opacity: 0.5;
+            animation: patternMove 20s linear infinite;
+        }
+
+        .tool-hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-hero__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tool-hero__left {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .tool-hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .tool-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .tool-hero__features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .tool-hero__cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tool-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-button--primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-button--primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-button--secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tool-hero__right {
+            position: relative;
+            animation: slideIn 1s ease-out;
+        }
+
+        /* Tool Display Section */
+        .tool-display {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .tool-display__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-display__wrapper {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-display__wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .tool-display__header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tool-display__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__description {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tool-display__content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .tool-display__input-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .tool-display__output-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .tool-display__controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-display__button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-display__button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-display__button--secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__input-group {
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-display__input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .tool-display__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .emi-summary {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            background: var(--bg-accent);
+        }
+
+        .emi-summary__item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--bg-secondary);
+        }
+
+        .emi-summary__item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .emi-summary__label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .emi-summary__value {
+            color: var(--text-secondary);
+        }
+
+        /* Blog Section */
+        .tool-blog {
+            padding: 4rem 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .tool-blog__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-blog__header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tool-blog__title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .tool-blog__subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .blog-content {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            box-shadow: var(--shadow-md);
+            margin-top: 2rem;
+        }
+
+        .blog-section {
+            margin-bottom: 3rem;
+        }
+
+        .blog-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .blog-section__title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .blog-section__title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .blog-section__content {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .blog-section__content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-section__content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .blog-section__content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .blog-section__content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .blog-section__content a {
+            color: var(--primary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--primary-light);
+            transition: var(--transition-all);
+        }
+
+        .blog-section__content a:hover {
+            color: var(--primary-dark);
+            border-bottom-color: var(--primary-dark);
+        }
+
+        /* Footer Placeholder */
+        #footer-placeholder {
+            min-height: 400px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes patternMove {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: 100px 100px;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .tool-hero__content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .tool-hero__right {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tool-hero {
+                padding: 3rem 1rem;
+            }
+
+            .tool-hero__title {
+                font-size: 2.5rem;
+            }
+
+            .tool-hero__features {
+                grid-template-columns: 1fr;
+            }
+
+            .tool-blog {
+                padding: 3rem 1rem;
+            }
+
+            .blog-content {
+                padding: 2rem;
+            }
+
+            .blog-section__title {
+                font-size: 1.75rem;
+            }
+
+            .blog-section__content {
+                font-size: 1rem;
+            }
+
+            .tool-display {
+                padding: 2rem 1rem;
+            }
+
+            .tool-display__wrapper {
+                padding: 1.5rem;
+            }
+
+            .tool-display__title {
+                font-size: 1.5rem;
+            }
+
+            .tool-display__controls {
+                flex-direction: column;
+            }
+
+            .tool-display__button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Calculate Your Loan EMI Instantly</h1>
+                    <p class="tool-hero__description">
+                        Get your monthly loan payments calculated instantly with our free Loan EMI Calculator. 
+                        Understand your repayment schedule, total interest, and make informed financial decisions.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-bolt"></i>
+                            <span>Instant Results</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Detailed Schedule</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Complete Analysis</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Private</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Now
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Calculate Your Loan EMI</h2>
+                    <p class="tool-display__description">
+                        Enter your loan details to calculate your monthly EMI, total interest, and complete 
+                        repayment schedule. Make informed decisions about your loan.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Loan Amount (₹)</label>
+                            <input type="number" class="tool-display__input" id="loan-amount" placeholder="Enter loan amount">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Interest Rate (% per year)</label>
+                            <input type="number" class="tool-display__input" id="interest-rate" placeholder="Enter interest rate">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Loan Term (years)</label>
+                            <input type="number" class="tool-display__input" id="loan-term" placeholder="Enter loan term">
+                        </div>
+                        <div class="tool-display__controls">
+                            <button class="tool-display__button" id="calculate-emi">
+                                <i class="fas fa-calculator"></i>
+                                Calculate EMI
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="reset-emi">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Your Results</h3>
+                        <div class="tool-display__result" id="emi-result">
+                            Your EMI calculation results will appear here...
+                        </div>
+                        <div class="emi-summary" id="emi-summary" style="display: none;">
+                            <div class="emi-summary__item">
+                                <span class="emi-summary__label">Monthly EMI:</span>
+                                <span class="emi-summary__value" id="monthly-emi"></span>
+                            </div>
+                            <div class="emi-summary__item">
+                                <span class="emi-summary__label">Total Interest:</span>
+                                <span class="emi-summary__value" id="total-interest"></span>
+                            </div>
+                            <div class="emi-summary__item">
+                                <span class="emi-summary__label">Total Payment:</span>
+                                <span class="emi-summary__value" id="total-payment"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Loan EMI and Financial Planning</h2>
+                <p class="tool-blog__subtitle">
+                    A comprehensive guide to understanding Equated Monthly Installments (EMI) and making informed financial decisions
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is EMI and How Does It Work?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Equated Monthly Installment (EMI) is a fixed payment amount made by a borrower to a lender at a specified date each calendar month. EMIs are used to pay off both interest and principal each month, so that over a specified number of years, the loan is paid off in full.
+                        </p>
+                        <p>
+                            The EMI calculation is based on three main factors:
+                        </p>
+                        <ul>
+                            <li><strong>Principal Amount:</strong> The total amount borrowed</li>
+                            <li><strong>Interest Rate:</strong> The annual rate of interest charged on the loan</li>
+                            <li><strong>Loan Term:</strong> The duration over which the loan is to be repaid</li>
+                        </ul>
+                        <p>
+                            Understanding how these factors interact is crucial for making informed decisions about loans and managing your finances effectively.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Components of EMI</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Each EMI payment consists of two main components:
+                        </p>
+                        <ul>
+                            <li>
+                                <strong>Principal Component:</strong>
+                                <br>This is the portion of the EMI that goes towards reducing the actual loan amount. The principal component increases with each payment while the interest component decreases.
+                            </li>
+                            <li>
+                                <strong>Interest Component:</strong>
+                                <br>This is the portion of the EMI that goes towards paying the interest on the loan. The interest component is higher in the initial payments and decreases over time.
+                            </li>
+                        </ul>
+                        <p>
+                            Understanding this breakdown helps borrowers make informed decisions about prepayment and loan restructuring.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Factors Affecting EMI</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Several factors can influence your EMI amount and overall loan cost:
+                        </p>
+                        <ul>
+                            <li><strong>Credit Score:</strong> A higher credit score can help you secure lower interest rates</li>
+                            <li><strong>Loan Term:</strong> Longer terms mean lower EMIs but higher total interest</li>
+                            <li><strong>Interest Rate Type:</strong> Fixed vs. floating rates affect EMI stability</li>
+                            <li><strong>Down Payment:</strong> A larger down payment reduces the loan amount and EMI</li>
+                            <li><strong>Additional Charges:</strong> Processing fees and other charges affect total cost</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Tips for Managing EMI Payments</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Here are some strategies to manage your EMI payments effectively:
+                        </p>
+                        <ul>
+                            <li>Choose a loan term that balances monthly payments with total interest</li>
+                            <li>Consider making prepayments when possible to reduce interest burden</li>
+                            <li>Maintain an emergency fund to handle unexpected financial situations</li>
+                            <li>Compare different loan offers to find the best interest rates</li>
+                            <li>Use loan calculators to understand the full cost of borrowing</li>
+                        </ul>
+                        <p>
+                            Remember that while lower EMIs might seem attractive, they often mean paying more interest over the long term. It's important to find the right balance between monthly affordability and total cost.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Loan EMI Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about the Loan EMI Calculator</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>What is an EMI?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>EMI stands for Equated Monthly Installment. It is the fixed payment amount made by a borrower to a lender at a specified date each calendar month.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How is EMI calculated?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>EMI is calculated using the principal amount, interest rate, and loan tenure. The formula is: <code>EMI = [P x R x (1+R)^N] / [(1+R)^N-1]</code> where P = principal, R = monthly interest rate, N = number of months.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I prepay my loan?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes, most lenders allow prepayment of loans, but some may charge a prepayment penalty. Check with your lender for details.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Does the EMI amount change over time?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>For fixed-rate loans, the EMI remains the same throughout the tenure. For floating-rate loans, the EMI may change if the interest rate changes.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Fetch and insert header
+        fetch('../../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // EMI Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const loanAmountInput = document.getElementById('loan-amount');
+            const interestRateInput = document.getElementById('interest-rate');
+            const loanTermInput = document.getElementById('loan-term');
+            const calculateButton = document.getElementById('calculate-emi');
+            const resetButton = document.getElementById('reset-emi');
+            const resultDiv = document.getElementById('emi-result');
+            const summaryDiv = document.getElementById('emi-summary');
+            const monthlyEmiSpan = document.getElementById('monthly-emi');
+            const totalInterestSpan = document.getElementById('total-interest');
+            const totalPaymentSpan = document.getElementById('total-payment');
+
+            function calculateEMI() {
+                const principal = parseFloat(loanAmountInput.value);
+                const annualRate = parseFloat(interestRateInput.value);
+                const years = parseFloat(loanTermInput.value);
+
+                if (principal && annualRate && years && principal > 0 && annualRate > 0 && years > 0) {
+                    // Convert annual rate to monthly rate
+                    const monthlyRate = (annualRate / 100) / 12;
+                    const numberOfPayments = years * 12;
+
+                    // Calculate EMI using the formula: EMI = P * r * (1 + r)^n / ((1 + r)^n - 1)
+                    const emi = principal * monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments) / 
+                              (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+
+                    const totalPayment = emi * numberOfPayments;
+                    const totalInterest = totalPayment - principal;
+
+                    // Format numbers with commas and 2 decimal places
+                    const formatNumber = (num) => {
+                        return '₹' + num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    };
+
+                    monthlyEmiSpan.textContent = formatNumber(emi);
+                    totalInterestSpan.textContent = formatNumber(totalInterest);
+                    totalPaymentSpan.textContent = formatNumber(totalPayment);
+
+                    resultDiv.textContent = 'Your EMI calculation is complete!';
+                    summaryDiv.style.display = 'block';
+                } else {
+                    resultDiv.textContent = 'Please enter valid loan details.';
+                    summaryDiv.style.display = 'none';
+                }
+            }
+
+            function resetCalculator() {
+                loanAmountInput.value = '';
+                interestRateInput.value = '';
+                loanTermInput.value = '';
+                resultDiv.textContent = 'Your EMI calculation results will appear here...';
+                summaryDiv.style.display = 'none';
+            }
+
+            calculateButton.addEventListener('click', calculateEMI);
+            resetButton.addEventListener('click', resetCalculator);
+
+            // Allow Enter key to trigger calculation
+            [loanAmountInput, interestRateInput, loanTermInput].forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        calculateEMI();
+                    }
+                });
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with animation classes
+        document.querySelectorAll('.tool-hero__left, .tool-hero__right, .blog-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+
+<script src="../universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html> 

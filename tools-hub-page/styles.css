@@ -1,0 +1,396 @@
+/* --- Global Styles & Variables --- */
+:root {
+    --primary: #4361EE;
+    --primary-dark: #3F37C9;
+    --primary-light: #e0e4fc;
+    --secondary: #f9fafb;
+    --text-dark: #111827;
+    --text-light: #6b7280;
+    --border-color: #d1d5db;
+    --card-bg: #ffffff;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-dark);
+    background-color: var(--card-bg);
+    line-height: 1.6;
+}
+
+/* --- Layout --- */
+.tools-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* --- Hero Section --- */
+.tools-header-section {
+    padding: 8rem 1.5rem 4rem;
+    background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+    color: white;
+    text-align: center;
+}
+
+.tools-header-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.tools-header-subtitle {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    opacity: 0.9;
+}
+
+.tools-header-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.stat-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* --- Tools Page --- */
+.tools-page {
+    padding: 2.5rem 0 3rem;
+    background-color: var(--secondary);
+}
+
+.tools-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.tools-header h1 {
+    font-size: 2.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.tools-header p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+/* --- Search & Filter Section --- */
+.search-section {
+    margin-bottom: 2.5rem;
+}
+
+/* ================================================= */
+/* ========= START: MODIFIED SECTION ================ */
+/* ================================================= */
+.search-bar-wrapper {
+    position: relative;
+    width: 100%; /* Control the width here */
+    margin: 2.5rem auto 2.5rem; /* Center the wrapper and keep original bottom margin */
+    max-width: 800px; /* Optional: A max-width is good practice */
+}
+/* ================================================= */
+/* ========== END: MODIFIED SECTION ================= */
+/* ================================================= */
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+}
+
+#search-input {
+    width: 100%; /* Keep this at 100% to fill the wrapper */
+    padding: 0.8rem 2.5rem 0.8rem 3rem;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.mic-button, .clear-search {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-light);
+    font-size: 1.2rem;
+    padding: 0.5rem;
+}
+
+.mic-button { right: 2.5rem; }
+.clear-search { right: 0.5rem; }
+.mic-button:hover, .clear-search:hover { color: var(--primary); }
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.filter-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background-color: var(--card-bg);
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.filter-button:hover {
+    transform: scale(1.05);
+    background-color: var(--primary-light);
+    border-color: var(--primary);
+}
+
+.filter-button.active {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    transform: scale(1.05);
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* --- Tools Grid & Cards --- */
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.tool-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.tool-card:hover .tool-category {
+    scale: 1.05;
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    border-radius: 50px;
+    margin-bottom: 1rem;
+    align-self: flex-start;
+}
+
+
+.tool-category {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    align-self: flex-start;
+}
+
+.tool-icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.tool-name {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.tool-description {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+}
+
+.tool-button {
+    display: inline-block;
+    text-align: center;
+    padding: 0.7rem 1rem;
+    background-color: var(--primary);
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+    margin-top: auto;
+}
+
+.tool-button:hover {
+    background-color: var(--primary-dark);
+}
+
+/* --- Animation & Helper Classes --- */
+.hidden {
+    display: none !important;
+}
+
+.animate-fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.animate-fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Error Overlay --- */
+.error-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.error-box {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: var(--shadow-lg);
+}
+
+.error-box h3 {
+    font-size: 1.25rem;
+    color: #dc2626;
+    margin-bottom: 1rem;
+}
+.error-box h3 i {
+    margin-right: 0.5rem;
+}
+
+.error-box p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+/* --- Responsive Media Queries --- */
+@media (max-width: 900px) {
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .search-bar-wrapper {
+        width: 80%; /* Make search bar wider on tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .tools-header-section {
+        padding: 3rem 1.5rem 2rem;
+    }
+    
+    .tools-header-title { font-size: 2rem; }
+    .tools-page { padding-top: 2rem; }
+    .tools-header h1 { font-size: 1.75rem; }
+    .faq-title { font-size: 1.75rem; }
+
+    .search-bar-wrapper {
+        width: 100%; /* Make search bar full-width on mobile */
+    }
+}
+
+@media (max-width: 600px) {
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+    .tools-header-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .tools-container {
+        padding: 0 1rem;
+    }
+    .tools-header-section {
+        padding: 2.5rem 1rem 1.5rem;
+    }
+    .filter-buttons {
+        gap: 0.5rem;
+    }
+    .filter-button {
+        padding: 0.4rem 0.8rem;
+    }
+    .faq-question {
+        font-size: 1rem;
+    }
+}
+
+/* Header Styles */
+#header-placeholder {
+    min-height: 130px;
+    position: relative; 
+    z-index: 2000;      
+}
+@media (max-width: 768px) {
+    #header-placeholder {
+        min-height: 64px;
+    }
+}

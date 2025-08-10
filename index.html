@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data: https://api.producthunt.com; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self';">
+    <title>Everytool.tech – Free Online Calculators, Converters & Dev Tools</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/SVG/favicon.svg">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="FAQ section/faq.css">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="Transform your work with smart tools. One platform, endless possibilities. Find and use the perfect tool for any task.">
+    <meta name="keywords" content="online tools, file converter, PDF tools, image editor, developer tools">
+    <meta property="og:title" content="Everytool - Your All-in-One Solution">
+    <meta property="og:description" content="Transform your work with smart tools. One platform, endless possibilities.">
+    <meta property="og:image" content="assets/logo-icon.png">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#3b7bbc">
+    <style>
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #3F37C9;
+            --text-primary: #1F2937;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --border-light: #dfe1e5;
+            --border-dark: #cdd1d5;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding-top: 80px;
+        }
+
+        /* --- Product Hunt Badge Animation --- */
+        .product-hunt-badge {
+            display: inline-block; /* Necessary for transform to work correctly */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border-radius: 8px; /* Match badge's rounded corners for a clean shadow */
+            margin-top: 1rem; /* Add some space above the badge */
+        }
+
+        .product-hunt-badge:hover {
+            transform: translateY(-4px); /* Lifts the badge up slightly */
+            box-shadow: 0 8px 20px rgba(253, 108, 38, 0.25); /* A soft orange glow, matching PH colors */
+        }
+
+        .product-hunt-badge img {
+            display: block; /* Prevents any extra space below the image */
+        }
+    </style>
+    <!-- start of popup -->
+    <style>
+        /* Paste this into your <style> tag or CSS file */
+
+/* --- NO-FLASH LOGIC (Unchanged) --- */
+.popup-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(17, 24, 39, 0.85); /* Slightly darker for more focus */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
+}
+
+.popup-overlay.visible {
+    display: flex;
+    opacity: 1;
+}
+
+/* --- MODERN POPUP STYLES --- */
+.popup-content {
+    background: #FFFFFF;
+    padding: 1.5rem 2.5rem 2rem 2.5rem; /* Adjusted padding */
+    border-radius: 24px; /* Softer, larger radius */
+    box-shadow: 0 15px 35px #00000026, 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 480px;
+    text-align: center;
+    transform: scale(0.9) translateY(10px); /* Start smaller and lower */
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    /* Flexbox for vertical alignment */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.popup-overlay.visible .popup-content {
+    transform: scale(1) translateY(0); /* Final animation state */
+}
+
+/* NEW: Logo Styling */
+.popup-logo {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 1rem; /* Space between logo and headline */
+}
+
+/* NEW: Modern Gradient Headline */
+.popup-headline {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    /* The gradient magic */
+    background: linear-gradient(45deg, #4361EE, #F72585);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.popup-subheading {
+    color: #6B7280;
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    max-width: 90%; /* Prevent text from being too wide */
+}
+
+/* Tip section remains functionally the same, with minor tweaks */
+.popup-tip {
+    background-color: #F8F9FA;
+    border-left: 5px solid #F72585;
+    border-right: 5px solid #F72585;
+    padding: 0.75rem 1rem;
+    margin: 0 0 2rem 0; /* Adjusted margins */
+    text-align: left;
+    border-radius: 8px;
+    width: 100%;
+}
+.popup-tip:hover {
+    border-left: 5px solid rgb(247, 37, 133);
+    border-right: 5px solid rgb(247, 37, 133);
+    border-top: 1.5px solid rgb(247, 37, 133);
+    border-bottom: 1.5px solid rgb(247, 37, 133);
+    background: linear-gradient(45deg, #F8F9FA, #f0f2ff);
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 15px rgba(247, 37, 133, 0.3);
+}
+
+.popup-tip p {
+    margin: 0;
+    color: #000000;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+kbd {
+    background-color: #E5E7EB;
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+    font-family: monospace;
+    font-size: 0.85rem;
+    border: 1px solid #D1D5DB;
+    box-shadow: inset 0 -1px 0 #D1D5DB;
+}
+
+/* NEW: Modern Gradient Button */
+.popup-button {
+    background:rgb(83, 110, 230); /* Subtle gradient */
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+    transition: all 0.3s ease;
+}
+
+.popup-button:hover {
+    transition: transform 0.3s ease;
+    background:rgb(67, 97, 238);
+    transform: translateY(-3px); /* Lifts the button */
+    box-shadow: 0 7px 25px rgba(67, 97, 238, 0.4); /* Stronger glow */
+}
+    </style>
+    <!-- end of popup -->
+</head>
+
+<body>
+    <!-- Header Section (will be loaded via fetch) -->
+    <div id="header-placeholder"></div>
+
+    <!-- start of popup -->
+    <div id="welcome-popup-overlay" class="popup-overlay">
+        <div class="popup-content">
+            <!-- Favicon/Logo added here -->
+            <img src="assets/SVG/favicon.svg" alt="Everytool.tech Logo" class="popup-logo">
+    
+            <!-- Content Section -->
+            <h1 class="popup-headline">Everytool.tech – Your All‑in‑One Toolkit.</h1>
+            <p class="popup-subheading">All the tools you need, in one place. And it's completely FREE!</p>
+            
+            <!-- Tip Section -->
+            <div class="popup-tip">
+                <p><strong>Tip:</strong> Press <kbd>Alt</kbd> + <kbd>S</kbd> anytime, anywhere on the website to open the Global Search.</p>
+            </div>
+            
+            <!-- Button Section -->
+            <button id="get-started-btn" class="popup-button">Get Started</button>
+        </div>
+    </div>
+    <!-- end of popup -->
+    
+    <!-- start of main content -->
+    <main class="main-content">
+        <section class="hero hero-modern" aria-label="Hero section">
+            <div class="hero__container hero__container-modern">
+                <div class="hero__content hero__content-modern">
+                    <div class="hero__text-content hero__text-content-modern animate-fade-up">
+                        <span class="hero__badge improved-badge">
+                            <span class="hero__badge-icon">⚡</span>
+                            <span class="hero__badge-text">All-in-one toolset for professionals</span>
+                        </span>
+                        <h1 class="hero__title hero__title-modern">
+                            <span class="gradient-text">Transform</span> Your Work with Smart Tools
+                        </h1>
+                        <p class="hero__subtitle hero__subtitle-modern">
+                            One platform, endless possibilities. Access over 50+ professional tools to streamline your workflow and boost productivity.
+                        </p>
+                        <a href="https://www.producthunt.com/products/everytool-tech?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-everytool-tech" target="_blank" class="product-hunt-badge">
+                            <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=986537&theme=light&t=1751366643219" alt="Everytool.tech - 50+ free online tools in one place – no logins, no limits. | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" />
+                            <span style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;">View Everytool.tech on Product Hunt</span>
+                        </a>
+                    </div>
+                    <div class="hero__visual hero__visual-modern animate-slide-in improved-profile-float">
+                        <div class="hero__profile-card improved-profile-card">
+                            <div class="hero__profile-img-wrap simple-rounded-profile">
+                                <img src="assets/varshith.jpg" alt="Gubba Varshith" class="hero__profile-img rounded-square-img">
+                                <a href="/creators.html"
+                                    <button class="hero__profile-status" aria-label="Online Status">click me</button>
+                                </a>
+                            </div>
+                            <div class="hero__profile-info">
+                                <div class="hero__profile-name">Gubba Varshith</div>
+                                <div class="hero__profile-role">Founder & Builder</div>
+                                <div class="hero__profile-social improved-profile-social">
+                                    <a href="https://twitter.com/varshithgubba" class="hero__profile-social-link" aria-label="Twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a href="https://www.linkedin.com/in/varshithgubba" class="hero__profile-social-link" aria-label="LinkedIn">
+                                        <i class="fab fa-linkedin"></i>
+                                    </a>
+                                    <a href="https://instagram.com/varshithgubba" class="hero__profile-social-link" aria-label="Instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="hero__profile-bg-shape"></div>
+                        </div>
+                        <div class="hero__floating-elements improved-floating-elements">
+                            <div class="hero__floating-tool tool-1 improved-floating-tool-glow">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="hero__floating-tool tool-2 improved-floating-tool-glow">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <div class="hero__floating-tool tool-3 improved-floating-tool-glow">
+                                <i class="fas fa-code"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="categories" aria-label="Browse by Category">
+            <div class="categories__container">
+                <h2 class="categories__title">Browse by Category</h2>
+                <p class="categories__subtitle">Find the perfect tools for your specific needs</p>
+                
+                <div class="categories__grid">
+                    <article class="category-card">
+                        <div class="category-card__icon-wrapper">
+                            <i class="fas fa-calculator category-card__icon"></i>
+                        </div>
+                        <h3 class="category-card__title">Finance Tools</h3>
+                        <p class="category-card__description">Financial, health, and math solutions for everyday calculations</p>
+                        <div class="category-card__tools">
+                            <a href="tools/loan-calculator.html" class="category-card__tool">Loan</a>
+                            <a href="tools/Compound-interest-calculator.html" class="category-card__tool">Compound Interest</a>
+                            <a href="tools/Inflation-Calculator.html" class="category-card__tool">Inflation</a>
+                        </div>
+                        <a href="category-pages/finance-tools.html" class="category-card__button">Explore Tools</a>
+                    </article>
+
+                    <article class="category-card">
+                        <div class="category-card__icon-wrapper">
+                            <i class="fas fa-heartbeat category-card__icon"></i>
+                        </div>
+                        <h3 class="category-card__title">Health Tools</h3>
+                        <p class="category-card__description">Track and calculate your health metrics</p>
+                        <div class="category-card__tools">
+                            <a href="tools/bmi-calculator.html" class="category-card__tool">BMI Calculator</a>
+                            <a href="tools/age-calculator.html" class="category-card__tool">Age Calculator</a>
+                            <a href="category-pages/health-tools.html" class="category-card__tool">More...</a>
+                        </div>
+                        <a href="category-pages/health-tools.html" class="category-card__button">Explore Tools</a>
+                    </article>
+
+                    <article class="category-card">
+                        <div class="category-card__icon-wrapper">
+                            <i class="fas fa-graduation-cap category-card__icon"></i>
+                        </div>
+                        <h3 class="category-card__title">Education Tools</h3>
+                        <p class="category-card__description">Resources for learning and teaching</p>
+                        <div class="category-card__tools">
+                            <a href="tools/words-count.html" class="category-card__tool">Word Counter</a>
+                            <a href="category-pages/education-tools.html" class="category-card__tool">More Tools</a>
+                            <a href="tools/percentage-calculator.html" class="category-card__tool">Percentage</a>
+                        </div>
+                        <a href="category-pages/education-tools.html" class="category-card__button">Explore Tools</a>
+                    </article>
+
+                    <article class="category-card">
+                        <div class="category-card__icon-wrapper">
+                            <i class="fas fa-square-root-alt category-card__icon"></i>
+                        </div>
+                        <h3 class="category-card__title">Math Tools</h3>
+                        <p class="category-card__description">Essential math calculators and converters</p>
+                        <div class="category-card__tools">
+                            <a href="tools/percentage-calculator.html" class="category-card__tool">Percentage</a>
+                            <a href="category-pages/math-tools.html" class="category-card__tool">More Tools</a>
+                            <a href="tools/Compound-interest-calculator.html" class="category-card__tool">Interest</a>
+                        </div>
+                        <a href="category-pages/math-tools.html" class="category-card__button">Explore Tools</a>
+                    </article>
+
+                    <article class="category-card">
+                        <div class="category-card__icon-wrapper">
+                            <i class="fas fa-clock category-card__icon"></i>
+                        </div>
+                        <h3 class="category-card__title">Data & Time Tools</h3>
+                        <p class="category-card__description">Time calculations and data management</p>
+                        <div class="category-card__tools">
+                            <a href="tools/age-calculator.html" class="category-card__tool">Age Calculator</a>
+                            <a href="category-pages/date-time-tools.html" class="category-card__tool">More Tools</a>
+                            <a href="category-pages/date-time-tools.html" class="category-card__tool">View All</a>
+                        </div>
+                        <a href="category-pages/date-time-tools.html" class="category-card__button">Explore Tools</a>
+                    </article>
+
+                    <article class="category-card">
+                        <div class="category-card__icon-wrapper">
+                            <i class="fas fa-tools category-card__icon"></i>
+                        </div>
+                        <h3 class="category-card__title">All Tools</h3>
+                        <p class="category-card__description">Browse our complete collection of tools</p>
+                        <div class="category-card__tools">
+                            <a href="tools-hub-page/index.html" class="category-card__tool">View All</a>
+                            <a href="tools-hub-page/index.html" class="category-card__tool">Browse</a>
+                            <a href="tools-hub-page/index.html" class="category-card__tool">Explore</a>
+                        </div>
+                        <a href="tools-hub-page/index.html" class="category-card__button">Explore Tools</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="cta-section">
+            <div class="cta-section__container">
+                <div class="cta-section__content">
+                    <h2 class="cta-section__title">Transform Your Workflow Today</h2>
+                    <p class="cta-section__description">
+                        Join thousands of professionals who trust Everytool to streamline their daily tasks. 
+                        Get instant access to all our premium tools and start working smarter, not harder.
+                    </p>
+                    <div class="cta-section__buttons">
+                        <a href="/tools-hub-page/index.html" class="cta-button cta-button--primary">
+                            <i class="fas fa-rocket"></i>
+                            Get Started Free
+                        </a>
+                    </div>
+                    <div class="cta-section__features">
+                        <div class="cta-feature">
+                            <i class="fas fa-bolt cta-feature__icon"></i>
+                            <h3 class="cta-feature__title">Lightning Fast</h3>
+                            <p class="cta-feature__description">Process files and data in seconds with our optimized tools</p>
+                        </div>
+                        <div class="cta-feature">
+                            <i class="fas fa-shield-alt cta-feature__icon"></i>
+                            <h3 class="cta-feature__title">100% Secure</h3>
+                            <p class="cta-feature__description">Your data is encrypted and never stored on our servers</p>
+                        </div>
+                        <div class="cta-feature">
+                            <i class="fas fa-clock cta-feature__icon"></i>
+                            <h3 class="cta-feature__title">24/7 Available</h3>
+                            <p class="cta-feature__description">Access your tools anytime, anywhere, on any device</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="trust" aria-label="Trust & Social Proof">
+            <div class="trust__container">
+                <div class="trust__stats">
+                    <div class="trust__stat">
+                        <span class="trust__number" data-target="1000" data-suffix="+">0</span>
+                        <span class="trust__label">Average Monthly Users</span>
+                    </div>
+                    <div class="trust__stat">
+                        <span class="trust__number" data-target="500" data-suffix="+">0</span>
+                        <span class="trust__label">Daily Tasks</span>
+                    </div>
+                    <div class="trust__stat">
+                        <span class="trust__number" data-target="4.8" data-suffix="/5">0</span>
+                        <span class="trust__label">User Rating</span>
+                    </div>
+                </div>
+
+                <div class="trust__testimonials">
+                    <article class="testimonial-card">
+                        <div class="testimonial-card__content">
+                            <i class="fas fa-quote-left testimonial-card__quote"></i>
+                            <p class="testimonial-card__text">Everytool has become an essential part of my daily workflow. The PDF converter saves me hours every week!</p>
+                        </div>
+                        <div class="testimonial-card__author">
+                            <div class="testimonial-card__avatar">
+                                <span>JD</span>
+                            </div>
+                            <div class="testimonial-card__info">
+                                <span class="testimonial-card__name">John Doe</span>
+                                <span class="testimonial-card__role">Marketing Director</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="testimonial-card">
+                        <div class="testimonial-card__content">
+                            <i class="fas fa-quote-left testimonial-card__quote"></i>
+                            <p class="testimonial-card__text">The developer tools are incredibly useful. I use the JSON formatter and code minifier daily.</p>
+                        </div>
+                        <div class="testimonial-card__author">
+                            <div class="testimonial-card__avatar">
+                                <span>AS</span>
+                            </div>
+                            <div class="testimonial-card__info">
+                                <span class="testimonial-card__name">Alice Smith</span>
+                                <span class="testimonial-card__role">Senior Developer</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" aria-label="Frequently Asked Questions">
+            <div class="faq-container">
+                <div class="faq-header">
+                    <h2 class="faq-title">Frequently Asked Questions</h2>
+                    <p class="faq-subtitle">Find answers to common questions about our tools and services</p>
+                </div>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            What tools are available on Everytool?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Everytool offers a wide range of tools including calculators, converters, generators, and developer tools. Our collection includes over 50+ free tools designed to help you with various tasks.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Are the tools free to use?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, all our tools are completely free to use. We believe in providing accessible solutions for everyone.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How do I find the right tool for my needs?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>You can browse tools by category, use the search bar to find specific tools, or explore our featured tools on the homepage. Each tool has a detailed description to help you understand its functionality.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Is my data safe when using these tools?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we take data security seriously. All tools process data locally in your browser when possible, and we never store your personal information or uploaded files.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Can I suggest new tools or features?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely! We welcome suggestions for new tools and features. You can contact us through our feedback form or email us directly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- end of main content -->
+    <!-- Footer Section -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="script.js" defer></script>
+    <script src="view.js" defer></script>
+    <script src="FAQ section/faq.js" defer></script>
+    <!-- (Your other scripts like script.js, view.js, etc. can remain above this) -->
+
+    <!-- CRITICAL: Search Functionality - DO NOT REMOVE -->
+    <style>
+        /* Header Styles */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+    </style>
+
+    <script>
+    // =====================================================================
+    // ====== SEARCH FUNCTIONALITY - UNIVERSAL FOR ALL PAGES ======
+    // =====================================================================
+    
+    // Polyfills for older browsers
+    (function() {
+        // Promise polyfill for IE
+        if (typeof Promise === 'undefined') {
+            window.Promise = function(executor) {
+                var self = this;
+                self.state = 'pending';
+                self.value = undefined;
+                self.handlers = [];
+                
+                function resolve(result) {
+                    if (self.state === 'pending') {
+                        self.state = 'fulfilled';
+                        self.value = result;
+                        self.handlers.forEach(handle);
+                        self.handlers = null;
+                    }
+                }
+                
+                function reject(error) {
+                    if (self.state === 'pending') {
+                        self.state = 'rejected';
+                        self.value = error;
+                        self.handlers.forEach(handle);
+                        self.handlers = null;
+                    }
+                }
+                
+                function handle(handler) {
+                    if (self.state === 'pending') {
+                        self.handlers.push(handler);
+                    } else {
+                        if (self.state === 'fulfilled' && typeof handler.onFulfilled === 'function') {
+                            handler.onFulfilled(self.value);
+                        }
+                        if (self.state === 'rejected' && typeof handler.onRejected === 'function') {
+                            handler.onRejected(self.value);
+                        }
+                    }
+                }
+                
+                this.then = function(onFulfilled, onRejected) {
+                    return new Promise(function(resolve, reject) {
+                        handle({
+                            onFulfilled: function(result) {
+                                try {
+                                    resolve(onFulfilled ? onFulfilled(result) : result);
+                                } catch (ex) {
+                                    reject(ex);
+                                }
+                            },
+                            onRejected: function(error) {
+                                try {
+                                    resolve(onRejected ? onRejected(error) : error);
+                                } catch (ex) {
+                                    reject(ex);
+                                }
+                            }
+                        });
+                    });
+                };
+                
+                executor(resolve, reject);
+            };
+        }
+        
+        // forEach polyfill for IE8
+        if (!Array.prototype.forEach) {
+            Array.prototype.forEach = function(callback, thisArg) {
+                var T, k;
+                if (this == null) {
+                    throw new TypeError('Array.prototype.forEach called on null or undefined');
+                }
+                var O = Object(this);
+                var len = parseInt(O.length) || 0;
+                if (typeof callback !== "function") {
+                    throw new TypeError(callback + ' is not a function');
+                }
+                if (arguments.length > 1) {
+                    T = thisArg;
+                }
+                k = 0;
+                while (k < len) {
+                    var kValue;
+                    if (k in O) {
+                        kValue = O[k];
+                        callback.call(T, kValue, k, O);
+                    }
+                    k++;
+                }
+            };
+        }
+    })();
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        function loadScript(src) {
+            return new Promise(function(resolve, reject) {
+                var script = document.createElement('script');
+                script.src = src;
+                script.onload = function() { resolve(script); };
+                script.onerror = function() { reject(new Error('Script load error for ' + src)); };
+                document.body.appendChild(script);
+            });
+        }
+        
+        function loadHeader() {
+            var headerPlaceholder = document.getElementById('header-placeholder');
+            if (!headerPlaceholder) return;
+        
+            fetch('/header.html') 
+                .then(function(response) {
+                    if (!response.ok) throw new Error('Network response for header.html was not ok.');
+                    return response.text();
+                })
+                .then(function(html) {
+                    headerPlaceholder.innerHTML = html;
+                    return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2');
+                })
+                .then(function() {
+                    return loadScript('/header-search.js');
+                })
+                .then(function() {
+                    if (typeof initializeHeader === 'function') {
+                        initializeHeader(); 
+                    } else {
+                        throw new Error('initializeHeader function not found.');
+                    }
+                })
+                .catch(function(error) {
+                    console.error('CRITICAL ERROR during header loading process:', error);
+                });
+        }
+        
+        function loadFooter() {
+            var footerPlaceholder = document.getElementById('footer-placeholder');
+            if (footerPlaceholder) {
+                fetch('/footer.html')
+                    .then(function(response) {
+                        return response.ok ? response.text() : Promise.reject('Failed to load footer');
+                    })
+                    .then(function(html) {
+                        footerPlaceholder.innerHTML = html;
+                    })
+                    .catch(function(error) {
+                        console.error('Error loading footer:', error);
+                    });
+            }
+        }
+        
+        loadHeader();
+        loadFooter();
+    });
+    </script>
+
+    <script>
+        // Paste this inside a <script> tag at the end of your <body>
+document.addEventListener('DOMContentLoaded', () => {
+    const popupOverlay = document.getElementById('welcome-popup-overlay');
+    const closeButton = document.getElementById('get-started-btn');
+    const visitedFlagKey = 'everytoolWelcomePopupShown';
+
+    if (!popupOverlay || !closeButton) {
+        return; // Exit if popup elements aren't found
+    }
+
+    // Check localStorage to see if the user has visited before.
+    const hasVisited = localStorage.getItem(visitedFlagKey);
+
+    // If the user has NOT visited, show the popup.
+    if (!hasVisited) {
+        // Add the 'visible' class to make the popup appear with a fade-in effect.
+        popupOverlay.classList.add('visible');
+    }
+
+    // Function to close the popup and set the visited flag.
+    const closePopupAndSetFlag = () => {
+        popupOverlay.classList.remove('visible'); // Fade out
+        try {
+            localStorage.setItem(visitedFlagKey, 'true');
+        } catch (e) {
+            console.error("Failed to save to localStorage.", e);
+        }
+    };
+
+    // Add event listeners to close the popup.
+    closeButton.addEventListener('click', closePopupAndSetFlag);
+    popupOverlay.addEventListener('click', (event) => {
+        if (event.target === popupOverlay) {
+            closePopupAndSetFlag();
+        }
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && popupOverlay.classList.contains('visible')) {
+            closePopupAndSetFlag();
+        }
+    });
+});
+    </script>
+</body>
+</html>

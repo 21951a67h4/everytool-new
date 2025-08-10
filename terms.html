@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Use - EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="FAQ section/faq.css">
+    <style>
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #3F37C9;
+            --text-primary: #333;
+            --text-secondary: #8f9cb3;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --border-light: #dfe1e5;
+            --border-dark: #cdd1d5;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+        /* Main Content Styles */
+        .terms-page {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .terms-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .terms-section {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .terms-section:nth-child(even) {
+            background: var(--bg-secondary);
+        }
+
+        .terms-section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .terms-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .terms-intro {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .terms-content {
+            color: var(--text-primary);
+        }
+
+        .terms-content p {
+            margin-bottom: 1rem;
+        }
+
+        .terms-content ul {
+            list-style-position: inside;
+            margin-bottom: 1.5rem;
+        }
+
+        .terms-content li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .terms-note {
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .terms-note i {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-top: 0.25rem;
+        }
+
+        .terms-highlight {
+            background: linear-gradient(120deg, rgba(67, 97, 238, 0.1) 0%, rgba(67, 97, 238, 0.2) 100%);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .contact-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: var(--bg-secondary);
+            padding: 3rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .footer__container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer__content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .footer__brand h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer__tagline {
+            color: var(--text-secondary);
+        }
+
+        .footer__nav-list {
+            list-style: none;
+        }
+
+        .footer__nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .footer__nav-link:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .footer__social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer__social-link {
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+
+        .footer__social-link:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header__nav-list {
+                display: none;
+            }
+
+            .header__mobile-menu {
+                display: block;
+            }
+
+            .header__mobile-menu span {
+                display: block;
+                width: 25px;
+                height: 2px;
+                background: var(--text-primary);
+                margin: 5px 0;
+                transition: var(--transition);
+            }
+
+            .terms-container {
+                padding: 0 1rem;
+            }
+
+            .terms-section {
+                padding: 1.5rem;
+            }
+
+            .terms-title {
+                font-size: 2rem;
+            }
+
+            .footer__content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .footer__nav-list {
+                text-align: center;
+            }
+
+            .footer__social {
+                justify-content: center;
+            }
+        }
+
+        /* FAQ Section Styles */
+        .faq-section,
+        .container,
+        .faq-header,
+        .faq-title,
+        .faq-subtitle,
+        .faq-list,
+        .faq-item,
+        .faq-question,
+        .faq-answer {
+            /* Remove these styles as they're now in faq.css */
+        }
+
+        /* Header Styles */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div id="header-placeholder"></div>
+
+    <!-- Main Content -->
+    <main class="terms-page">
+        <div class="terms-container">
+            <!-- Introduction Section -->
+            <section class="terms-section">
+                <h1 class="terms-title">Terms of Use</h1>
+                <p class="terms-intro">Welcome to EveryTool.tech. By accessing and using our website, you agree to comply with and be bound by these Terms of Use. Please read these terms carefully before using our services.</p>
+            </section>
+
+            <!-- Acceptance of Terms Section -->
+            <section class="terms-section">
+                <h2>Acceptance of Terms</h2>
+                <div class="terms-content">
+                    <p>By accessing or using EveryTool.tech, you acknowledge that you have read, understood, and agree to be bound by these Terms of Use. If you do not agree to these terms, please do not use our services.</p>
+                </div>
+            </section>
+
+            <!-- Modification of Terms Section -->
+            <section class="terms-section">
+                <h2>Modification of Terms</h2>
+                <div class="terms-content">
+                    <p>We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting to the website. Your continued use of EveryTool.tech after any modifications indicates your acceptance of the updated terms.</p>
+                    <div class="terms-note">
+                        <i class="fas fa-info-circle"></i>
+                        <p>We recommend reviewing these terms periodically to stay informed of any changes.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Use of Website Section -->
+            <section class="terms-section">
+                <h2>Use of the Website</h2>
+                <div class="terms-content">
+                    <p>You agree to use EveryTool.tech only for lawful purposes and in accordance with these Terms of Use. You shall not:</p>
+                    <ul>
+                        <li>Use the website in any way that violates applicable laws or regulations</li>
+                        <li>Attempt to gain unauthorized access to any part of the website</li>
+                        <li>Interfere with the proper functioning of the website</li>
+                        <li>Use the website for any harmful or malicious purposes</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Intellectual Property Rights Section -->
+            <section class="terms-section">
+                <h2>Intellectual Property Rights</h2>
+                <div class="terms-content">
+                    <p>All content, features, and functionality of EveryTool.tech are owned by us and are protected by international copyright, trademark, and other intellectual property laws.</p>
+                    <div class="terms-highlight">
+                        You may not reproduce, distribute, modify, create derivative works of, publicly display, or exploit any content from our website without our prior written consent.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Limitation of Liability Section -->
+            <section class="terms-section">
+                <h2>Limitation of Liability</h2>
+                <div class="terms-content">
+                    <p>EveryTool.tech is provided "as is" without any warranties, expressed or implied. We shall not be liable for any damages arising from the use or inability to use our services.</p>
+                </div>
+            </section>
+
+            <!-- External Links Disclaimer Section -->
+            <section class="terms-section">
+                <h2>External Links Disclaimer</h2>
+                <div class="terms-content">
+                    <p>Our website may contain links to external websites. We are not responsible for the content or practices of any third-party websites. You access external links at your own risk.</p>
+                </div>
+            </section>
+
+            <!-- Governing Law Section -->
+            <section class="terms-section">
+                <h2>Governing Law</h2>
+                <div class="terms-content">
+                    <p>These Terms of Use shall be governed by and construed in accordance with the laws of India, without regard to its conflict of law provisions.</p>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="terms-section">
+                <h2>Contact Us</h2>
+                <div class="terms-content">
+                    <p>If you have any questions about these Terms of Use, please contact us:</p>
+                    <a href="coming-soon.html" class="contact-button">
+                        <i class="fas fa-envelope"></i>
+                        Contact Us
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- FAQ Section -->
+    <section class="tools-faq">
+        <div class="container">
+            <div class="tools-faq-header">
+                <h2 class="tools-faq-title">Frequently Asked Questions</h2>
+                <p class="tools-faq-subtitle">Common questions about our terms of service.</p>
+            </div>
+            <div class="tools-faq-list">
+                <div class="tools-faq-item">
+                    <div class="tools-faq-question">
+                        <h3>What are the terms of service?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="tools-faq-answer">
+                        <p>Our terms of service outline the rules and guidelines for using EveryTool.tech. By using our <a href="/tools-hub-page/index.html">tools</a>, you agree to these terms. Please read our full <a href="terms.html">Terms of Service</a> for complete details.</p>
+                    </div>
+                </div>
+
+                <div class="tools-faq-item">
+                    <div class="tools-faq-question">
+                        <h3>How do I accept the terms?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="tools-faq-answer">
+                        <p>By accessing and using our <a href="/tools-hub-page/index.html">tools</a>, you automatically accept our terms of service. No additional action is required. However, we recommend reviewing our <a href="terms.html">Terms of Service</a> and <a href="privacy-policy.html">Privacy Policy</a> to understand your rights and responsibilities.</p>
+                    </div>
+                </div>
+
+                <div class="tools-faq-item">
+                    <div class="tools-faq-question">
+                        <h3>Can the terms change?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="tools-faq-answer">
+                        <p>Yes, we may update our terms from time to time. We will notify users of any significant changes through our website or email. Continued use of our <a href="/tools-hub-page/index.html">tools</a> after such changes constitutes acceptance of the new terms.</p>
+                    </div>
+                </div>
+
+                <div class="tools-faq-item">
+                    <div class="tools-faq-question">
+                        <h3>What happens if I violate the terms?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="tools-faq-answer">
+                        <p>Violation of our terms may result in temporary or permanent suspension of access to our <a href="/tools-hub-page/index.html">tools</a>. For serious violations, we may take legal action. If you have questions about our terms, please <a href="coming-soon.html">contact us</a>.</p>
+                    </div>
+                </div>
+
+                <div class="tools-faq-item">
+                    <div class="tools-faq-question">
+                        <h3>How can I report violations?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="tools-faq-answer">
+                        <p>If you notice any violations of our terms, please <a href="coming-soon.html">contact us</a> immediately. Include as much detail as possible about the violation, and we will investigate the matter promptly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="FAQ section/faq.js"></script>
+    <script>
+        // Load header and footer
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Initialize FAQ functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.faqManager) {
+                faqManager.init();
+            }
+        });
+    </script>
+
+<script>
+    // =====================================================================
+    // ====== START: MAGIC BLOCK TO COPY FOR EVERY NEW PAGE ======
+    // =====================================================================
+        document.addEventListener('DOMContentLoaded', () => {
+    
+    const loadScript = (src) => {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = () => resolve(script);
+            script.onerror = () => reject(new Error(`Script load error for ${src}`));
+            document.body.appendChild(script);
+        });
+    };
+    
+    const loadHeader = () => {
+        const headerPlaceholder = document.getElementById('header-placeholder');
+        if (!headerPlaceholder) return;
+    
+        // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+        fetch('/header.html') 
+            .then(response => {
+                if (!response.ok) throw new Error('Network response for header.html was not ok.');
+                return response.text();
+            })
+            .then(html => {
+                headerPlaceholder.innerHTML = html;
+                return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2');
+            })
+            .then(() => {
+                // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+                return loadScript('/header-search.js');
+            })
+            .then(() => {
+                if (typeof initializeHeader === 'function') {
+                    initializeHeader(); 
+                } else {
+                    throw new Error('initializeHeader function not found.');
+                }
+            })
+            .catch(error => {
+                console.error('CRITICAL ERROR during header loading process:', error);
+            });
+    };
+    
+    const loadFooter = () => {
+        const footerPlaceholder = document.getElementById('footer-placeholder');
+        if (footerPlaceholder) {
+            // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+            fetch('/footer.html')
+                .then(response => response.ok ? response.text() : Promise.reject('Failed to load footer'))
+                .then(html => { footerPlaceholder.innerHTML = html; })
+                .catch(error => console.error('Error loading footer:', error));
+        }
+    };
+    
+    loadHeader();
+    loadFooter();
+    });
+    
+        </script>
+</body>
+</html> 

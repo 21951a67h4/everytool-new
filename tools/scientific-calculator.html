@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Scientific Calculator | Advanced Calculations Made Easy | EveryTool.tech</title>
+    <meta name="description" content="Perform advanced calculations with our free online Scientific Calculator. Features trigonometric, logarithmic, and exponential functions, perfect for students and professionals.">
+    <meta name="keywords" content="scientific calculator, advanced calculator, trigonometric functions, logarithmic functions, exponential functions, math calculator, scientific notation, complex numbers">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Online Scientific Calculator | EveryTool.tech">
+    <meta property="og:description" content="Perform advanced calculations with our free online Scientific Calculator. Features trigonometric, logarithmic, and exponential functions, perfect for students and professionals.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/scientific-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    <div id="head-placeholder"></div>
+    <script src="../scripts/head.js" defer></script>
+    <link rel="stylesheet" href="../FAQ section/faq.css">
+    <link rel="stylesheet" href="tool.css">
+    <link rel="stylesheet" href="../styles/footer.css">
+
+    <!-- START: CRITICAL STYLE FOR HEADER -->
+    <style>
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+        /* Scientific Calculator Specific Styles */
+        .calculator-layout {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .calculator-main {
+            display: flex;
+            flex-direction: column;
+            background: #f0f4f8;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .calculator-display {
+            background: #e1e9f0;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            text-align: right;
+            font-family: 'Roboto Mono', monospace;
+        }
+        #formula-display {
+            min-height: 24px;
+            font-size: 1rem;
+            color: #556;
+            word-wrap: break-word;
+            border-bottom: 1px solid #c8d2dc;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+        #result-display {
+            min-height: 48px;
+            font-size: 2.5rem;
+            font-weight: 500;
+            color: #1a237e;
+        }
+        .calculator-buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+        .calc-btn {
+            padding: 18px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #ffffff;
+            color: #333;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-weight: 500;
+        }
+        .calc-btn:hover { background-color: #f5f5f5; transform: translateY(-2px); }
+        .calc-btn:active { background-color: #e0e0e0; transform: translateY(0); }
+        .calc-btn.function { background-color: #e8eaf6; color: #3f51b5; }
+        .calc-btn.operator { background-color: #fff3e0; color: #ff9800; font-size: 1.5rem; }
+        .calc-btn.equals { background-color: #4caf50; color: white; grid-column: span 2; font-size: 1.5rem; }
+        .calc-btn.clear { background-color: #f44336; color: white; }
+
+        .calculator-history {
+            background: #fdfdfd;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            height: 550px;
+            overflow-y: auto;
+        }
+        .calculator-history h4 { margin-top: 0; text-align: center; color: #555; }
+        #history-log { display: flex; flex-direction: column; gap: 10px; }
+        .history-item {
+            padding: 10px;
+            border-radius: 6px;
+            background: #f9f9f9;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .history-item:hover { background-color: #eef7ff; }
+        .history-expr { font-size: 0.9em; color: #666; word-break: break-all; }
+        .history-res { font-size: 1.1em; font-weight: 600; color: #333; text-align: right;}
+        
+        @media (max-width: 768px) {
+            .calculator-layout { grid-template-columns: 1fr; }
+            .calculator-history { height: 200px; margin-top: 20px; }
+            .calc-btn { padding: 15px 10px; font-size: 1rem; }
+            #result-display { font-size: 2rem; }
+        }
+    </style>
+    <!-- END: CRITICAL STYLE FOR HEADER -->
+
+</head>
+<body data-tool-name="Scientific Calculator" data-meta-description="A powerful and free online Scientific Calculator with advanced functions for trigonometry, logarithms, and more. Perfect for students and professionals.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Powerful Online Scientific Calculator</h1>
+                    <p class="tool-hero__description">
+                        From basic arithmetic to complex trigonometric, logarithmic, and exponential functions, our free scientific calculator is designed for students, professionals, and anyone in need of precision calculations.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-square-root-alt"></i>
+                            <span>Full Scientific Functions</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-history"></i>
+                            <span>Interactive History Log</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-brain"></i>
+                            <span>Memory & Constants</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-keyboard"></i>
+                            <span>Keyboard Support</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Start Calculating
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn the Functions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Your Digital Calculation Hub</h2>
+                    <p class="tool-display__description">
+                        Use the buttons or your keyboard for seamless input. Your calculation history is saved on the right.
+                    </p>
+                </div>
+                <!-- Scientific Calculator Custom Interface -->
+                <div class="calculator-layout">
+                    <div class="calculator-main">
+                        <div class="calculator-display">
+                            <div id="formula-display"></div>
+                            <div id="result-display">0</div>
+                        </div>
+                        <div class="calculator-buttons">
+                            <button class="calc-btn function" data-value="deg">Rad</button>
+                            <button class="calc-btn function" data-value="sin(">sin</button>
+                            <button class="calc-btn function" data-value="cos(">cos</button>
+                            <button class="calc-btn function" data-value="tan(">tan</button>
+                            <button class="calc-btn function" data-value="**">xʸ</button>
+
+                            <button class="calc-btn function" data-value="log(">log</button>
+                            <button class="calc-btn function" data-value="ln(">ln</button>
+                            <button class="calc-btn" data-value="(">(</button>
+                            <button class="calc-btn" data-value=")">)</button>
+                            <button class="calc-btn function" data-value="sqrt(">√</button>
+
+                            <button class="calc-btn" data-value="7">7</button>
+                            <button class="calc-btn" data-value="8">8</button>
+                            <button class="calc-btn" data-value="9">9</button>
+                            <button class="calc-btn clear" data-value="c">C</button>
+                            <button class="calc-btn clear" data-value="backspace">⌫</button>
+
+                            <button class="calc-btn" data-value="4">4</button>
+                            <button class="calc-btn" data-value="5">5</button>
+                            <button class="calc-btn" data-value="6">6</button>
+                            <button class="calc-btn operator" data-value="*">×</button>
+                            <button class="calc-btn operator" data-value="/">÷</button>
+                            
+                            <button class="calc-btn" data-value="1">1</button>
+                            <button class="calc-btn" data-value="2">2</button>
+                            <button class="calc-btn" data-value="3">3</button>
+                            <button class="calc-btn operator" data-value="+">+</button>
+                            <button class="calc-btn operator" data-value="-">−</button>
+
+                            <button class="calc-btn" data-value="0">0</button>
+                            <button class="calc-btn" data-value=".">.</button>
+                            <button class="calc-btn" data-value="pi">π</button>
+                            <button class="calc-btn equals" data-value="=">=</button>
+                        </div>
+                    </div>
+                    <div class="calculator-history">
+                        <h4>Calculation History</h4>
+                        <div id="history-log"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Unlocking the Power of the Scientific Calculator</h2>
+                <p class="tool-blog__subtitle">
+                    A comprehensive guide to moving beyond basic arithmetic and mastering the tools of science and engineering.
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Introduction: More Than Just Numbers</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            In a world driven by data, technology, and complex systems, the ability to perform advanced calculations is not just a niche skill—it's a fundamental requirement in countless fields. While a basic calculator handles the four essential operations, the <strong>scientific calculator</strong> is a sophisticated instrument designed to tackle the language of science and engineering. It incorporates functions that model the natural world, from the arc of a thrown ball to the decay of radioactive material.
+                        </p>
+                        <p>
+                            This guide will walk you through the core functions of a modern online scientific calculator. Understanding these tools empowers you to solve complex problems, verify intricate formulas, and approach quantitative challenges with confidence. Whether you're a high school student learning trigonometry, a college student in a STEM major, or a professional engineer, mastering this tool is an investment in your analytical capabilities.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Core Functions: The Building Blocks of Scientific Calculation</h3>
+                    <div class="blog-section__content">
+                        <h4>Order of Operations (PEMDAS/BODMAS)</h4>
+                        <p>The first rule of any calculator beyond the most basic is the order of operations. A scientific calculator inherently understands this hierarchy: Parentheses/Brackets, Exponents/Orders, Multiplication and Division (from left to right), and Addition and Subtraction (from left to right). This is why using parentheses `()` is critical. For an expression like `3 + 5 * 2`, the calculator correctly computes `5 * 2` first, then adds 3 to get 13. If you wanted to add first, you would write `(3 + 5) * 2`, which correctly yields 16. Our calculator's formula display shows your expression exactly as you type it, allowing you to verify your use of parentheses is correct.</p>
+                        
+                        <h4>Trigonometric Functions (sin, cos, tan) & the Radian/Degree Toggle</h4>
+                        <p>Trigonometry is the study of triangles and angles, but its applications are vast, covering waves, oscillations, and rotations.
+                        <ul>
+                            <li><strong>sin(x)</strong>: The sine function, used in modeling waves like sound and light.</li>
+                            <li><strong>cos(x)</strong>: The cosine function, often in phase with sine, crucial for describing oscillations.</li>
+                            <li><strong>tan(x)</strong>: The tangent function, representing the slope of a line at a given angle.</li>
+                        </ul>
+                        The most vital setting for these functions is the <strong>Degrees (Deg) vs. Radians (Rad)</strong> toggle. Angles can be measured in degrees (a full circle is 360°) or radians (a full circle is 2π radians). Using the wrong mode is one of the most common errors. For example, `sin(90)` in Degree mode is `1`, but in Radian mode, it's `0.89...`. Always ensure your calculator is in the correct mode for your problem.</p>
+                        
+                        <h4>Logarithmic Functions (log, ln)</h4>
+                        <p>Logarithms are the inverse of exponents. They answer the question: "what exponent do I need to raise a base to, to get a certain number?"
+                        <ul>
+                            <li><strong>log(x)</strong>: This is the base-10 logarithm. It's used in scales that measure vast ranges, like the pH scale for acidity (chemistry) and the Richter scale for earthquake magnitude (geology).</li>
+                            <li><strong>ln(x)</strong>: This is the natural logarithm, which has a base of the mathematical constant `e` (approximately 2.718). It appears naturally in growth and decay processes, such as compound interest, population growth, and radioactive decay.</li>
+                        </ul></p>
+
+                        <h4>Exponents and Roots (xʸ, √)</h4>
+                        <p>Exponents represent repeated multiplication, and roots are their inverse.
+                        <ul>
+                            <li><strong>xʸ (Power)</strong>: Allows you to raise any number `x` to the power of any other number `y`. This is essential for scientific notation and formulas involving exponential growth.</li>
+                            <li><strong>√ (Square Root)</strong>: Finds the number which, when multiplied by itself, gives your input. It's fundamental in geometry (Pythagorean theorem) and physics.</li>
+                        </ul></p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Maximizing Efficiency with Advanced Features</h3>
+                    <div class="blog-section__content">
+                        <h4>The Power of Calculation History</h4>
+                        <p>One of the biggest advantages of an online scientific calculator is the interactive history log. How often have you performed a multi-step calculation, only to realize you made a mistake in the first step? Or needed the result of a previous calculation for your current one? The history log solves this.
+                        Every time you press "=", your full expression and its result are saved. You can then click on any part of that previous entry—either the formula or the result—to instantly bring it back into the calculator's display. This feature eliminates tedious re-typing, reduces errors, and creates a clear, auditable trail of your work, which is invaluable for checking complex problems.</p>
+                        
+                        <h4>Essential Constants: π and e</h4>
+                        <p>Some numbers are so fundamental to mathematics and science that they are given their own buttons.
+                        <ul>
+                            <li><strong>π (Pi)</strong>: Approximately 3.14159, Pi is the ratio of a circle's circumference to its diameter. It is indispensable in any calculation involving circles, spheres, cylinders, and is ubiquitous in trigonometry and wave analysis.</li>
+                            <li><strong>e (Euler's Number)</strong>: Approximately 2.71828, `e` is the base of the natural logarithm. It is the universal constant of growth, appearing in any situation where the rate of change is proportional to the current value, from finance to biology.</li>
+                        </ul></p>
+                    </div>
+                </div>
+                
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Putting It All Together: A Practical Example</h3>
+                    <div class="blog-section__content">
+                        <p>Let's calculate the distance a projectile travels (its range), ignoring air resistance. The formula is: <strong>Range = (v² * sin(2θ)) / g</strong>, where:</p>
+                        <ul>
+                            <li><strong>v</strong> is the initial velocity (e.g., 50 m/s).</li>
+                            <li><strong>θ</strong> is the launch angle (e.g., 30 degrees).</li>
+                            <li><strong>g</strong> is the acceleration due to gravity (approx. 9.8 m/s²).</li>
+                        </ul>
+                        <p>Here's how you'd input this into the calculator:</p>
+                        <ol>
+                            <li><strong>Check Mode:</strong> Ensure the calculator is in Degree (Deg) mode, because our angle is 30°.</li>
+                            <li><strong>Enter the Expression:</strong> You would type: `(50**2 * sin(2 * 30)) / 9.8`</li>
+                            <li><strong>Calculate:</strong> Pressing `=` evaluates this. `sin(60)` is calculated, multiplied by `50²` (which is 2500), and the result is divided by 9.8.</li>
+                            <li><strong>Result:</strong> The calculator would display approximately <strong>220.92 meters</strong>. This entire calculation is now saved in your history, ready to be modified if you want to test a different launch angle or velocity.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Find quick answers to common questions about our scientific calculator</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What's the difference between Degrees and Radians?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>They are two different units for measuring angles. A full circle is 360 Degrees (360°) or 2π Radians. Use Degrees for everyday geometry and many engineering problems. Use Radians for most higher-level mathematics, physics, and calculus, as they simplify many formulas. Always check which mode your problem requires!</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        My calculation shows "Error". What did I do wrong?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Most errors are "Syntax Errors." Check for these common issues:
+                        <ul>
+                            <li><strong>Mismatched Parentheses:</strong> Ensure every `(` has a corresponding `)`.</li>
+                            <li><strong>Invalid Operations:</strong> You cannot perform an operation like dividing by zero or taking the square root of a negative number.</li>
+                            <li><strong>Double Operators:</strong> An expression like `5 * + 3` is invalid. Make sure operators are separated by numbers or parentheses.</li>
+                        </ul>
+                        Our formula display helps you spot these errors easily.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I use the calculation history?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Every time you press the `=` button, your calculation is saved in the history log on the right. To re-use a past calculation, simply click on its entry in the log. Clicking the formula will bring the formula back, and clicking the result will bring the number back, ready for your next operation.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I use my keyboard with this calculator?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. Our calculator is fully keyboard-compatible. You can use the number keys, operators (+, -, *, /), the decimal point, and parentheses directly. Use 'Enter' to calculate (=), 'Backspace' to delete the last character, and 'c' or 'Escape' to clear the input.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What is the 'e' constant and the 'ln' function?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>'e' is a special mathematical constant, approximately 2.718, known as Euler's number. It's the base of the natural logarithm. The 'ln' function is the natural logarithm, which is crucial for problems involving compound interest, population growth, and radioactive decay—any situation where the rate of change is proportional to the current amount.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+    <div id="footer-placeholder"></div>
+    <script src="../scripts/footer.js" defer></script>
+
+    <!-- CRITICAL: Universal Search Script - DO NOT REMOVE -->
+    <script src="../universal-search-deploy.js"></script>
+    
+    <!-- External scripts can be loaded at the end -->
+    <script src="../universal-search-deploy.js"></script>
+    <script src="../../faq.js" defer></script>
+    <script src="../../view.js" defer></script>
+    <script src="../scripts/page-loader.js" defer></script>
+    <script src="../scripts/scientific-calculator.js" defer></script>
+    <script src="../FAQ section/faq.js" defer></script>
+
+</body>
+</html>

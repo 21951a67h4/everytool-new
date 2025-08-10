@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Country Inflation Calculator (₹, $, £, ¥) | EveryTool.tech</title>
+    <meta name="description" content="Calculate the changing value of money over time with our free Inflation Calculator for India (₹), USA ($), UK (£), and Japan (¥). See historical buying power and real growth.">
+    <meta name="keywords" content="inflation calculator, buying power calculator, real value of money, cpi calculator, historical inflation, India, USA, UK, Japan">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Multi-Country Inflation Calculator (₹, $, £, ¥) | EveryTool.tech">
+    <meta property="og:description" content="Calculate the changing value of money over time with our free Inflation Calculator for India (₹), USA ($), UK (£), and Japan (¥). See historical buying power and real growth.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/inflation-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../FAQ section/faq.css">
+    <link rel="stylesheet" href="tool.css">
+    <style>
+        /* Custom styles for Inflation Calculator */
+        .tool-display__content { display: block; }
+        .calc-tabs { display: flex; flex-wrap: wrap; border-bottom: 2px solid #007bff; margin-bottom: 1.5rem; }
+        .calc-tab { padding: 1rem 1.5rem; cursor: pointer; background: #f1f3f5; border: 1px solid #dee2e6; border-bottom: none; border-radius: 8px 8px 0 0; margin-right: 0.5rem; margin-bottom: -1px; transition: background-color 0.2s, color 0.2s; }
+        .calc-tab.active { background: #007bff; color: #fff; border-color: #007bff; }
+        .calc-panel { display: none; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 0 8px 8px 8px; padding: 2rem; }
+        .calc-panel.active { display: block; }
+        .tool-display__input-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; align-items: end;}
+        .tool-display__input, .tool-display__select { width: 100%; padding: 0.75rem; border: 1px solid #ced4da; border-radius: 8px; font-size: 1rem; }
+        
+        #results-section { margin-top: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        @media (max-width: 900px) { #results-section { grid-template-columns: 1fr; } }
+        
+        .result-summary { background: #e9f5ff; border: 1px solid #b3d7ff; border-radius: 8px; padding: 1.5rem; text-align: center; grid-column: 1 / -1; }
+        .result-summary p { margin: 0; font-size: 1.2rem; }
+        .result-summary .result-value { font-size: 2.5rem; font-weight: 700; color: #007bff; }
+        
+        .result-details { background: #fff; border: 1px solid #e9ecef; border-radius: 8px; padding: 1.5rem; }
+        .result-details p { display: flex; justify-content: space-between; margin: 0.5rem 0; }
+        .result-details strong { color: #343a40; }
+        .chart-container { grid-column: 1 / -1; margin-top: 1rem; }
+        .disclaimer { font-size: 0.8rem; color: #6c757d; margin-top: 1.5rem; text-align: center; }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Inflation Calculator: Understand Your Money's Real Value</h1>
+                    <p class="tool-hero__description">
+                        Discover how the buying power of money changes over time. Our calculator uses historical data for India (₹), USA ($), UK (£), and Japan (¥) to show you the true impact of inflation.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-globe"></i>
+                            <span>Multi-Country Data</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Visual Inflation Chart</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-balance-scale"></i>
+                            <span>Real Growth Analysis</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-history"></i>
+                            <span>Historical Accuracy</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-play"></i>
+                            Calculate Inflation
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Inflation
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                 <div class="tool-display__header">
+                    <h2 class="tool-display__title">Your Money Through Time</h2>
+                    <p class="tool-display__description">
+                        Select a calculation mode to see how inflation affects value.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                     <div class="calc-tabs">
+                        <div class="calc-tab active" data-tab="mode1"><i class="fas fa-search-dollar"></i> Value over Time</div>
+                        <div class="calc-tab" data-tab="mode2"><i class="fas fa-balance-scale-right"></i> Real vs. Nominal</div>
+                        <div class="calc-tab" data-tab="mode3"><i class="fas fa-rocket"></i> Future Projection</div>
+                    </div>
+                    
+                    <!-- Mode 1: Value over Time -->
+                    <div id="mode1" class="calc-panel active">
+                        <div class="tool-display__input-row">
+                             <div class="tool-display__input-group">
+                                <label>Country</label>
+                                <select id="m1-country" class="tool-display__select"></select>
+                            </div>
+                            <div class="tool-display__input-group">
+                                <label id="m1-amount-label">Initial Amount</label>
+                                <input type="number" id="m1-amount" class="tool-display__input" placeholder="e.g., 10000">
+                            </div>
+                            <div class="tool-display__input-group">
+                                <label>Start Year</label>
+                                <select id="m1-start-year" class="tool-display__select"></select>
+                            </div>
+                            <div class="tool-display__input-group">
+                                <label>End Year</label>
+                                <select id="m1-end-year" class="tool-display__select"></select>
+                            </div>
+                        </div>
+                        <div class="tool-display__controls" style="margin-top:1.5rem;">
+                            <button class="tool-display__button" onclick="calculateMode1()">Calculate</button>
+                        </div>
+                    </div>
+
+                    <!-- Mode 2: Real vs Nominal -->
+                    <div id="mode2" class="calc-panel">
+                         <div class="tool-display__input-row">
+                             <div class="tool-display__input-group">
+                                <label>Country</label>
+                                <select id="m2-country" class="tool-display__select"></select>
+                            </div>
+                         </div>
+                         <div class="tool-display__input-row" style="margin-top: 1rem;">
+                              <div class="tool-display__input-group">
+                                <label id="m2-start-amount-label">Starting Value</label>
+                                <input type="number" id="m2-start-amount" class="tool-display__input">
+                            </div>
+                             <div class="tool-display__input-group">
+                                <label>in Year</label>
+                                <select id="m2-start-year" class="tool-display__select"></select>
+                            </div>
+                            <div class="tool-display__input-group">
+                                <label id="m2-end-amount-label">Ending Value</label>
+                                <input type="number" id="m2-end-amount" class="tool-display__input">
+                            </div>
+                             <div class="tool-display__input-group">
+                                <label>in Year</label>
+                                <select id="m2-end-year" class="tool-display__select"></select>
+                            </div>
+                         </div>
+                        <div class="tool-display__controls" style="margin-top:1.5rem;">
+                            <button class="tool-display__button" onclick="calculateMode2()">Analyze Growth</button>
+                        </div>
+                    </div>
+
+                    <!-- Mode 3: Future Projection -->
+                    <div id="mode3" class="calc-panel">
+                        <div class="tool-display__input-row">
+                             <div class="tool-display__input-group">
+                                <label>Country</label>
+                                <select id="m3-country" class="tool-display__select"></select>
+                            </div>
+                            <div class="tool-display__input-group">
+                                <label id="m3-amount-label">Amount Today</label>
+                                <input type="number" id="m3-amount" class="tool-display__input" placeholder="e.g., 50000">
+                            </div>
+                            <div class="tool-display__input-group">
+                                <label>Project to Year</label>
+                                <input type="number" id="m3-future-year" class="tool-display__input" placeholder="e.g., 2030">
+                            </div>
+                             <div class="tool-display__input-group">
+                                <label>Assumed Inflation (%)</label>
+                                <input type="number" id="m3-inflation-rate" class="tool-display__input" placeholder="e.g., 3.5">
+                            </div>
+                        </div>
+                         <div class="tool-display__controls" style="margin-top:1.5rem;">
+                            <button class="tool-display__button" onclick="calculateMode3()">Project Future Value</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div id="results-section" class="hidden">
+                    <div id="result-summary" class="result-summary"></div>
+                    <div class="result-details">
+                        <h4>Calculation Details</h4>
+                        <p><span>Total Inflation Rate:</span> <strong id="total-inflation">--</strong></p>
+                        <p><span>Average Yearly Inflation:</span> <strong id="avg-inflation">--</strong></p>
+                    </div>
+                     <div class="result-details" id="growth-details">
+                         <h4>Growth Analysis</h4>
+                        <p><span>Nominal Growth:</span> <strong id="nominal-growth">--</strong></p>
+                        <p><span>Real Growth (After Inflation):</span> <strong id="real-growth">--</strong></p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="inflation-chart"></canvas>
+                    </div>
+                </div>
+                 <p class="disclaimer">Data is based on the Consumer Price Index (CPI) for the selected country. This tool is for informational and educational purposes only and should not be used for financial planning without consulting a professional.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">The Silent Thief: A Guide to Understanding Inflation and Buying Power</h2>
+                <p class="tool-blog__subtitle">
+                    Learn what inflation is, how it's measured, and how our Inflation Calculator can reveal the true value of your money over time.
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Introduction: The Ghost in Your Wallet</h3>
+                    <div class="blog-section__content">
+                        <p>
+                           Have you ever heard an older relative say, "Back in my day, a cup of coffee only cost a quarter!"? That statement is a perfect real-world example of inflation. Inflation is the rate at which the general level of prices for goods and services is rising, and subsequently, the purchasing power of currency is falling. It's the silent, invisible force that makes the money you have today worth less in the future. Understanding this concept is absolutely critical for long-term savings, investing, and salary negotiations.
+                        </p>
+                        <p>
+                            To make this abstract concept tangible, we built our multi-country <strong>Inflation Calculator</strong>. This tool uses historical data to let you "time travel" with your money, seeing exactly what a certain amount in the past is worth today, or vice-versa. This guide will explain the mechanics of inflation, how it's measured using the Consumer Price Index (CPI), and how you can use our calculator to make smarter financial decisions.
+                        </p>
+                    </div>
+                </div>
+                <div class="blog-section">
+                    <h3 class="blog-section__title">How is Inflation Measured? The CPI Explained</h3>
+                    <div class="blog-section__content">
+                        <p>
+                           Governments and economists track inflation using a metric called the Consumer Price Index (CPI). The CPI represents the average change over time in the prices paid by urban consumers for a "market basket" of consumer goods and services. This basket includes everything from food and housing to transportation and medical care.
+                        </p>
+                        <p>Here's how it works:</p>
+                        <ol>
+                            <li>A base year is chosen and its CPI value is set to 100.</li>
+                            <li>In subsequent years, the cost of the same basket of goods is measured. If the basket that cost $100 in the base year now costs $103, the new CPI is 103.</li>
+                            <li>The inflation rate between two years is the percentage change in their CPI values.</li>
+                        </ol>
+                        <p>Our <strong>Inflation Calculator</strong> has this historical CPI data built-in for several countries. When you select two years, it uses their respective CPI values to determine the change in buying power.</p>
+                        <p><strong>The Formula:</strong> <code>End Year Value = Start Year Value * (End Year CPI / Start Year CPI)</code></p>
+                    </div>
+                </div>
+                 <div class="blog-section">
+                    <h3 class="blog-section__title">Using the Calculator: Practical Applications</h3>
+                    <div class="blog-section__content">
+                        <h4>Mode 1: Value over Time</h4>
+                        <p>This is the core function. It answers questions like, "What is the equivalent of ₹50,000 from 2008 in today's money?" or "How much was $20 in 1990 worth?" This is perfect for understanding the real value of historical prices, old salaries, or inheritances.</p>
+                        
+                        <h4>Mode 2: Real vs. Nominal Growth</h4>
+                        <p>This is arguably the most powerful feature for personal finance. Let's say your salary went from £40,000 in 2018 to £45,000 in 2023. That's a 12.5% increase (your *nominal* growth). But did your buying power actually increase? This mode will adjust the £40,000 for inflation to its 2023 equivalent. If that value is, say, £44,000, then your *real* growth was only about 2.3%. If the inflation-adjusted value was £46,000, your salary actually lost buying power. This mode tells you if you are truly getting ahead or just treading water.</p>
+
+                        <h4>Mode 3: Future Projection</h4>
+                        <p>Planning for retirement or a big future purchase? This mode helps you understand how much you'll *really* need. If you want to have the buying power of $1 million in 30 years, and you assume an average inflation of 3%, this tool will calculate that you'll actually need over $2.4 million in 30 years to buy the same amount of goods. This is crucial for setting realistic savings goals.</p>
+                    </div>
+                </div>
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Why Inflation Matters to You</h3>
+                    <div class="blog-section__content">
+                       <p>Ignoring inflation can be detrimental to your financial health:</p>
+                       <ul>
+                           <li><strong>Savings:</strong> If your money is sitting in a savings account earning 1% interest, but inflation is 3%, you are losing 2% of your purchasing power every year.</li>
+                           <li><strong>Investing:</strong> The goal of investing is to achieve a "real return"—a return that is higher than the rate of inflation. Understanding inflation helps you set appropriate investment goals.</li>
+                           <li><strong>Wages:</strong> When negotiating a raise, knowing the recent inflation rate gives you a baseline. A 3% raise in a 4% inflation environment is a pay cut in real terms.</li>
+                       </ul>
+                    </div>
+                </div>
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Conclusion: Make Informed Decisions</h3>
+                    <div class="blog-section__content">
+                        <p>
+                           Inflation is a constant economic reality. While you can't control it, you can understand and plan for it. By using our <strong>Inflation Calculator</strong>, you can strip away the confusing effects of changing prices and see the true value of money over time.
+                        </p>
+                        <p>
+                            Use it to analyze your salary, set realistic long-term goals, or simply satisfy your curiosity about historical prices. Empowering yourself with this knowledge is the best defense against the silent erosion of your wealth.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Common questions about inflation and its calculation.</p>
+            </div>
+            <div class="faq-list">
+                 <div class="faq-item">
+                    <div class="faq-question">
+                        What is the Consumer Price Index (CPI)?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The CPI is the primary measure of inflation. It's an index that tracks the average price of a standard basket of consumer goods and services over time. Our calculator uses historical CPI data from official government sources for each country to ensure accuracy.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What's the difference between inflation and deflation?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Inflation is the increase in the general price level, meaning your money buys less over time. Deflation is the opposite: a decrease in the general price level, where your money buys *more*. While deflation sounds good, it's often a sign of a shrinking economy and can be very damaging.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How accurate is this calculator?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The calculator is as accurate as the official CPI data published by the statistical agencies of each country (e.g., Bureau of Labor Statistics in the US, Ministry of Statistics in India). We use annual average CPI data for our calculations. It's a precise tool for historical analysis.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Why are results different for different countries?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Each country has its own economy, monetary policy, and market dynamics, leading to different rates of inflation. A period of high inflation in the US might have been a period of low inflation in Japan, so the buying power of the Dollar and the Yen would have changed very differently.</p>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <div class="faq-question">
+                        Can this tool predict future inflation?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No tool can predict future inflation with certainty. Our "Future Projection" mode allows you to calculate based on an *assumed* future inflation rate. This is useful for planning, but the actual rate will depend on future economic conditions. A common assumption for long-term planning is 2-4%, depending on the country.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Fetch and insert header/footer
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('../../header.html').then(r => r.text()).then(h => document.getElementById('header-placeholder').innerHTML = h);
+            fetch('../../footer.html').then(r => r.text()).then(h => document.getElementById('footer-placeholder').innerHTML = h);
+        });
+
+            // --- Tab Switching ---
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    panels.forEach(p => p.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                    document.getElementById('results-section').classList.add('hidden');
+                });
+            });
+            
+            // --- Initialize Dropdowns ---
+            function populateYears(selectElement, years) {
+                const currentYear = new Date().getFullYear();
+                selectElement.innerHTML = '';
+                years.forEach(year => {
+                    selectElement.innerHTML += `<option value="${year}">${year}</option>`;
+                });
+                if (years.includes(currentYear)) {
+                    selectElement.value = currentYear;
+                } else {
+                    selectElement.value = years[years.length-1];
+                }
+            }
+
+            function setupCountry(countryCode) {
+                const countryData = CPI_DATA[countryCode];
+                const years = Object.keys(countryData.data).map(Number).sort((a,b) => a - b);
+                
+                // Mode 1
+                document.getElementById('m1-amount-label').textContent = `Amount (${countryData.symbol})`;
+                populateYears(document.getElementById('m1-start-year'), years);
+                populateYears(document.getElementById('m1-end-year'), years);
+                
+                // Mode 2
+                document.getElementById('m2-start-amount-label').textContent = `Starting Value (${countryData.symbol})`;
+                document.getElementById('m2-end-amount-label').textContent = `Ending Value (${countryData.symbol})`;
+                populateYears(document.getElementById('m2-start-year'), years);
+                populateYears(document.getElementById('m2-end-year'), years);
+                
+                // Mode 3
+                 document.getElementById('m3-amount-label').textContent = `Amount Today (${countryData.symbol})`;
+            }
+
+            function initialize() {
+                const countrySelects = document.querySelectorAll('#m1-country, #m2-country, #m3-country');
+                countrySelects.forEach(select => {
+                    select.innerHTML = '';
+                    for (const country in CPI_DATA) {
+                        select.innerHTML += `<option value="${country}">${country}</option>`;
+                    }
+                    select.addEventListener('change', (e) => setupCountry(e.target.value));
+                });
+                setupCountry('USA'); // Default to USA
+            }
+            initialize();
+
+            window.calculateMode1 = function() {
+                const country = document.getElementById('m1-country').value;
+                const amount = parseFloat(document.getElementById('m1-amount').value);
+                const startYear = parseInt(document.getElementById('m1-start-year').value);
+                const endYear = parseInt(document.getElementById('m1-end-year').value);
+                
+                if (isNaN(amount) || isNaN(startYear) || isNaN(endYear)) return;
+
+                const countryData = CPI_DATA[country];
+                const startCPI = countryData.data[startYear];
+                const endCPI = countryData.data[endYear];
+
+                const adjustedValue = amount * (endCPI / startCPI);
+                const totalInflation = ((endCPI - startCPI) / startCPI) * 100;
+                const years = Math.abs(endYear - startYear);
+                const avgInflation = years > 0 ? (Math.pow(endCPI / startCPI, 1 / years) - 1) * 100 : 0;
+                
+                // Display results
+                const resultsSection = document.getElementById('results-section');
+                resultsSection.classList.remove('hidden');
+                document.getElementById('growth-details').style.display = 'none';
+
+                const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: countryData.currency, maximumFractionDigits: 2 });
+                const summaryEl = document.getElementById('result-summary');
+                summaryEl.innerHTML = `<p>${formatter.format(amount)} in ${startYear} has the buying power of</p><p class="result-value">${formatter.format(adjustedValue)} in ${endYear}.</p>`;
+
+                document.getElementById('total-inflation').textContent = `${totalInflation.toFixed(2)}%`;
+                document.getElementById('avg-inflation').textContent = `${avgInflation.toFixed(2)}% per year`;
+
+                generateChart(country, startYear, endYear, amount);
+            };
+            
+            window.calculateMode2 = function() {
+                const country = document.getElementById('m2-country').value;
+                const startAmount = parseFloat(document.getElementById('m2-start-amount').value);
+                const endAmount = parseFloat(document.getElementById('m2-end-amount').value);
+                const startYear = parseInt(document.getElementById('m2-start-year').value);
+                const endYear = parseInt(document.getElementById('m2-end-year').value);
+
+                if (isNaN(startAmount) || isNaN(endAmount) || isNaN(startYear) || isNaN(endYear)) return;
+                
+                const countryData = CPI_DATA[country];
+                const startCPI = countryData.data[startYear];
+                const endCPI = countryData.data[endYear];
+                
+                const inflationAdjustedStartAmount = startAmount * (endCPI / startCPI);
+                const nominalGrowth = ((endAmount - startAmount) / startAmount) * 100;
+                const realGrowth = ((endAmount - inflationAdjustedStartAmount) / inflationAdjustedStartAmount) * 100;
+
+                // Display
+                const resultsSection = document.getElementById('results-section');
+                resultsSection.classList.remove('hidden');
+                document.getElementById('growth-details').style.display = 'block';
+
+                const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: countryData.currency, maximumFractionDigits: 2 });
+                const summaryEl = document.getElementById('result-summary');
+                summaryEl.innerHTML = `<p>${formatter.format(startAmount)} in ${startYear} is equivalent to ${formatter.format(inflationAdjustedStartAmount)} in ${endYear}.</p>`;
+
+                document.getElementById('total-inflation').textContent = `(${( (endCPI - startCPI) / startCPI) * 100 .toFixed(2)}%)`;
+                document.getElementById('avg-inflation').textContent = `N/A`;
+                document.getElementById('nominal-growth').textContent = `${nominalGrowth.toFixed(2)}%`;
+                document.getElementById('real-growth').textContent = `${realGrowth.toFixed(2)}%`;
+                 document.getElementById('real-growth').style.color = realGrowth >= 0 ? '#28a745' : '#dc3545';
+                
+                document.querySelector('.chart-container').classList.add('hidden');
+            };
+            
+             window.calculateMode3 = function() {
+                const country = document.getElementById('m3-country').value;
+                const amount = parseFloat(document.getElementById('m3-amount').value);
+                const futureYear = parseInt(document.getElementById('m3-future-year').value);
+                const assumedRate = parseFloat(document.getElementById('m3-inflation-rate').value) / 100;
+                const currentYear = new Date().getFullYear();
+
+                if (isNaN(amount) || isNaN(futureYear) || isNaN(assumedRate) || futureYear <= currentYear) return;
+                 
+                const years = futureYear - currentYear;
+                const futureValue = amount * Math.pow(1 + assumedRate, years);
+
+                // Display
+                const resultsSection = document.getElementById('results-section');
+                resultsSection.classList.remove('hidden');
+                document.getElementById('growth-details').style.display = 'none';
+
+                const countryData = CPI_DATA[country];
+                const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: countryData.currency, maximumFractionDigits: 2 });
+                const summaryEl = document.getElementById('result-summary');
+                summaryEl.innerHTML = `<p>To have the buying power of ${formatter.format(amount)} today, you will need</p><p class="result-value">${formatter.format(futureValue)} in ${futureYear}.</p>`;
+                
+                document.getElementById('total-inflation').textContent = `(${( (Math.pow(1+assumedRate, years) - 1) * 100).toFixed(2)}% total)`;
+                document.getElementById('avg-inflation').textContent = `${(assumedRate*100).toFixed(2)}% per year (assumed)`;
+                
+                document.querySelector('.chart-container').classList.add('hidden');
+             };
+
+            function generateChart(country, startYear, endYear, startAmount) {
+                if (inflationChart) inflationChart.destroy();
+                document.querySelector('.chart-container').classList.remove('hidden');
+
+                const countryData = CPI_DATA[country];
+                const years = Object.keys(countryData.data).map(Number).sort((a,b) => a - b).filter(y => y >= startYear && y <= endYear);
+                if(years.length < 2) return;
+
+                const startCPI = countryData.data[startYear];
+                const chartData = years.map(year => {
+                    const cpi = countryData.data[year];
+                    return startAmount * (cpi / startCPI);
+                });
+                
+                const ctx = document.getElementById('inflation-chart').getContext('2d');
+                inflationChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: years,
+                        datasets: [{
+                            label: `Value of ${startAmount} ${countryData.symbol}`,
+                            data: chartData,
+                            borderColor: '#007bff',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return new Intl.NumberFormat('en-US', { style: 'currency', currency: countryData.currency }).format(context.raw);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const CPI_DATA = {
+                'USA': {
+                    currency: 'USD', symbol: '$',
+                    data: {
+                        2000: 172.2, 2001: 177.1, 2002: 179.9, 2003: 184.0, 2004: 188.9, 2005: 195.3,
+                        2006: 201.6, 2007: 207.3, 2008: 215.3, 2009: 214.5, 2010: 218.1, 2011: 224.9,
+                        2012: 229.6, 2013: 233.0, 2014: 236.7, 2015: 237.0, 2016: 240.0, 2017: 245.1,
+                        2018: 251.1, 2019: 255.7, 2020: 258.8, 2021: 271.0, 2022: 296.3, 2023: 304.7
+                    }
+                },
+                'India': {
+                    currency: 'INR', symbol: '₹',
+                    data: {
+                        2005: 34, 2006: 38, 2007: 43, 2008: 49, 2009: 55, 2010: 62,
+                        2011: 68, 2012: 75, 2013: 83, 2014: 87, 2015: 90, 2016: 96,
+                        2017: 102, 2018: 110, 2019: 118, 2020: 125, 2021: 134, 2022: 142, 2023: 148
+                    }
+                },
+                'UK': {
+                    currency: 'GBP', symbol: '£',
+                    data: {
+                        2000: 75.1, 2001: 77.6, 2002: 79.7, 2003: 81.5, 2004: 83.0, 2005: 84.0,
+                        2006: 87.2, 2007: 90.4, 2008: 93.9, 2009: 94.8, 2010: 96.0, 2011: 98.3,
+                        2012: 101.4, 2013: 103.8, 2014: 105.5, 2015: 106.8, 2016: 109.1, 2017: 111.3,
+                        2018: 113.6, 2019: 115.1, 2020: 116.4, 2021: 120.1, 2022: 126.9, 2023: 132.8
+                    }
+                },
+                'Japan': {
+                    currency: 'JPY', symbol: '¥',
+                    data: {
+                        2000: 101.7, 2001: 100.3, 2002: 99.1, 2003: 98.5, 2004: 98.8, 2005: 100.0,
+                        2006: 100.5, 2007: 100.9, 2008: 101.3, 2009: 99.7, 2010: 99.7, 2011: 99.9,
+                        2012: 100.3, 2013: 101.1, 2014: 102.3, 2015: 103.5, 2016: 103.8, 2017: 104.1,
+                        2018: 104.3, 2019: 104.9, 2020: 105.1, 2021: 105.5, 2022: 106.9, 2023: 107.8
+                    }
+                }
+            };
+        
+            const tabs = document.querySelectorAll('.calc-tab');
+            const panels = document.querySelectorAll('.calc-panel');
+            const countrySelectors = ['#m1-country', '#m2-country', '#m3-country'];
+            let inflationChart;
+        
+            // Populate countries and year dropdowns
+            Object.keys(CPI_DATA).forEach(country => {
+                countrySelectors.forEach(sel => {
+                    const option = new Option(country, country);
+                    document.querySelector(sel).appendChild(option.cloneNode(true));
+                });
+            });
+        
+            function populateYears(selectId, country) {
+                const select = document.getElementById(selectId);
+                select.innerHTML = '';
+                const years = Object.keys(CPI_DATA[country].data).map(Number).sort((a, b) => a - b);
+                years.forEach(year => select.appendChild(new Option(year, year)));
+            }
+        
+            // Tab switching logic
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    panels.forEach(p => p.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+        
+            // Update year dropdowns when country changes
+            countrySelectors.forEach((sel, index) => {
+                document.querySelector(sel).addEventListener('change', function () {
+                    const country = this.value;
+                    if (index === 0) {
+                        populateYears('m1-start-year', country);
+                        populateYears('m1-end-year', country);
+                    } else if (index === 1) {
+                        populateYears('m2-start-year', country);
+                        populateYears('m2-end-year', country);
+                    }
+                });
+            });
+        
+            // Default select for mode1
+            document.querySelector('#m1-country').dispatchEvent(new Event('change'));
+        
+            // -------------------- MODE 1 --------------------
+            window.calculateMode1 = function () {
+                const country = document.getElementById('m1-country').value;
+                const amount = parseFloat(document.getElementById('m1-amount').value);
+                const startYear = parseInt(document.getElementById('m1-start-year').value);
+                const endYear = parseInt(document.getElementById('m1-end-year').value);
+                const cpi = CPI_DATA[country].data;
+                const symbol = CPI_DATA[country].symbol;
+        
+                if (!(startYear in cpi && endYear in cpi) || isNaN(amount)) return alert("Invalid input or CPI data");
+        
+                const adjustedAmount = (cpi[endYear] / cpi[startYear]) * amount;
+                const inflationRate = ((cpi[endYear] - cpi[startYear]) / cpi[startYear]) * 100;
+                const avgInflation = inflationRate / Math.abs(endYear - startYear);
+        
+                document.getElementById('results-section').classList.remove('hidden');
+                document.getElementById('result-summary').innerHTML = `<strong>${symbol}${amount.toFixed(2)}</strong> in ${startYear} is equivalent to <strong>${symbol}${adjustedAmount.toFixed(2)}</strong> in ${endYear}.`;
+                document.getElementById('total-inflation').innerText = `${inflationRate.toFixed(2)}%`;
+                document.getElementById('avg-inflation').innerText = `${avgInflation.toFixed(2)}%`;
+                document.getElementById('growth-details').style.display = 'none';
+                updateChart(country, startYear, endYear);
+            };
+        
+            // -------------------- MODE 2 --------------------
+            window.calculateMode2 = function () {
+                const country = document.getElementById('m2-country').value;
+                const startAmount = parseFloat(document.getElementById('m2-start-amount').value);
+                const endAmount = parseFloat(document.getElementById('m2-end-amount').value);
+                const startYear = parseInt(document.getElementById('m2-start-year').value);
+                const endYear = parseInt(document.getElementById('m2-end-year').value);
+                const cpi = CPI_DATA[country].data;
+        
+                if (!(startYear in cpi && endYear in cpi) || isNaN(startAmount) || isNaN(endAmount)) return alert("Invalid input");
+        
+                const nominalGrowth = ((endAmount - startAmount) / startAmount) * 100;
+                const expectedEndAmount = (cpi[endYear] / cpi[startYear]) * startAmount;
+                const realGrowth = ((endAmount - expectedEndAmount) / expectedEndAmount) * 100;
+        
+                document.getElementById('results-section').classList.remove('hidden');
+                document.getElementById('result-summary').innerHTML = `Real growth analysis of <strong>${CPI_DATA[country].symbol}${startAmount}</strong> in ${startYear} vs <strong>${CPI_DATA[country].symbol}${endAmount}</strong> in ${endYear}`;
+                document.getElementById('nominal-growth').innerText = `${nominalGrowth.toFixed(2)}%`;
+                document.getElementById('real-growth').innerText = `${realGrowth.toFixed(2)}%`;
+                document.getElementById('total-inflation').innerText = `--`;
+                document.getElementById('avg-inflation').innerText = `--`;
+                document.getElementById('growth-details').style.display = 'block';
+                updateChart(country, startYear, endYear);
+            };
+        
+            // -------------------- MODE 3 --------------------
+            window.calculateMode3 = function () {
+                const country = document.getElementById('m3-country').value;
+                const amount = parseFloat(document.getElementById('m3-amount').value);
+                const futureYear = parseInt(document.getElementById('m3-future-year').value);
+                const inflationRate = parseFloat(document.getElementById('m3-inflation-rate').value);
+                const symbol = CPI_DATA[country].symbol;
+                const currentYear = 2023;
+        
+                if (isNaN(amount) || isNaN(futureYear) || isNaN(inflationRate)) return alert("Invalid inputs");
+        
+                const yearsAhead = futureYear - currentYear;
+                const projectedValue = amount * Math.pow(1 + inflationRate / 100, yearsAhead);
+        
+                document.getElementById('results-section').classList.remove('hidden');
+                document.getElementById('result-summary').innerHTML = `${symbol}${amount} today will be worth <strong>${symbol}${projectedValue.toFixed(2)}</strong> in ${futureYear} assuming <strong>${inflationRate}%</strong> yearly inflation.`;
+                document.getElementById('total-inflation').innerText = `--`;
+                document.getElementById('avg-inflation').innerText = `--`;
+                document.getElementById('growth-details').style.display = 'none';
+                updateChart(country, currentYear, futureYear, true, inflationRate);
+            };
+        
+            function updateChart(country, startYear, endYear, isProjected = false, rate = 0) {
+                const cpi = CPI_DATA[country].data;
+                const years = [];
+                const values = [];
+                if (!isProjected) {
+                    for (let year = startYear; year <= endYear; year++) {
+                        if (cpi[year]) {
+                            years.push(year);
+                            values.push(cpi[year]);
+                        }
+                    }
+                } else {
+                    let value = cpi[startYear];
+                    for (let i = 0; i <= endYear - startYear; i++) {
+                        years.push(startYear + i);
+                        values.push(value);
+                        value *= 1 + rate / 100;
+                    }
+                }
+        
+                if (inflationChart) inflationChart.destroy();
+                const ctx = document.getElementById('inflation-chart').getContext('2d');
+                inflationChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: years,
+                        datasets: [{
+                            label: `Inflation Trend (${country})`,
+                            data: values,
+                            fill: true,
+                            backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                            borderColor: '#007bff',
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: { beginAtZero: false },
+                            x: { ticks: { autoSkip: true, maxTicksLimit: 12 } }
+                        }
+                    }
+                });
+            }
+        });
+        </script>        
+    <script src="../universal-search-deploy.js"></script>
+    <script src="../../faq.js" defer></script>
+    <script src="../../view.js" defer></script>
+</body>
+</html>

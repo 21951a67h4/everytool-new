@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete sitemap of EveryTool.tech - Find all tools, calculators, converters, and utilities in one place">
+    <title>Sitemap - EveryTool.tech</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/logo-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --text-color: #1f2937;
+            --text-light: #6b7280;
+            --bg-color: #ffffff;
+            --bg-light: #f9fafb;
+            --border-color: #e5e7eb;
+            --section-bg: #f8fafc;
+            --section-border: #e2e8f0;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 3rem 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .sitemap-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .sitemap-title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            padding-left: 3rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .section {
+            background: var(--section-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--section-border);
+            transition: var(--transition);
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--section-border);
+        }
+
+        .section-heading i {
+            font-size: 1.25rem;
+        }
+
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .link-card {
+            background: var(--bg-color);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .link-card:hover {
+            color: #ffd700;
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .link-card a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .link-card a:hover {
+            color: var(--primary-color);
+        }
+
+        .link-card i {
+            color: var(--primary-color);
+            font-size: 0.875rem;
+        }
+
+        .timestamp {
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 3rem;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 2rem 1rem;
+            }
+
+            .sitemap-title {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .link-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sitemap-title {
+                font-size: 1.75rem;
+            }
+
+            .section {
+                padding: 1rem;
+            }
+
+            .section-heading {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <div class="main-content">
+        <div class="sitemap-header">
+            <h1 class="sitemap-title">Sitemap</h1>
+            <p class="description">Explore all the tools and resources available on EveryTool.tech</p>
+        </div>
+
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search for tools and pages..." id="searchInput">
+        </div>
+
+        <main>
+            <section class="section">
+                <div class="section-heading">
+                    <i class="fas fa-home"></i>
+                    Main Pages
+                </div>
+                <div class="link-grid">
+                    <div class="link-card">
+                        <a href="index.html" target="_blank"><i class="fas fa-chevron-right"></i>Home</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="about.html" target="_blank"><i class="fas fa-chevron-right"></i>About</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="coming-soon.html" target="_blank"><i class="fas fa-chevron-right"></i>Contact</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="FAQ section/faq.html" target="_blank"><i class="fas fa-chevron-right"></i>FAQ</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="support-us.html" target="_blank"><i class="fas fa-chevron-right"></i>Support Us</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="terms.html" target="_blank"><i class="fas fa-chevron-right"></i>Terms of Service</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="privacy-policy.html" target="_blank"><i class="fas fa-chevron-right"></i>Privacy Policy</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-heading">
+                    <i class="fas fa-th-large"></i>
+                    Tool Categories
+                </div>
+                <div class="link-grid">
+                    <div class="link-card">
+                        <a href="tools-hub-page/index.html?category=calculators" target="_blank"><i class="fas fa-chevron-right"></i>Calculators</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools-hub-page/index.html?category=converters" target="_blank"><i class="fas fa-chevron-right"></i>Converters</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools-hub-page/index.html?category=developer" target="_blank"><i class="fas fa-chevron-right"></i>Developer Tools</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools-hub-page/index.html?category=generators" target="_blank"><i class="fas fa-chevron-right"></i>Generators</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools-hub-page/index.html?category=seo" target="_blank"><i class="fas fa-chevron-right"></i>SEO Tools</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools-hub-page/index.html?category=text" target="_blank"><i class="fas fa-chevron-right"></i>Text/File Tools</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-heading">
+                    <i class="fas fa-tools"></i>
+                    Individual Tools
+                </div>
+                <div class="link-grid">
+                    <!-- Calculators -->
+                    <div class="link-card">
+                        <a href="tools/bmi-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>BMI Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/age-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Age Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/calorie-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Calorie Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/car-loan-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Car Loan Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/compound-interest-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Compound Interest Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/inflation-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Inflation Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/loan-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Loan Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/mortgage-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Mortgage Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/paycheck-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Paycheck Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/percentage-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Percentage Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/tip-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Tip Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/word-count.html" target="_blank"><i class="fas fa-chevron-right"></i>Word Count</a>
+                    </div>
+                </div>
+            </section>
+            
+        </main>
+
+        <footer class="timestamp">
+            <p>Last updated on: <time id="last-updated"></time></p>
+        </footer>
+    </div>
+
+    <!-- Footer Container -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="view.js"></script>
+    <script>
+        // Set the last updated timestamp
+        document.getElementById('last-updated').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Fetch and insert header
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const linkCards = document.querySelectorAll('.link-card');
+
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            linkCards.forEach(card => {
+                const linkText = card.querySelector('a').textContent.toLowerCase();
+                const matchesSearch = linkText.includes(searchTerm);
+                card.style.display = matchesSearch ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html> 

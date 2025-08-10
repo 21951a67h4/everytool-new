@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Loan Calculator | Calculate Your Monthly Payments | EveryTool.tech</title>
+    <meta name="description" content="Calculate your monthly car payments, total interest, and total cost with our advanced Car Loan Calculator. Perfect for buyers, dealers, and financial planners.">
+    <meta name="keywords" content="car loan calculator, monthly car payments, car loan cost, car loan interest, car loan amortization">
+    <meta name="robots" content="noindex">
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Car Loan Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate your monthly car payments, total interest, and total cost with our advanced Car Loan Calculator. Perfect for buyers, dealers, and financial planners.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/car-loan-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../FAQ section/faq.css">
+    <link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Car Loan Calculator</h1>
+                    <p class="tool-hero__description">
+                        Instantly estimate your monthly car payments, total interest, and total cost with our advanced Car Loan Calculator. Perfect for buyers, dealers, and financial planners. Enter your details and get a full breakdown!
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-car"></i>
+                            <span>Accurate Monthly Payment Calculation</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Amortization & Interest Breakdown</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-percent"></i>
+                            <span>Customizable Rates & Fees</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Mobile Friendly & Easy to Use</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Now
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Car Loan Payment & Cost Breakdown</h2>
+                    <p class="tool-display__description">
+                        Enter your car purchase details to calculate your monthly payment, total interest, and total cost. Adjust the values to see how different factors affect your loan.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__input-group">
+                            <div class="tool-display__input-group">
+                                <label class="tool-display__label" for="currency">Currency</label>
+                                <select class="tool-display__input" id="currency">
+                                    <option value="USD" selected>USD - US Dollar ($)</option>
+                                    <option value="EUR">EUR - Euro (€)</option>
+                                    <option value="GBP">GBP - British Pound (£)</option>
+                                    <option value="INR">INR - Indian Rupee (₹)</option>
+                                    <option value="JPY">JPY - Japanese Yen (¥)</option>
+                                    <option value="AUD">AUD - Australian Dollar (A$)</option>
+                                </select>
+                            </div>
+                            <label class="tool-display__label" for="car-price">Car Price </label>
+                            <input type="number" class="tool-display__input" id="car-price" min="0" placeholder="e.g. 25000">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label" for="down-payment">Down Payment </label>
+                            <input type="number" class="tool-display__input" id="down-payment" min="0" placeholder="e.g. 5000">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label" for="trade-in">Trade-in Value  <span style="color:var(--text-light);font-weight:400;">(optional)</span></label>
+                            <input type="number" class="tool-display__input" id="trade-in" min="0" placeholder="e.g. 2000">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label" for="loan-term">Loan Term (years)</label>
+                            <input type="number" class="tool-display__input" id="loan-term" min="1" max="10" placeholder="e.g. 5">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label" for="interest-rate">Interest Rate (APR %)</label>
+                            <input type="number" class="tool-display__input" id="interest-rate" min="0" step="0.01" placeholder="e.g. 6.5">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label" for="sales-tax">Sales Tax (%) <span style="color:var(--text-light);font-weight:400;">(optional)</span></label>
+                            <input type="number" class="tool-display__input" id="sales-tax" min="0" step="0.01" placeholder="e.g. 8.25">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label" for="fees">Other Fees  <span style="color:var(--text-light);font-weight:400;">(optional)</span></label>
+                            <input type="number" class="tool-display__input" id="fees" min="0" placeholder="e.g. 500">
+                        </div>
+                        <div class="tool-display__controls">
+                            <button class="tool-display__button" id="calculate-btn">
+                                <i class="fas fa-calculator"></i>
+                                Calculate
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="reset-btn">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                        </div>
+                        <div id="calc-error" style="color:var(--accent);margin-top:0.5rem;display:none;"></div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Results</h3>
+                        <div class="tool-display__result" id="calc-result">
+                            Enter your details and click Calculate to see your results.
+                        </div>
+                        <div style="margin-top:2rem;">
+                            <canvas id="loanChart" width="200" height="200" style="max-width:200px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Mastering Content Transformation with Tool Name</h2>
+                <p class="tool-blog__subtitle">
+                    A comprehensive guide to understanding and utilizing the full potential of our powerful content transformation tool
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Understanding Content Transformation in the Digital Age</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            In today's fast-paced digital landscape, content transformation has become an essential 
+                            process for businesses and individuals alike. Tool Name stands at the forefront of this 
+                            revolution, offering a sophisticated solution that combines advanced algorithms with 
+                            user-friendly interfaces. Our tool is designed to meet the growing demands of content 
+                            creators, marketers, and professionals who need to adapt their content for various 
+                            platforms and purposes.
+                        </p>
+                        <p>
+                            The importance of content transformation cannot be overstated in the current digital 
+                            ecosystem. With the proliferation of different platforms, formats, and audience 
+                            preferences, the ability to quickly and effectively transform content has become a 
+                            crucial competitive advantage. Tool Name addresses this need by providing a comprehensive 
+                            solution that maintains content quality while adapting it to different contexts and 
+                            requirements.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Key Features and Advanced Capabilities</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Tool Name offers a robust suite of features designed to meet the diverse needs of 
+                            modern content creators. Let's explore the key capabilities that make our tool 
+                            indispensable:
+                        </p>
+                        <ul>
+                            <li>
+                                <strong>Advanced Processing Engine:</strong> Our proprietary algorithm analyzes 
+                                content structure, context, and intent to deliver precise transformations that 
+                                maintain the original message while optimizing for the target format.
+                            </li>
+                            <li>
+                                <strong>Multi-Format Support:</strong> Whether you're working with text, documents, 
+                                or structured data, our tool handles various input formats with ease, ensuring 
+                                compatibility across different platforms and systems.
+                            </li>
+                            <li>
+                                <strong>Intelligent Content Analysis:</strong> The tool employs natural language 
+                                processing to understand context, tone, and style, ensuring that transformed 
+                                content maintains its intended impact and effectiveness.
+                            </li>
+                            <li>
+                                <strong>Customization Options:</strong> Users can fine-tune transformation 
+                                parameters to match specific requirements, allowing for precise control over 
+                                the output format and style.
+                            </li>
+                        </ul>
+                        <p>
+                            These features work in harmony to provide a seamless content transformation 
+                            experience, saving time and resources while maintaining quality standards.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Best Practices for Optimal Results</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            To achieve the best results with Tool Name, consider these expert-recommended 
+                            practices:
+                        </p>
+                        <ol>
+                            <li>
+                                <strong>Prepare Your Content:</strong> Ensure your input content is well-structured 
+                                and free of formatting issues before processing. This helps the tool deliver more 
+                                accurate transformations.
+                            </li>
+                            <li>
+                                <strong>Choose the Right Settings:</strong> Take time to configure the tool's 
+                                parameters according to your specific needs. The right settings can significantly 
+                                improve output quality.
+                            </li>
+                            <li>
+                                <strong>Review and Refine:</strong> Always review the transformed content and make 
+                                necessary adjustments. While our tool is highly accurate, human oversight ensures 
+                                perfect results.
+                            </li>
+                            <li>
+                                <strong>Regular Updates:</strong> Keep the tool updated to access the latest 
+                                features and improvements. We continuously enhance our algorithms for better 
+                                performance.
+                            </li>
+                        </ol>
+                        <p>
+                            By following these practices, you can maximize the benefits of Tool Name and achieve 
+                            consistently high-quality results in your content transformation projects.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Industry Applications and Use Cases</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Tool Name serves various industries and use cases, demonstrating its versatility 
+                            and effectiveness:
+                        </p>
+                        <ul>
+                            <li>
+                                <strong>Content Marketing:</strong> Transform blog posts into social media content, 
+                                email newsletters, or video scripts while maintaining brand voice and messaging.
+                            </li>
+                            <li>
+                                <strong>E-commerce:</strong> Optimize product descriptions for different platforms 
+                                and markets, ensuring consistent messaging across all channels.
+                            </li>
+                            <li>
+                                <strong>Education:</strong> Adapt learning materials for different formats and 
+                                learning styles, making content more accessible to diverse audiences.
+                            </li>
+                            <li>
+                                <strong>Technical Documentation:</strong> Convert complex technical content into 
+                                user-friendly formats without losing essential information.
+                            </li>
+                        </ul>
+                        <p>
+                            These applications highlight the tool's ability to meet diverse content transformation 
+                            needs across different sectors and purposes.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Future Developments and Roadmap</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            We're committed to continuously improving Tool Name and expanding its capabilities. 
+                            Our development roadmap includes:
+                        </p>
+                        <ul>
+                            <li>Integration with popular content management systems</li>
+                            <li>Advanced AI-powered content optimization</li>
+                            <li>Enhanced multi-language support</li>
+                            <li>Custom API access for enterprise users</li>
+                        </ul>
+                        <p>
+                            Stay updated with our latest developments by subscribing to our newsletter or 
+                            following our blog. We value user feedback and incorporate it into our ongoing 
+                            development process to ensure Tool Name remains at the forefront of content 
+                            transformation technology.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Find quick answers to common questions about our tools and services</p>
+            </div>
+            <div class="faq-list">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What is EveryTool.tech?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>EveryTool.tech is a comprehensive platform offering a wide range of online tools designed to make your digital tasks easier. From text manipulation to file conversion, we provide free, easy-to-use tools that help you work more efficiently.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Are the tools free to use?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, all our tools are completely free to use. We support our platform through non-intrusive advertisements, allowing us to provide these tools at no cost to our users.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I use the tools?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Using our tools is simple:</p>
+                        <ul>
+                            <li>Select the tool you need from our homepage</li>
+                            <li>Follow the on-screen instructions</li>
+                            <li>Get instant results</li>
+                            <li>Download or copy your results as needed</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is my data safe?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we take data privacy seriously. All processing is done in your browser, and we don't store any of your data on our servers. Your information remains private and secure.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I use these tools on mobile devices?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, all our tools are fully responsive and work great on mobile devices, tablets, and desktop computers. We ensure a consistent experience across all devices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Fetch and insert header
+        fetch('../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with animation classes
+        document.querySelectorAll('.tool-hero__left, .tool-hero__right, .blog-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Car Loan Calculator Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const carPrice = document.getElementById('car-price');
+            const downPayment = document.getElementById('down-payment');
+            const tradeIn = document.getElementById('trade-in');
+            const loanTerm = document.getElementById('loan-term');
+            const interestRate = document.getElementById('interest-rate');
+            const salesTax = document.getElementById('sales-tax');
+            const fees = document.getElementById('fees');
+            const currency = document.getElementById('currency');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const resultDiv = document.getElementById('calc-result');
+            const errorDiv = document.getElementById('calc-error');
+            let loanChartInstance = null;
+
+            function formatCurrency(num) {
+                const curr = currency.value || 'USD';
+                return num.toLocaleString('en-US', { style: 'currency', currency: curr });
+            }
+
+            function validateInputs() {
+                errorDiv.style.display = 'none';
+                if (!carPrice.value || carPrice.value <= 0) {
+                    errorDiv.textContent = 'Please enter a valid car price.';
+                    errorDiv.style.display = 'block';
+                    return false;
+                }
+                if (!loanTerm.value || loanTerm.value <= 0) {
+                    errorDiv.textContent = 'Please enter a valid loan term.';
+                    errorDiv.style.display = 'block';
+                    return false;
+                }
+                if (!interestRate.value || interestRate.value < 0) {
+                    errorDiv.textContent = 'Please enter a valid interest rate.';
+                    errorDiv.style.display = 'block';
+                    return false;
+                }
+                if (Number(downPayment.value) + Number(tradeIn.value || 0) > Number(carPrice.value)) {
+                    errorDiv.textContent = 'Down payment and trade-in cannot exceed car price.';
+                    errorDiv.style.display = 'block';
+                    return false;
+                }
+                return true;
+            }
+
+            function calculateLoan() {
+                if (!validateInputs()) return;
+                // Parse values
+                const price = Number(carPrice.value);
+                const down = Number(downPayment.value) || 0;
+                const trade = Number(tradeIn.value) || 0;
+                const years = Number(loanTerm.value);
+                const rate = Number(interestRate.value) / 100;
+                const tax = Number(salesTax.value) / 100 || 0;
+                const fee = Number(fees.value) || 0;
+
+                // Calculate taxable amount
+                const taxableAmount = price - down - trade;
+                const taxAmount = taxableAmount > 0 ? taxableAmount * tax : 0;
+                const loanAmount = Math.max(0, taxableAmount + taxAmount + fee);
+
+                // Monthly interest rate
+                const n = years * 12;
+                const r = rate / 12;
+                let monthlyPayment = 0;
+                if (r > 0) {
+                    monthlyPayment = loanAmount * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+                } else {
+                    monthlyPayment = loanAmount / n;
+                }
+                const totalPayment = monthlyPayment * n;
+                const totalInterest = totalPayment - loanAmount;
+
+                // Output
+                resultDiv.innerHTML = `
+                    <div><strong>Loan Amount:</strong> ${formatCurrency(loanAmount)}</div>
+                    <div><strong>Monthly Payment:</strong> ${formatCurrency(monthlyPayment)}</div>
+                    <div><strong>Total Interest:</strong> ${formatCurrency(totalInterest)}</div>
+                    <div><strong>Total Payment:</strong> ${formatCurrency(totalPayment)}</div>
+                    <hr style="margin:1rem 0;">
+                    <div style="font-size:1rem;color:var(--text-secondary);">
+                        <strong>Summary:</strong><br>
+                        Car Price: ${formatCurrency(price)}<br>
+                        Down Payment: ${formatCurrency(down)}<br>
+                        Trade-in Value: ${formatCurrency(trade)}<br>
+                        Sales Tax: ${tax > 0 ? (tax * 100).toFixed(2) + '%' : 'N/A'}<br>
+                        Fees: ${formatCurrency(fee)}<br>
+                        Loan Term: ${years} years (${n} months)<br>
+                        Interest Rate: ${(rate * 100).toFixed(2)}% APR
+                    </div>
+                `;
+
+                // Draw Chart.js doughnut chart (Principal vs. Interest)
+                const ctx = document.getElementById('loanChart').getContext('2d');
+                if (loanChartInstance) {
+                    loanChartInstance.destroy();
+                }
+                loanChartInstance = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Principal', 'Total Interest'],
+                        datasets: [{
+                            data: [loanAmount, totalInterest],
+                            backgroundColor: ['#4361EE', '#F72585'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'bottom',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.raw || 0;
+                                        return `${label}: ${formatCurrency(value)}`;
+                                    }
+                                }
+                            }
+                        },
+                        animation: false
+                    }
+                });
+            }
+
+            calculateBtn.addEventListener('click', calculateLoan);
+            resetBtn.addEventListener('click', function() {
+                carPrice.value = '';
+                downPayment.value = '';
+                tradeIn.value = '';
+                loanTerm.value = '';
+                interestRate.value = '';
+                salesTax.value = '';
+                fees.value = '';
+                currency.value = 'USD';
+                resultDiv.innerHTML = 'Enter your details and click Calculate to see your results.';
+                errorDiv.style.display = 'none';
+                if (loanChartInstance) {
+                    loanChartInstance.destroy();
+                    loanChartInstance = null;
+                }
+            });
+        });
+    </script>
+
+    <script src="../FAQ section/faq.js"></script>
+    <script src="../view.js"></script>
+    <script>
+        // Initialize FAQ functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // FAQ Accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Close all other FAQ items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current FAQ item
+                    item.classList.toggle('active');
+                });
+
+                // Add keyboard navigation
+                question.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        question.click();
+                    }
+                });
+
+                // Make the question focusable
+                question.setAttribute('tabindex', '0');
+                question.setAttribute('role', 'button');
+                question.setAttribute('aria-expanded', 'false');
+                
+                // Update ARIA attributes when toggled
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    question.setAttribute('aria-expanded', isActive);
+                });
+            });
+
+            // Initialize device view manager
+            const viewManager = new DeviceViewManager();
+            
+            // Subscribe to device changes
+            viewManager.subscribe((deviceInfo) => {
+                // Update FAQ section based on device type
+                const faqSection = document.querySelector('.faq-section');
+                if (deviceInfo.type === 'mobile') {
+                    faqSection.style.padding = '2rem 0';
+                } else {
+                    faqSection.style.padding = '4rem 0';
+                }
+            });
+        });
+    </script>
+
+<script>
+    // =====================================================================
+    // ====== START: MAGIC BLOCK TO COPY FOR EVERY NEW PAGE ======
+    // =====================================================================
+        document.addEventListener('DOMContentLoaded', () => {
+    
+    const loadScript = (src) => {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = () => resolve(script);
+            script.onerror = () => reject(new Error(`Script load error for ${src}`));
+            document.body.appendChild(script);
+        });
+    };
+    
+    const loadHeader = () => {
+        const headerPlaceholder = document.getElementById('header-placeholder');
+        if (!headerPlaceholder) return;
+    
+        // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+        fetch('/header.html') 
+            .then(response => {
+                if (!response.ok) throw new Error('Network response for header.html was not ok.');
+                return response.text();
+            })
+            .then(html => {
+                headerPlaceholder.innerHTML = html;
+                return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2');
+            })
+            .then(() => {
+                // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+                return loadScript('/header-search.js');
+            })
+            .then(() => {
+                if (typeof initializeHeader === 'function') {
+                    initializeHeader(); 
+                } else {
+                    throw new Error('initializeHeader function not found.');
+                }
+            })
+            .catch(error => {
+                console.error('CRITICAL ERROR during header loading process:', error);
+            });
+    };
+    
+    const loadFooter = () => {
+        const footerPlaceholder = document.getElementById('footer-placeholder');
+        if (footerPlaceholder) {
+            // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+            fetch('/footer.html')
+                .then(response => response.ok ? response.text() : Promise.reject('Failed to load footer'))
+                .then(html => { footerPlaceholder.innerHTML = html; })
+                .catch(error => console.error('Error loading footer:', error));
+        }
+    };
+    
+    loadHeader();
+    loadFooter();
+    });
+    
+        </script>
+</body>
+</html>

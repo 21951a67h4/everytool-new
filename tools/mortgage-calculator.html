@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortagage Calculator (home loan) | EveryTool.tech</title>
+    <meta name="description" content="Transform your content with our powerful Tool Name. Free, fast, and easy to use. Perfect for professionals and beginners. Try it now!">
+    <meta name="keywords" content="tool name, online tool, free tool, content transformation, professional tool, easy to use tool">
+    <meta name="robots" content="noindex">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Tool Name - Free Online Tool | EveryTool.tech">
+    <meta property="og:description" content="Transform your content with our powerful Tool Name. Free, fast, and easy to use. Perfect for professionals and beginners.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tool-name">
+    <meta property="og:image" content="https://everytool.tech/assets/tool-preview.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/favicon.png"> 
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../FAQ section/faq.css">
+    <link rel="stylesheet" href="tool.css">
+    <!-- Chart.js CDN for Pie Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Mortgage Calculator (Home Loan)</h1>
+                    <p class="tool-hero__description">
+                        Instantly estimate your monthly home loan payments. Enter your loan amount, interest rate, and loan term to see your monthly payment breakdown.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-bolt"></i>
+                            <span>Lightning Fast Calculation</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>100% Secure & Private</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-magic"></i>
+                            <span>Accurate Results</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-infinity"></i>
+                            <span>Unlimited Usage</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-play"></i>
+                            Try Now - It's Free
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Mortgage Calculator</h2>
+                    <p class="tool-display__description">
+                        Enter your loan details below to calculate your estimated monthly mortgage payment.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label" for="loan-amount">Loan Amount</label>
+                            <input type="number" id="loan-amount" class="tool-display__input" placeholder="e.g. 250000" min="0">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label" for="interest-rate">Interest Rate (%)</label>
+                            <input type="number" id="interest-rate" class="tool-display__input" placeholder="e.g. 6.5" min="0" step="0.01">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label" for="loan-term">Loan Term (years)</label>
+                            <input type="number" id="loan-term" class="tool-display__input" placeholder="e.g. 30" min="1">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label" for="extra-payment">Extra Monthly Payment (optional)</label>
+                            <input type="number" id="extra-payment" class="tool-display__input" placeholder="e.g. 100" min="0" step="0.01">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label" for="currency-type">Currency</label>
+                            <select id="currency-type" class="tool-display__input">
+                                <option value="$">USD ($)</option>
+                                <option value="€">EUR (€)</option>
+                                <option value="£">GBP (£)</option>
+                                <option value="₹">INR (₹)</option>
+                                <option value="¥">JPY (¥)</option>
+                                <option value="C$">CAD (C$)</option>
+                                <option value="A$">AUD (A$)</option>
+                                <option value="₩">KRW (₩)</option>
+                                <option value="₽">RUB (₽)</option>
+                                <option value="Fr">CHF (Fr)</option>
+                            </select>
+                        </div>
+                        <div class="tool-display__controls">
+                            <button id="calculate-btn" class="tool-display__button">
+                                <i class="fas fa-magic"></i>
+                                Calculate
+                            </button>
+                            <button id="reset-btn" class="tool-display__button tool-display__button--secondary">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Results</h3>
+                        <div id="monthly-payment-result" class="tool-display__result">
+                            Your monthly payment will appear here...
+                        </div>
+                        <div id="total-interest-result" class="tool-display__result"></div>
+                        <div id="total-payment-result" class="tool-display__result"></div>
+                        <canvas id="mortgage-pie-chart" style="max-width: 350px; margin: 2rem auto 0; display: block;"></canvas>
+                        <button id="toggle-amortization" class="tool-display__button tool-display__button--secondary" style="margin-top:1rem;">Show Amortization Table</button>
+                        <div id="amortization-table-container" style="display:none; margin-top:1.5rem;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Blog Section -->
+<section id="learn-more" class="tool-blog">
+    <div class="tool-blog__container">
+        <div class="tool-blog__header">
+            <h2 class="tool-blog__title">Mastering Home Financing with Mortgage Calculator (Home Loan)</h2>
+            <p class="tool-blog__subtitle">
+                A comprehensive guide to understanding and utilizing the full potential of our powerful Mortgage Calculator for better home loan planning.
+            </p>
+        </div>
+        <div class="blog-content">
+            <div class="blog-section">
+                <h3 class="blog-section__title">Understanding Mortgage Planning in the Digital Age</h3>
+                <div class="blog-section__content">
+                    <p>
+                        Buying a home is one of the most significant financial decisions in a person’s life. Whether you’re a first-time buyer or a seasoned real estate investor, understanding your loan terms and monthly commitments is crucial. The <strong>Mortgage Calculator (Home Loan)</strong> is an essential tool that empowers you to make smart financial choices by breaking down the complexities of loan repayment into clear, manageable figures.
+                    </p>
+                    <p>
+                        In today’s fast-paced financial world, manually calculating your loan repayment schedule can be time-consuming and error-prone. Our Mortgage Calculator automates this process using accurate mathematical models to help you predict your Equated Monthly Installment (EMI), total interest payable, and overall loan cost. With just a few inputs like loan amount, interest rate, and tenure, the tool instantly provides detailed insights that support better decision-making.
+                    </p>
+                    <p>
+                        Whether you're planning to buy your dream house, refinance an existing home loan, or compare different loan offers, using a Mortgage Calculator is now a fundamental step in the process. It simplifies the entire borrowing journey by eliminating guesswork and providing transparency.
+                    </p>
+                </div>
+            </div>
+
+            <div class="blog-section">
+                <h3 class="blog-section__title">Key Features and Advanced Capabilities</h3>
+                <div class="blog-section__content">
+                    <p>
+                        The <strong>Mortgage Calculator (Home Loan)</strong> has been developed with a user-centric approach, offering powerful capabilities that make it an indispensable tool for financial planning. Here are its key features:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Real-Time EMI Calculation:</strong> Get instant results based on your inputs. Modify values and see how your EMI changes in real-time, helping you optimize your loan terms.
+                        </li>
+                        <li>
+                            <strong>Interest Breakdown:</strong> The tool shows how much you’ll pay in interest over the life of your loan, enabling you to evaluate the true cost of borrowing.
+                        </li>
+                        <li>
+                            <strong>Loan Amortization Table:</strong> Visualize your repayment schedule month-by-month or year-by-year. This breakdown shows how your payments are split between principal and interest over time.
+                        </li>
+                        <li>
+                            <strong>Prepayment Impact Analysis:</strong> Analyze how part-payments or early repayments will reduce your EMI or loan tenure. Make informed prepayment decisions that save money.
+                        </li>
+                        <li>
+                            <strong>Mobile-Responsive Interface:</strong> Easily access and use the calculator on your smartphone, tablet, or desktop without any compromises in usability.
+                        </li>
+                        <li>
+                            <strong>Multi-Currency and Localization Options:</strong> Use the calculator in your preferred currency, making it ideal for NRIs or global users looking to invest in Indian property.
+                        </li>
+                    </ul>
+                    <p>
+                        These capabilities ensure that the Mortgage Calculator is more than just a number cruncher—it’s a strategic financial assistant helping you secure the best possible home loan terms.
+                    </p>
+                </div>
+            </div>
+
+            <div class="blog-section">
+                <h3 class="blog-section__title">Best Practices for Optimal Results</h3>
+                <div class="blog-section__content">
+                    <p>
+                        To fully leverage the Mortgage Calculator and make accurate decisions, here are some proven best practices:
+                    </p>
+                    <ol>
+                        <li>
+                            <strong>Enter Accurate Data:</strong> Use realistic figures for your loan amount, interest rate, and loan tenure. Refer to your lender's offer letter or interest chart to avoid estimation errors.
+                        </li>
+                        <li>
+                            <strong>Compare Multiple Scenarios:</strong> Test different combinations of tenure and interest rates to find the most affordable EMI that fits your monthly budget.
+                        </li>
+                        <li>
+                            <strong>Factor in Hidden Charges:</strong> While the calculator gives an excellent overview, remember to consider processing fees, legal costs, and insurance premiums that may apply.
+                        </li>
+                        <li>
+                            <strong>Use the Prepayment Feature:</strong> Explore how lump-sum prepayments can reduce the interest burden or help you close the loan faster. This can save you lakhs over the loan term.
+                        </li>
+                        <li>
+                            <strong>Cross-Verify with Loan Provider:</strong> Use the calculator’s results to validate the figures shared by banks or NBFCs. This helps you negotiate better and avoid overpaying.
+                        </li>
+                    </ol>
+                    <p>
+                        Following these best practices not only enhances the accuracy of your financial planning but also increases your confidence in dealing with lenders and choosing the right loan package.
+                    </p>
+                </div>
+            </div>
+
+            <div class="blog-section">
+                <h3 class="blog-section__title">Industry Applications and Use Cases</h3>
+                <div class="blog-section__content">
+                    <p>
+                        The <strong>Mortgage Calculator (Home Loan)</strong> finds applications across various financial and real estate scenarios. Here’s how different users benefit from it:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Home Buyers:</strong> Calculate your EMI before applying for a home loan. Understand how your income aligns with the repayment amount and plan your finances accordingly.
+                        </li>
+                        <li>
+                            <strong>Real Estate Agents:</strong> Help clients quickly estimate monthly payments for different properties, making it easier to close deals with confidence.
+                        </li>
+                        <li>
+                            <strong>Loan Consultants:</strong> Use the calculator to compare offers from multiple banks, showing clients the most cost-effective options instantly.
+                        </li>
+                        <li>
+                            <strong>NRIs and Global Buyers:</strong> Plan cross-border home investments by understanding EMI and interest commitments in local currencies and timelines.
+                        </li>
+                        <li>
+                            <strong>Finance Bloggers & Influencers:</strong> Create content, guides, and tutorials around home loans using real-world calculator data and case studies.
+                        </li>
+                    </ul>
+                    <p>
+                        These use cases demonstrate the tool's flexibility in serving everyone from individuals and professionals to businesses within the home finance ecosystem.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Find quick answers to common questions about our tools and services</p>
+            </div>
+            <div class="faq-list">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What is EveryTool.tech?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>EveryTool.tech is a comprehensive platform offering a wide range of online tools designed to make your digital tasks easier. From text manipulation to file conversion, we provide free, easy-to-use tools that help you work more efficiently.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Are the tools free to use?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, all our tools are completely free to use. We support our platform through non-intrusive advertisements, allowing us to provide these tools at no cost to our users.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I use the tools?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Using our tools is simple:</p>
+                        <ul>
+                            <li>Select the tool you need from our homepage</li>
+                            <li>Follow the on-screen instructions</li>
+                            <li>Get instant results</li>
+                            <li>Download or copy your results as needed</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is my data safe?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we take data privacy seriously. All processing is done in your browser, and we don't store any of your data on our servers. Your information remains private and secure.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I use these tools on mobile devices?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, all our tools are fully responsive and work great on mobile devices, tablets, and desktop computers. We ensure a consistent experience across all devices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Fetch and insert header
+        fetch('../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with animation classes
+        document.querySelectorAll('.tool-hero__left, .tool-hero__right, .blog-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Mortgage Calculator Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const loanAmountInput = document.getElementById('loan-amount');
+            const interestRateInput = document.getElementById('interest-rate');
+            const loanTermInput = document.getElementById('loan-term');
+            const extraPaymentInput = document.getElementById('extra-payment');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const resultDiv = document.getElementById('monthly-payment-result');
+            const totalInterestDiv = document.getElementById('total-interest-result');
+            const totalPaymentDiv = document.getElementById('total-payment-result');
+            const pieChartCanvas = document.getElementById('mortgage-pie-chart');
+            const toggleAmortBtn = document.getElementById('toggle-amortization');
+            const amortizationTableContainer = document.getElementById('amortization-table-container');
+            const currencyTypeInput = document.getElementById('currency-type');
+            let pieChartInstance = null;
+
+            function calculateMortgage() {
+                const principal = parseFloat(loanAmountInput.value);
+                const annualRate = parseFloat(interestRateInput.value);
+                const years = parseInt(loanTermInput.value);
+                const extra = parseFloat(extraPaymentInput.value) || 0;
+                const currency = currencyTypeInput.value;
+
+                if (isNaN(principal) || isNaN(annualRate) || isNaN(years) || principal <= 0 || annualRate <= 0 || years <= 0) {
+                    resultDiv.textContent = 'Please enter valid loan details.';
+                    totalInterestDiv.textContent = '';
+                    totalPaymentDiv.textContent = '';
+                    if (pieChartInstance) pieChartInstance.destroy();
+                    amortizationTableContainer.style.display = 'none';
+                    return;
+                }
+
+                const monthlyRate = annualRate / 100 / 12;
+                const n = years * 12;
+                let monthlyPayment = (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -n));
+                let totalPayment = 0;
+                let totalInterest = 0;
+                let balance = principal;
+                let amortization = [];
+                let month = 0;
+
+                // If extra payment, recalculate amortization
+                if (extra > 0) {
+                    while (balance > 0 && month < 1000*n) { // safety limit
+                        let interest = balance * monthlyRate;
+                        let principalPaid = Math.min(monthlyPayment + extra - interest, balance);
+                        let payment = principalPaid + interest;
+                        if (payment < 0) break;
+                        balance -= principalPaid;
+                        totalInterest += interest;
+                        totalPayment += payment;
+                        amortization.push({
+                            month: month + 1,
+                            payment: payment,
+                            principal: principalPaid,
+                            interest: interest,
+                            balance: Math.max(balance,0)
+                        });
+                        month++;
+                        if (balance <= 0.01) break;
+                    }
+                    monthlyPayment = (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -n)); // show base payment
+                } else {
+                    for (let i = 0; i < n; i++) {
+                        let interest = balance * monthlyRate;
+                        let principalPaid = monthlyPayment - interest;
+                        balance -= principalPaid;
+                        totalInterest += interest;
+                        totalPayment += monthlyPayment;
+                        amortization.push({
+                            month: i + 1,
+                            payment: monthlyPayment,
+                            principal: principalPaid,
+                            interest: interest,
+                            balance: Math.max(balance,0)
+                        });
+                    }
+                }
+
+                resultDiv.textContent = `Estimated Monthly Payment: ${currency}${monthlyPayment.toFixed(2)}${extra > 0 ? ' + ' + currency + extra.toFixed(2) + ' extra' : ''}`;
+                totalInterestDiv.textContent = `Total Interest Paid: ${currency}${totalInterest.toFixed(2)}`;
+                totalPaymentDiv.textContent = `Total Amount Paid: ${currency}${totalPayment.toFixed(2)}`;
+
+                // Pie Chart
+                if (pieChartInstance) pieChartInstance.destroy();
+                pieChartInstance = new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Principal', 'Interest'],
+                        datasets: [{
+                            data: [principal, totalInterest],
+                            backgroundColor: ['#4361EE', '#F72585'],
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { position: 'bottom' }
+                        }
+                    }
+                });
+
+                // Amortization Table
+                function renderAmortizationTable() {
+                    let html = `<table style=\"width:100%;border-collapse:collapse;text-align:right;font-size:0.95rem;\">\n                        <thead><tr><th>Month</th><th>Payment</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead><tbody>`;
+                    for (let i = 0; i < amortization.length; i++) {
+                        if (i > 599 && i < amortization.length - 1) { // show first 600 and last row
+                            if (i === 600) html += `<tr><td colspan=\"5\" style=\"text-align:center;\">... (skipped) ...</td></tr>`;
+                            continue;
+                        }
+                        const row = amortization[i];
+                        html += `<tr><td>${row.month}</td><td>${currency}${row.payment.toFixed(2)}</td><td>${currency}${row.principal.toFixed(2)}</td><td>${currency}${row.interest.toFixed(2)}</td><td>${currency}${row.balance.toFixed(2)}</td></tr>`;
+                    }
+                    html += `</tbody></table>`;
+                    return html;
+                }
+                amortizationTableContainer.innerHTML = renderAmortizationTable();
+                amortizationTableContainer.style.display = 'none';
+                toggleAmortBtn.textContent = 'Show Amortization Table';
+                toggleAmortBtn.onclick = function() {
+                    if (amortizationTableContainer.style.display === 'none') {
+                        amortizationTableContainer.style.display = 'block';
+                        toggleAmortBtn.textContent = 'Hide Amortization Table';
+                    } else {
+                        amortizationTableContainer.style.display = 'none';
+                        toggleAmortBtn.textContent = 'Show Amortization Table';
+                    }
+                };
+            }
+
+            calculateBtn.addEventListener('click', calculateMortgage);
+
+            resetBtn.addEventListener('click', function() {
+                loanAmountInput.value = '';
+                interestRateInput.value = '';
+                loanTermInput.value = '';
+                extraPaymentInput.value = '';
+                currencyTypeInput.value = '$';
+                resultDiv.textContent = 'Your monthly payment will appear here...';
+                totalInterestDiv.textContent = '';
+                totalPaymentDiv.textContent = '';
+                amortizationTableContainer.innerHTML = '';
+                amortizationTableContainer.style.display = 'none';
+                toggleAmortBtn.textContent = 'Show Amortization Table';
+                if (pieChartInstance) pieChartInstance.destroy();
+            });
+        });
+    </script>
+
+    <script src="../universal-search-deploy.js"></script>
+    <script src="../../faq.js" defer></script>
+    <script src="../../view.js" defer></script>
+
+    <script>
+        // Initialize FAQ functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // FAQ Accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Close all other FAQ items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current FAQ item
+                    item.classList.toggle('active');
+                });
+
+                // Add keyboard navigation
+                question.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        question.click();
+                    }
+                });
+
+                // Make the question focusable
+                question.setAttribute('tabindex', '0');
+                question.setAttribute('role', 'button');
+                question.setAttribute('aria-expanded', 'false');
+                
+                // Update ARIA attributes when toggled
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    question.setAttribute('aria-expanded', isActive);
+                });
+            });
+
+            // Initialize device view manager
+            const viewManager = new DeviceViewManager();
+            
+            // Subscribe to device changes
+            viewManager.subscribe((deviceInfo) => {
+                // Update FAQ section based on device type
+                const faqSection = document.querySelector('.faq-section');
+                if (deviceInfo.type === 'mobile') {
+                    faqSection.style.padding = '2rem 0';
+                } else {
+                    faqSection.style.padding = '4rem 0';
+                }
+            });
+        });
+    </script>
+
+<script>
+    // =====================================================================
+    // ====== START: MAGIC BLOCK TO COPY FOR EVERY NEW PAGE ======
+    // =====================================================================
+        document.addEventListener('DOMContentLoaded', () => {
+    
+    const loadScript = (src) => {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = () => resolve(script);
+            script.onerror = () => reject(new Error(`Script load error for ${src}`));
+            document.body.appendChild(script);
+        });
+    };
+    
+    const loadHeader = () => {
+        const headerPlaceholder = document.getElementById('header-placeholder');
+        if (!headerPlaceholder) return;
+    
+        // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+        fetch('/header.html') 
+            .then(response => {
+                if (!response.ok) throw new Error('Network response for header.html was not ok.');
+                return response.text();
+            })
+            .then(html => {
+                headerPlaceholder.innerHTML = html;
+                return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2');
+            })
+            .then(() => {
+                // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+                return loadScript('/header-search.js');
+            })
+            .then(() => {
+                if (typeof initializeHeader === 'function') {
+                    initializeHeader(); 
+                } else {
+                    throw new Error('initializeHeader function not found.');
+                }
+            })
+            .catch(error => {
+                console.error('CRITICAL ERROR during header loading process:', error);
+            });
+    };
+    
+    const loadFooter = () => {
+        const footerPlaceholder = document.getElementById('footer-placeholder');
+        if (footerPlaceholder) {
+            // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+            fetch('/footer.html')
+                .then(response => response.ok ? response.text() : Promise.reject('Failed to load footer'))
+                .then(html => { footerPlaceholder.innerHTML = html; })
+                .catch(error => console.error('Error loading footer:', error));
+        }
+    };
+    
+    loadHeader();
+    loadFooter();
+    });
+    
+        </script>
+</body>
+</html>

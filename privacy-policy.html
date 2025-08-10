@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="FAQ section/faq.css">
+    <style>
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #3F37C9;
+            --text-primary: #1F2937;
+            --text-secondary: #8f9cb3;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --border-light: #dfe1e5;
+            --border-dark: #cdd1d5;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding-top: 80px;
+        }
+
+        .header__mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .privacy-page {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .privacy-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .privacy-section {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .privacy-section:nth-child(even) {
+            background: var(--bg-secondary);
+        }
+
+        .privacy-section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .privacy-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .privacy-intro {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .privacy-content {
+            color: var(--text-primary);
+        }
+
+        .privacy-content p {
+            margin-bottom: 1rem;
+        }
+
+        .privacy-content ul {
+            list-style-position: inside;
+            margin-bottom: 1.5rem;
+        }
+
+        .privacy-content li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .privacy-note {
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .privacy-note i {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-top: 0.25rem;
+        }
+
+        .privacy-highlight {
+            background: linear-gradient(120deg, rgba(67, 97, 238, 0.1) 0%, rgba(67, 97, 238, 0.2) 100%);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .contact-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: var(--bg-secondary);
+            padding: 3rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .footer__container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer__content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .footer__brand h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer__tagline {
+            color: var(--text-secondary);
+        }
+
+        .footer__nav-list {
+            list-style: none;
+        }
+
+        .footer__nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .footer__nav-link:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .footer__social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer__social-link {
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+
+        .footer__social-link:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header__nav-list {
+                display: none;
+            }
+
+            .header__mobile-menu {
+                display: block;
+            }
+
+            .header__mobile-menu span {
+                display: block;
+                width: 25px;
+                height: 2px;
+                background: var(--text-primary);
+                margin: 5px 0;
+                transition: var(--transition);
+            }
+
+            .privacy-container {
+                padding: 0 1rem;
+            }
+
+            .privacy-section {
+                padding: 1.5rem;
+            }
+
+            .privacy-title {
+                font-size: 2rem;
+            }
+
+            .footer__content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .footer__nav-list {
+                text-align: center;
+            }
+
+            .footer__social {
+                justify-content: center;
+            }
+        }
+
+        /* Header Styles */
+    #header-placeholder {
+        min-height: 130px;
+        position: relative; 
+        z-index: 2000;      
+    }
+    @media (max-width: 768px) {
+        #header-placeholder {
+            min-height: 64px;
+        }
+    }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div id="header-placeholder"></div>
+
+    <main class="main-content">
+        <div class="privacy-container">
+            <!-- Introduction Section -->
+            <section class="privacy-section">
+                <h1 class="privacy-title">Privacy Policy</h1>
+                <p class="privacy-intro">At EveryTool.tech, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our free online tools. We display advertisements to support our operations and provide these tools at no cost to you.</p>
+            </section>
+
+            <!-- Information Collection Section -->
+            <section class="privacy-section">
+                <h2>Information Collection</h2>
+                <div class="privacy-content">
+                    <p>We believe in minimal data collection. Our website:</p>
+                    <ul>
+                        <li>Does not require user registration or personal login</li>
+                        <li>Collects minimal data through cookies and analytics tools</li>
+                        <li>Uses this information solely to improve our services</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Ad Display & Tracking Section -->
+            <section class="privacy-section">
+                <h2>Ad Display & Tracking</h2>
+                <div class="privacy-content">
+                    <p>To support our free services, we display advertisements that may:</p>
+                    <ul>
+                        <li>Use cookies and tracking technologies to serve relevant content</li>
+                        <li>Collect anonymous usage data to improve ad relevance</li>
+                    </ul>
+                    <div class="privacy-note">
+                        <i class="fas fa-info-circle"></i>
+                        <p>You can opt out of personalized ads by visiting <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google's Ad Settings</a>.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cookies & Analytics Section -->
+            <section class="privacy-section">
+                <h2>Cookies & Analytics</h2>
+                <div class="privacy-content">
+                    <p>We use cookies and analytics tools to:</p>
+                    <ul>
+                        <li>Track anonymous usage data</li>
+                        <li>Improve website performance and user experience</li>
+                        <li>Analyze tool usage patterns</li>
+                    </ul>
+                    <p class="privacy-highlight">No personally identifiable information is stored through these methods.</p>
+                </div>
+            </section>
+
+            <!-- Third-Party Services Section -->
+            <section class="privacy-section">
+                <h2>Third-Party Services</h2>
+                <div class="privacy-content">
+                    <p>We use the following third-party services:</p>
+                    <ul>
+                        <li>Google Analytics for usage statistics</li>
+                        <li>Google AdSense for advertisements</li>
+                    </ul>
+                    <p>These services have their own privacy policies and data collection practices.</p>
+                </div>
+            </section>
+
+            <!-- User Rights Section -->
+            <section class="privacy-section">
+                <h2>Your Rights</h2>
+                <div class="privacy-content">
+                    <p>You have control over your data:</p>
+                    <ul>
+                        <li>Adjust cookie settings in your browser</li>
+                        <li>Opt out of tracking through browser settings</li>
+                        <li>Clear cookies and browsing data at any time</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Policy Updates Section -->
+            <section class="privacy-section">
+                <h2>Policy Updates</h2>
+                <div class="privacy-content">
+                    <p>We may update this Privacy Policy periodically. We encourage you to review this page regularly for any changes. Your continued use of our services after any modifications indicates your acceptance of the updated policy.</p>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="privacy-section">
+                <h2>Contact Us</h2>
+                <div class="privacy-content">
+                    <p>If you have any questions about this Privacy Policy, please contact us:</p>
+                    <a href="/contact.html" class="contact-button">
+                        <i class="fas fa-envelope"></i>
+                        Contact Us
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- FAQ Section -->
+    <section class="tools-faq">
+        <div class="container">
+            <div class="tools-faq-header">
+                <h2 class="tools-faq-title">Frequently Asked Questions</h2>
+                <p class="tools-faq-subtitle">Common questions about our privacy policy.</p>
+            </div>
+            <div class="tools-faq-list">
+                <div class="tools-faq-item">
+                    <div class="tools-faq-question">
+                        <h3>What information do we collect?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="tools-faq-answer">
+                        <p>We collect information that you provide when using our <a href="/tools-hub-page/index.html">tools</a>, such as files you upload for processing. We also collect usage data to improve our services. For more details, please read our full <a href="privacy-policy.html">Privacy Policy</a>.</p>
+                    </div>
+                </div>
+
+                <div class="tools-faq-item">
+                    <div class="tools-faq-question">
+                        <h3>How do we use your information?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="tools-faq-answer">
+                        <p>We use your information to provide and improve our <a href="/tools-hub-page/index.html">tools</a>, communicate with you about updates, and ensure the security of our services. We never sell your personal information to third parties.</p>
+                    </div>
+                </div>
+
+                <div class="tools-faq-item">
+                    <div class="tools-faq-question">
+                        <h3>How do we protect your data?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="tools-faq-answer">
+                        <p>We implement industry-standard security measures to protect your data. All data processed through our <a href="/tools-hub-page/index.html">tools</a> is encrypted and automatically deleted after processing. For more information about our security practices, please visit our <a href="privacy-policy.html">Privacy Policy</a>.</p>
+                    </div>
+                </div>
+
+                <div class="tools-faq-item">
+                    <div class="tools-faq-question">
+                        <h3>Do we use cookies?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="tools-faq-answer">
+                        <p>Yes, we use cookies to improve your experience on our website and <a href="/tools-hub-page/index.html">tools</a>. These cookies help us understand how you use our services and allow us to provide better functionality. You can control cookie settings through your browser preferences.</p>
+                    </div>
+                </div>
+
+                <div class="tools-faq-item">
+                    <div class="tools-faq-question">
+                        <h3>How can you contact us about privacy?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="tools-faq-answer">
+                        <p>If you have any questions about our privacy practices or would like to exercise your privacy rights, please <a href="coming-soon.html">contact us</a>. We're committed to addressing all privacy-related concerns promptly and transparently.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="FAQ section/faq.js"></script>
+    <script>
+        // Load header and footer
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Initialize FAQ functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.faqManager) {
+                faqManager.init();
+            }
+        });
+    </script>
+
+<script>
+    // =====================================================================
+    // ====== START: MAGIC BLOCK TO COPY FOR EVERY NEW PAGE ======
+    // =====================================================================
+        document.addEventListener('DOMContentLoaded', () => {
+    
+    const loadScript = (src) => {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = () => resolve(script);
+            script.onerror = () => reject(new Error(`Script load error for ${src}`));
+            document.body.appendChild(script);
+        });
+    };
+    
+    const loadHeader = () => {
+        const headerPlaceholder = document.getElementById('header-placeholder');
+        if (!headerPlaceholder) return;
+    
+        // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+        fetch('/header.html') 
+            .then(response => {
+                if (!response.ok) throw new Error('Network response for header.html was not ok.');
+                return response.text();
+            })
+            .then(html => {
+                headerPlaceholder.innerHTML = html;
+                return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2');
+            })
+            .then(() => {
+                // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+                return loadScript('/header-search.js');
+            })
+            .then(() => {
+                if (typeof initializeHeader === 'function') {
+                    initializeHeader(); 
+                } else {
+                    throw new Error('initializeHeader function not found.');
+                }
+            })
+            .catch(error => {
+                console.error('CRITICAL ERROR during header loading process:', error);
+            });
+    };
+    
+    const loadFooter = () => {
+        const footerPlaceholder = document.getElementById('footer-placeholder');
+        if (footerPlaceholder) {
+            // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+            fetch('/footer.html')
+                .then(response => response.ok ? response.text() : Promise.reject('Failed to load footer'))
+                .then(html => { footerPlaceholder.innerHTML = html; })
+                .catch(error => console.error('Error loading footer:', error));
+        }
+    };
+    
+    loadHeader();
+    loadFooter();
+    });
+    
+        </script>
+</body>
+</html> 

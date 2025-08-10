@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolsHub - Your Ultimate Web Tools Directory</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../FAQ section/faq.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Dynamic Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Hero Section -->
+    <section class="tools-header-section">
+        <div class="tools-container">
+            <h1 class="tools-header-title">Welcome to EveryTool.Tech</h1>
+            <p class="tools-header-subtitle">Every tool you need — 100% free, zero tracking, full privacy.</p>
+            <div class="tools-header-stats">
+                <div class="stat-box">
+                    <span class="stat-number">18</span>
+                    <span class="stat-label">Tools</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">9</span>
+                    <span class="stat-label">Categories</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">5k+</span>
+                    <span class="stat-label">Monthly Users</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Tools Page Content -->
+    <main class="tools-page">
+        <div class="tools-container">
+            <!-- Tools Header -->
+            <header class="tools-header">
+                <h1>All Tools</h1>
+                <p>Find the perfect tool to supercharge your workflow.</p>
+            </header>
+
+            <!-- Search and Filter Section -->
+            <div class="search-section">
+                <div class="search-bar-wrapper">
+                    <i class="fa-solid fa-search search-icon"></i>
+                    <input type="text" id="search-input" placeholder="Search for tools by name or description...">
+                    <button id="voice-search-btn" class="mic-button" aria-label="Search by voice">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
+                    <button id="clear-search" class="clear-search hidden" aria-label="Clear search">×</button>
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-button active" data-category="all">All</button>
+                    <button class="filter-button" data-category="finance">Finance</button>
+                    <button class="filter-button" data-category="health">Health</button>
+                    <button class="filter-button" data-category="math">Math</button>
+                    <button class="filter-button" data-category="education">Education</button>
+                    <button class="filter-button" data-category="date-time">Date & Time</button>
+                    <button class="filter-button" data-category="seo">SEO</button>
+                    <button class="filter-button" data-category="developer">Developer</button>
+                    <button class="filter-button" data-category="productivity">Productivity</button>
+                    <button class="filter-button" data-category="other">Other</button>
+                </div>
+            </div>
+
+            <!-- Tools Grid -->
+            <div id="tools-grid" class="tools-grid">
+                <!-- Tool Cards will be populated here -->
+                <div class="tool-card animate-fade-up" data-category="finance">
+                    <span class="tool-category">Finance</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">car loan Calculator</h3>
+                    <p class="tool-description">Calculate the monthly car payments, total interest, and total cost with our advanced Car Loan Calculator. Perfect for buyers, dealers, and financial planners.</p>
+                    <a href="../tools/car-loan-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="finance">
+                    <span class="tool-category">Finance</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">Compound Interest Calculator</h3>
+                    <p class="tool-description">Calculate the future value of your investment with our Compound Interest Calculator. Perfect for investors, financial planners, and anyone interested in growth.</p>
+                    <a href="../tools/compound-interest-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="finance">
+                    <span class="tool-category">Finance</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">Inflation Calculator</h3>
+                    <p class="tool-description">Calculate the buying power of money over time with our Inflation Calculator. Perfect for investors, financial planners, and anyone interested in growth.</p>
+                    <a href="../tools/inflation-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="finance">
+                    <span class="tool-category">Finance</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">Loan Calculator</h3>
+                    <p class="tool-description">Calculate the monthly loan payments, total interest, and total cost with our advanced Loan Calculator. Perfect for buyers, dealers, and financial planners.</p>
+                    <a href="../tools/loan-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="finance">
+                    <span class="tool-category">Finance</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">Mortgage Calculator</h3>
+                    <p class="tool-description">Calculate the monthly mortgage payments, total interest, and total cost with our advanced Mortgage Calculator. Perfect for buyers, dealers, and financial planners.</p>
+                    <a href="../tools/mortgage-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="finance">
+                    <span class="tool-category">Finance</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">Paycheck Calculator</h3>
+                    <p class="tool-description">Calculate your take-home pay, taxes, and deductions with our Paycheck Calculator. Perfect for anyone interested in their financial situation.</p>
+                    <a href="../tools/paycheck-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="finance">
+                    <span class="tool-category">Finance</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">Tip Calculator</h3>
+                    <p class="tool-description">Calculate the tip amount for your bill with our Tip Calculator. Perfect for anyone interested in their financial situation.</p>
+                    <a href="../tools/tip-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="health">
+                    <span class="tool-category">Health</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">BMI Calculator</h3>
+                    <p class="tool-description">Calculate your Body Mass Index (BMI) with our BMI Calculator. Perfect for anyone interested in their health and fitness.</p>
+                    <a href="../tools/bmi-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="health">
+                    <span class="tool-category">Health</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">Calorie Calculator</h3>
+                    <p class="tool-description">Calculate the calories burned during your workout with our Calorie Calculator. Perfect for anyone interested in their health and fitness.</p>
+                    <a href="../tools/calorie-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="math">
+                    <span class="tool-category">Math</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">Integral Calculator</h3>
+                    <p class="tool-description">Calculate the integral of a function with our Integral Calculator. Perfect for anyone interested in their health and fitness.</p>
+                    <a href="../tools/integral-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="math">
+                    <span class="tool-category">Math</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">Fraction Calculator</h3>
+                    <p class="tool-description">Calculate the fraction of a number with our Fraction Calculator. Perfect for anyone interested in their health and fitness.</p>
+                    <a href="../tools/fraction-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="math">
+                    <span class="tool-category">Math</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">Graphing Calculator</h3>
+                    <p class="tool-description">Graph functions, plot points, find intersections, and more with our Graphing Calculator. Perfect for anyone interested in their health and fitness.</p>
+                    <a href="../tools/graphing-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="math">
+                    <span class="tool-category">Math</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">Percentage Calculator</h3>
+                    <p class="tool-description">Calculate the percentage of a number with our Percentage Calculator. Perfect for anyone interested in their health and fitness.</p>
+                    <a href="../tools/percentage-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="math">
+                    <span class="tool-category">Math</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">Scientific Calculator</h3>
+                    <p class="tool-description">Perform advanced calculations with our Scientific Calculator. Features trigonometric, logarithmic, and exponential functions, perfect for students and professionals.</p>
+                    <a href="../tools/scientific-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="education">
+                    <span class="tool-category">Education</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">Final Grade Calculator</h3>
+                    <p class="tool-description">Calculate your final grade with our Final Grade Calculator. Perfect for students and professionals.</p>
+                    <a href="../tools/final-grade-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="education">
+                    <span class="tool-category">Education</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">GPA Calculator</h3>
+                    <p class="tool-description">Calculate your GPA with our GPA Calculator. Perfect for students and professionals.</p>
+                    <a href="../tools/gpa-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="date-time">
+                    <span class="tool-category">Date & Time</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3 class="tool-name">Time Calculator</h3>
+                    <p class="tool-description">Calculate the time between two dates with our Time Calculator. Perfect for students and professionals.</p>
+                    <a href="../tools/time-calculator.html" class="tool-button">open Tool</a>
+                </div>
+                    <div class="tool-card animate-fade-up" data-category="date-time">
+                        <span class="tool-category">Date & Time</span>
+                        <div class="tool-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                        <h3 class="tool-name">Age Calculator</h3>
+                        <p class="tool-description">Calculate your age with our Age Calculator. Perfect for students and professionals.</p>
+                        <a href="../tools/age-calculator.html" class="tool-button">open Tool</a>
+                    </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FAQ Section -->
+    <section class="tools-faq">
+        <div class="container">
+            <div class="tools-faq-header">
+                <h2 class="tools-faq-title">Frequently Asked Questions</h2>
+                <p class="tools-faq-subtitle">
+                    Find answers to common questions about our tools and platform.
+                </p>
+            </div>
+            <div class="tools-faq-list">
+                <div class="tools-faq-item">
+                    <div class="tools-faq-question" tabindex="0">
+                        <h3>What is EveryTool.Tech?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="tools-faq-answer">
+                        <p>
+                            EveryTool.Tech is a free online platform that offers a wide range of tools to help with daily tasks, from finance and health calculators to developer utilities and more. Our goal is to provide simple, reliable, and accessible tools for everyone.
+                        </p>
+                    </div>
+                </div>
+                 <div class="tools-faq-item">
+                    <div class="tools-faq-question" tabindex="0">
+                        <h3>Are all the tools on this website free to use?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="tools-faq-answer">
+                        <p>
+                            Yes, absolutely! All tools available on EveryTool.Tech are completely free to use. There are no hidden charges, subscription fees, or usage limits.
+                        </p>
+                    </div>
+                </div>
+                 <div class="tools-faq-item">
+                    <div class="tools-faq-question" tabindex="0">
+                        <h3>Do I need to create an account to use the tools?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="tools-faq-answer">
+                        <p>
+                           No, you do not need to create an account. All our tools are accessible to everyone without requiring any registration or sign-up. Just visit the page and start using them right away.
+                        </p>
+                    </div>
+                </div>
+
+                 <div class="tools-faq-item">
+                    <div class="tools-faq-question" tabindex="0">
+                        <h3>How do you ensure the accuracy of the calculators?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="tools-faq-answer">
+                        <p>
+                            We take accuracy very seriously. Our financial and health calculators are built based on standard, publicly available formulas and are thoroughly tested. However, they should be used for estimation and informational purposes only and not as a substitute for professional advice.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer-placeholder"></footer>
+
+    <!-- Error Overlay -->
+    <div id="error-overlay" class="error-overlay hidden">
+        <div class="error-box">
+            <h3><i class="fa-solid fa-circle-exclamation"></i> Oops! Something went wrong.</h3>
+            <p id="error-message">We couldn't initialize the application.</p>
+            <button id="retry-button" class="tool-button">Retry</button>
+        </div>
+    </div>
+
+    <!-- External & Main Scripts -->
+    <script src="../view.js"></script>
+    <script src="../FAQ section/faq.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        
+// =====================================================================
+// ====== START: MAGIC BLOCK TO COPY FOR EVERY NEW PAGE ======
+// =====================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+
+const loadScript = (src) => {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = () => resolve(script);
+        script.onerror = () => reject(new Error(`Script load error for ${src}`));
+        document.body.appendChild(script);
+    });
+};
+
+const loadHeader = () => {
+    const headerPlaceholder = document.getElementById('header-placeholder');
+    if (!headerPlaceholder) return;
+
+    // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+    fetch('/header.html') 
+        .then(response => {
+            if (!response.ok) throw new Error('Network response for header.html was not ok.');
+            return response.text();
+        })
+        .then(html => {
+            headerPlaceholder.innerHTML = html;
+            return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2');
+        })
+        .then(() => {
+            // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+            return loadScript('/header-search.js');
+        })
+        .then(() => {
+            if (typeof initializeHeader === 'function') {
+                initializeHeader(); 
+            } else {
+                throw new Error('initializeHeader function not found.');
+            }
+        })
+        .catch(error => {
+            console.error('CRITICAL ERROR during header loading process:', error);
+        });
+};
+
+const loadFooter = () => {
+    const footerPlaceholder = document.getElementById('footer-placeholder');
+    if (footerPlaceholder) {
+        // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+        fetch('/footer.html')
+            .then(response => response.ok ? response.text() : Promise.reject('Failed to load footer'))
+            .then(html => { footerPlaceholder.innerHTML = html; })
+            .catch(error => console.error('Error loading footer:', error));
+    }
+};
+
+loadHeader();
+loadFooter();
+});
+    </script>
+</body>
+</html>

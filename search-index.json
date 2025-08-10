@@ -1,0 +1,93 @@
+[
+  {
+    "title": "Home",
+    "url": "/index.html",
+    "content": "Home"
+  },
+  {
+    "title": "Tools",
+    "url": "/tools-hub-page/index.html",
+    "content": "Tools"
+  },
+  {
+    "title": "About",
+    "url": "/about.html",
+    "content": "About"
+  },
+  {
+    "title": "Contact",
+    "url": "https://contact.everytool.tech",
+    "content": "Contact"
+  },
+  {
+    "title": "Support Us",
+    "url": "/support-us.html",
+    "content": "Support Us"
+  },
+  {
+    "title": "Creators",
+    "url": "/creators.html",
+    "content": "Creators"
+  },
+  {
+    "title": "Finance Tools",
+    "url": "/category-pages/finance-tools.html",
+    "content": "Finance Tools"
+  },
+  {
+    "title": "Health Tools",
+    "url": "/category-pages/health-tools.html",
+    "content": "Health Tools"
+  },
+  {
+    "title": "Education Tools",
+    "url": "/category-pages/education-tools.html",
+    "content": "Education Tools"
+  },
+  {
+    "title": "Math Tools",
+    "url": "/category-pages/math-tools.html",
+    "content": "Math Tools"
+  },
+  {
+    "title": "Data & Time Tools",
+    "url": "/category-pages/date-time-tools.html",
+    "content": "Data & Time Tools",
+    "category": "Data & Time"
+  },
+  {
+    "title": "Age Calculator",
+    "url": "/tools/age-calculator.html",
+    "content": "Calculate your age in years, months, and days based on your date of birth. Find out exactly how old you are down to the day."
+  },
+  {
+    "title": "BMI Calculator",
+    "url": "/tools/bmi-calculator.html",
+    "content": "Determine your Body Mass Index (BMI) using your height and weight. Assess if your weight is in a healthy range."
+  },
+  {
+    "title": "Loan Calculator",
+    "url": "/tools/loan-calculator.html",
+    "content": "Calculate monthly payments, total interest, and amortization schedules for any type of loan, including personal, auto, or mortgages."
+  },
+  {
+    "title": "Percentage Calculator",
+    "url": "/tools/percentage-calculator.html",
+    "content": "Percentage Calculator"
+  },
+  {
+    "title": "Compound Interest Calculator",
+    "url": "/tools/Compound-interest-calculator.html",
+    "content": "See how your investments can grow over time with the power of compound interest. Project future balances with different contribution schedules."
+  },
+  {
+    "title": "Word and Character Counter",
+    "url": "/tools/words-count.html",
+    "content": "Count words, characters, sentences, and paragraphs in your text. A useful tool for writers, students, and editors."
+  },
+  {
+    "title": "Inflation Calculator",
+    "url": "/tools/Inflation-Calculator.html",
+    "content": "Calculate the buying power of money over time. See how inflation has affected the value of a certain amount from one year to another."
+  }
+]

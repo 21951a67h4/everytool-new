@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Allow: /sitemap.html
+Allow: /sitemap.xml
+Allow: /tools/
+Allow: /categorie-page/
+Allow: /assets/
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+Disallow: /draft/
+
+# Sitemap location
+Sitemap: https://everytool.tech/sitemap.xml 
