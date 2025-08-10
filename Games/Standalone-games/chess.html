@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EveryTool | Chess Game</title>
     <!-- Icons -->
+    <link rel="icon" href="/assets/SVG/favicon.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
@@ -15,8 +16,8 @@
             justify-content: flex-start;
             min-height: 100vh;
             margin: 0;
-            background-color: #312e2b;
-            color: #ffffff;
+            background-color: #ffffff;
+            color: #fff;
         }
 
         /* Navigation button to games hub */
@@ -80,7 +81,7 @@
         .black { background-color: #769656; }
 
         .piece {
-            cursor: grab;
+            cursor: pointer;
             user-select: none;
         }
         
@@ -114,9 +115,12 @@
             background-color: rgba(205, 210, 106, 0.7);
         }
 
+        /* Info panel */
+
         #info-panel {
+            color: #000000;
             width: 280px;
-            background-color: #1e1c19;
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
@@ -132,7 +136,7 @@
         h2 {
             margin: 0;
             padding-bottom: 10px;
-            border-bottom: 2px solid #4a4744;
+            border-bottom: 2px solid #000000;
         }
 
         #turn-display {
@@ -150,18 +154,35 @@
         }
         
         .score-section {
-            background-color: #312e2b;
+            color: #000000;
+            background-color: #ffffff;
             padding: 15px;
             border-radius: 8px;
         }
         
         .score-section h3 {
+            color: #000000;
             margin-top: 0;
             margin-bottom: 10px;
             font-size: 1.1em;
         }
 
-        .captured-pieces {
+        .captured-pieces-white {
+            background-color: #769656;
+            border-radius: 8px;
+            border: 2px solid #000000;
+            min-height: 50px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            font-size: 30px;
+        }
+
+        .captured-pieces-black {
+            background-color: #eeeed2;
+            border: 2px solid #000000;
+            border-radius: 8px;
             min-height: 50px;
             display: flex;
             flex-wrap: wrap;
@@ -171,8 +192,8 @@
         }
         
         #new-game-btn {
-            background-color: #769656;
-            color: white;
+            background-color: #000000;
+            color: #ffffff;
             border: none;
             padding: 15px;
             font-size: 1.2em;
@@ -183,7 +204,7 @@
         }
         
         #new-game-btn:hover {
-            background-color: #8ab068;
+            background-color: #ffffff;
         }
 
         #promotion-choice {
@@ -191,8 +212,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #1e1c19;
-            border: 2px solid #769656;
+            background: #ffffff;
+            border: 2px solid #000000;
             padding: 20px;
             border-radius: 10px;
             display: none;
@@ -233,11 +254,11 @@
             <div id="game-announcer"></div>
             <div class="score-section">
                 <h3>White Score: <span id="white-score">0</span></h3>
-                <div class="captured-pieces" id="black-captured"></div>
+                <div class="captured-pieces-white" id="black-captured"></div>
             </div>
             <div class="score-section">
                 <h3>Black Score: <span id="black-score">0</span></h3>
-                <div class="captured-pieces" id="white-captured"></div>
+                <div class="captured-pieces-black" id="white-captured"></div>
             </div>
             <button id="new-game-btn">New Game</button>
         </div>
