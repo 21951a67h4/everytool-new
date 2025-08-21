@@ -1,6 +1,7 @@
 var fuse;
 var searchData = [];
 var isSearchInitialized = false;
+var safeIndex = [];
 
 // Compatible debounce function for all browsers
 function debounce(func, wait) {
@@ -108,6 +109,21 @@ function initUniversalSearch() {
 
 function setupSearchEngine(allPages) {
     searchData = allPages;
+    // Build a simple, safe index for CSP-friendly search
+    try {
+        safeIndex = (Array.isArray(searchData) ? searchData : []).map(function (p) {
+            var title = (p && p.title ? String(p.title) : '');
+            var content = (p && p.content ? String(p.content) : '');
+            return {
+                page: p,
+                titleLower: title.toLowerCase(),
+                contentLower: content.toLowerCase()
+            };
+        });
+    } catch (e) {
+        errorHandler.logError(e, { context: 'setupSearchEngine - build safeIndex' });
+        safeIndex = [];
+    }
     
     var options = {
         keys: [
@@ -119,13 +135,22 @@ function setupSearchEngine(allPages) {
         minMatchCharLength: 2
     };
 
-    if (typeof Fuse === 'undefined') {
-        throw new Error('Fuse.js is not loaded. Please ensure the CDN script tag is in your HTML.');
+    // Try to initialize Fuse when available and CSP allows it; otherwise fall back to safe search
+    if (typeof Fuse !== 'undefined') {
+        try {
+            fuse = new Fuse(searchData, options);
+            console.log('Universal search initialized successfully with Fuse.js');
+        } catch (e) {
+            // Common when CSP blocks eval/Function
+            console.warn('Fuse.js disabled due to CSP or runtime error. Falling back to safe search.', e);
+            fuse = null;
+        }
+    } else {
+        console.warn('Fuse.js not found. Using CSP-safe fallback search.');
+        fuse = null;
     }
 
-    fuse = new Fuse(searchData, options);
     isSearchInitialized = true;
-    console.log('Universal search initialized successfully.');
 }
 
 /**
@@ -134,11 +159,44 @@ function setupSearchEngine(allPages) {
  * @returns {Array} An array of search results.
  */
 function performSearch(query) {
-    if (!fuse) {
+    if (!isSearchInitialized) {
         console.warn('Search is not initialized yet.');
         return [];
     }
-    return fuse.search(query);
+    // Prefer Fuse when available
+    if (fuse) {
+        return fuse.search(query);
+    }
+    // CSP-safe fallback: simple scoring
+    try {
+        var q = String(query || '').toLowerCase().trim();
+        if (q.length < 2) return [];
+        var tokens = q.split(/\s+/).filter(Boolean);
+        if (!tokens.length) return [];
+
+        var results = [];
+        for (var i = 0; i < safeIndex.length; i++) {
+            var item = safeIndex[i];
+            var titleHits = 0;
+            var contentHits = 0;
+            for (var t = 0; t < tokens.length; t++) {
+                var token = tokens[t];
+                if (item.titleLower.indexOf(token) !== -1) titleHits += 2; // weight title higher
+                if (item.contentLower.indexOf(token) !== -1) contentHits += 1;
+            }
+            var score = titleHits + contentHits;
+            if (score > 0) {
+                results.push({ item: item.page, score: 1 / (1 + score) });
+            }
+        }
+        // Sort: higher score (more matches) first
+        results.sort(function (a, b) { return a.score - b.score; });
+        // Limit to top 10 to mirror Fuse UI
+        return results.slice(0, 10);
+    } catch (e) {
+        errorHandler.logError(e, { context: 'performSearch - fallback' });
+        return [];
+    }
 }
 
 // --- END: Search Data Handling ---

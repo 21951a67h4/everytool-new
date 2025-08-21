@@ -1,0 +1,91 @@
+/* Back to Top Button Styles */
+#et-btt {
+  position: fixed;
+  right: calc(16px + env(safe-area-inset-right));
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(10px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#et-btt.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+#et-btt .et-btt__btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--et-btt-size, 48px);
+  height: var(--et-btt-size, 48px);
+  border-radius: 50%;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid #e5e7eb;
+  background: linear-gradient(180deg, #ffffff 0%, #f7f8ff 100%);
+  color: #3f37c9; /* default arrow color */
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.08),
+    /* subtle yellow glow */ 0 0 8px rgba(255,224,102,0.18), 0 0 16px rgba(255,224,102,0.14);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+}
+
+/* Glassy highlight */
+#et-btt .et-btt__btn::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 5px;
+  height: 40%;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0));
+  pointer-events: none;
+}
+
+/* Hover 3D effect */
+#et-btt .et-btt__btn:hover {
+  transform: translateY(-6px) scale(1.05);
+  color: #ffd700; /* arrow turns yellow */
+  box-shadow: 
+    0 12px 25px rgba(255,224,102,0.35 ), 
+    0 8px 15px rgba(255,224,102,0.35), 
+    inset 0 1px 0 rgba(255,255,255,0.5),
+    /* stronger yellow glow */ 0 0 12px rgba(255,224,102,0.35), 0 0 28px rgba(255,224,102,0.30), 0 0 48px rgba(255,224,102,0.22);
+}
+
+/* Active press */
+#et-btt .et-btt__btn:active {
+  transform: translateY(-2px) scale(0.98);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.4);
+}
+
+#et-btt .et-btt__ring {
+  position: absolute;
+  inset: 0;
+}
+
+#et-btt .et-btt__ring-track {
+  fill: none;
+  stroke: rgba(0,0,0,0.12);
+  stroke-width: 3;
+}
+
+#et-btt .et-btt__ring-indicator {
+  fill: none;
+  stroke: #ffd700; /* progress ring in yellow */
+  stroke-width: 3;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+#et-btt .et-btt__icon {
+  position: relative;
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+}

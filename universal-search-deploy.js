@@ -105,6 +105,17 @@
         }
     }
     
+    // Detect if CSP blocks eval/new Function (unsafe-eval)
+    function isUnsafeEvalAllowed() {
+        try {
+            // new Function is commonly blocked by CSP when unsafe-eval is disallowed
+            var fn = new Function('return true;');
+            return !!fn();
+        } catch (e) {
+            return false;
+        }
+    }
+
     // Function to load scripts dynamically
     function loadScript(src) {
         return new Promise(function(resolve, reject) {
@@ -186,9 +197,24 @@
     function ensureHeaderScriptsLoaded() {
         console.log('Ensuring header scripts are loaded...');
         
-        return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2')
+        var evalAllowed = isUnsafeEvalAllowed();
+        var promise = Promise.resolve();
+        if (evalAllowed) {
+            promise = promise.then(function () {
+                return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2')
+                    .then(function() {
+                        console.log('Fuse.js loaded successfully');
+                    })
+                    .catch(function (err) {
+                        console.warn('Failed to load Fuse.js, will use fallback search.', err);
+                    });
+            });
+        } else {
+            console.warn('CSP blocks unsafe-eval; skipping Fuse.js and using fallback search.');
+        }
+
+        return promise
             .then(function() {
-                console.log('Fuse.js loaded successfully');
                 return loadScript('/header-search.js');
             })
             .then(function() {

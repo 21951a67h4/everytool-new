@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About | EveryTool.tech</title>
     <link rel="stylesheet" href="FAQ section/faq.css">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="preload" href="assets/SVG/favicon.svg" as="image">
+    <link rel="icon" href="assets/SVG/favicon.svg">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="back-to-top.css">
+    <script src="back-to-top.js"></script>
     <style>
         :root {
             --primary: #4361EE;
@@ -184,6 +189,18 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
+        .about-profile-image:hover {
+            box-shadow: 0 0 10px var(--text-yellow);
+            border: 1px solid var(--text-yellow);
+        }
+        
+        .about-profile-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
         .about-profile-content {
             flex: 1;
         }
@@ -206,16 +223,35 @@
             color: var(--text-primary);
             opacity: 0.8;
             line-height: 1.6;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
-        .about-profile-bio:hover {
-            color: var(--primary);
+        .about-profile-knowme-btn {
+            display: inline-block;
+            padding: 0.35rem 0.9rem;
+            background: var(--primary);
+            color: white;
             text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
             transition: var(--transition);
+            margin-bottom: 0.7rem;
+            font-size: 0.97rem;
+        }
+
+        .about-profile-knowme-btn:hover {
+            box-shadow: var(--shadow-md);
+            border: 1.5px solid var(--primary);
+            transform: translateY(-2.5px);
+            background: var(--text-yellow);
+            color: var(--primary);
+            border-radius: 50px;
         }
 
         .about-profile-social {
+            position: relative;
+            top: 10px;
+            left: 10px;
             display: flex;
             gap: 1rem;
         }
@@ -228,7 +264,7 @@
 
         .about-profile-social a:hover {
             opacity: 1;
-            color: var(--primary);
+            color: var(--text-yellow);
         }
 
         @media (max-width: 768px) {
@@ -381,7 +417,10 @@
         }
 
         .about-cta-button--secondary:hover {
-            background: white;
+            transform: translateY(-2px) scale(1.05);
+            transition: var(--transition);
+            border: 2px solid var(--text-yellow);
+            background: var(--text-yellow);
             color: var(--primary);
             box-shadow: var(--shadow-md);
             border-radius: 0.5rem;
@@ -549,10 +588,13 @@
         </section>
 
         <div class="about-profile animate-fade-up">
-            <img src="assets/varshith.jpg" alt="Gubba Varshith" class="about-profile-image">
+            <div class="about-profile-left">
+                <img src="assets/varshith2.png" alt="Gubba Varshith" class="about-profile-image">
+                <a href="creators.html" class="about-profile-knowme-btn">Know Me</a>
+            </div>
             <div class="about-profile-content">
                 <h2 class="about-profile-name">Gubba Varshith</h2>
-                <div class="about-profile-role">Founder & Builder</div>
+                <div class="about-profile-role">Founder & Full Stack Developer</div>
                 <p class="about-profile-bio">
                     Hi! I'm Varshith, the creator of EveryTool.tech. I'm passionate about building simple, 
                     useful tools that help people get things done faster. My background is in web development 
@@ -665,7 +707,7 @@
                     <a href="/tools-hub-page/index.html" class="about-cta-button about-cta-button--primary">
                         Explore Tools
                     </a>
-                    <a href="coming-soon.html" class="about-cta-button about-cta-button--secondary">
+                    <a href="contact.html" class="about-cta-button about-cta-button--secondary">
                         Contact Us
                     </a>
                 </div>

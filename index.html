@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data: https://api.producthunt.com; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self';">
-    <title>Everytool.tech – Free Online Calculators, Converters & Dev Tools</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src-elem 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: https://api.producthunt.com; font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self';">
+    <title>Everytool.tech | Your privacy our priority</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/SVG/favicon.svg">
@@ -17,6 +17,9 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" href="FAQ section/faq.css">
     <link rel="stylesheet" href="styles.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="back-to-top.css">
+    <script src="back-to-top.js"></script>
     
     <!-- Meta Tags -->
     <meta name="description" content="Transform your work with smart tools. One platform, endless possibilities. Find and use the perfect tool for any task.">
@@ -262,9 +265,9 @@ kbd {
                     <div class="hero__visual hero__visual-modern animate-slide-in improved-profile-float">
                         <div class="hero__profile-card improved-profile-card">
                             <div class="hero__profile-img-wrap simple-rounded-profile">
-                                <img src="assets/varshith.jpg" alt="Gubba Varshith" class="hero__profile-img rounded-square-img">
+                                <img src="assets/varshith2.png" alt="Gubba Varshith" class="hero__profile-img rounded-square-img">
                                 <a href="/creators.html"
-                                    <button class="hero__profile-status" aria-label="Online Status">click me</button>
+                                    <button class="hero__profile-status" aria-label="Online Status">Know More</button>
                                 </a>
                             </div>
                             <div class="hero__profile-info">
@@ -329,7 +332,6 @@ kbd {
                         <div class="category-card__tools">
                             <a href="tools/bmi-calculator.html" class="category-card__tool" target="_blank" rel="noopener">BMI Calculator</a>
                             <a href="tools/age-calculator.html" class="category-card__tool" target="_blank" rel="noopener">Age Calculator</a>
-                            <a href="category-pages/health-tools.html" class="category-card__tool">More...</a>
                         </div>
                         <a href="category-pages/health-tools.html" class="category-card__button">Explore Health Tools</a>
                     </article>
@@ -341,9 +343,8 @@ kbd {
                         <h3 class="category-card__title">Education Tools</h3>
                         <p class="category-card__description">Resources for learning and teaching</p>
                         <div class="category-card__tools">
-                            <a href="tools/words-count.html" class="category-card__tool" target="_blank" rel="noopener">Word Counter</a>
-                            <a href="category-pages/education-tools.html" class="category-card__tool" target="_blank" rel="noopener">More Tools</a>
-                            <a href="tools/percentage-calculator.html" class="category-card__tool" target="_blank" rel="noopener">Percentage</a>
+                            <a href="tools/words-count.html" class="category-card__tool" target="_blank" rel="noopener">Financial Calculator</a>
+                            <a href="tools/percentage-calculator.html" class="category-card__tool" target="_blank" rel="noopener">GPA Calculator</a>
                         </div>
                         <a href="category-pages/education-tools.html" class="category-card__button">Explore Education Tools</a>
                     </article>
@@ -355,9 +356,10 @@ kbd {
                         <h3 class="category-card__title">Math Tools</h3>
                         <p class="category-card__description">Essential math calculators and converters</p>
                         <div class="category-card__tools">
-                            <a href="tools/percentage-calculator.html" class="category-card__tool" target="_blank" rel="noopener">Percentage</a>
-                            <a href="category-pages/math-tools.html" class="category-card__tool" target="_blank" rel="noopener">More Tools</a>
-                            <a href="tools/Compound-interest-calculator.html" class="category-card__tool" target="_blank" rel="noopener">Interest</a>
+                            <a href="tools/percentage-calculator.html" class="category-card__tool" target="_blank" rel="noopener">Percentage Calculator</a>
+                            <a href="tools/Compound-interest-calculator.html" class="category-card__tool" target="_blank" rel="noopener">Interest Calculator</a>
+                            <a href="category-pages/math-tools.html" class="category-card__tool" target="_blank" rel="noopener">Integral Calculator</a>
+                            <a href="category-pages/math-tools.html" class="category-card__tool" target="_blank" rel="noopener">Fraction Calculator</a>
                         </div>
                         <a href="category-pages/math-tools.html" class="category-card__button">Explore Math Tools</a>
                     </article>
@@ -370,50 +372,19 @@ kbd {
                         <p class="category-card__description">Time calculations and data management</p>
                         <div class="category-card__tools">
                             <a href="tools/age-calculator.html" class="category-card__tool" target="_blank" rel="noopener">Age Calculator</a>
-                            <a href="category-pages/date-time-tools.html" class="category-card__tool" target="_blank" rel="noopener">More Tools</a>
-                            <a href="category-pages/date-time-tools.html" class="category-card__tool" target="_blank" rel="noopener">View All</a>
+                            <a href="category-pages/date-time-tools.html" class="category-card__tool" target="_blank" rel="noopener">Time Calculator</a>
                         </div>
                         <a href="category-pages/date-time-tools.html" class="category-card__button">Explore Date & Time Tools</a>
                     </article>
 
                     <article class="category-card">
                         <div class="category-card__icon-wrapper">
-                            <i class="fas fa-heartbeat category-card__icon"></i>
-                        </div>
-                        <h3 class="category-card__title">SEO Tools</h3>
-                        <p class="category-card__description">SEO tools for your website</p>
-                        <div class="category-card__tools">
-                            <a href="tools/Interactive-emotion-wheel.html" class="category-card__tool" target="_blank" rel="noopener">Emotion Wheel</a>
-                            <a href="tools/Interactive-emotion-wheel.html" class="category-card__tool" target="_blank" rel="noopener">Emotion Wheel</a>
-                            <a href="category-pages/seo-tools.html" class="category-card__tool" target="_blank" rel="noopener">More...</a>
-                        </div>
-                        <a href="category-pages/seo-tools.html" class="category-card__button">Explore SEO Tools</a>
-                    </article>
-
-                    <article class="category-card">
-                        <div class="category-card__icon-wrapper">
-                            <i class="fas fa-heartbeat category-card__icon"></i>
-                        </div>
-                        <h3 class="category-card__title">Developer Tools</h3>
-                        <p class="category-card__description">Developer tools for your website</p>
-                        <div class="category-card__tools">
-                            <a href="tools/Interactive-emotion-wheel.html" class="category-card__tool" target="_blank" rel="noopener">Emotion Wheel</a>
-                            <a href="tools/Interactive-emotion-wheel.html" class="category-card__tool" target="_blank" rel="noopener">Emotion Wheel</a>
-                            <a href="category-pages/developer-tools.html" class="category-card__tool" target="_blank" rel="noopener">More...</a>
-                        </div>
-                        <a href="category-pages/developer-tools.html" class="category-card__button">Explore Developer Tools</a>
-                    </article>
-
-                    <article class="category-card">
-                        <div class="category-card__icon-wrapper">
-                            <i class="fas fa-heartbeat category-card__icon"></i>
+                            <i class="fas fa-tools category-card__icon"></i>
                         </div>
                         <h3 class="category-card__title">Productivity Tools</h3>
-                        <p class="category-card__description">Productivity tools for your website</p>
+                        <p class="category-card__description">Tools to help you manage your time and tasks</p>
                         <div class="category-card__tools">
                             <a href="tools/words-count.html" class="category-card__tool" target="_blank" rel="noopener">Word Counter</a>
-                            <a href="tools/Interactive-emotion-wheel.html" class="category-card__tool" target="_blank" rel="noopener">Emotion Wheel</a>
-                            <a href="category-pages/productivity-tools.html" class="category-card__tool" target="_blank" rel="noopener">More...</a>
                         </div>
                         <a href="category-pages/productivity-tools.html" class="category-card__button">Explore Productivity Tools</a>
                     </article>
@@ -424,7 +395,7 @@ kbd {
                         </div>
                         <h3 class="category-card__title">All Tools</h3>
                         <p class="category-card__description">Browse our complete catalog of tools present in this website</p>
-                        <a href="tools-hub-page/index.html" class="category-card__button">Explore Tools</a>
+                        <a href="tools-hub-page/index.html" class="category-card__button">Explore All Tools</a>
                     </article>
                 </div>
             </div>
@@ -545,6 +516,15 @@ kbd {
                             <p>Yes, all our tools are completely free to use. We believe in providing accessible solutions for everyone.</p>
                         </div>
                     </div>
+                    <div class="faq-item"> 
+                        <div class="faq-question"> 
+                            What’s the fastest way to find the right tool? 
+                            <i class="fas fa-chevron-down"></i> 
+                        </div> 
+                        <div class="faq-answer"> 
+                            <p>Simply click the search icon in the header or press <strong>Alt + S</strong> to open the global search pop-up. You can also browse by category or explore our featured tools on the homepage. Each tool includes a detailed description so you know exactly how it works before using it.</p> 
+                        </div>
+                    </div>
                     <div class="faq-item">
                         <div class="faq-question">
                             How do I find the right tool for my needs?
@@ -556,20 +536,11 @@ kbd {
                     </div>
                     <div class="faq-item">
                         <div class="faq-question">
-                            Is my data safe when using these tools?
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Yes, we take data security seriously. All tools process data locally in your browser when possible, and we never store your personal information or uploaded files.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question">
                             Can I suggest new tools or features?
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            <p>Absolutely! We welcome suggestions for new tools and features. You can contact us through our feedback form or email us directly.</p>
+                            <p>Absolutely! We welcome suggestions for new tools and features. You can contact us through our <a href="contact.html">contact page</a>.</p>
                         </div>
                     </div>
                 </div>

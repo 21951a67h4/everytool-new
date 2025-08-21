@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="FAQ section/faq.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="back-to-top.css">
+    <script src="back-to-top.js"></script>
     <style>
         :root {
             --primary: #4361EE;
@@ -272,19 +275,6 @@
             }
         }
 
-        /* FAQ Section Styles */
-        .faq-section,
-        .container,
-        .faq-header,
-        .faq-title,
-        .faq-subtitle,
-        .faq-list,
-        .faq-item,
-        .faq-question,
-        .faq-answer {
-            /* Remove these styles as they're now in faq.css */
-        }
-
         /* Header Styles */
         #header-placeholder {
             min-height: 130px;
@@ -460,29 +450,7 @@
 
     <!-- Scripts -->
     <script src="FAQ section/faq.js"></script>
-    <script>
-        // Load header and footer
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-placeholder').innerHTML = data;
-            })
-            .catch(error => console.error('Error loading header:', error));
-
-        fetch('footer.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('footer-placeholder').innerHTML = data;
-            })
-            .catch(error => console.error('Error loading footer:', error));
-
-        // Initialize FAQ functionality
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.faqManager) {
-                faqManager.init();
-            }
-        });
-    </script>
+    
 
 <script>
     // =====================================================================
