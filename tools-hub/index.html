@@ -30,11 +30,11 @@
             <p class="tools-header-subtitle">Every tool you need — 100% free, zero tracking, full privacy.</p>
             <div class="tools-header-stats">
                 <div class="stat-box">
-                    <span class="stat-number">20</span>
+                    <span class="stat-number" id="tools-count">0</span>
                     <span class="stat-label">Tools</span>
                 </div>
                 <div class="stat-box">
-                    <span class="stat-number">6</span>
+                    <span class="stat-number" id="categories-count">0</span>
                     <span class="stat-label">Categories</span>
                 </div>
                 <div class="stat-box">
@@ -353,8 +353,36 @@ const loadFooter = () => {
     }
 };
 
+// Function to automatically update tools and categories count
+const updateStats = () => {
+    // Count total tools
+    const toolCards = document.querySelectorAll('.tool-card');
+    const toolsCount = toolCards.length;
+    
+    // Count total available categories from filter buttons (excluding "all")
+    const filterButtons = document.querySelectorAll('.filter-button[data-category]:not([data-category="all"])');
+    const categoriesCount = filterButtons.length;
+    
+    // Update the display
+    const toolsCountElement = document.getElementById('tools-count');
+    const categoriesCountElement = document.getElementById('categories-count');
+    
+    if (toolsCountElement) {
+        toolsCountElement.textContent = toolsCount;
+    }
+    
+    if (categoriesCountElement) {
+        categoriesCountElement.textContent = categoriesCount;
+    }
+    
+    console.log(`Stats updated: ${toolsCount} tools, ${categoriesCount} categories`);
+};
+
 loadHeader();
 loadFooter();
+
+// Update stats after DOM is fully loaded
+setTimeout(updateStats, 100);
 });
     </script>
 </body>

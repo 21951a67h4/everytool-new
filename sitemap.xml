@@ -54,7 +54,7 @@
     </url>
     <!-- Tools Hub Page -->
     <url>
-        <loc>https://everytool.tech/tools-hub-page/index.html</loc>
+        <loc>https://everytool.tech/tools-hub/index.html</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
@@ -84,6 +84,21 @@
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
+    <url>
+        <loc>https://everytool.tech/category-pages/seo-tools.html</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/category-pages/developer-tools.html</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/category-pages/productivity-tools.html</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
     <!-- Tool Pages (from /tools) -->
     <url>
         <loc>https://everytool.tech/tools/bmi-calculator.html</loc>
@@ -107,6 +122,86 @@
     </url>
     <url>
         <loc>https://everytool.tech/tools/loan-calculator.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/car-loan-calculator.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/mortgage-calculator.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/Compound-interest-calculator.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/FIRE-Age-Simulator.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/Fraction-calculator.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/GPA-Calculator.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/Graphing-calculator.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/Inflation-Calculator.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/Integral-calculator.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/Interactive-emotion-wheel.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/Paycheck-calculator.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/scientific-calculator.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/Time-calculator.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/Tip-calculator.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/words-count.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://everytool.tech/tools/final-grade-calculator.html</loc>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
