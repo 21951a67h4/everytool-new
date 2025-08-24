@@ -208,6 +208,36 @@
             opacity: 0;
         }
 
+        /* Ensure search button is visible on mobile */
+        .header__search-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            font-size: 1rem;
+            min-width: auto;
+            height: 40px;
+        }
+
+        .header__search-text {
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        /* Ensure header top section is properly visible */
+        .header__top {
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Ensure logo is properly sized on mobile */
+        .header__logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
         body.menu-open {
             overflow: hidden;
         }
@@ -319,6 +349,27 @@
         .header__nav {
             width: 100%;
             justify-content: center;
+        }
+    }
+
+    /* Additional mobile optimizations */
+    @media (max-width: 480px) {
+        .header__container {
+            padding: 0 1rem;
+        }
+        
+        .header__search-btn {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.9rem;
+        }
+        
+        .header__search-text {
+            font-size: 0.85rem;
+        }
+        
+        .header__logo-img {
+            width: 36px;
+            height: 36px;
         }
     }
 

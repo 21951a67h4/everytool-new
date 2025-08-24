@@ -8,7 +8,7 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link rel="apple-touch-icon" href="assets/logo-icon.png">
+    <link rel="apple-touch-icon" href="assets/lo">
     <link rel="manifest" href="site.webmanifest">
     
     <!-- Font Awesome -->
@@ -20,17 +20,58 @@
     
     <style>
         :root {
-            --primary-color: #2563eb;
+            /* Clean, Professional Color System */
+            --primary: #2563eb;
             --primary-hover: #1d4ed8;
-            --text-color: #1f2937;
-            --text-light: #6b7280;
-            --bg-color: #ffffff;
-            --bg-light: #f9fafb;
-            --border-color: #e5e7eb;
-            --section-bg: #f8fafc;
-            --section-border: #e2e8f0;
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --transition: all 0.3s ease;
+            --primary-light: #3b82f6;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-muted: #f1f5f9;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --success: #10b981;
+            --success-light: #d1fae5;
+
+            /* Typography Scale */
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+
+            /* Spacing Scale */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+            /* Transitions */
+            --transition-fast: all 0.15s ease;
+            --transition-normal: all 0.3s ease;
+            --transition-slow: all 0.5s ease;
         }
 
         * {
@@ -40,10 +81,10 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
+            color: var(--text-primary);
+            background-color: var(--bg-secondary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -51,166 +92,287 @@
 
         .main-content {
             flex: 1;
-            padding: 3rem 1.5rem;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: var(--space-8) var(--space-4);
             width: 100%;
         }
 
         .sitemap-header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: var(--space-10);
+            padding: var(--space-6) 0;
         }
 
         .sitemap-title {
-            font-size: 2.5rem;
-            color: var(--primary-color);
+            font-size: var(--font-size-4xl);
             font-weight: 700;
-            margin-bottom: 1rem;
+            color: var(--text-primary);
+            margin-bottom: var(--space-3);
+            line-height: 1.2;
         }
 
         .description {
-            color: var(--text-light);
-            font-size: 1.1rem;
-            max-width: 700px;
+            color: var(--text-secondary);
+            font-size: var(--font-size-lg);
+            max-width: 600px;
             margin: 0 auto;
+            line-height: 1.6;
         }
 
         .search-container {
-            max-width: 600px;
-            margin: 0 auto 2rem auto;
+            max-width: 500px;
+            margin: 0 auto var(--space-8) auto;
             position: relative;
         }
 
         .search-input {
             width: 100%;
-            padding: 1rem 1.5rem;
-            padding-left: 3rem;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: var(--transition);
+            padding: var(--space-3) var(--space-4);
+            padding-left: 2.5rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            background: var(--bg-primary);
+            transition: var(--transition-normal);
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
         }
 
         .search-input:focus {
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1), var(--shadow-md);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
         }
 
         .search-icon {
             position: absolute;
-            left: 1rem;
+            left: 0.75rem;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-light);
+            color: var(--text-muted);
+            font-size: 1rem;
+            pointer-events: none;
+            transition: var(--transition-normal);
         }
 
+        .search-loading {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: translateY(-50%) rotate(0deg); }
+            to { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        .search-input:focus + .search-icon {
+            color: var(--primary);
+        }
+
+        .no-results-message {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+            margin-top: var(--space-2);
+        }
+
+        .no-results-message i {
+            font-size: 2rem;
+            color: var(--text-muted);
+            margin-bottom: var(--space-2);
+        }
+
+        .no-results-message p {
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: var(--space-1);
+        }
+
+        .no-results-message small {
+            color: var(--text-muted);
+        }
+
+        /* No animations - keep it clean and professional */
+
         .section {
-            background: var(--section-bg);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--section-border);
-            transition: var(--transition);
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin-bottom: var(--space-8);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: var(--transition-normal);
         }
 
         .section:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-md);
+            border-color: var(--border);
         }
 
         .section-heading {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            color: var(--primary-color);
-            font-size: 1.5rem;
+            gap: var(--space-3);
+            color: var(--primary);
+            font-size: var(--font-size-2xl);
             font-weight: 600;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid var(--section-border);
+            margin-bottom: var(--space-5);
+            padding-bottom: var(--space-2);
+            border-bottom: 2px solid var(--border-light);
         }
 
         .section-heading i {
             font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        /* Count badge */
+        .count-badge {
+            margin-left: auto;
+            background: var(--bg-muted);
+            color: var(--text-secondary);
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+            padding: var(--space-1) var(--space-2);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            transition: var(--transition-normal);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .count-badge:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
         .link-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-4);
         }
 
         .link-card {
-            background: var(--bg-color);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
+            background: var(--bg-primary);
+            padding: var(--space-3);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-sm);
         }
 
         .link-card:hover {
-            color: #ffd700;
-            border-color: var(--primary-color);
-            transform: scale(1.05);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
         }
 
         .link-card a {
-            color: var(--text-color);
+            color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: var(--space-2);
             font-weight: 500;
+            font-size: var(--font-size-sm);
+            line-height: 1.4;
         }
 
         .link-card a:hover {
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
         .link-card i {
-            color: var(--primary-color);
+            color: var(--primary);
             font-size: 0.875rem;
+            flex-shrink: 0;
         }
 
         .timestamp {
             text-align: center;
-            color: var(--text-light);
-            margin-top: 3rem;
+            color: var(--text-secondary);
+            margin-top: var(--space-12);
             font-size: 0.875rem;
+            opacity: 0.8;
         }
 
         @media (max-width: 768px) {
             .main-content {
-                padding: 2rem 1rem;
+                padding: var(--space-8) var(--space-4);
             }
 
             .sitemap-title {
-                font-size: 2rem;
+                font-size: clamp(1.5rem, 5vw, 2rem);
             }
 
             .section {
-                padding: 1.5rem;
+                padding: var(--space-6);
+                margin-bottom: var(--space-6);
+                background: var(--bg-primary);
+                border: 1px solid var(--border);
+                box-shadow: var(--shadow-sm);
+            }
+
+            .section-heading {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-3);
+                font-size: 1.25rem;
+            }
+
+            .count-badge {
+                margin-left: 0;
+                margin-top: var(--space-2);
+                font-size: 0.75rem;
+                padding: var(--space-1) var(--space-2);
             }
 
             .link-grid {
                 grid-template-columns: 1fr;
+                gap: var(--space-3);
+            }
+
+            .link-card {
+                padding: var(--space-3);
             }
         }
 
         @media (max-width: 480px) {
             .sitemap-title {
-                font-size: 1.75rem;
+                font-size: clamp(1.25rem, 6vw, 1.75rem);
             }
 
             .section {
-                padding: 1rem;
+                padding: var(--space-4);
+                margin-bottom: var(--space-4);
             }
 
             .section-heading {
-                font-size: 1.25rem;
+                font-size: 1.125rem;
+            }
+
+            .search-input {
+                font-size: 1rem;
+                padding: var(--space-3) var(--space-4);
+                padding-left: 2rem;
+            }
+
+            .search-icon {
+                left: 0.75rem;
+                font-size: 1rem;
             }
         }
     </style>
@@ -227,7 +389,12 @@
 
         <div class="search-container">
             <i class="fas fa-search search-icon"></i>
-            <input type="text" class="search-input" placeholder="Search for tools and pages..." id="searchInput">
+            <input type="text" class="search-input" placeholder="Search for tools and pages..." id="searchInput" aria-label="Search tools and pages">
+            <div id="no-results" class="no-results-message" style="display: none;">
+                <i class="fas fa-search"></i>
+                <p>No tools or pages found matching your search.</p>
+                <small>Try different keywords or browse the categories below.</small>
+            </div>
         </div>
 
         <main>
@@ -244,13 +411,10 @@
                         <a href="about.html" target="_blank"><i class="fas fa-chevron-right"></i>About</a>
                     </div>
                     <div class="link-card">
-                        <a href="coming-soon.html" target="_blank"><i class="fas fa-chevron-right"></i>Contact</a>
+                        <a href="contact.html" target="_blank"><i class="fas fa-chevron-right"></i>Contact</a>
                     </div>
                     <div class="link-card">
-                        <a href="FAQ section/faq.html" target="_blank"><i class="fas fa-chevron-right"></i>FAQ</a>
-                    </div>
-                    <div class="link-card">
-                        <a href="support-us.html" target="_blank"><i class="fas fa-chevron-right"></i>Support Us</a>
+                        <a href="support.html" target="_blank"><i class="fas fa-chevron-right"></i>Support Us</a>
                     </div>
                     <div class="link-card">
                         <a href="terms.html" target="_blank"><i class="fas fa-chevron-right"></i>Terms of Service</a>
@@ -261,49 +425,48 @@
                 </div>
             </section>
 
-            <section class="section">
+            <section class="section" id="categories-section">
                 <div class="section-heading">
                     <i class="fas fa-th-large"></i>
                     Tool Categories
+                    <span class="count-badge" id="categoriesCount"></span>
                 </div>
                 <div class="link-grid">
                     <div class="link-card">
-                        <a href="tools-hub-page/index.html?category=calculators" target="_blank"><i class="fas fa-chevron-right"></i>Calculators</a>
+                        <a href="/category-pages/finance-tools.html" target="_blank"><i class="fas fa-chevron-right"></i>Financial Tools</a>
                     </div>
                     <div class="link-card">
-                        <a href="tools-hub-page/index.html?category=converters" target="_blank"><i class="fas fa-chevron-right"></i>Converters</a>
+                        <a href="/category-pages/health-tools.html" target="_blank"><i class="fas fa-chevron-right"></i>Health Tools</a>
                     </div>
                     <div class="link-card">
-                        <a href="tools-hub-page/index.html?category=developer" target="_blank"><i class="fas fa-chevron-right"></i>Developer Tools</a>
+                        <a href="/category-pages/math-tools.html" target="_blank"><i class="fas fa-chevron-right"></i>Math Tools</a>
                     </div>
                     <div class="link-card">
-                        <a href="tools-hub-page/index.html?category=generators" target="_blank"><i class="fas fa-chevron-right"></i>Generators</a>
+                        <a href="/category-pages/education-tools.html" target="_blank"><i class="fas fa-chevron-right"></i>Education Tools</a>
                     </div>
                     <div class="link-card">
-                        <a href="tools-hub-page/index.html?category=seo" target="_blank"><i class="fas fa-chevron-right"></i>SEO Tools</a>
+                        <a href="/category-pages/date-time-tools.html" target="_blank"><i class="fas fa-chevron-right"></i>Date & Time Tools</a>
                     </div>
                     <div class="link-card">
-                        <a href="tools-hub-page/index.html?category=text" target="_blank"><i class="fas fa-chevron-right"></i>Text/File Tools</a>
+                        <a href="/category-pages/seo-tools.html" target="_blank"><i class="fas fa-chevron-right"></i>SEO Tools</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="/category-pages/developer-tools.html" target="_blank"><i class="fas fa-chevron-right"></i>Developer Tools</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="/category-pages/productivity-tools.html" target="_blank"><i class="fas fa-chevron-right"></i>Productivity Tools</a>
                     </div>
                 </div>
             </section>
 
-            <section class="section">
+            <section class="section" id="tools-section">
                 <div class="section-heading">
                     <i class="fas fa-tools"></i>
                     Individual Tools
+                    <span class="count-badge" id="toolsCount"></span>
                 </div>
                 <div class="link-grid">
                     <!-- Calculators -->
-                    <div class="link-card">
-                        <a href="tools/bmi-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>BMI Calculator</a>
-                    </div>
-                    <div class="link-card">
-                        <a href="tools/age-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Age Calculator</a>
-                    </div>
-                    <div class="link-card">
-                        <a href="tools/calorie-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Calorie Calculator</a>
-                    </div>
                     <div class="link-card">
                         <a href="tools/car-loan-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Car Loan Calculator</a>
                     </div>
@@ -323,13 +486,46 @@
                         <a href="tools/paycheck-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Paycheck Calculator</a>
                     </div>
                     <div class="link-card">
-                        <a href="tools/percentage-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Percentage Calculator</a>
-                    </div>
-                    <div class="link-card">
                         <a href="tools/tip-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Tip Calculator</a>
                     </div>
                     <div class="link-card">
-                        <a href="tools/word-count.html" target="_blank"><i class="fas fa-chevron-right"></i>Word Count</a>
+                        <a href="tools/FIRE-Age-Simulator.html" target="_blank"><i class="fas fa-chevron-right"></i>FIRE Age Simulator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/calorie-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Calorie Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/bmi-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>BMI Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/Integral-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Integral Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/fraction-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Fraction Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/Graphing-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Graphing Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/percentage-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Percentage Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/scientific-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Scientific Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/final-grade-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Final Grade Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/gpa-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>GPA Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/time-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Time Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/age-calculator.html" target="_blank"><i class="fas fa-chevron-right"></i>Age Calculator</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="tools/word-count.html" target="_blank"><i class="fas fa-chevron-right"></i>Word Counter</a>
                     </div>
                 </div>
             </section>
@@ -370,19 +566,103 @@
             })
             .catch(error => console.error('Error loading footer:', error));
 
-        // Search functionality
+        // Enhanced Search functionality
         const searchInput = document.getElementById('searchInput');
+        const searchIcon = document.querySelector('.search-icon');
         const linkCards = document.querySelectorAll('.link-card');
+        const sections = document.querySelectorAll('.section');
 
         searchInput.addEventListener('input', () => {
-            const searchTerm = searchInput.value.toLowerCase();
-            
-            linkCards.forEach(card => {
-                const linkText = card.querySelector('a').textContent.toLowerCase();
-                const matchesSearch = linkText.includes(searchTerm);
-                card.style.display = matchesSearch ? 'block' : 'none';
+            const searchTerm = searchInput.value.toLowerCase().trim();
+
+            // Show loading indicator for longer searches
+            if (searchTerm.length > 2) {
+                searchIcon.classList.add('search-loading');
+            } else {
+                searchIcon.classList.remove('search-loading');
+            }
+
+            if (searchTerm === '') {
+                // Show all cards and sections when search is empty
+                linkCards.forEach(card => card.style.display = 'block');
+                sections.forEach(section => section.style.display = 'block');
+                document.getElementById('no-results').style.display = 'none';
+                searchIcon.classList.remove('search-loading');
+                return;
+            }
+
+            let hasVisibleCards = false;
+
+            sections.forEach(section => {
+                const sectionCards = section.querySelectorAll('.link-card');
+                let sectionHasVisibleCards = false;
+
+                sectionCards.forEach(card => {
+                    const linkText = card.querySelector('a').textContent.toLowerCase();
+                    const matchesSearch = linkText.includes(searchTerm);
+
+                    if (matchesSearch) {
+                        card.style.display = 'block';
+                        sectionHasVisibleCards = true;
+                        hasVisibleCards = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Show/hide entire section based on whether it has visible cards
+                section.style.display = sectionHasVisibleCards ? 'block' : 'none';
+            });
+
+            // Show/hide "no results" message
+            const noResultsEl = document.getElementById('no-results');
+            if (!hasVisibleCards) {
+                noResultsEl.style.display = 'block';
+            } else {
+                noResultsEl.style.display = 'none';
+            }
+
+            // Remove loading indicator
+            searchIcon.classList.remove('search-loading');
+        });
+
+        // Keyboard navigation and accessibility
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                searchInput.value = '';
+                searchInput.blur();
+                // Trigger input event to reset search
+                const inputEvent = new Event('input', { bubbles: true });
+                searchInput.dispatchEvent(inputEvent);
+            }
+        });
+
+        // Smooth scroll to sections when clicking section headings
+        document.querySelectorAll('.section-heading').forEach(heading => {
+            heading.addEventListener('click', () => {
+                const section = heading.closest('.section');
+                const rect = section.getBoundingClientRect();
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const targetTop = rect.top + scrollTop - 20; // 20px offset from top
+
+                window.scrollTo({
+                    top: targetTop,
+                    behavior: 'smooth'
+                });
             });
         });
+
+        // Auto-update counts on load
+        const categoriesCountEl = document.getElementById('categoriesCount');
+        const toolsCountEl = document.getElementById('toolsCount');
+        const categoriesTotal = document.querySelectorAll('#categories-section .link-card').length;
+        const toolsTotal = document.querySelectorAll('#tools-section .link-card').length;
+        if (categoriesCountEl) {
+            categoriesCountEl.textContent = `total categories : ${categoriesTotal}`;
+        }
+        if (toolsCountEl) {
+            toolsCountEl.textContent = `total tools : ${toolsTotal}`;
+        }
     </script>
 </body>
 </html> 
