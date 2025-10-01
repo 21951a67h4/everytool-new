@@ -1,0 +1,624 @@
+<!--
+    Text Diff Checker Tool Page
+    Built using the EveryTool.tech template.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Text Diff Checker | EveryTool.tech</title>
+
+    <meta name="description" content="Compare two text or code snippets side-by-side. Highlights additions, deletions, and changes with color-coded diff output.">
+
+    <meta name="keywords" content="text diff, code comparison, diff checker, text compare tool">
+
+    <meta name="robots" content="index, follow">
+
+
+    <meta property="og:title" content="Text Diff Checker | EveryTool.tech">
+
+    <meta property="og:description" content="Compare text and code with visual diff highlighting for additions, deletions, and changes.">
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:url" content="https://everytool.tech/text-diff-checker">
+
+
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../FAQ section/faq.css">
+    <link rel="stylesheet" href="tool.css">
+    <link rel="stylesheet" href="../back-to-top.css">
+    <script src="../back-to-top.js"></script>
+    <style>
+        #header-placeholder {
+            min-height: 130px;
+            position: relative;
+            z-index: 2000;
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        .diff-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .diff-inputs {
+            display: grid;
+            gap: 20px;
+        }
+        @media (min-width: 768px) {
+            .diff-inputs {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .diff-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .diff-input-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .diff-textarea {
+            width: 100%;
+            min-height: 200px;
+            border-radius: 14px;
+            border: 1px solid #cbd5f5;
+            padding: 16px;
+            background: #f8f9ff;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.9rem;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+            resize: vertical;
+        }
+        .diff-textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.16);
+        }
+
+        .diff-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .diff-result-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            padding: 24px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+        }
+
+        .diff-result-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .diff-result-title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .diff-stats {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .diff-stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.88rem;
+            padding: 6px 12px;
+            border-radius: 8px;
+        }
+
+        .diff-stat--added {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .diff-stat--removed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .diff-stat--changed {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .diff-output {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.88rem;
+            max-height: 500px;
+            overflow: auto;
+            line-height: 1.6;
+        }
+
+        .diff-line {
+            display: block;
+            padding: 2px 8px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .diff-line--added {
+            background: rgba(34, 197, 94, 0.15);
+            color: #86efac;
+        }
+
+        .diff-line--removed {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+        }
+
+        .diff-line--unchanged {
+            color: #cbd5e1;
+        }
+
+        .diff-line-number {
+            display: inline-block;
+            width: 40px;
+            color: #64748b;
+            user-select: none;
+        }
+
+        .diff-no-result {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .diff-feedback {
+            font-size: 0.88rem;
+            color: #10b981;
+            min-height: 18px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body data-tool-name="Text Diff Checker" data-meta-description="Compare two text or code snippets with visual diff highlighting.">
+
+    <div id="header-placeholder"></div>
+
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Text Diff Checker</h1>
+
+                    <p class="tool-hero__description">
+                        Compare two text or code snippets side-by-side. Instantly see additions, deletions, and changes highlighted with color-coded diff output.
+                    </p>
+
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-columns"></i> <span>Side-by-Side Compare</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-highlighter"></i> <span>Visual Highlighting</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-download"></i> <span>Export Results</span>
+                        </div>
+                    </div>
+
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-code-compare"></i>
+                            Compare Text
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-info-circle"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Text Diff Checker</h2>
+                    <p class="tool-display__description">
+                        Paste your original and modified text below, then click Compare to see the differences.
+                    </p>
+                </div>
+
+                <div class="diff-container">
+                    <div class="diff-inputs">
+                        <div class="diff-input-group">
+                            <label class="diff-input-label" for="original-text">
+                                <i class="fas fa-file-alt"></i>
+                                Original Text
+                            </label>
+                            <textarea id="original-text" class="diff-textarea" placeholder="Paste original text here..."></textarea>
+                        </div>
+
+                        <div class="diff-input-group">
+                            <label class="diff-input-label" for="modified-text">
+                                <i class="fas fa-file-code"></i>
+                                Modified Text
+                            </label>
+                            <textarea id="modified-text" class="diff-textarea" placeholder="Paste modified text here..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="diff-actions">
+                        <button id="compare-btn" class="tool-display__button--primary">
+                            <i class="fas fa-code-compare"></i>
+                            Compare Text
+                        </button>
+                        <button id="clear-btn" class="tool-button tool-button--secondary">
+                            <i class="fas fa-eraser"></i>
+                            Clear All
+                        </button>
+                    </div>
+
+                    <div class="diff-result-card">
+                        <div class="diff-result-header">
+                            <h3 class="diff-result-title">Comparison Results</h3>
+                            <div id="diff-stats" class="diff-stats" style="display: none;">
+                                <div class="diff-stat diff-stat--added">
+                                    <i class="fas fa-plus"></i>
+                                    <span id="added-count">0</span> added
+                                </div>
+                                <div class="diff-stat diff-stat--removed">
+                                    <i class="fas fa-minus"></i>
+                                    <span id="removed-count">0</span> removed
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="diff-output-wrapper">
+                            <div class="diff-no-result">
+                                Enter text in both fields and click "Compare Text" to see differences...
+                            </div>
+                        </div>
+
+                        <div id="diff-result-actions" style="display: none; margin-top: 16px;">
+                            <div class="diff-actions">
+                                <button id="copy-diff" class="tool-display__button">
+                                    <i class="fas fa-copy"></i>
+                                    Copy Diff
+                                </button>
+                                <button id="download-diff" class="tool-display__button--primary">
+                                    <i class="fas fa-download"></i>
+                                    Download Diff
+                                </button>
+                            </div>
+                        </div>
+
+                        <p id="diff-feedback" class="diff-feedback" role="status" aria-live="assertive"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Text Diffs</h2>
+                <p class="tool-blog__subtitle">Learn how to read and interpret diff outputs effectively.</p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is a Diff?</h3>
+                    <div class="blog-section__content">
+                        <p>A diff (difference) shows changes between two versions of text or code. Lines highlighted in green indicate additions, red shows deletions, and unchanged lines appear in gray. This visual representation makes it easy to track what changed between versions.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Common Use Cases</h3>
+                    <div class="blog-section__content">
+                        <ul>
+                            <li><strong>Code Reviews:</strong> Compare code changes before merging</li>
+                            <li><strong>Document Editing:</strong> Track revisions in contracts or articles</li>
+                            <li><strong>Configuration Files:</strong> Spot differences in settings between environments</li>
+                            <li><strong>Version Control:</strong> Understand what changed between commits</li>
+                            <li><strong>Debugging:</strong> Compare working vs. broken code to find issues</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Reading Diff Output</h3>
+                    <div class="blog-section__content">
+                        <p><strong>Green lines (additions):</strong> Text that appears in the modified version but not in the original.</p>
+                        <p><strong>Red lines (deletions):</strong> Text that was in the original but removed in the modified version.</p>
+                        <p><strong>Gray lines (unchanged):</strong> Text that remains the same in both versions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Common questions about text comparison and diff tools.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I compare code files?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! This tool works with any text, including code in JavaScript, Python, HTML, CSS, JSON, and more. The monospace font and line-by-line comparison make it ideal for spotting code changes.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is my text data secure?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely. All comparison happens locally in your browser. Your text never leaves your device and is not sent to any server, ensuring complete privacy and security.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What's the difference between this and Git diff?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>This is a simplified, visual diff tool for quick comparisons without needing Git or command-line tools. Git diff provides more advanced features like context control and patch generation, but this tool is faster for simple text comparisons.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I compare large files?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, but very large files (10,000+ lines) may slow down your browser. For optimal performance, use this tool with files under 5,000 lines. For larger files, consider command-line diff tools.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../FAQ section/faq.js" defer></script>
+    <script src="../universal-search-deploy.js" defer></script>
+    <script>
+        (function () {
+            var elements = {
+                originalText: document.getElementById('original-text'),
+                modifiedText: document.getElementById('modified-text'),
+                compareBtn: document.getElementById('compare-btn'),
+                clearBtn: document.getElementById('clear-btn'),
+                copyBtn: document.getElementById('copy-diff'),
+                downloadBtn: document.getElementById('download-diff'),
+                outputWrapper: document.getElementById('diff-output-wrapper'),
+                stats: document.getElementById('diff-stats'),
+                addedCount: document.getElementById('added-count'),
+                removedCount: document.getElementById('removed-count'),
+                resultActions: document.getElementById('diff-result-actions'),
+                feedback: document.getElementById('diff-feedback')
+            };
+
+            var feedbackTimeout = null;
+            var currentDiff = '';
+
+            function setFeedback(message, duration) {
+                if (duration === void 0) duration = 2800;
+                if (feedbackTimeout) {
+                    clearTimeout(feedbackTimeout);
+                    feedbackTimeout = null;
+                }
+                elements.feedback.textContent = message;
+                if (message && duration > 0) {
+                    feedbackTimeout = setTimeout(function () {
+                        elements.feedback.textContent = '';
+                        feedbackTimeout = null;
+                    }, duration);
+                }
+            }
+
+            function escapeHtml(text) {
+                var div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            function computeDiff() {
+                var original = elements.originalText.value;
+                var modified = elements.modifiedText.value;
+
+                if (!original && !modified) {
+                    setFeedback('Please enter text in both fields.', 2400);
+                    return;
+                }
+
+                var originalLines = original.split('\n');
+                var modifiedLines = modified.split('\n');
+
+                var diff = [];
+                var added = 0;
+                var removed = 0;
+
+                var maxLen = Math.max(originalLines.length, modifiedLines.length);
+                var lineNum = 1;
+
+                for (var i = 0; i < maxLen; i++) {
+                    var origLine = originalLines[i];
+                    var modLine = modifiedLines[i];
+
+                    if (origLine === modLine) {
+                        if (origLine !== undefined) {
+                            diff.push({ type: 'unchanged', text: origLine, lineNum: lineNum++ });
+                        }
+                    } else {
+                        if (origLine !== undefined && (modLine === undefined || origLine !== modLine)) {
+                            diff.push({ type: 'removed', text: origLine, lineNum: lineNum });
+                            removed++;
+                        }
+                        if (modLine !== undefined && (origLine === undefined || origLine !== modLine)) {
+                            diff.push({ type: 'added', text: modLine, lineNum: lineNum });
+                            added++;
+                        }
+                        if (origLine !== undefined || modLine !== undefined) {
+                            lineNum++;
+                        }
+                    }
+                }
+
+                renderDiff(diff, added, removed);
+            }
+
+            function renderDiff(diff, added, removed) {
+                var html = '<div class="diff-output">';
+                
+                diff.forEach(function (line) {
+                    var className = 'diff-line diff-line--' + line.type;
+                    var icon = line.type === 'added' ? '+' : (line.type === 'removed' ? '-' : ' ');
+                    html += '<span class="' + className + '">';
+                    html += '<span class="diff-line-number">' + (line.type === 'unchanged' ? line.lineNum : icon) + '</span>';
+                    html += escapeHtml(line.text || '');
+                    html += '</span>';
+                });
+
+                html += '</div>';
+
+                elements.outputWrapper.innerHTML = html;
+                elements.addedCount.textContent = added;
+                elements.removedCount.textContent = removed;
+                elements.stats.style.display = 'flex';
+                elements.resultActions.style.display = 'block';
+
+                currentDiff = diff.map(function (line) {
+                    var prefix = line.type === 'added' ? '+ ' : (line.type === 'removed' ? '- ' : '  ');
+                    return prefix + line.text;
+                }).join('\n');
+
+                setFeedback('Comparison complete! Found ' + (added + removed) + ' change' + (added + removed !== 1 ? 's' : '') + '.', 2600);
+            }
+
+            function clearAll() {
+                elements.originalText.value = '';
+                elements.modifiedText.value = '';
+                elements.outputWrapper.innerHTML = '<div class="diff-no-result">Enter text in both fields and click "Compare Text" to see differences...</div>';
+                elements.stats.style.display = 'none';
+                elements.resultActions.style.display = 'none';
+                currentDiff = '';
+                setFeedback('All fields cleared.', 2200);
+            }
+
+            function copyDiff() {
+                if (!currentDiff) {
+                    setFeedback('No diff to copy. Compare text first.', 2400);
+                    return;
+                }
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(currentDiff).then(function () {
+                        setFeedback('Diff copied to clipboard!', 2400);
+                    }, function () {
+                        setFeedback('Copy failed. Select text manually.', 3000);
+                    });
+                } else {
+                    var temp = document.createElement('textarea');
+                    temp.value = currentDiff;
+                    temp.style.position = 'fixed';
+                    temp.style.opacity = '0';
+                    document.body.appendChild(temp);
+                    temp.select();
+                    try {
+                        document.execCommand('copy');
+                        setFeedback('Diff copied to clipboard!', 2400);
+                    } catch (err) {
+                        setFeedback('Copy failed. Select text manually.', 3000);
+                    }
+                    document.body.removeChild(temp);
+                }
+            }
+
+            function downloadDiff() {
+                if (!currentDiff) {
+                    setFeedback('No diff to download. Compare text first.', 2400);
+                    return;
+                }
+
+                var blob = new Blob([currentDiff], { type: 'text/plain' });
+                var url = URL.createObjectURL(blob);
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = 'text-diff.txt';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                setFeedback('Diff downloaded as text-diff.txt', 2400);
+            }
+
+            elements.compareBtn.addEventListener('click', computeDiff);
+            elements.clearBtn.addEventListener('click', clearAll);
+            elements.copyBtn.addEventListener('click', copyDiff);
+            elements.downloadBtn.addEventListener('click', downloadDiff);
+        })();
+    </script>
+
+</body>
+</html>
+

@@ -33,6 +33,18 @@
     <link rel="stylesheet" href="../back-to-top.css">
     <script src="../back-to-top.js"></script>
     <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
         /* Custom styles for Calorie Calculator */
         .tool-display__input-section { display: flex; flex-direction: column; gap: 1.5rem; }
         .input-group-container { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; padding: 1.5rem; }
@@ -63,6 +75,63 @@
         .macro-slider-group input[type="range"] { width: 100%; }
         .macro-chart-container { width: 100%; max-width: 250px; margin: 1.5rem auto 0 auto; }
         .disclaimer { font-size: 0.8rem; color: #6c757d; margin-top: 1rem; text-align: center;}
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .tool-display__input-row { 
+                grid-template-columns: 1fr; 
+                gap: 0.75rem; 
+            }
+            .goal-grid { 
+                grid-template-columns: 1fr; 
+                gap: 0.75rem; 
+            }
+            .result-card { 
+                padding: 1rem; 
+            }
+            .result-card .calorie-value { 
+                font-size: 2rem; 
+            }
+            .input-group-container { 
+                padding: 1rem; 
+            }
+            .tool-display__input, .tool-display__select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .height-inputs { 
+                flex-direction: column; 
+                gap: 0.75rem; 
+            }
+            .unit-switcher button { 
+                padding: 0.6rem; 
+                font-size: 0.9rem; 
+            }
+            .macros-presets button { 
+                margin-bottom: 0.5rem; 
+                margin-right: 0.25rem; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .result-card .calorie-value { 
+                font-size: 1.8rem; 
+            }
+            .unit-switcher { 
+                flex-direction: column; 
+            }
+            .unit-switcher button { 
+                border-radius: 0; 
+            }
+            .unit-switcher button:first-child { 
+                border-radius: 8px 8px 0 0; 
+            }
+            .unit-switcher button:last-child { 
+                border-radius: 0 0 8px 8px; 
+            }
+            .macro-chart-container { 
+                max-width: 200px; 
+            }
+        }
     </style>
 </head>
 <body>
@@ -370,7 +439,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>For the general population, the Mifflin-St Jeor formula is considered the most accurate and is the default in our calculator. For individuals with a known body fat percentage (especially athletes), the Katch-McArdle formula, which uses lean body mass, provides a more precise estimate.</p>
+                        <p>For the general population, the Mifflin-St Jeor formula is considered the most accurate and is the default in our calculator. For individuals with a known body fat percentage (especially athletes), the Katch-McArdle formula, which uses lean body mass, provides a much more precise estimate.</p>
                     </div>
                 </div>
                 <div class="faq-item">

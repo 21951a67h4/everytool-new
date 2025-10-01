@@ -495,6 +495,8 @@
         /* Responsive Design (Hero/Search adjustments for smaller screens) */
         @media (max-width: 768px) {
             /* Hero and Search adjustments for mobile */
+            .hero-layered-bg { height: auto; min-height: 340px; padding: 2rem 1rem; }
+            .hero-focus-card { height: auto; min-height: 300px; }
             .hero-title { 
                 font-size: 2.5rem; 
             }
@@ -559,6 +561,7 @@
             
             .tool-card {
                 padding: 1.25rem;
+                box-shadow: var(--shadow-sm);
             }
             
             .tool-name {
@@ -638,9 +641,27 @@
 
         /* Header Placeholder Styles */
         #header-placeholder {
-            min-height: 80px;
+            min-height: 130px;
             position: relative; 
             z-index: 1001; 
+        }
+        @media (max-width: 768px) { #header-placeholder { min-height: 64px; } }
+        
+        /* Desktop-to-tablet search positioning simplification */
+        @media (max-width: 1024px) {
+            .search-input { position: relative; left: 0; transform: none; width: 100%; max-width: 600px; margin: 0 auto; }
+            .search-icon { left: 16px !important; }
+            .search-clear-btn { right: 16px !important; }
+        }
+        
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-card-background { animation: none; }
+        }
+        
+        /* Full-width CTAs on mobile */
+        @media (max-width: 768px) {
+            .hero-button, .tool-button { width: 100%; }
         }
     </style>
 
@@ -726,13 +747,13 @@
             <article class="tool-card">
                 <div class="tool-icon"><i class="fas fa-calculator"></i></div>
                 <h2 class="tool-name">Final Grade Calculator</h2>
-                <p class="tool-description">Calculate your final grade with our Final Grade Calculator. Perfect for anyone interested in their financial situation.</p>
+                <p class="tool-description">Calculate your final grade based on current scores and target goals. Built for students and teachers.</p>
                 <a href="../tools/final-grade-calculator.html" class="tool-button">Open Tool</a>
             </article>
             <article class="tool-card">
                 <div class="tool-icon"><i class="fas fa-calculator"></i></div>
                 <h2 class="tool-name">GPA Calculator</h2>
-                <p class="tool-description">Calculate your grade point average with our GPA Calculator. Perfect for anyone interested in their financial situation.</p>
+                <p class="tool-description">Compute your GPA quickly from course grades and credits with clear, flexible inputs.</p>
                 <a href="../tools/gpa-calculator.html" class="tool-button">Open Tool</a>
             </article>
         </div>
@@ -893,8 +914,8 @@
                     }
                 });
             }, { 
-                rootMargin: '0px',
-                threshold: 0.1 // Trigger when 10% of the item is visible
+                rootMargin: '100px 0px',
+                threshold: 0.05 // Trigger a bit earlier on mobile for perceived speed
             });
 
             toolCards.forEach(card => observer.observe(card));

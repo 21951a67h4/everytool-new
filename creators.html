@@ -178,8 +178,83 @@
     .avatar {
       width: 112px; height: 112px; border-radius: 50%; margin-top: 16px; border: 3px solid rgba(67,97,238,.18);
       overflow: hidden; box-shadow: var(--shadow-md);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .avatar:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(67,97,238,0.3);
     }
     .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Image Popup Modal Styles */
+    .image-modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .image-modal.show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      animation: zoomIn 0.3s ease;
+    }
+
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
 
     .h-name { margin: 16px 0 6px; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.01em; }
     .h-role { color: var(--text-secondary); margin: 0 0 16px; font-size: 0.8rem; font-weight: 600; letter-spacing: -0.01em; }
@@ -427,13 +502,13 @@
     <aside class="sidebar" aria-label="Profile and site navigation">
       <div class="hero-card">
         <span class="badge"><i class="fa-solid fa-bolt"></i> Developer & Builder</span>
-        <div class="avatar" aria-hidden="true">
-          <img src="assets/varshith2.png" alt="Portrait of Varshith Gubba" loading="lazy" />
+        <div class="avatar" aria-hidden="true" onclick="openImageModal()">
+          <img src="assets/varshith3.png" alt="Portrait of Varshith Gubba" loading="lazy" />
         </div>
         <h1 class="h-name">Varshith Gubba</h1>
         <p class="h-role">Full Stack Developer • UI/UX Designer</p>
         <div class="quick-actions" role="group" aria-label="Quick actions">
-          <a class="btn" href="#contact"><i class="fa-regular fa-envelope"></i> Contact</a>
+          <a class="btn" href="/contact.html"><i class="fa-regular fa-envelope"></i> Contact</a>
         </div>
 
         <div class="socials" role="group" aria-label="Social links">
@@ -734,6 +809,43 @@
       });
   })();
 </script>
+
+<!-- Image Modal JavaScript -->
+<script>
+  function openImageModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  }
+
+  function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto'; // Restore scrolling
+  }
+
+  // Close modal with Escape key
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      closeImageModal();
+    }
+  });
+
+  // Close modal when clicking outside the image
+  document.getElementById('imageModal').addEventListener('click', function(event) {
+    if (event.target === this) {
+      closeImageModal();
+    }
+  });
+</script>
+
+<!-- Image Modal -->
+<div id="imageModal" class="image-modal" onclick="closeImageModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <span class="modal-close" onclick="closeImageModal()">&times;</span>
+    <img src="assets/varshith3.png" alt="Portrait of Varshith Gubba - Enlarged View" />
+  </div>
+</div>
 
 <!-- CRITICAL: Universal Search Functionality - DO NOT REMOVE -->
 <script src="universal-search-deploy.js"></script> 

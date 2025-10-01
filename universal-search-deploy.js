@@ -229,6 +229,7 @@
                     console.log('Initializing header functionality...');
                     initializeHeader();
                     console.log('Search functionality initialized successfully!');
+                    try { initializeHeaderDropdown(); } catch (e) { console.warn('Dropdown init failed', e); }
                 } else {
                     console.error('initializeHeader function not found after loading scripts');
                     // Try to load from alternative path
@@ -237,6 +238,7 @@
                             if (typeof initializeHeader === 'function') {
                                 initializeHeader();
                                 console.log('Search functionality initialized from alternative path!');
+                                try { initializeHeaderDropdown(); } catch (e) { console.warn('Dropdown init failed', e); }
                             }
                         });
                 }

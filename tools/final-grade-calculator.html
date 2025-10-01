@@ -61,6 +61,58 @@
         #required-score-display { font-size: 4rem; font-weight: 700; color: #0056b3; line-height: 1.1; }
         #result-message { margin-top: 10px; font-size: 1.1rem; font-weight: 500; color: #333; }
         #current-standing-summary { margin-top: 20px; padding-top: 15px; border-top: 1px solid #cce4ff; }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .grade-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .grade-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .component-list-header, .component-row { 
+                grid-template-columns: 2fr 1.5fr 1.5fr 1fr; 
+                gap: 8px; 
+                font-size: 0.9rem; 
+            }
+            .component-row input { 
+                padding: 6px; 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            #grade-result-section { 
+                padding: 20px 15px; 
+            }
+            #required-score-display { 
+                font-size: 3rem; 
+            }
+            .grade-calc-form-group input { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grade-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .component-list-header, .component-row { 
+                grid-template-columns: 2fr 1fr 1fr 1fr; 
+                gap: 6px; 
+                font-size: 0.8rem; 
+            }
+            .component-row input { 
+                padding: 5px; 
+                font-size: 14px; 
+            }
+            #required-score-display { 
+                font-size: 2.5rem; 
+            }
+            .grade-calc-form-group input { 
+                padding: 8px; 
+            }
+        }
     </style>
     <!-- END: CRITICAL STYLE FOR HEADER -->
 

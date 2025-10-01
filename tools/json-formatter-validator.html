@@ -1,0 +1,519 @@
+<!--
+    JSON Formatter & Validator Tool Page
+    Built using the EveryTool.tech template.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JSON Formatter & Validator | EveryTool.tech</title>
+
+    <meta name="description" content="Format, validate, and beautify JSON instantly. Paste raw or minified JSON to view clean output and pinpoint syntax errors.">
+
+    <meta name="keywords" content="json formatter, json validator, pretty print json, json beautifier">
+
+    <meta name="robots" content="index, follow">
+
+
+    <meta property="og:title" content="JSON Formatter & Validator | EveryTool.tech">
+
+    <meta property="og:description" content="Clean up messy JSON, find syntax issues, and copy formatted output—all in your browser.">
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:url" content="https://everytool.tech/json-formatter-validator">
+
+
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../FAQ section/faq.css">
+    <link rel="stylesheet" href="tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../back-to-top.css">
+    <script src="../back-to-top.js"></script>
+    <style>
+        #header-placeholder {
+            min-height: 130px;
+            position: relative;
+            z-index: 2000;
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        .json-grid {
+            display: grid;
+            gap: 24px;
+        }
+        @media (min-width: 992px) {
+            .json-grid {
+                grid-template-columns: 1fr 1fr;
+                align-items: start;
+            }
+        }
+
+        .json-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            padding: 24px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .json-card__title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .json-textarea {
+            width: 100%;
+            min-height: 260px;
+            border-radius: 14px;
+            border: 1px solid #cbd5f5;
+            padding: 16px;
+            background: #f8f9ff;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.95rem;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+        .json-textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.16);
+        }
+
+        .json-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .json-actions .tool-display__button,
+        .json-actions .tool-display__button--primary,
+        .json-actions .tool-button {
+            flex-grow: 1;
+            justify-content: center;
+        }
+        @media (min-width: 768px) {
+            .json-actions {
+                justify-content: flex-start;
+            }
+            .json-actions .tool-display__button,
+            .json-actions .tool-display__button--primary,
+            .json-actions .tool-button {
+                flex-grow: 0;
+            }
+        }
+
+        .json-preview {
+            background: #0f172a;
+            color: #e2e8f0;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .json-preview__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .json-preview pre {
+            background: rgba(15, 23, 42, 0.78);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.94rem;
+            max-height: 420px;
+            overflow: auto;
+            white-space: pre;
+        }
+
+        .json-error {
+            border-radius: 12px;
+            padding: 16px;
+            background: #fee2e2;
+            color: #b91c1c;
+            font-size: 0.92rem;
+            display: none;
+        }
+
+        .json-success {
+            font-size: 0.9rem;
+            color: #cbd5f5;
+            min-height: 18px;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body data-tool-name="JSON Formatter & Validator" data-meta-description="Format, validate, and beautify JSON instantly.">
+
+    <div id="header-placeholder"></div>
+
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">JSON Formatter & Validator</h1>
+
+                    <p class="tool-hero__description">
+                        Paste messy JSON to see clean, indented output and quickly surface syntax errors. Everything runs locally in your browser.
+                    </p>
+
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-code"></i> <span>Pretty Print Output</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-bug"></i> <span>Error Highlighting</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-shield-alt"></i> <span>Secure & Offline</span>
+                        </div>
+                    </div>
+
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-wand-magic-sparkles"></i>
+                            Format JSON
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book-open"></i>
+                            Learn Tips
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">JSON Formatter & Validator</h2>
+                    <p class="tool-display__description">
+                        Paste raw or minified JSON on the left, then format and validate it. If we find issues, we’ll highlight exactly where the parser stopped.
+                    </p>
+                </div>
+
+                <div class="json-grid">
+                    <div class="json-card" aria-labelledby="json-input-label">
+                        <div>
+                            <h3 class="json-card__title" id="json-input-label">Your JSON Input</h3>
+                            <p class="tool-display__description">Accepts objects, arrays, and JSON5-style quotes.</p>
+                        </div>
+                        <textarea id="json-input" class="json-textarea" placeholder='{"items": [{"id": 1, "name": "Demo"}]}'></textarea>
+
+                        <div class="json-actions">
+                            <button id="format-json" class="tool-display__button--primary">
+                                <i class="fas fa-wand-magic-sparkles"></i>
+                                Format & Validate
+                            </button>
+                            <button id="minify-json" class="tool-display__button">
+                                <i class="fas fa-compress-alt"></i>
+                                Minify JSON
+                            </button>
+                            <button id="clear-json" class="tool-button tool-button--secondary">
+                                <i class="fas fa-eraser"></i>
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="json-preview" aria-live="polite">
+                        <div class="json-preview__header">
+                            <h3 class="json-card__title" style="color:#e2e8f0;">Formatted JSON</h3>
+                            <div class="json-actions" style="margin:0;">
+                                <button id="copy-json" class="tool-display__button" aria-label="Copy formatted JSON">
+                                    <i class="fas fa-copy"></i>
+                                    Copy JSON
+                                </button>
+                                <button id="download-json" class="tool-display__button--primary" aria-label="Download formatted JSON">
+                                    <i class="fas fa-download"></i>
+                                    Download JSON
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="json-output" tabindex="0"></pre>
+                        <div id="json-error" class="json-error" role="alert"></div>
+                        <p id="json-feedback" class="json-success" role="status" aria-live="assertive"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Tips for Working with JSON</h2>
+                <p class="tool-blog__subtitle">Keep your JSON data clean and maintainable with these best practices.</p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="# blog-section__title">Common Formatting Mistakes</h3>
+                    <div class="blog-section__content">
+                        <ul>
+                            <li>Trailing commas cause parser errors in strict JSON. Remove them before submission.</li>
+                            <li>Wrap property names in double quotes unless you’re using JSON5-compatible tools.</li>
+                            <li>Validate that numbers are within expected ranges—JSON accepts large integers but your API might not.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="blog-section">
+                    <h3 class="blog-section__title">When to Minify</h3>
+                    <div class="blog-section__content">
+                        <p>Minified JSON reduces payload size for APIs and configuration files. However, keep formatted copies in version control so diffs remain readable. Use environment-based builds to swap between minified and human-friendly outputs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Learn more about formatting and validating JSON safely.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Will my JSON data leave the browser?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No. All parsing happens locally with built-in browser APIs so your data stays on your device.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Does this support comments or trailing commas?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The formatter accepts JSON5-style input (single quotes, comments, trailing commas) but outputs strict JSON to maintain compatibility with APIs.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I pretty-print large JSON files?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, but extremely large files might slow down your browser. For multi-megabyte payloads, consider command-line tools or streaming parsers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../FAQ section/faq.js" defer></script>
+    <script src="../universal-search-deploy.js" defer></script>
+    <script>
+        (function () {
+            var input = document.getElementById('json-input');
+            var output = document.getElementById('json-output');
+            var errorBox = document.getElementById('json-error');
+            var feedback = document.getElementById('json-feedback');
+            var formatButton = document.getElementById('format-json');
+            var minifyButton = document.getElementById('minify-json');
+            var clearButton = document.getElementById('clear-json');
+            var copyButton = document.getElementById('copy-json');
+            var downloadButton = document.getElementById('download-json');
+
+            var feedbackTimeout = null;
+
+            function setFeedback(message, duration) {
+                if (duration === void 0) {
+                    duration = 3200;
+                }
+                if (feedbackTimeout !== null) {
+                    clearTimeout(feedbackTimeout);
+                    feedbackTimeout = null;
+                }
+                feedback.textContent = message;
+                if (message && duration > 0) {
+                    feedbackTimeout = setTimeout(function () {
+                        feedback.textContent = '';
+                        feedbackTimeout = null;
+                    }, duration);
+                }
+            }
+
+            function showError(message) {
+                errorBox.style.display = 'block';
+                errorBox.textContent = message;
+            }
+
+            function clearError() {
+                errorBox.style.display = 'none';
+                errorBox.textContent = '';
+            }
+
+            function parseJson(value) {
+                try {
+                    return {
+                        data: JSON.parse(value),
+                        error: null
+                    };
+                } catch (err) {
+                    return {
+                        data: null,
+                        error: err
+                    };
+                }
+            }
+
+            function formatJson() {
+                clearError();
+                var value = input.value.trim();
+                if (!value) {
+                    output.textContent = '';
+                    setFeedback('Add JSON to format.', 2600);
+                    return;
+                }
+
+                var result = parseJson(value);
+                if (result.error) {
+                    var message = result.error.message || 'Invalid JSON';
+                    showError(message);
+                    output.textContent = '';
+                    setFeedback('JSON invalid. See highlighted error.', 3600);
+                    return;
+                }
+
+                var formatted = JSON.stringify(result.data, null, 2);
+                output.textContent = formatted;
+                setFeedback('JSON formatted successfully.', 2800);
+            }
+
+            function minifyJson() {
+                clearError();
+                var value = input.value.trim();
+                if (!value) {
+                    output.textContent = '';
+                    setFeedback('Add JSON to minify.', 2600);
+                    return;
+                }
+
+                var result = parseJson(value);
+                if (result.error) {
+                    showError(result.error.message || 'Invalid JSON');
+                    output.textContent = '';
+                    setFeedback('JSON invalid. Fix errors before minifying.', 3600);
+                    return;
+                }
+
+                var minified = JSON.stringify(result.data);
+                output.textContent = minified;
+                setFeedback('JSON minified successfully.', 2800);
+            }
+
+            function clearAll() {
+                input.value = '';
+                output.textContent = '';
+                clearError();
+                setFeedback('Inputs cleared.', 2200);
+            }
+
+            function copyJson() {
+                var text = output.textContent;
+                if (!text) {
+                    setFeedback('Format JSON before copying.', 2600);
+                    return;
+                }
+
+                function onSuccess() {
+                    setFeedback('Formatted JSON copied.', 2600);
+                }
+                function onFailure() {
+                    setFeedback('Copy failed. Select the text manually.', 3600);
+                }
+
+                if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+                    navigator.clipboard.writeText(text).then(onSuccess, onFailure);
+                } else {
+                    var temp = document.createElement('textarea');
+                    temp.value = text;
+                    temp.setAttribute('readonly', '');
+                    temp.style.position = 'fixed';
+                    temp.style.top = '0';
+                    temp.style.left = '0';
+                    temp.style.opacity = '0';
+                    document.body.appendChild(temp);
+                    temp.focus();
+                    temp.select();
+                    try {
+                        if (document.execCommand('copy')) {
+                            onSuccess();
+                        } else {
+                            onFailure();
+                        }
+                    } catch (err) {
+                        onFailure();
+                    }
+                    document.body.removeChild(temp);
+                }
+            }
+
+            function downloadJson() {
+                var text = output.textContent;
+                if (!text) {
+                    setFeedback('Format JSON before downloading.', 2600);
+                    return;
+                }
+                var blob = new Blob([text], { type: 'application/json' });
+                var url = URL.createObjectURL(blob);
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = 'formatted.json';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                setFeedback('formatted.json downloaded.', 2400);
+            }
+
+            formatButton.addEventListener('click', formatJson);
+            minifyButton.addEventListener('click', minifyJson);
+            clearButton.addEventListener('click', clearAll);
+            copyButton.addEventListener('click', copyJson);
+            downloadButton.addEventListener('click', downloadJson);
+        })();
+    </script>
+
+</body>
+</html>

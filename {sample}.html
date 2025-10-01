@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <!-- Back to top button -->
   <link rel="stylesheet" href="back-to-top.css">
   <script src="back-to-top.js"></script>
   <style>
@@ -35,7 +34,6 @@
       --glass-bg: rgba(255, 255, 255, 0.9);
       --glass-blur: blur(10px);
     }
-
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg-primary);
@@ -46,7 +44,6 @@
       display: flex;
       flex-direction: column;
     }
-
     .support-hero {
       background: var(--grad-1);
       padding: 140px 20px 80px;
@@ -55,7 +52,6 @@
       position: relative;
       overflow: hidden;
     }
-
     .support-hero::before {
       content: '';
       position: absolute;
@@ -67,12 +63,10 @@
       opacity: 0.1;
       animation: rotate 60s linear infinite;
     }
-
     @keyframes rotate {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
-
     .support-hero h1 {
       font-size: 3rem;
       font-weight: 800;
@@ -80,7 +74,6 @@
       position: relative;
       animation: fadeUp 0.8s ease forwards;
     }
-
     .support-hero p {
       font-size: 1.25rem;
       max-width: 600px;
@@ -89,12 +82,10 @@
       position: relative;
       animation: fadeUp 0.8s ease forwards 0.2s;
     }
-
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     .support-content {
       max-width: 860px;
       margin: -40px auto 0;
@@ -102,7 +93,6 @@
       position: relative;
       z-index: 1;
     }
-
     .support-card {
       background: white;
       border-radius: var(--radius-xl);
@@ -113,21 +103,17 @@
       opacity: 0;
       border: 1px solid var(--border-color);
     }
-
     .support-card h2 {
       color: var(--primary);
       font-size: 1.75rem;
       margin-bottom: 1rem;
     }
-
     .support-card p {
       color: var(--text-secondary);
       line-height: 1.6;
       margin-bottom: 1.5rem;
       font-size: 1.05rem;
     }
-
-    /* Donation widget */
     .donation-widget {
       margin-top: 24px;
       background: var(--bg-secondary);
@@ -135,12 +121,10 @@
       border-radius: var(--radius-lg);
       padding: 20px;
     }
-
     .donation-header {
       display: flex; align-items: center; justify-content: space-between;
       gap: 12px; flex-wrap: wrap;
     }
-
     .currency-toggle {
       display: inline-flex;
       background: var(--bg-accent);
@@ -164,7 +148,6 @@
       color: var(--primary);
       box-shadow: var(--shadow-sm);
     }
-
     .amount-row {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -196,7 +179,6 @@
       cursor: pointer; font-weight: 700; transition: var(--transition);
     }
     .go-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
-
     .chips {
       margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;
     }
@@ -206,12 +188,10 @@
       transition: var(--transition);
     }
     .chip:hover { border-color: var(--primary-light); color: var(--primary); box-shadow: var(--shadow-sm); }
-
     .hint-row {
       display: flex; justify-content: space-between; align-items: center; margin-top: 10px; color: var(--text-light); font-size: 0.9rem;
     }
     .error { color: #E11D48; font-weight: 600; }
-
     @media (max-width: 768px) {
       .support-hero h1 { font-size: 2rem; }
       .support-hero { padding-top: 120px; }
@@ -219,8 +199,6 @@
       .support-card { padding: 30px; }
       .amount-row { grid-template-columns: 1fr; }
     }
-
-    /* Modal Styles (polished) */
     .modal {
       position: fixed; inset: 0; background: rgba(10, 14, 25, 0.55);
       backdrop-filter: blur(8px);
@@ -252,7 +230,6 @@
       display: inline-flex; align-items: center; gap: 8px;
     }
     .payee-line { margin: 0; font-weight: 800; font-size: 1.3rem; color: var(--text-primary); }
-
     .qr-wrap { position: relative; margin: 18px auto; width: 220px; height: 220px; display: grid; place-items: center; }
     .qr-glow {
       position: absolute; inset: -16px; border-radius: 24px;
@@ -260,9 +237,7 @@
       filter: blur(8px); z-index: 0;
     }
     #qrcode { position: relative; z-index: 1; width: 200px; height: 200px; border-radius: 12px; overflow: hidden; }
-
     .amount-line { text-align: center; margin-top: 6px; font-weight: 800; color: var(--text-primary); }
-
     .modal-actions { display: grid; gap: 10px; margin-top: 16px; }
     .cta {
       display: inline-flex; align-items: center; justify-content: center; gap: 10px;
@@ -272,28 +247,33 @@
     }
     .cta.primary { background: var(--primary); color: white; border: none; }
     .cta:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
-
-    /* Copy toast */
     .toast {
       position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(12px);
       background: #111827; color: white; padding: 10px 14px; border-radius: 10px; font-weight: 700; opacity: 0;
       transition: opacity .25s ease, transform .25s ease; z-index: 1100; box-shadow: var(--shadow-md);
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-    /* Header Styles */
     #header-placeholder { min-height: 130px; position: relative; z-index: 2000; }
     @media (max-width: 768px) { #header-placeholder { min-height: 64px; } }
+    /* Show Share button only up to tablet */
+    @media (min-width: 1025px) {
+      #share-link {
+        display: none !important;
+      }
+    }
+    @media (max-width: 1024px) {
+      #share-link {
+        display: inline-flex;
+      }
+    }
   </style>
 </head>
 <body>
   <div id="header-placeholder"></div>
-
   <div class="support-hero">
     <h1>Support Our Mission 💚</h1>
     <p>Your contribution helps us build and maintain free, high-quality tools for everyone.</p>
   </div>
-
   <main class="support-content">
     <div class="support-card">
       <h2>Why Your Support Matters</h2>
@@ -303,8 +283,6 @@
       <p>
         Your contribution, no matter the size, makes a huge difference and allows us to continue building and improving the platform for the entire community.
       </p>
-
-      <!-- Donation Widget -->
       <div class="donation-widget" role="region" aria-label="Donation widget">
         <div class="donation-header">
           <div class="currency-toggle" role="tablist" aria-label="Currency selection">
@@ -315,7 +293,6 @@
             Choose currency, enter amount, then Generate QR
           </div>
         </div>
-
         <div class="amount-row">
           <div class="amount-input-wrap">
             <span class="amount-prefix" id="currency-prefix">₹</span>
@@ -326,9 +303,7 @@
             <i class="fa-solid fa-qrcode"></i> Generate QR
           </button>
         </div>
-
         <div class="chips" id="preset-chips"></div>
-
         <div class="hint-row">
           <div id="hint-text">Powered by UPI • Works with GPay, Paytm, PhonePe</div>
           <div id="error-text" class="error" role="alert" aria-live="polite" style="visibility:hidden;"></div>
@@ -336,7 +311,6 @@
       </div>
     </div>
   </main>
-
   <!-- Modal -->
   <div id="pay-modal" class="modal" aria-hidden="true" aria-label="Payment QR modal">
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
@@ -365,26 +339,17 @@
       </div>
     </div>
   </div>
-
   <div id="toast" class="toast" role="status" aria-live="polite">Link copied</div>
-
   <footer id="footer-placeholder"></footer>
-
-  <!-- QRCode.js Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
   <script>
     // ================== CONFIG (replace USD username later) ==================
-    const PAYEE_NAME = "EveryTool Tech";                 // Display name
-    const UPI_ID = "everytooltech@airtel";               // Your live UPI ID (INR)
-    const NOTE = "Donation to EveryTool.tech";           // Shown in UPI apps as note
-    const PAYPAL_ME_USERNAME = "yourPayPalMeID";         // <-- replace later with your PayPal.me username
+    const PAYEE_NAME = "Varshith";
+    const UPI_ID = "9490263939@airtel";
+    const NOTE = "Donation to EveryTool.tech";
+    const PAYPAL_ME_USERNAME = "GUBBAVARSHITH";
     // ========================================================================
-
-    // State
     let currency = "INR";
-
-    // Elements
     const btnINR = document.getElementById('btn-inr');
     const btnUSD = document.getElementById('btn-usd');
     const amountInput = document.getElementById('donation-amount');
@@ -393,7 +358,6 @@
     const hint = document.getElementById('hint-text');
     const errorEl = document.getElementById('error-text');
     const generateBtn = document.getElementById('generate-btn');
-
     const modal = document.getElementById('pay-modal');
     const modalClose = document.getElementById('modal-close');
     const payeeLine = document.getElementById('payee-line');
@@ -402,16 +366,13 @@
     const copyLink = document.getElementById('copy-link');
     const shareLink = document.getElementById('share-link');
     const toast = document.getElementById('toast');
-
     const fmtINR = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
     const fmtUSD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
     function showToast(msg = "Link copied") {
       toast.textContent = msg;
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 1600);
     }
-
     function setError(msg = "") {
       if (!msg) {
         errorEl.style.visibility = "hidden";
@@ -421,34 +382,24 @@
         errorEl.textContent = msg;
       }
     }
-
     function setCurrency(c) {
       currency = c;
       const isINR = c === "INR";
-
-      // Toggle styles & aria
       btnINR.classList.toggle('active', isINR);
       btnUSD.classList.toggle('active', !isINR);
       btnINR.setAttribute('aria-selected', isINR ? 'true' : 'false');
       btnUSD.setAttribute('aria-selected', !isINR ? 'true' : 'false');
-
-      // Input config
       prefix.textContent = isINR ? "₹" : "$";
       amountInput.placeholder = isINR ? "Enter amount in INR" : "Enter amount in USD";
       amountInput.min = isINR ? "1" : "1";
       amountInput.step = isINR ? "1" : "0.01";
       amountInput.value = "";
-
-      // Hint
       hint.textContent = isINR
         ? "Powered by UPI • Works with GPay, Paytm, PhonePe"
         : "Powered by PayPal • USD donations via PayPal.me";
       setError();
-
-      // Preset chips
       renderChips(isINR ? [100, 200, 500, 1000] : [5, 10, 20, 50], isINR);
     }
-
     function renderChips(values, isINR) {
       chipsWrap.innerHTML = "";
       values.forEach(v => {
@@ -463,7 +414,6 @@
         chipsWrap.appendChild(chip);
       });
     }
-
     function sanitizeAmount(raw, isINR) {
       if (raw === "" || raw === null || raw === undefined) return null;
       let n = Number(raw);
@@ -471,39 +421,34 @@
       if (isINR) {
         n = Math.floor(n);
         if (n < 1) return null;
-        if (n > 100000) n = 100000; // soft cap
+        if (n > 100000) n = 100000;
       } else {
         n = Math.round(n * 100) / 100;
         if (n < 1) return null;
-        if (n > 10000) n = 10000; // soft cap
+        if (n > 10000) n = 10000;
       }
       return n;
     }
-
     function buildUpiUrl(amount) {
       const params = new URLSearchParams({
-        pa: UPI_ID,                   // Payee VPA
-        pn: PAYEE_NAME,               // Payee Name
-        am: String(amount),           // Amount
-        cu: 'INR',                    // Currency fixed to INR for UPI
-        tn: NOTE                      // Transaction note
+        pa: UPI_ID,
+        pn: PAYEE_NAME,
+        am: String(amount),
+        cu: 'INR',
+        tn: NOTE
       });
       return `upi://pay?${params.toString()}`;
     }
-
     function buildPaypalUrl(amountUSD) {
       const user = PAYPAL_ME_USERNAME || "yourPayPalMeID";
       const amt = Number(amountUSD).toFixed(2);
-      // Force USD with currency_code param
       return `https://paypal.me/${encodeURIComponent(user)}/${amt}?currency_code=USD`;
     }
-
     function makeQr(text) {
       const node = document.getElementById('qrcode');
       node.innerHTML = "";
       new QRCode(node, { text, width: 200, height: 200 });
     }
-
     function openModal() {
       modal.classList.add('visible');
       modal.setAttribute('aria-hidden', 'false');
@@ -516,41 +461,31 @@
       document.removeEventListener('keydown', onEsc);
     }
     function onEsc(e) { if (e.key === 'Escape') closeModal(); }
-
     function handleGenerate() {
       setError();
       const isINR = currency === 'INR';
       const raw = amountInput.value;
       const amt = sanitizeAmount(raw, isINR);
-
       if (amt === null) {
         setError(isINR ? "Enter a valid amount (₹1 – ₹100000)" : "Enter a valid amount ($1.00 – $10000.00)");
         return;
       }
-
       const link = isINR ? buildUpiUrl(amt) : buildPaypalUrl(amt);
       makeQr(link);
-
       payeeLine.textContent = PAYEE_NAME;
       amountLine.textContent = isINR ? fmtINR.format(amt) : fmtUSD.format(amt);
       openLink.setAttribute('href', link);
-
-      // Adjust label/icon for primary CTA
       openLink.innerHTML = isINR
         ? '<i class="fa-solid fa-arrow-up-right-from-square"></i> Open UPI App'
         : '<i class="fa-brands fa-paypal"></i> Pay with PayPal';
-
       openModal();
     }
-
-    // Events
     generateBtn.addEventListener('click', handleGenerate);
     amountInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleGenerate(); });
     btnINR.addEventListener('click', () => setCurrency('INR'));
     btnUSD.addEventListener('click', () => setCurrency('USD'));
     modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
     modalClose.addEventListener('click', closeModal);
-
     copyLink.addEventListener('click', async (e) => {
       e.preventDefault();
       const href = openLink.getAttribute('href');
@@ -566,29 +501,41 @@
         showToast("Payment link copied");
       } catch { showToast("Unable to copy"); }
     });
-
+    // UPDATED SHARE BUTTON LOGIC
     shareLink.addEventListener('click', async (e) => {
       e.preventDefault();
       const href = openLink.getAttribute('href');
+      const isINR = currency === 'INR';
+      const rawAmount = amountInput.value;
+      const amount = isINR ? (rawAmount ? `₹${rawAmount}` : '') : (rawAmount ? `$${rawAmount}` : '');
+      let shareTitle = 'Support EveryTool.tech';
+      let shareText = isINR ?
+        `Here's a quick way to donate ${amount} to EveryTool.tech. Tap the link to pay with any UPI app:` :
+        `Support EveryTool.tech with a quick donation on PayPal:`;
       if (navigator.share) {
         try {
-          await navigator.share({ title: 'Support EveryTool.tech', text: 'Donate securely', url: href });
-        } catch(_) {}
+          await navigator.share({
+            title: shareTitle,
+            text: shareText + '\n' + href,
+            url: href
+          });
+        } catch (err) {
+          // User cancelled
+        }
       } else {
-        showToast("Share not supported on this device");
+        showToast("Sharing is not supported on this device/browser.");
       }
     });
-
-    // Init
+    // Optionally hide Share button at runtime too (extra safe)
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.innerWidth > 1024) {
+        shareLink.style.display = 'none';
+      }
+    });
     setCurrency('INR');
   </script>
-
   <script>
-  // =====================================================================
-  // ====== START: MAGIC BLOCK TO COPY FOR EVERY NEW PAGE ======
-  // =====================================================================
   document.addEventListener('DOMContentLoaded', () => {
-
     const loadScript = (src) => {
       return new Promise((resolve, reject) => {
         const script = document.createElement('script');
@@ -598,13 +545,10 @@
         document.body.appendChild(script);
       });
     };
-
     const loadHeader = () => {
       const headerPlaceholder = document.getElementById('header-placeholder');
       if (!headerPlaceholder) return;
-
-      // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
-      fetch('/header.html') 
+      fetch('/header.html')
         .then(response => {
           if (!response.ok) throw new Error('Network response for header.html was not ok.');
           return response.text();
@@ -614,12 +558,11 @@
           return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2');
         })
         .then(() => {
-          // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
           return loadScript('/header-search.js');
         })
         .then(() => {
           if (typeof initializeHeader === 'function') {
-            initializeHeader(); 
+            initializeHeader();
           } else {
             throw new Error('initializeHeader function not found.');
           }
@@ -628,18 +571,15 @@
           console.error('CRITICAL ERROR during header loading process:', error);
         });
     };
-
     const loadFooter = () => {
       const footerPlaceholder = document.getElementById('footer-placeholder');
       if (footerPlaceholder) {
-        // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
         fetch('/footer.html')
           .then(response => response.ok ? response.text() : Promise.reject('Failed to load footer'))
           .then(html => { footerPlaceholder.innerHTML = html; })
           .catch(error => console.error('Error loading footer:', error));
       }
     };
-
     loadHeader();
     loadFooter();
   });

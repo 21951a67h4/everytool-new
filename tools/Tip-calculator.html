@@ -25,112 +25,125 @@
     <!-- FAQ section styling -->
     <link rel="stylesheet" href="../FAQ section/faq.css">
     <link rel="stylesheet" href="tool.css">
-    <!-- Back to top button -->
     <link rel="stylesheet" href="../back-to-top.css">
     <script src="../back-to-top.js"></script>
     <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
         /* Custom styles for Tip Calculator */
-        .tool-display__input-grid {
+        .tip-calc-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .tip-input-section {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
         }
-
-        .tool-display__input-row {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .tool-display__input-row .tool-display__input-group {
-            flex-grow: 1;
-        }
-
-        .tool-display__select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
-            background-color: #fff;
-        }
-
-        .tool-display__input {
-             width: 100%;
-             box-sizing: border-box;
-             padding: 0.75rem;
-             border: 1px solid #ddd;
-             border-radius: 8px;
-             font-size: 1rem;
-             font-family: 'Inter', sans-serif;
-        }
-        
-        .tip-presets {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .tip-preset-btn {
-            flex: 1;
-            padding: 0.5rem;
-            background-color: #f0f4f8;
-            border: 1px solid #d1d9e6;
-            color: #333;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .tip-preset-btn:hover {
-            background-color: #e1e8f0;
-        }
-
-        .tip-slider {
-            width: 100%;
-            margin-top: 0.5rem;
-        }
-
-        .tool-display__output-section {
-            background-color: #0d1a2e;
-            color: #fff;
-            padding: 2rem;
+        .tip-result-section {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
             border-radius: 12px;
+            padding: 25px;
             text-align: center;
         }
-        
-        .tool-display__output-section h3 {
-            color: #fff;
-            margin-bottom: 2rem;
-        }
-
-        .output-grid {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .output-item {
-            background-color: #1a293f;
-            padding: 1rem;
-            border-radius: 8px;
-        }
-
-        .output-item__label {
-            font-size: 0.9rem;
-            color: #a0aec0;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .output-item__value {
-            font-size: 1.75rem;
+        .tip-amount {
+            font-size: 3rem;
             font-weight: 700;
-            color: #48bb78; /* A nice green for money */
+            color: #28a745;
+            margin: 10px 0;
         }
-        
-        #per-person-section {
-             display: none; /* Initially hidden */
+        .total-amount {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #007bff;
+            margin: 10px 0;
+        }
+        .tip-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .breakdown-item {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        .breakdown-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #495057;
+        }
+        .breakdown-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .tip-input-section { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .tip-result-section { 
+                padding: 20px; 
+            }
+            .tip-amount { 
+                font-size: 2.5rem; 
+            }
+            .total-amount { 
+                font-size: 2rem; 
+            }
+            .tip-breakdown { 
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+                gap: 12px; 
+            }
+            .breakdown-item { 
+                padding: 12px; 
+            }
+            .breakdown-value { 
+                font-size: 1.3rem; 
+            }
+            .tool-display__input { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tip-amount { 
+                font-size: 2rem; 
+            }
+            .total-amount { 
+                font-size: 1.8rem; 
+            }
+            .tip-breakdown { 
+                grid-template-columns: 1fr 1fr; 
+                gap: 10px; 
+            }
+            .breakdown-item { 
+                padding: 10px; 
+            }
+            .breakdown-value { 
+                font-size: 1.2rem; 
+            }
+            .breakdown-label { 
+                font-size: 0.8rem; 
+            }
         }
     </style>
 </head>

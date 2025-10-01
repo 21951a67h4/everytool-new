@@ -26,103 +26,108 @@
     <!-- FAQ section styling -->
     <link rel="stylesheet" href="../FAQ section/faq.css">
     <link rel="stylesheet" href="tool.css">
-    <!-- Back to top button -->
     <link rel="stylesheet" href="../back-to-top.css">
     <script src="../back-to-top.js"></script>
     <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
         /* Custom styles for Percentage Calculator */
-        .tool-display__content {
-            display: block; /* Override grid for tabbed layout */
-        }
-        .calc-tabs {
+        .percentage-calc-container {
             display: flex;
-            flex-wrap: wrap;
-            border-bottom: 2px solid #007bff;
-            margin-bottom: 1.5rem;
+            flex-direction: column;
+            gap: 20px;
         }
-        .calc-tab {
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            background: #f1f3f5;
+        .calc-mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .mode-btn {
+            flex: 1;
+            padding: 12px;
             border: 1px solid #dee2e6;
-            border-bottom: none;
-            border-radius: 8px 8px 0 0;
-            margin-right: 0.5rem;
-            margin-bottom: -1px;
-            transition: background-color 0.2s, color 0.2s;
+            border-radius: 8px;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        .calc-tab.active {
+        .mode-btn.active {
             background: #007bff;
             color: #fff;
             border-color: #007bff;
         }
-        .calc-panel {
-            display: none;
+        .calc-input-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .calc-result-section {
             background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 0 8px 8px 8px;
-            padding: 2rem;
-        }
-        .calc-panel.active {
-            display: block;
-        }
-
-        .calc-form {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        .calc-form .tool-display__input-group {
-            flex-grow: 1;
-        }
-        .calc-form .tool-display__input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ced4da;
-            border-radius: 8px;
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
-        .calc-result {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            background: #e9f5ff;
-            border: 1px solid #b3d7ff;
-            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 25px;
             text-align: center;
         }
-        .calc-result p {
-            margin: 0;
-            font-size: 1.2rem;
-        }
-        .calc-result .result-value {
-            font-size: 2.5rem;
+        .result-value {
+            font-size: 3rem;
             font-weight: 700;
-            color: #007bff;
+            color: #28a745;
+            margin: 15px 0;
+        }
+        .result-label {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 10px;
         }
 
-        #history-section {
-            margin-top: 2rem;
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .calc-mode-selector { 
+                flex-direction: column; 
+                gap: 8px; 
+            }
+            .calc-input-section { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .calc-result-section { 
+                padding: 20px; 
+            }
+            .result-value { 
+                font-size: 2.5rem; 
+            }
+            .mode-btn { 
+                padding: 10px; 
+            }
+            .tool-display__input { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
         }
-        #history-list {
-            list-style: none;
-            padding: 0;
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            background: #fff;
-        }
-        #history-list li {
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #e9ecef;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        #history-list li:last-child {
-            border-bottom: none;
+
+        @media (max-width: 480px) {
+            .result-value { 
+                font-size: 2rem; 
+            }
+            .result-label { 
+                font-size: 1rem; 
+            }
+            .calc-result-section { 
+                padding: 15px; 
+            }
+            .mode-btn { 
+                padding: 8px; 
+                font-size: 0.9rem; 
+            }
         }
     </style>
 </head>

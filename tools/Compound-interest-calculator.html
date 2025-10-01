@@ -30,6 +30,18 @@
     <script src="../back-to-top.js"></script>
     
     <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
         /* Custom styles for Compound Interest Calculator */
         .tool-display__input-section {
             display: flex;
@@ -135,6 +147,54 @@
         }
 
         .disclaimer { font-size: 0.8rem; color: #6c757d; margin-top: 1rem; text-align: center;}
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .tool-display__input-row { 
+                grid-template-columns: 1fr; 
+                gap: 1rem; 
+            }
+            .output-summary { 
+                grid-template-columns: 1fr; 
+                gap: 0.75rem; 
+            }
+            .summary-card { 
+                padding: 1rem; 
+            }
+            .summary-card__value { 
+                font-size: 1.5rem; 
+            }
+            .input-group-container { 
+                padding: 1rem; 
+            }
+            .tool-display__input, .tool-display__select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .results-table { 
+                font-size: 0.8rem; 
+            }
+            .results-table th, .results-table td { 
+                padding: 0.5rem 0.25rem; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .summary-card__value { 
+                font-size: 1.3rem; 
+            }
+            .summary-card__label { 
+                font-size: 0.9rem; 
+            }
+            .results-table { 
+                font-size: 0.75rem; 
+            }
+            .results-table th, .results-table td { 
+                padding: 0.4rem 0.2rem; 
+            }
+            .chart-container { 
+                margin-bottom: 1rem; 
+            }
+        }
     </style>
 </head>
 <body>

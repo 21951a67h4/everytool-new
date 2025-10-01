@@ -1,18 +1,18 @@
-/* Back to Top Button Styles */
+/* Back to Top Button Styles - The Vivid Disc Concept */
 #et-btt {
   position: fixed;
-  right: calc(16px + env(safe-area-inset-right));
-  bottom: calc(16px + env(safe-area-inset-bottom));
+  right: calc(20px + env(safe-area-inset-right));
+  bottom: calc(20px + env(safe-area-inset-bottom));
   z-index: 9999;
   opacity: 0;
-  transform: translateY(10px) scale(0.96);
+  transform: translateY(15px) scale(0.95);
   pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #et-btt.is-visible {
   opacity: 1;
-  transform: none;
+  transform: translateY(0) scale(1);
   pointer-events: auto;
 }
 
@@ -20,72 +20,113 @@
   position: relative;
   display: grid;
   place-items: center;
-  width: var(--et-btt-size, 48px);
-  height: var(--et-btt-size, 48px);
-  border-radius: 50%;
+  width: var(--et-btt-size, 52px); /* Default size reduced */
+  height: var(--et-btt-size, 52px); /* Default size reduced */
+  border-radius: 50%; /* Perfect circle */
   cursor: pointer;
   outline: none;
-  border: 1px solid #e5e7eb;
-  background: linear-gradient(180deg, #ffffff 0%, #f7f8ff 100%);
-  color: #3f37c9; /* default arrow color */
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.08),
-    /* subtle yellow glow */ 0 0 8px rgba(255,224,102,0.18), 0 0 16px rgba(255,224,102,0.14);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+  border: none;
+  
+  /* Solid, opaque background for high visibility */
+  background: #4361EE; /* Primary Blue */
+  color: #ffffff; /* White icon */
+  
+  box-shadow: 
+    0 8px 24px rgba(67, 97, 238, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
 }
 
-/* Glassy highlight */
-#et-btt .et-btt__btn::after {
-  content: "";
-  position: absolute;
-  left: 6px;
-  right: 6px;
-  top: 5px;
-  height: 40%;
-  border-radius: inherit;
-  background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0));
-  pointer-events: none;
-}
-
-/* Hover 3D effect */
+/* Hover State - Transitions to the vibrant gradient */
 #et-btt .et-btt__btn:hover {
   transform: translateY(-6px) scale(1.05);
-  color: #ffd700; /* arrow turns yellow */
+  background: linear-gradient(135deg, #4361EE 0%, #7209B7 100%);
   box-shadow: 
-    0 12px 25px rgba(255,224,102,0.35 ), 
-    0 8px 15px rgba(255,224,102,0.35), 
-    inset 0 1px 0 rgba(255,255,255,0.5),
-    /* stronger yellow glow */ 0 0 12px rgba(255,224,102,0.35), 0 0 28px rgba(255,224,102,0.30), 0 0 48px rgba(255,224,102,0.22);
+    0 16px 32px rgba(67, 97, 238, 0.3),
+    0 8px 24px rgba(114, 9, 183, 0.2);
 }
 
-/* Active press */
+/* Active press with tactile feedback */
 #et-btt .et-btt__btn:active {
-  transform: translateY(-2px) scale(0.98);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.4);
+  transform: translateY(-2px) scale(0.96);
+  box-shadow: 0 4px 16px rgba(67, 97, 238, 0.3);
 }
 
+/* Progress ring perfectly centered */
 #et-btt .et-btt__ring {
   position: absolute;
-  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 #et-btt .et-btt__ring-track {
   fill: none;
-  stroke: rgba(0,0,0,0.12);
+  stroke: rgba(255, 255, 255, 0.2);
   stroke-width: 3;
 }
 
 #et-btt .et-btt__ring-indicator {
   fill: none;
-  stroke: #ffd700; /* progress ring in yellow */
+  stroke: #ffe066; /* CHANGED: Progress indicator color */
   stroke-width: 3;
   stroke-linecap: round;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
+  filter: drop-shadow(0 0 4px rgba(255, 224, 102, 0.5)); /* Adjusted drop-shadow */
+  transition: stroke-dashoffset 0.2s linear;
 }
 
+/* Icon perfectly centered */
 #et-btt .et-btt__icon {
   position: relative;
-  z-index: 1;
-  width: 18px;
-  height: 18px;
+  z-index: 2;
+  width: 22px; /* Adjusted for smaller button */
+  height: 22px; /* Adjusted for smaller button */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  #et-btt {
+    right: calc(16px + env(safe-area-inset-right));
+    bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+  
+  #et-btt .et-btt__btn {
+    width: var(--et-btt-size, 48px); /* Further reduced for mobile */
+    height: var(--et-btt-size, 48px); /* Further reduced for mobile */
+  }
+  
+  #et-btt .et-btt__icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* High contrast mode for accessibility */
+@media (prefers-contrast: high) {
+  #et-btt .et-btt__btn {
+    border: 2px solid;
+    background: Canvas;
+    color: CanvasText;
+  }
+  #et-btt .et-btt__btn:hover {
+    background: Highlight;
+    color: HighlightText;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  #et-btt .et-btt__btn,
+  #et-btt {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus states for keyboard navigation */
+#et-btt .et-btt__btn:focus-visible {
+  outline: 3px solid #4361EE;
+  outline-offset: 3px;
+  background: linear-gradient(135deg, #4361EE 0%, #7209B7 100%);
 }

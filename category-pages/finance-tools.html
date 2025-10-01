@@ -81,6 +81,8 @@
 
         @media (max-width: 768px) {
             /* Hero and Search adjustments for mobile */
+            .hero-layered-bg { height: auto; min-height: 340px; padding: 2rem 1rem; }
+            .hero-focus-card { height: auto; min-height: 300px; }
             .hero-title { 
                 font-size: 2.5rem; 
             }
@@ -143,9 +145,7 @@
                 margin-top: 2rem;
             }
             
-            .tool-card {
-                padding: 1.25rem;
-            }
+            .tool-card { padding: 1.25rem; box-shadow: var(--shadow-sm); }
             
             .tool-name {
                 font-size: 1.1rem;
@@ -196,9 +196,7 @@
                 font-size: 1.2rem;
             }
             
-            .hero-title {
-                font-size: 2rem;
-            }
+            .hero-title { font-size: 2rem; }
             
             .hero-subtitle {
                 font-size: 1rem;
@@ -310,6 +308,19 @@
             font-weight: 600;
             transition: var(--transition);
         }
+        
+        /* Desktop-to-tablet search positioning simplification */
+        @media (max-width: 1024px) {
+            .search-input { position: relative; left: 0; transform: none; width: 100%; max-width: 600px; margin: 0 auto; }
+            .search-icon { left: 16px !important; }
+            .search-clear-btn { right: 16px !important; }
+        }
+        
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) { .hero-card-background { animation: none; } }
+        
+        /* Full-width CTAs on mobile */
+        @media (max-width: 768px) { .hero-button, .tool-button { width: 100%; } }
         
         /* Search and Filter */
         .search-filter {
@@ -723,49 +734,49 @@
             <article class="tool-card">
                 <div class="tool-icon"><i class="fas fa-landmark"></i></div>
                 <h2 class="tool-name">Car Loan Calculator</h2>
-                <p class="tool-description">Calculate your monthly car loan payments, total interest, and amortization schedule.</p>
+                <p class="tool-description">Calculate monthly payments, total interest, and an amortization schedule for your car loan.</p>
                 <a href="../tools/car-loan-calculator.html" class="tool-button">Open Tool</a>
             </article>
             <article class="tool-card">
                 <div class="tool-icon"><i class="fas fa-landmark"></i></div>
                 <h2 class="tool-name">Compound Interest Calculator</h2>
-                <p class="tool-description">Calculate the future value of your investment with our Compound Interest Calculator. Perfect for investors, financial planners, and anyone interested in growth.</p>
+                <p class="tool-description">Project the future value of investments with compound interest and optional contributions.</p>
                 <a href="../tools/compound-interest-calculator.html" class="tool-button">Open Tool</a>
             </article>
             <article class="tool-card">
                 <div class="tool-icon"><i class="fas fa-landmark"></i></div>
                 <h2 class="tool-name">Inflation Calculator</h2>
-                <p class="tool-description">Calculate the buying power of money over time with our Inflation Calculator. Perfect for investors, financial planners, and anyone interested in growth.</p>
+                <p class="tool-description">See how buying power changes over time by adjusting for inflation.</p>
                 <a href="../tools/inflation-calculator.html" class="tool-button">Open Tool</a>
             </article>
             <article class="tool-card">
                 <div class="tool-icon"><i class="fas fa-landmark"></i></div>
                 <h2 class="tool-name">Mortgage Calculator</h2>
-                <p class="tool-description">Calculate the monthly mortgage payments, total interest, and total cost with our advanced Mortgage Calculator. Perfect for buyers, dealers, and financial planners.</p>
+                <p class="tool-description">Estimate mortgage payments, total interest, and total cost with optional extra payments.</p>
                 <a href="../tools/mortgage-calculator.html" class="tool-button">Open Tool</a>
             </article>
             <article class="tool-card">
                 <div class="tool-icon"><i class="fas fa-landmark"></i></div>
                 <h2 class="tool-name">Paycheck Calculator</h2>
-                <p class="tool-description">Calculate your take-home pay, taxes, and deductions with our Paycheck Calculator. Perfect for anyone interested in their financial situation.</p>
+                <p class="tool-description">Estimate take-home pay with taxes and deductions based on your location and filing status.</p>
                 <a href="../tools/paycheck-calculator.html" class="tool-button">Open Tool</a>
             </article>
             <article class="tool-card">
                 <div class="tool-icon"><i class="fas fa-landmark"></i></div>
                 <h2 class="tool-name">Tip Calculator</h2>
-                <p class="tool-description">Calculate the tip amount for your bill with our Tip Calculator. Perfect for anyone interested in their financial situation.</p>
+                <p class="tool-description">Quickly compute tip and per-person split with rounding options.</p>
                 <a href="../tools/tip-calculator.html" class="tool-button">Open Tool</a>
             </article>
             <article class="tool-card">
                 <div class="tool-icon"><i class="fas fa-landmark"></i></div>
                 <h2 class="tool-name">FIRE Age Simulator</h2>
-                <p class="tool-description">Calculate your financial independence date with our FIRE Age Simulator. Perfect for anyone interested in their financial situation.</p>
+                <p class="tool-description">Estimate your target financial independence date from savings rate and return assumptions.</p>
                 <a href="../tools/FIRE-Age-Simulator.html" class="tool-button">Open Tool</a>
             </article>
             <article class="tool-card">
                 <div class="tool-icon"><i class="fas fa-landmark"></i></div>
                 <h2 class="tool-name">Loan Calculator</h2>
-                <p class="tool-description">Calculate the monthly loan payments, total interest, and total cost with our advanced Loan Calculator. Perfect for buyers, dealers, and financial planners.</p>
+                <p class="tool-description">Compute loan payments, interest, and total cost for any principal, rate, and term.</p>
                 <a href="../tools/loan-calculator.html" class="tool-button">Open Tool</a>
             </article>
         </div>
@@ -926,8 +937,8 @@
                     }
                 });
             }, { 
-                rootMargin: '0px',
-                threshold: 0.1 // Trigger when 10% of the item is visible
+                rootMargin: '100px 0px',
+                threshold: 0.05 // Trigger a bit earlier on mobile for perceived speed
             });
 
             toolCards.forEach(card => observer.observe(card));

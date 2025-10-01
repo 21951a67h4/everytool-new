@@ -32,6 +32,18 @@
     <link rel="stylesheet" href="tool.css">
     <link rel="stylesheet" href="../back-to-top.css">
     <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
         /* Custom styles for BMI Calculator */
         .tool-display__content {
             display: grid;
@@ -82,6 +94,60 @@
         #history-section { margin-top: 2rem; }
         #history-table { width: 100%; border-collapse: collapse; }
         #history-table th, #history-table td { padding: 0.5rem; border: 1px solid #ddd; text-align: center; }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                gap: 1.5rem; 
+            }
+            .bmi-score { 
+                font-size: 3rem; 
+            }
+            .bmi-category { 
+                font-size: 1.2rem; 
+            }
+            .bmi-result-display { 
+                padding: 1.5rem; 
+            }
+            .input-group-container { 
+                padding: 1rem; 
+            }
+            .tool-display__input, .tool-display__select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .height-inputs { 
+                flex-direction: column; 
+                gap: 0.75rem; 
+            }
+            .unit-switcher button { 
+                padding: 0.6rem; 
+                font-size: 0.9rem; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .bmi-score { 
+                font-size: 2.5rem; 
+            }
+            .bmi-category { 
+                font-size: 1.1rem; 
+            }
+            .bmi-result-display { 
+                padding: 1rem; 
+            }
+            .unit-switcher { 
+                flex-direction: column; 
+            }
+            .unit-switcher button { 
+                border-radius: 0; 
+            }
+            .unit-switcher button:first-child { 
+                border-radius: 8px 8px 0 0; 
+            }
+            .unit-switcher button:last-child { 
+                border-radius: 0 0 8px 8px; 
+            }
+        }
     </style>
 </head>
 <body>

@@ -560,6 +560,27 @@
 
 
     </style>
+    <style>
+        /* Additions: header placeholder, hero sizing, search simplification, motion, CTAs */
+        #header-placeholder { min-height: 130px; position: relative; z-index: 1001; }
+        @media (max-width: 768px) { #header-placeholder { min-height: 64px; } }
+        @media (max-width: 1024px) {
+            .search-input { position: relative; left: 0; transform: none; width: 100%; max-width: 600px; margin: 0 auto; }
+            .search-icon { left: 16px !important; }
+            .search-clear-btn { right: 16px !important; }
+        }
+        @media (max-width: 768px) {
+            .hero-layered-bg { height: auto; min-height: 340px; padding: 2rem 1rem; }
+            .hero-focus-card { height: auto; min-height: 300px; }
+            .tool-card { box-shadow: var(--shadow-sm); }
+            .hero-button, .tool-button { width: 100%; }
+        }
+        @media (max-width: 480px) {
+            .hero-layered-bg { min-height: 300px; }
+            .hero-focus-card { min-height: 260px; }
+        }
+        @media (prefers-reduced-motion: reduce) { .hero-card-background { animation: none; } }
+    </style>
 
     <!-- Category-specific styles injected by JavaScript -->
     <style id="category-specific-styles"></style>
@@ -649,7 +670,7 @@
             <article class="tool-card">
                 <div class="tool-icon"><i class="fas fa-calculator"></i></div>
                 <h2 class="tool-name">Time Calculator</h2>
-                <p class="tool-description">Calculate the time between two dates or times. Perfect for anyone interested in their financial situation.</p>
+                <p class="tool-description">Calculate the time between two dates or times with precise breakdowns and formats.</p>
                 <a href="../tools/time-calculator.html" class="tool-button">Open Tool</a>
             </article>
         </div>

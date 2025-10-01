@@ -1,0 +1,643 @@
+<!--
+    Open Graph & Twitter Card Generator Tool Page
+    Built using the standard EveryTool.tech template.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Open Graph &amp; Twitter Card Generator | EveryTool.tech</title>
+
+    <meta name="description" content="Create share-ready Open Graph and Twitter Card meta tags with a live social preview and instant copy to clipboard.">
+
+    <meta name="keywords" content="open graph generator, twitter card generator, social meta tags, og tags, twitter tags">
+
+    <meta name="robots" content="index, follow">
+
+
+    <meta property="og:title" content="Open Graph &amp; Twitter Card Generator | EveryTool.tech">
+
+    <meta property="og:description" content="Generate perfect social meta tags, preview the card, and copy the markup in seconds.">
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:url" content="https://everytool.tech/open-graph-twitter-card-generator">
+
+
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../FAQ section/faq.css">
+    <link rel="stylesheet" href="tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../back-to-top.css">
+    <script src="../back-to-top.js"></script>
+    <style>
+        /* Reserve header space while shared header loads */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative;
+            z-index: 2000;
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        .social-tool-grid {
+            display: grid;
+            gap: 24px;
+        }
+        @media (min-width: 992px) {
+            .social-tool-grid {
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                align-items: start;
+            }
+        }
+
+        .social-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .social-form__group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .social-form__label {
+            font-weight: 600;
+            color: #1a1f2c;
+        }
+
+        .social-form__input,
+        .social-form__textarea {
+            width: 100%;
+            border: 1px solid #d3d7df;
+            border-radius: 10px;
+            padding: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .social-form__textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .social-form__input:focus,
+        .social-form__textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+        }
+
+        .social-meta-preview {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 20px;
+            color: #e2e8f0;
+        }
+
+        .social-preview-card {
+            background: #1e293b;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .social-preview-card__image {
+            position: relative;
+            width: 100%;
+            padding-top: 52.5%;
+            background-color: #1e293b;
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        .social-preview-card__image::after {
+            content: attr(data-placeholder);
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(139, 92, 246, 0.25));
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
+
+        .social-preview-card__image[data-has-image="true"]::after {
+            opacity: 0;
+        }
+
+        .social-preview-card__body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .social-preview-card__site {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(226, 232, 240, 0.7);
+            letter-spacing: 0.08em;
+        }
+
+        .social-preview-card__title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f8fafc;
+            word-break: break-word;
+        }
+
+        .social-preview-card__description {
+            font-size: 0.9rem;
+            color: rgba(226, 232, 240, 0.78);
+            word-break: break-word;
+        }
+
+        .social-preview__code {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 10px;
+            padding: 16px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .social-preview__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .social-preview__actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .social-tip {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .input-hint {
+            font-size: 0.85rem;
+            color: #475569;
+        }
+
+        .social-inline-group {
+            display: grid;
+            gap: 14px;
+        }
+
+        @media (min-width: 640px) {
+            .social-inline-group {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="Open Graph & Twitter Card Generator" data-meta-description="Generate validated Open Graph and Twitter Card meta tags with live previews and instant copy support.">
+
+    <div id="header-placeholder"></div>
+
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Open Graph &amp; Twitter Card Generator</h1>
+
+                    <p class="tool-hero__description">
+                        Craft perfect social sharing tags in seconds. Enter your content once, preview the social card instantly, and copy all the markup with one click.
+                    </p>
+
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-share-alt"></i> <span>Dual Tag Support</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-eye"></i> <span>Live Card Preview</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-copy"></i> <span>One-Click Copy</span>
+                        </div>
+                    </div>
+
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-bolt"></i>
+                            Build Social Tags
+                        </a>
+                        <a href="#faq" class="tool-button tool-button--secondary">
+                            <i class="fas fa-circle-question"></i>
+                            FAQs
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Social Meta Tag Builder</h2>
+                    <p class="tool-display__description">
+                        Fill in the fields below to generate Open Graph and Twitter Card tags that are ready to drop into your head section.
+                    </p>
+                </div>
+
+                <div class="social-tool-grid">
+                    <form class="social-form" id="social-form">
+                        <div class="social-form__group">
+                            <label class="social-form__label" for="social-title">Title</label>
+                            <input class="social-form__input" type="text" id="social-title" name="social-title" maxlength="80" placeholder="e.g., Launching Our New Feature" autocomplete="off">
+                            <p class="input-hint">Keep it descriptive and under 60 characters for the best display on most platforms.</p>
+                        </div>
+
+                        <div class="social-form__group">
+                            <label class="social-form__label" for="social-description">Description</label>
+                            <textarea class="social-form__textarea" id="social-description" name="social-description" maxlength="200" placeholder="Summarize your content in one or two sentences."></textarea>
+                            <p class="input-hint">Aim for 140 characters or less to avoid truncation in social feeds.</p>
+                        </div>
+
+                        <div class="social-inline-group">
+                            <div class="social-form__group">
+                                <label class="social-form__label" for="social-url">Page URL</label>
+                                <input class="social-form__input" type="url" id="social-url" name="social-url" placeholder="https://example.com/post">
+                            </div>
+                            <div class="social-form__group">
+                                <label class="social-form__label" for="social-site">Site Name</label>
+                                <input class="social-form__input" type="text" id="social-site" name="social-site" placeholder="Brand or Website Name">
+                            </div>
+                        </div>
+
+                        <div class="social-form__group">
+                            <label class="social-form__label" for="social-image">Image URL</label>
+                            <input class="social-form__input" type="url" id="social-image" name="social-image" placeholder="https://example.com/preview.jpg">
+                            <p class="input-hint">Use an image at least 1200×630 px for crisp large previews on all platforms.</p>
+                        </div>
+
+                    </form>
+
+                    <div class="social-meta-preview" aria-live="polite">
+                        <div class="social-preview-card" aria-label="Social preview">
+                            <div class="social-preview-card__image" id="preview-image" data-placeholder="Image Preview" data-has-image="false"></div>
+                            <div class="social-preview-card__body">
+                                <span class="social-preview-card__site" id="preview-site">yoursite.com</span>
+                                <h3 class="social-preview-card__title" id="preview-title">Your Social Headline Appears Here</h3>
+                                <p class="social-preview-card__description" id="preview-description">Add a compelling summary to show users what they will get when they click your link.</p>
+                            </div>
+                        </div>
+
+                        <div class="social-preview__header">
+                            <h3 class="meta-preview__title">Generated Meta Tags</h3>
+                            <div class="social-preview__actions">
+                                <button id="clear-social" type="button" class="tool-button tool-button--secondary meta-preview__button" aria-label="Clear all inputs">
+                                    <i class="fas fa-eraser"></i>
+                                    <span>Clear All</span>
+                                </button>
+                                <button id="copy-social" type="button" class="tool-display__button meta-preview__button" aria-live="polite" aria-label="Copy generated social meta tags">
+                                    <i class="fas fa-copy"></i>
+                                    <span>Copy Code</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <pre class="social-preview__code" id="social-output" tabindex="0"></pre>
+                        <p class="social-tip" id="social-feedback" role="status" aria-live="assertive"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Mastering Social Sharing Metadata</h2>
+                <p class="tool-blog__subtitle">
+                    Explore best practices for creating consistent and engaging previews across major social networks.
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Why Open Graph and Twitter Tags Matter</h3>
+                    <div class="blog-section__content">
+                        <p>Social platforms rely on metadata to decide how your links appear. Proper tags ensure your brand voice, imagery, and key message show up exactly as you intended, helping drive clicks and engagement.</p>
+                    </div>
+                </div>
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Designing a Scroll-Stopping Card</h3>
+                    <div class="blog-section__content">
+                        <p>A compelling social preview pairs strong visuals with concise copy. Featured images should follow recommended dimensions, include minimal text, and reinforce the headline message to convince users to learn more.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Quick answers about Open Graph and Twitter Card tags.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Why do I need both Open Graph and Twitter Card tags?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Open Graph tags power previews on Facebook, LinkedIn, Slack, and many others. Twitter uses its own tag set. Adding both ensures your links look great no matter where they are shared.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What image size works best for social previews?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Use images at least 1200×630 pixels (aspect ratio ~1.91:1). This size keeps your preview sharp for both Open Graph and large Twitter cards on high-resolution screens.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I customize the Twitter card style?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. This generator defaults to <code>summary_large_image</code>, which delivers the richest preview. Switch to <code>summary</code> if you prefer a smaller card without an image.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do the tags update social previews instantly?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Some platforms cache previews. After updating your tags, use sharing debuggers (like Facebook Sharing Debugger or Twitter Card Validator) to refresh the cache and pull the latest data.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../FAQ section/faq.js" defer></script>
+    <script src="../universal-search-deploy.js" defer></script>
+    <script>
+        (function () {
+            var form = document.getElementById('social-form');
+            var fields = {
+                title: document.getElementById('social-title'),
+                description: document.getElementById('social-description'),
+                url: document.getElementById('social-url'),
+                site: document.getElementById('social-site'),
+                image: document.getElementById('social-image')
+            };
+            var output = document.getElementById('social-output');
+            var copyButton = document.getElementById('copy-social');
+            var clearButton = document.getElementById('clear-social');
+            var feedback = document.getElementById('social-feedback');
+            var feedbackTimeout = null;
+
+            var preview = {
+                image: document.getElementById('preview-image'),
+                site: document.getElementById('preview-site'),
+                title: document.getElementById('preview-title'),
+                description: document.getElementById('preview-description')
+            };
+
+            function escapeHtml(value) {
+                return value.replace(/[&<>"']/g, function (char) {
+                    switch (char) {
+                        case '&': return '&amp;';
+                        case '<': return '&lt;';
+                        case '>': return '&gt;';
+                        case '"': return '&quot;';
+                        case "'": return '&#39;';
+                        default: return char;
+                    }
+                });
+            }
+
+            function formatUrl(url) {
+                if (!url) {
+                    return '';
+                }
+                var lower = url.trim().toLowerCase();
+                if (lower.indexOf('http://') === 0 || lower.indexOf('https://') === 0) {
+                    return url.trim();
+                }
+                return 'https://' + url.trim();
+            }
+
+            function updatePreview() {
+                var title = fields.title.value.trim();
+                var description = fields.description.value.trim();
+                var url = fields.url.value.trim();
+                var site = fields.site.value.trim();
+                var image = fields.image.value.trim();
+
+                preview.title.textContent = title || 'Your Social Headline Appears Here';
+                preview.description.textContent = description || 'Add a compelling summary to show users what they will get when they click your link.';
+
+                var displaySite = site || url;
+                if (displaySite) {
+                    try {
+                        var cleaned = formatUrl(displaySite);
+                        var siteUrl = cleaned ? new URL(cleaned) : null;
+                        preview.site.textContent = siteUrl ? siteUrl.hostname.replace(/^www\./, '') : displaySite;
+                    } catch (err) {
+                        preview.site.textContent = displaySite;
+                    }
+                } else {
+                    preview.site.textContent = 'yoursite.com';
+                }
+
+                if (image) {
+                    preview.image.setAttribute('data-has-image', 'true');
+                    preview.image.style.backgroundImage = 'url("' + image.replace(/"/g, '\\"') + '")';
+                } else {
+                    preview.image.setAttribute('data-has-image', 'false');
+                    preview.image.style.backgroundImage = 'none';
+                }
+            }
+
+            function buildMeta() {
+                var lines = [];
+                var title = fields.title.value.trim();
+                var description = fields.description.value.trim();
+                var url = fields.url.value.trim();
+                var site = fields.site.value.trim();
+                var image = fields.image.value.trim();
+
+                if (title) {
+                    lines.push('<meta property="og:title" content="' + escapeHtml(title) + '">');
+                    lines.push('<meta name="twitter:title" content="' + escapeHtml(title) + '">');
+                }
+
+                if (description) {
+                    lines.push('<meta property="og:description" content="' + escapeHtml(description) + '">');
+                    lines.push('<meta name="twitter:description" content="' + escapeHtml(description) + '">');
+                }
+
+                if (url) {
+                    lines.push('<meta property="og:url" content="' + escapeHtml(url) + '">');
+                }
+
+                if (site) {
+                    lines.push('<meta property="og:site_name" content="' + escapeHtml(site) + '">');
+                }
+
+                if (image) {
+                    lines.push('<meta property="og:image" content="' + escapeHtml(image) + '">');
+                    lines.push('<meta name="twitter:image" content="' + escapeHtml(image) + '">');
+                }
+
+                lines.push('<meta property="og:type" content="website">');
+                lines.push('<meta name="twitter:card" content="summary_large_image">');
+
+                if (lines.length === 0) {
+                    lines.push('<!-- Enter page details to generate Open Graph and Twitter Card tags -->');
+                }
+
+                output.textContent = lines.join('\n');
+            }
+
+            function setFeedback(message, duration) {
+                if (duration === void 0) {
+                    duration = 3000;
+                }
+
+                if (feedbackTimeout !== null) {
+                    clearTimeout(feedbackTimeout);
+                    feedbackTimeout = null;
+                }
+
+                feedback.textContent = message;
+
+                if (message && duration > 0) {
+                    feedbackTimeout = setTimeout(function () {
+                        feedback.textContent = '';
+                        feedbackTimeout = null;
+                    }, duration);
+                }
+            }
+
+            function attachListeners() {
+                var elements = form.querySelectorAll('input, textarea');
+                for (var i = 0; i < elements.length; i += 1) {
+                    elements[i].addEventListener('input', function () {
+                        buildMeta();
+                        updatePreview();
+                    });
+                    elements[i].addEventListener('change', function () {
+                        buildMeta();
+                        updatePreview();
+                    });
+                }
+            }
+
+            function copyMeta() {
+                var metaText = output.textContent;
+                if (!metaText) {
+                    setFeedback('Nothing to copy yet. Fill in the form first.', 3000);
+                    return;
+                }
+
+                function onCopySuccess() {
+                    setFeedback('Social meta tags copied to clipboard!', 3000);
+                }
+
+                function onCopyFailure() {
+                    setFeedback('Copy failed. Select the text and copy it manually.', 4000);
+                }
+
+                if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+                    navigator.clipboard.writeText(metaText).then(onCopySuccess, onCopyFailure);
+                } else {
+                    var tempTextArea = document.createElement('textarea');
+                    tempTextArea.value = metaText;
+                    tempTextArea.setAttribute('readonly', '');
+                    tempTextArea.style.position = 'fixed';
+                    tempTextArea.style.top = '0';
+                    tempTextArea.style.left = '0';
+                    tempTextArea.style.opacity = '0';
+                    document.body.appendChild(tempTextArea);
+                    tempTextArea.focus();
+                    tempTextArea.select();
+
+                    try {
+                        var successful = document.execCommand('copy');
+                        if (successful) {
+                            onCopySuccess();
+                        } else {
+                            onCopyFailure();
+                        }
+                    } catch (err) {
+                        onCopyFailure();
+                    }
+
+                    document.body.removeChild(tempTextArea);
+                }
+            }
+
+            function clearMeta() {
+                form.reset();
+                buildMeta();
+                updatePreview();
+                setFeedback('All fields cleared.', 2000);
+                if (fields.title) {
+                    fields.title.focus();
+                }
+            }
+
+            copyButton.addEventListener('click', copyMeta);
+            clearButton.addEventListener('click', clearMeta);
+            attachListeners();
+            buildMeta();
+            updatePreview();
+        })();
+    </script>
+
+</body>
+</html>
+

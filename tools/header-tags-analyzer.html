@@ -1,0 +1,613 @@
+<!--
+    Header Tags Analyzer Tool Page
+    Built using the EveryTool.tech template.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Header Tags Analyzer | EveryTool.tech</title>
+
+    <meta name="description" content="Analyze HTML header tags (H1-H6) structure and hierarchy. Check for SEO issues like missing H1 or multiple H1 tags.">
+
+    <meta name="keywords" content="header tag analyzer, h1 checker, heading structure, seo header tags">
+
+    <meta name="robots" content="index, follow">
+
+
+    <meta property="og:title" content="Header Tags Analyzer | EveryTool.tech">
+
+    <meta property="og:description" content="Analyze and optimize your HTML heading structure for better SEO.">
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:url" content="https://everytool.tech/header-tags-analyzer">
+
+
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../FAQ section/faq.css">
+    <link rel="stylesheet" href="tool.css">
+    <link rel="stylesheet" href="../back-to-top.css">
+    <script src="../back-to-top.js"></script>
+    <style>
+        #header-placeholder {
+            min-height: 130px;
+            position: relative;
+            z-index: 2000;
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        .header-grid {
+            display: grid;
+            gap: 24px;
+        }
+        @media (min-width: 992px) {
+            .header-grid {
+                grid-template-columns: 1fr 1fr;
+                align-items: start;
+            }
+        }
+
+        .header-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            padding: 24px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .header-card__title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .header-textarea {
+            width: 100%;
+            min-height: 280px;
+            border-radius: 14px;
+            border: 1px solid #cbd5f5;
+            padding: 16px;
+            background: #f8f9ff;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.9rem;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+            resize: vertical;
+        }
+        .header-textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.16);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .header-results {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            padding: 24px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .header-alerts {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .header-alert {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .header-alert.success {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            color: #166534;
+        }
+
+        .header-alert.warning {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            color: #92400e;
+        }
+
+        .header-alert.error {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            color: #991b1b;
+        }
+
+        .header-alert i {
+            margin-top: 2px;
+        }
+
+        .header-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 12px;
+            padding: 16px;
+            background: #f8f9ff;
+            border-radius: 12px;
+        }
+
+        .header-summary-item {
+            text-align: center;
+        }
+
+        .header-summary-item__count {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #4f46e5;
+            display: block;
+        }
+
+        .header-summary-item__label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .header-hierarchy {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .header-tag-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            border-left: 3px solid #cbd5f5;
+        }
+
+        .header-tag-item--h1 {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .header-tag-item--h2 {
+            border-left-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .header-tag-item--h3 {
+            border-left-color: #eab308;
+        }
+
+        .header-tag-item--h4 {
+            border-left-color: #84cc16;
+        }
+
+        .header-tag-item--h5 {
+            border-left-color: #22c55e;
+        }
+
+        .header-tag-item--h6 {
+            border-left-color: #10b981;
+        }
+
+        .header-tag-badge {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            background: #ffffff;
+            color: #0f172a;
+            border: 2px solid currentColor;
+        }
+
+        .header-tag-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .header-tag-text {
+            font-size: 0.92rem;
+            color: #0f172a;
+            font-weight: 500;
+            word-wrap: break-word;
+            margin: 0;
+        }
+
+        .header-tag-indent {
+            font-size: 0.78rem;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        .header-no-data {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .header-feedback {
+            font-size: 0.88rem;
+            color: #10b981;
+            min-height: 18px;
+            font-weight: 500;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body data-tool-name="Header Tags Analyzer" data-meta-description="Analyze HTML header tags structure and hierarchy for better SEO.">
+
+    <div id="header-placeholder"></div>
+
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Header Tags Analyzer</h1>
+
+                    <p class="tool-hero__description">
+                        Analyze your HTML heading structure (H1-H6) to ensure proper hierarchy and SEO optimization. Detect missing H1 tags, multiple H1s, and structural issues.
+                    </p>
+
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-list-ol"></i> <span>Hierarchy Detection</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-exclamation-triangle"></i> <span>SEO Warnings</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-sitemap"></i> <span>Structure Analysis</span>
+                        </div>
+                    </div>
+
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-search"></i>
+                            Analyze Headers
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-graduation-cap"></i>
+                            Learn Best Practices
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Header Tags Analyzer</h2>
+                    <p class="tool-display__description">
+                        Paste your HTML or web content below to analyze heading tag structure and hierarchy.
+                    </p>
+                </div>
+
+                <div class="header-grid">
+                    <div class="header-card">
+                        <h3 class="header-card__title">HTML Content</h3>
+
+                        <textarea id="html-input" class="header-textarea" placeholder="Paste your HTML content here..."></textarea>
+
+                        <div class="header-actions">
+                            <button id="analyze-btn" class="tool-display__button--primary">
+                                <i class="fas fa-search"></i>
+                                Analyze Headers
+                            </button>
+                            <button id="clear-btn" class="tool-button tool-button--secondary">
+                                <i class="fas fa-eraser"></i>
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="header-results">
+                        <h3 class="header-card__title">Analysis Results</h3>
+
+                        <div id="header-alerts" class="header-alerts"></div>
+
+                        <div id="header-summary" style="display: none;">
+                            <h4 class="header-card__title" style="font-size: 1rem; margin-bottom: 8px;">Header Count</h4>
+                            <div class="header-summary" id="summary-stats"></div>
+                        </div>
+
+                        <div id="header-hierarchy-container" style="display: none;">
+                            <h4 class="header-card__title" style="font-size: 1rem; margin-bottom: 8px;">Header Hierarchy</h4>
+                            <div id="header-hierarchy" class="header-hierarchy"></div>
+                        </div>
+
+                        <div id="no-results" class="header-no-data">
+                            Paste HTML content and click "Analyze Headers" to see results...
+                        </div>
+
+                        <p id="header-feedback" class="header-feedback" role="status" aria-live="assertive"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Header Tag Best Practices</h2>
+                <p class="tool-blog__subtitle">Learn how to structure your headings for better SEO and accessibility.</p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Why Header Tags Matter</h3>
+                    <div class="blog-section__content">
+                        <p>Header tags (H1-H6) structure your content hierarchically, helping both search engines and screen readers understand the organization and importance of different sections. Proper heading structure improves SEO rankings and accessibility compliance.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">H1 Tag Guidelines</h3>
+                    <div class="blog-section__content">
+                        <ul>
+                            <li><strong>Use exactly one H1</strong> per page as the main title</li>
+                            <li><strong>Make it descriptive:</strong> Clearly convey the page topic</li>
+                            <li><strong>Include your primary keyword</strong> naturally in the H1</li>
+                            <li><strong>Keep it unique:</strong> Every page should have a different H1</li>
+                            <li><strong>Place it early:</strong> Typically near the top of your content</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Proper Hierarchy</h3>
+                    <div class="blog-section__content">
+                        <p>Headers should follow a logical order: H1 → H2 → H3, etc. Don't skip levels (e.g., jumping from H2 to H4). Each heading level represents a subsection of the level above it. This creates a clear content outline that's easy to navigate and understand.</p>
+                        <ul>
+                            <li><strong>H1:</strong> Page title (one per page)</li>
+                            <li><strong>H2:</strong> Main sections</li>
+                            <li><strong>H3:</strong> Subsections within H2s</li>
+                            <li><strong>H4-H6:</strong> Further subdivisions as needed</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Common questions about header tag optimization.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I have multiple H1 tags?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>While HTML5 technically allows multiple H1 tags, SEO best practice is to use only one H1 per page. This H1 should represent the main topic and help search engines understand what the page is about. Multiple H1s can dilute your message and confuse ranking algorithms.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What happens if I skip heading levels?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Skipping levels (e.g., H2 to H4) creates a confusing hierarchy that hurts both SEO and accessibility. Screen readers rely on proper heading structure for navigation. Search engines may misunderstand your content organization. Always maintain sequential order.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Should I use headers for styling?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No. Use headers for semantic structure, not visual styling. If you need large text, use CSS instead of choosing a header tag based on size. Headers should reflect content hierarchy, not design preferences.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do header tags still matter for SEO?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! While not the strongest ranking factor, headers help search engines understand content structure and topic relevance. They improve user experience, increase time-on-page, and support semantic SEO strategies. Proper header usage is a foundational SEO practice.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../FAQ section/faq.js" defer></script>
+    <script src="../universal-search-deploy.js" defer></script>
+    <script>
+        (function () {
+            var elements = {
+                htmlInput: document.getElementById('html-input'),
+                analyzeBtn: document.getElementById('analyze-btn'),
+                clearBtn: document.getElementById('clear-btn'),
+                alerts: document.getElementById('header-alerts'),
+                summarySection: document.getElementById('header-summary'),
+                summaryStats: document.getElementById('summary-stats'),
+                hierarchyContainer: document.getElementById('header-hierarchy-container'),
+                hierarchy: document.getElementById('header-hierarchy'),
+                noResults: document.getElementById('no-results'),
+                feedback: document.getElementById('header-feedback')
+            };
+
+            var feedbackTimeout = null;
+
+            function setFeedback(message, duration) {
+                if (duration === void 0) duration = 2800;
+                if (feedbackTimeout) {
+                    clearTimeout(feedbackTimeout);
+                    feedbackTimeout = null;
+                }
+                elements.feedback.textContent = message;
+                if (message && duration > 0) {
+                    feedbackTimeout = setTimeout(function () {
+                        elements.feedback.textContent = '';
+                        feedbackTimeout = null;
+                    }, duration);
+                }
+            }
+
+            function escapeHtml(text) {
+                var div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            function analyzeHeaders() {
+                var html = elements.htmlInput.value.trim();
+                if (!html) {
+                    setFeedback('Please paste HTML content to analyze.', 2400);
+                    return;
+                }
+
+                var tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+
+                var headers = [];
+                var counts = { h1: 0, h2: 0, h3: 0, h4: 0, h5: 0, h6: 0 };
+
+                for (var level = 1; level <= 6; level++) {
+                    var tags = tempDiv.querySelectorAll('h' + level);
+                    counts['h' + level] = tags.length;
+                    
+                    tags.forEach(function (tag) {
+                        headers.push({
+                            level: level,
+                            text: tag.textContent.trim()
+                        });
+                    });
+                }
+
+                if (headers.length === 0) {
+                    elements.alerts.innerHTML = '<div class="header-alert warning"><i class="fas fa-exclamation-triangle"></i><span>No header tags found in the provided HTML.</span></div>';
+                    elements.summarySection.style.display = 'none';
+                    elements.hierarchyContainer.style.display = 'none';
+                    elements.noResults.style.display = 'none';
+                    setFeedback('No headers found.', 2400);
+                    return;
+                }
+
+                var alerts = [];
+
+                if (counts.h1 === 0) {
+                    alerts.push({ type: 'error', message: 'Missing H1 tag! Every page should have exactly one H1 tag as the main title.' });
+                } else if (counts.h1 === 1) {
+                    alerts.push({ type: 'success', message: 'Perfect! You have exactly one H1 tag.' });
+                } else {
+                    alerts.push({ type: 'warning', message: 'Multiple H1 tags detected (' + counts.h1 + '). Consider using only one H1 per page for better SEO.' });
+                }
+
+                var prevLevel = 0;
+                var skipped = false;
+                headers.forEach(function (header) {
+                    if (header.level > prevLevel + 1 && prevLevel !== 0) {
+                        skipped = true;
+                    }
+                    prevLevel = header.level;
+                });
+
+                if (skipped) {
+                    alerts.push({ type: 'warning', message: 'Heading hierarchy has skipped levels. Maintain proper order (H1 → H2 → H3) for better accessibility.' });
+                }
+
+                var alertsHtml = alerts.map(function (alert) {
+                    var icon = alert.type === 'success' ? 'check-circle' : (alert.type === 'error' ? 'times-circle' : 'exclamation-triangle');
+                    return '<div class="header-alert ' + alert.type + '"><i class="fas fa-' + icon + '"></i><span>' + alert.message + '</span></div>';
+                }).join('');
+
+                elements.alerts.innerHTML = alertsHtml;
+
+                var summaryHtml = '';
+                for (var i = 1; i <= 6; i++) {
+                    summaryHtml += '<div class="header-summary-item"><span class="header-summary-item__count">' + counts['h' + i] + '</span><span class="header-summary-item__label">H' + i + '</span></div>';
+                }
+                elements.summaryStats.innerHTML = summaryHtml;
+                elements.summarySection.style.display = 'block';
+
+                var hierarchyHtml = headers.map(function (header) {
+                    var indent = '└─'.repeat(Math.max(0, header.level - 1));
+                    return '<div class="header-tag-item header-tag-item--h' + header.level + '"><div class="header-tag-badge">H' + header.level + '</div><div class="header-tag-content"><p class="header-tag-text">' + escapeHtml(header.text) + '</p>' + (indent ? '<p class="header-tag-indent">' + indent + ' Level ' + header.level + '</p>' : '') + '</div></div>';
+                }).join('');
+
+                elements.hierarchy.innerHTML = hierarchyHtml;
+                elements.hierarchyContainer.style.display = 'block';
+                elements.noResults.style.display = 'none';
+
+                setFeedback('Analysis complete! Found ' + headers.length + ' header tag' + (headers.length !== 1 ? 's' : '') + '.', 2600);
+            }
+
+            function clearAll() {
+                elements.htmlInput.value = '';
+                elements.alerts.innerHTML = '';
+                elements.summarySection.style.display = 'none';
+                elements.hierarchyContainer.style.display = 'none';
+                elements.noResults.style.display = 'block';
+                setFeedback('Content cleared.', 2200);
+            }
+
+            elements.analyzeBtn.addEventListener('click', analyzeHeaders);
+            elements.clearBtn.addEventListener('click', clearAll);
+        })();
+    </script>
+
+</body>
+</html>
+

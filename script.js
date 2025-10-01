@@ -63,6 +63,7 @@ function animateNumbers() {
 
 document.addEventListener('DOMContentLoaded', () => {
     loadHeader();
+    loadFooter();
     // Always run trust section animation
     animateNumbers();
 
@@ -506,6 +507,176 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// ===== Blog Carousel Controller =====
+(function initBlogCarousel(){
+    // Mark that JS is running so CSS can enable JS-only animations safely
+    try { document.documentElement.classList.add('has-js'); } catch(e) {}
+
+    const viewport = document.getElementById('blog-carousel-viewport');
+    if (!viewport) return; // Only on pages with carousel
+
+    const track = viewport.querySelector('.blogs__track');
+    const prevBtn = document.querySelector('.blogs__arrow[data-action="prev"]');
+    const nextBtn = document.querySelector('.blogs__arrow[data-action="next"]');
+    const status = document.getElementById('blog-carousel-status');
+
+    let cardWidth = 0;
+    let gap = 0;
+    let step = 0; // pixels to move per click
+    let maxScroll = 0;
+    let visibleCount = 1;
+
+    function computeLayout(){
+        const firstCard = track.querySelector('.card');
+        if (!firstCard) return;
+
+        // Measure card width with multiple fallbacks for cross-browser reliability
+        const rect = firstCard.getBoundingClientRect();
+        cardWidth = rect && rect.width ? rect.width : (firstCard.offsetWidth || track.clientWidth);
+
+        // Determine gap with broader property support
+        const style = window.getComputedStyle(track);
+        const gapCandidate = style.columnGap || style.gap || style.gridColumnGap || '0px';
+        const parsed = parseFloat(gapCandidate);
+        gap = isNaN(parsed) ? 0 : parsed;
+
+        // 3 at >=1024px, 2 at 768-1023px, else 1
+        if (window.matchMedia && window.matchMedia('(min-width: 1024px)').matches) {
+            visibleCount = 3;
+        } else if (window.matchMedia && window.matchMedia('(min-width: 768px)').matches) {
+            visibleCount = 2;
+        } else {
+            visibleCount = 1;
+        }
+
+        step = visibleCount * (cardWidth + gap);
+
+        // Some browsers report 0 until after paint; compute again on next frame if so
+        maxScroll = Math.max(0, (track.scrollWidth || 0) - (track.clientWidth || 0));
+
+        // Runtime hard fallback: if layout produced zero-sized cards or the track height is tiny, switch to flex
+        const blogsSection = viewport.closest('section.blogs');
+        const trackRect = track.getBoundingClientRect();
+        const needsFlex = !cardWidth || cardWidth < 10 || trackRect.height < 10;
+        if (blogsSection) {
+            if (needsFlex) {
+                blogsSection.classList.add('blogs--flex');
+            } else {
+                blogsSection.classList.remove('blogs--flex');
+            }
+        }
+
+        rafUpdateButtons();
+    }
+
+    function smoothScrollTo(x){
+        const behaviorSupported = 'scrollBehavior' in document.documentElement.style;
+        if (behaviorSupported) {
+            track.scrollTo({ left: x, behavior: 'smooth' });
+        } else {
+            // fallback
+            track.scrollLeft = x;
+        }
+    }
+
+    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+    function handleArrow(direction){
+        const target = clamp(track.scrollLeft + (direction === 'next' ? step : -step), 0, maxScroll);
+        smoothScrollTo(target);
+        // After programmatic scroll, update states on next frame and after end
+        rafUpdateButtons();
+        announce();
+    }
+
+    function announce(){
+        if (!status) return;
+        const total = track.querySelectorAll('.card').length;
+        const index = Math.round(track.scrollLeft / (cardWidth + gap)) + 1;
+        const end = Math.min(total, index + visibleCount - 1);
+        status.textContent = `Showing ${index}-${end} of ${total}`;
+    }
+
+    function updateButtons(){
+        const atStart = track.scrollLeft <= 1;
+        const atEnd = track.scrollLeft >= maxScroll - 1;
+        if (prevBtn) prevBtn.disabled = atStart;
+        if (nextBtn) nextBtn.disabled = atEnd;
+    }
+
+    let rafId;
+    function rafUpdateButtons(){
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+            updateButtons();
+        });
+    }
+
+    // Event bindings
+    function ripple(e, el){
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+        el.style.setProperty('--x', x+'px');
+        el.style.setProperty('--y', y+'px');
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('mousemove', (e)=> ripple(e, prevBtn));
+        prevBtn.addEventListener('click', (e)=> { ripple(e, prevBtn); handleArrow('prev'); });
+    }
+    if (nextBtn) {
+        nextBtn.addEventListener('mousemove', (e)=> ripple(e, nextBtn));
+        nextBtn.addEventListener('click', (e)=> { ripple(e, nextBtn); handleArrow('next'); });
+    }
+
+    // Keyboard support when viewport focused
+    viewport.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); handleArrow('prev'); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); handleArrow('next'); }
+    });
+
+    // Recompute on resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(computeLayout, 150);
+    });
+
+    // Recompute again after full load (fonts/images/styles fully applied)
+    window.addEventListener('load', () => {
+        // double-pass for browsers that need a paint before correct measurements
+        computeLayout();
+        requestAnimationFrame(computeLayout);
+    });
+
+    // Observe element size changes for dynamic content/layout shifts
+    if (typeof ResizeObserver !== 'undefined') {
+        const ro = new ResizeObserver(() => computeLayout());
+        ro.observe(track);
+        ro.observe(viewport);
+    }
+
+    // Recompute when card images load
+    const images = track.querySelectorAll('img');
+    images.forEach(img => {
+        if (img.complete) return; // already loaded
+        img.addEventListener('load', () => computeLayout(), { once: true });
+    });
+
+    // Sync buttons while user scrolls (native swipe on mobile)
+    track.addEventListener('scroll', rafUpdateButtons, { passive: true });
+
+    // Initial measurements (two passes to mitigate zero-width first paint)
+    computeLayout();
+    requestAnimationFrame(computeLayout);
+
+    // Staggered entrance for cards for a seamless feel
+    const cards = track.querySelectorAll('.card');
+    cards.forEach((card, idx) => {
+        setTimeout(() => card.classList.add('animate-in'), 60 * idx);
+    });
+})();
+
 // Legacy scroller functionality (for other scrollers on the page)
 const scroller = document.querySelector('.scroller-track');
 if (scroller) {
@@ -572,6 +743,20 @@ async function loadHeader() {
         }
     } catch (error) {
         console.error('Failed to load header:', error);
+    }
+}
+
+async function loadFooter() {
+    try {
+        const response = await fetch('/footer.html');
+        const footerHTML = await response.text();
+        const footerPlaceholder = document.getElementById('footer-placeholder');
+        if (footerPlaceholder) {
+            footerPlaceholder.innerHTML = footerHTML;
+            
+        }
+    } catch (error) {
+        console.error('Failed to load footer:', error);
     }
 }
 

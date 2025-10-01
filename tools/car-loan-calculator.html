@@ -28,6 +28,60 @@
     <!-- Back to top button -->
     <link rel="stylesheet" href="../back-to-top.css">
     <script src="../back-to-top.js"></script>
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Mobile-specific optimizations for Car Loan Calculator */
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .tool-display__input-group { 
+                margin-bottom: 1rem; 
+            }
+            .tool-display__input { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .tool-display__button { 
+                width: 100%; 
+                margin-bottom: 0.5rem; 
+            }
+            .tool-display__controls { 
+                flex-direction: column; 
+            }
+            #calc-result { 
+                font-size: 0.9rem; 
+            }
+            #loanChart { 
+                max-width: 100%; 
+                height: auto; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-display__input { 
+                padding: 0.6rem; 
+            }
+            .tool-display__button { 
+                padding: 0.75rem; 
+                font-size: 0.9rem; 
+            }
+            #calc-result { 
+                font-size: 0.85rem; 
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header Placeholder -->

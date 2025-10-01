@@ -54,6 +54,34 @@
         .result-details strong { color: #343a40; }
         .chart-container { grid-column: 1 / -1; margin-top: 1rem; }
         .disclaimer { font-size: 0.8rem; color: #6c757d; margin-top: 1.5rem; text-align: center; }
+
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Inflation Calculator Mobile Enhancements */
+        @media (max-width: 768px) {
+            .tool-display__input-section { gap: 1rem; }
+            .tool-display__input-row { grid-template-columns: 1fr !important; gap: 0.75rem; }
+            .tool-display__input, .tool-display__select { font-size: 16px; }
+            .result-card { padding: 1rem !important; }
+            .summary-grid { grid-template-columns: 1fr 1fr !important; gap: 0.75rem !important; }
+            .results-table { font-size: 0.85rem !important; }
+            .results-table th, .results-table td { padding: 0.5rem !important; }
+        }
+
+        @media (max-width: 480px) {
+            .summary-grid { grid-template-columns: 1fr !important; }
+            .results-table { font-size: 0.8rem !important; }
+        }
     </style>
 </head>
 <body>

@@ -479,6 +479,36 @@
                 gap: 8px;
             }
         }
+
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Emotion Wheel Mobile Enhancements */
+        @media (max-width: 992px) {
+            .layout-grid { grid-template-columns: 1fr !important; gap: 1rem !important; }
+            .side-panel { order: 2; }
+            .wheel-panel { order: 1; }
+        }
+        @media (max-width: 768px) {
+            .controls input, .controls select { font-size: 16px; }
+            canvas, .wheel-canvas { max-width: 100% !important; height: auto !important; }
+            .card, .panel, .section { padding: 1rem !important; }
+            .badge, .tag { font-size: 0.85rem !important; }
+        }
+        @media (max-width: 480px) {
+            .controls { gap: 0.5rem !important; }
+            .section-title { font-size: 1.1rem !important; }
+            .paragraph, .text-sm { font-size: 0.95rem !important; }
+        }
     </style>
 </head>
 

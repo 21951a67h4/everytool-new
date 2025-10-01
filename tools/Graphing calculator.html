@@ -123,10 +123,20 @@
             }
             #graph-container {
                 order: 1;
-                height: 400px;
+                height: 420px;
             }
         }
 
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .function-input-item input, .graph-window-controls input { font-size: 16px; }
+            #graph-container { height: 360px; }
+        }
+
+        @media (max-width: 480px) {
+            #graph-container { height: 300px; }
+            .graph-window-controls { grid-template-columns: 1fr; }
+        }
     </style>
     <!-- END: CRITICAL STYLE FOR HEADER -->
 

@@ -3,10 +3,8 @@
 
   var DEFAULTS = {
     visibleAfterPx: 260,
-    sizePx: 48,
-    insetRightPx: 16,
-    insetBottomPx: 16,
-    ringRadius: 22 // fixed radius for proper circle alignment
+    sizePx: 52, // CHANGED: Overall size reduced
+    ringRadius: 24.5 // CHANGED: Recalculated for 52px size with 3px stroke
   };
 
   var userConfig = window.BackToTopConfig || {};
@@ -28,7 +26,6 @@
     if (document.getElementById(rootId)) return;
     var root = document.createElement('div');
     root.id = rootId;
-    root.className = 'et-btt';
     root.setAttribute('aria-hidden', 'true');
 
     var btn = document.createElement('button');
@@ -38,38 +35,36 @@
     btn.title = 'Back to top';
     btn.style.setProperty('--et-btt-size', config.sizePx + 'px');
 
-    // Progress ring SVG
     var svgRing = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svgRing.setAttribute('class', 'et-btt__ring');
-    svgRing.setAttribute('width', String(config.sizePx));
-    svgRing.setAttribute('height', String(config.sizePx));
-    svgRing.setAttribute('viewBox', '0 0 48 48');
+    svgRing.setAttribute('viewBox', '0 0 ' + config.sizePx + ' ' + config.sizePx);
 
+    var center = config.sizePx / 2;
     var track = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     track.setAttribute('class', 'et-btt__ring-track');
-    track.setAttribute('cx', '24');
-    track.setAttribute('cy', '24');
+    track.setAttribute('cx', String(center));
+    track.setAttribute('cy', String(center));
     track.setAttribute('r', String(config.ringRadius));
 
     var indicator = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     indicator.setAttribute('class', 'et-btt__ring-indicator');
-    indicator.setAttribute('cx', '24');
-    indicator.setAttribute('cy', '24');
+    indicator.setAttribute('cx', String(center));
+    indicator.setAttribute('cy', String(center));
     indicator.setAttribute('r', String(config.ringRadius));
     indicator.setAttribute('stroke-dasharray', String(state.ringCircumference));
     indicator.setAttribute('stroke-dashoffset', String(state.ringCircumference));
 
     svgRing.appendChild(track);
     svgRing.appendChild(indicator);
-
-    // Arrow icon SVG
+    
     var svgIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svgIcon.setAttribute('class', 'et-btt__icon');
     svgIcon.setAttribute('viewBox', '0 0 24 24');
     svgIcon.setAttribute('aria-hidden', 'true');
+    
     var iconPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     iconPath.setAttribute('fill', 'currentColor');
-    iconPath.setAttribute('d', 'M12 6l-5 5h3v7h4v-7h3z');
+    iconPath.setAttribute('d', 'M12 4l-7 7h5v9h4v-9h5z'); // Arrow icon
     svgIcon.appendChild(iconPath);
 
     btn.appendChild(svgRing);
@@ -88,10 +83,7 @@
 
   function getMaxScrollable() {
     var doc = document.documentElement;
-    var body = document.body;
-    var scrollHeight = Math.max(body.scrollHeight, doc.scrollHeight);
-    var clientHeight = doc.clientHeight;
-    return Math.max(1, scrollHeight - clientHeight);
+    return Math.max(1, doc.scrollHeight - doc.clientHeight);
   }
 
   function setVisible(isVisible) {
@@ -130,19 +122,53 @@
     }
   }
 
-  function onClick() {
+  function onClick(e) {
+    // Click feedback: Ripple Effect
+    if (state.elements.button) {
+      var rect = state.elements.button.getBoundingClientRect();
+      var ripple = document.createElement('span');
+
+      ripple.className = 'et-btt__ripple';
+      ripple.style.height = ripple.style.width = Math.max(rect.width, rect.height) + 'px';
+      ripple.style.top = (e.clientY - rect.top - ripple.offsetHeight / 2) + 'px';
+      ripple.style.left = (e.clientX - rect.left - ripple.offsetWidth / 2) + 'px';
+      
+      var style = document.createElement('style');
+      style.textContent = `
+        .et-btt__ripple {
+          position: absolute;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.6);
+          transform: scale(0);
+          animation: et-btt-ripple-animation 0.6s linear;
+          pointer-events: none;
+        }
+        @keyframes et-btt-ripple-animation {
+          to {
+            transform: scale(4);
+            opacity: 0;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+      state.elements.button.appendChild(ripple);
+      
+      setTimeout(() => ripple.remove(), 600);
+    }
+    
+    // Smooth scroll functionality
     if (state.prefersReducedMotion) {
       window.scrollTo(0, 0);
-      return;
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    if ('scrollBehavior' in document.documentElement.style && typeof window.scrollTo === 'function') {
-      try { window.scrollTo({ top: 0, behavior: 'smooth' }); return; } catch (_) {}
-    }
-    window.scrollTo(0, 0);
   }
 
   function onKeydown(e) {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); }
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onClick(e);
+    }
   }
 
   function init() {
@@ -154,8 +180,7 @@
     state.elements.button.addEventListener('keydown', onKeydown);
     window.addEventListener('scroll', onScrollOrResize, { passive: true });
     window.addEventListener('resize', onScrollOrResize);
-    document.addEventListener('visibilitychange', onScrollOrResize);
-    onScrollOrResize();
+    rafUpdate(); // Initial check
     state.hasMounted = true;
   }
 
@@ -167,21 +192,19 @@
     }
     window.removeEventListener('scroll', onScrollOrResize);
     window.removeEventListener('resize', onScrollOrResize);
-    document.removeEventListener('visibilitychange', onScrollOrResize);
     if (state.elements.root && state.elements.root.parentNode) {
       state.elements.root.parentNode.removeChild(state.elements.root);
     }
     state.hasMounted = false;
   }
-
+  
+  // Expose public methods
   window.BackToTop = {
     init: init,
-    destroy: destroy,
-    show: function () { setVisible(true); },
-    hide: function () { setVisible(false); },
-    update: function () { onScrollOrResize(); }
+    destroy: destroy
   };
 
+  // Auto-initialize
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

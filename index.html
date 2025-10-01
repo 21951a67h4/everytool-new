@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Organization Schema Markup -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Everytool.tech",
+      "url": "https://everytool.tech",
+      "logo": "https://everytool.tech/assets/SVG/logo(icon).svg"
+    }
+    </script>
     
     <!-- Content Security Policy -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src-elem 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: https://api.producthunt.com; font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com; connect-src 'self';">
     <title>Everytool.tech | Your privacy our priority</title>
+    <meta name="description" content="Everytool.tech offers a wide range of tools including calculator, converter, generator, and developer tools. our collection includes over 50+ free tools designed to help you with various tasks.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/SVG/favicon.svg">
@@ -19,7 +31,6 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Back to top button -->
     <link rel="stylesheet" href="back-to-top.css">
-    <script src="back-to-top.js"></script>
     
     <!-- Meta Tags -->
     <meta name="description" content="Transform your work with smart tools. One platform, endless possibilities. Find and use the perfect tool for any task.">
@@ -265,9 +276,9 @@ kbd {
                     <div class="hero__visual hero__visual-modern animate-slide-in improved-profile-float">
                         <div class="hero__profile-card improved-profile-card">
                             <div class="hero__profile-img-wrap simple-rounded-profile">
-                                <img src="assets/varshith2.png" alt="Gubba Varshith" class="hero__profile-img rounded-square-img">
+                                <img src="assets/varshith3.png" alt="Gubba Varshith" class="hero__profile-img rounded-square-img">
                                 <a href="/creators.html"
-                                    <button class="hero__profile-status" aria-label="Online Status">Know More</button>
+                                    <button class="hero__profile-status" aria-label="Online Status">Know Me</button>
                                 </a>
                             </div>
                             <div class="hero__profile-info">
@@ -401,6 +412,186 @@ kbd {
             </div>
         </section>
 
+        <!-- start of latest blogs carousel -->
+        <section class="blogs" aria-label="Latest Blog Posts">
+            <div class="blogs__container">
+                <div class="blogs__header">
+                    <button class="blogs__arrow blogs__arrow--prev" data-action="prev" aria-label="Previous posts" disabled>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2 class="blogs__title">Latest Blog Posts</h2>
+                    <button class="blogs__arrow blogs__arrow--next" data-action="next" aria-label="Next posts">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    </div>
+
+                <div id="blog-carousel-viewport" class="blogs__viewport" tabindex="0">
+                    <div class="blogs__track">
+                        <article class="card" role="article">
+                            <div class="card__media">
+                                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Demo">
+                                <span class="card__badge">Other</span>
+                    </div>
+                            <div class="card__body">
+                                <h3 class="card__title">Demo Post 1</h3>
+                                <div class="card__meta"><i class="far fa-calendar"></i> August 28, 2025</div>
+                                <p class="card__excerpt">Planning a loan? Your EMI (Equated Monthly Instalment) is the monthly amount you’ll pay. This guide explains the formula in…</p>
+                                <a class="card__btn" href="#" aria-label="Read more about Demo Post 1">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                  </article>
+          
+                        <article class="card" role="article">
+                            <div class="card__media">
+                                <img src="#" alt="Demo">
+                                <span class="card__badge">Finance</span>
+                    </div>
+                            <div class="card__body">
+                                <h3 class="card__title">Demo Post 2</h3>
+                                <div class="card__meta"><i class="far fa-calendar"></i> August 24, 2025</div>
+                                <p class="card__excerpt">Understand compound interest with practical examples and a handy calculator to project your savings overtime…</p>
+                                <a class="card__btn" href="#" aria-label="Read more about Demo Post 2">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                  </article>
+                        <article class="card" role="article">
+                            <div class="card__media">
+                                <img src="#" alt="Demo">
+                                <span class="card__badge">Math</span>
+                            </div>
+                            <div class="card__body">
+                                <h3 class="card__title">Demo Post 3</h3>
+                                <div class="card__meta"><i class="far fa-calendar"></i> August 20, 2025</div>
+                                <p class="card__excerpt">Master percentage calculations quickly with tips, tricks and solved examples you can use anywhere…</p>
+                                <a class="card__btn" href="#" aria-label="Read more about Demo Post 3">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </article>
+                        <article class="card" role="article">
+                            <div class="card__media">
+                                <img src="#" alt="Demo">
+                                <span class="card__badge">Productivity</span>
+                            </div>
+                            <div class="card__body">
+                                <h3 class="card__title">Demo Post 4</h3>
+                                <div class="card__meta"><i class="far fa-calendar"></i> August 15, 2025</div>
+                                <p class="card__excerpt">Boost your productivity with these simple, actionable tips and the best free tools available online…</p>
+                                <a class="card__btn" href="#" aria-label="Read more about Demo Post 4">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </article>
+                        <article class="card" role="article">
+                            <div class="card__media">
+                                <img src="#" alt="Demo">
+                                <span class="card__badge">Collaboration</span>
+                            </div>
+                            <div class="card__body">
+                                <h3 class="card__title">Demo Post 5</h3>
+                                <div class="card__meta"><i class="far fa-calendar"></i> August 10, 2025</div>
+                                <p class="card__excerpt">Discover the best online collaboration tools for remote teams and how to use them effectively…</p>
+                                <a class="card__btn" href="#" aria-label="Read more about Demo Post 5">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </article>
+                <p class="sr-only" id="blog-carousel-status" aria-live="polite"></p>
+                    </div>
+          </section>
+          
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org", 
+          "@type": "ItemList",
+          "name": "Latest Blog Posts",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "BlogPosting",
+                "headline": "Demo Post 1",
+                "name": "Demo Post 1",
+                "description": "Planning a loan? Your EMI (Equated Monthly Instalment) is the monthly amount you’ll pay. This guide explains the formula in…",
+                "datePublished": "2025-08-28",
+                "image": "https://everytool.tech/assets/varshith2.png",
+                "url": "https://everytool.tech/#demo-post-1",
+                "author": {"@type": "Organization", "name": "Everytool.tech"},
+                "publisher": {"@type": "Organization", "name": "Everytool.tech", "logo": {"@type": "ImageObject", "url": "https://everytool.tech/assets/SVG/logo(icon).svg"}}
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "BlogPosting",
+                "headline": "Demo Post 2",
+                "name": "Demo Post 2",
+                "description": "Understand compound interest with practical examples and a handy calculator to project your savings overtime…",
+                "datePublished": "2025-08-24",
+                "image": "https://everytool.tech/assets/varshith.jpg",
+                "url": "https://everytool.tech/#demo-post-2",
+                "author": {"@type": "Organization", "name": "Everytool.tech"},
+                "publisher": {"@type": "Organization", "name": "Everytool.tech", "logo": {"@type": "ImageObject", "url": "https://everytool.tech/assets/SVG/logo(icon).svg"}}
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "BlogPosting",
+                "headline": "Demo Post 3",
+                "name": "Demo Post 3",
+                "description": "Master percentage calculations quickly with tips, tricks and solved examples you can use anywhere…",
+                "datePublished": "2025-08-20",
+                "image": "https://everytool.tech/assets/varshith2.png",
+                "url": "https://everytool.tech/#demo-post-3",
+                "author": {"@type": "Organization", "name": "Everytool.tech"},
+                "publisher": {"@type": "Organization", "name": "Everytool.tech", "logo": {"@type": "ImageObject", "url": "https://everytool.tech/assets/SVG/logo(icon).svg"}}
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "BlogPosting",
+                "headline": "Demo Post 4",
+                "name": "Demo Post 4",
+                "description": "Boost productivity with these focused workflows and shortcuts built into Everytool…",
+                "datePublished": "2025-08-12",
+                "image": "https://everytool.tech/assets/varshith.jpg",
+                "url": "https://everytool.tech/#demo-post-4",
+                "author": {"@type": "Organization", "name": "Everytool.tech"},
+                "publisher": {"@type": "Organization", "name": "Everytool.tech", "logo": {"@type": "ImageObject", "url": "https://everytool.tech/assets/SVG/logo(icon).svg"}}
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "item": {
+                "@type": "BlogPosting",
+                "headline": "Demo Post 5",
+                "name": "Demo Post 5",
+                "description": "Dev-friendly tips to validate JSON, minify code, and automate your debugging sessions…",
+                "datePublished": "2025-08-09",
+                "image": "https://everytool.tech/assets/varshith2.png",
+                "url": "https://everytool.tech/#demo-post-5",
+                "author": {"@type": "Organization", "name": "Everytool.tech"},
+                "publisher": {"@type": "Organization", "name": "Everytool.tech", "logo": {"@type": "ImageObject", "url": "https://everytool.tech/assets/SVG/logo(icon).svg"}}
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
+              "item": {
+                "@type": "BlogPosting",
+                "headline": "Demo Post 6",
+                "name": "Demo Post 6",
+                "description": "Planning a loan? Your EMI is the monthly amount you’ll pay. This guide explains the formula in detail…",
+                "datePublished": "2025-08-01",
+                "image": "https://everytool.tech/assets/varshith.jpg",
+                "url": "https://everytool.tech/#demo-post-6",
+                "author": {"@type": "Organization", "name": "Everytool.tech"},
+                "publisher": {"@type": "Organization", "name": "Everytool.tech", "logo": {"@type": "ImageObject", "url": "https://everytool.tech/assets/SVG/logo(icon).svg"}}
+              }
+            }
+          ]
+        }
+          </script>
+        <!-- end of latest blogs carousel -->
 
         <section class="cta-section">
             <div class="cta-section__container">
@@ -711,33 +902,16 @@ kbd {
                 });
         }
         
-        function loadFooter() {
-            var footerPlaceholder = document.getElementById('footer-placeholder');
-            if (footerPlaceholder) {
-                fetch('/footer.html')
-                    .then(function(response) {
-                        return response.ok ? response.text() : Promise.reject('Failed to load footer');
-                    })
-                    .then(function(html) {
-                        footerPlaceholder.innerHTML = html;
-                    })
-                    .catch(function(error) {
-                        console.error('Error loading footer:', error);
-                    });
-            }
-        }
-        
         loadHeader();
-        loadFooter();
     });
     </script>
 
     <script>
         // Paste this inside a <script> tag at the end of your <body>
-document.addEventListener('DOMContentLoaded', () => {
-    const popupOverlay = document.getElementById('welcome-popup-overlay');
-    const closeButton = document.getElementById('get-started-btn');
-    const visitedFlagKey = 'everytoolWelcomePopupShown';
+        document.addEventListener('DOMContentLoaded', () => {
+            const popupOverlay = document.getElementById('welcome-popup-overlay');
+            const closeButton = document.getElementById('get-started-btn');
+            const visitedFlagKey = 'everytoolWelcomePopupShown';
 
     if (!popupOverlay || !closeButton) {
         return; // Exit if popup elements aren't found
@@ -776,5 +950,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
     </script>
+
+    <script src="back-to-top.js" defer></script>
 </body>
 </html>

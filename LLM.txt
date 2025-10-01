@@ -1,0 +1,44 @@
+# LLM access policy for everytool.tech
+
+# This file communicates that Large Language Model (LLM) crawlers may access
+# and use publicly available content on this site. While adoption varies by
+# provider, many LLMs check for site-level guidance in files like this.
+
+User-agent: *
+Allow: /
+
+# Optional: rate limit guidance for respectful crawling
+Crawl-Delay: 1
+
+# Known LLM/AI crawlers (redundant with the wildcard, kept for clarity)
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
+# Site maps to help discovery
+Sitemap: https://everytool.tech/sitemap.xml
+
+# Contact for questions or takedown requests
+Contact: https://everytool.tech/contact.html
+
+# Data usage guidance (non-binding, declarative)
+Training: Allowed
+Attribution: Required
+Redistribution: Allowed for derived non-verbatim outputs
+
+# Last updated
+Updated: 2025-08-28
+

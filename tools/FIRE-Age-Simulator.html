@@ -199,6 +199,21 @@
         .projection-container {
             margin-top: 2.5rem;
         }
+
+        /* Mobile-specific tweaks */
+        @media (max-width: 768px) {
+            #calculate-btn { width: 100%; }
+            .result-card p { font-size: 1.6rem; }
+            .form-field input, .form-field select { font-size: 16px; }
+            .projection-container { margin-top: 1.5rem; }
+            #results-container { margin-top: 0.5rem; }
+            #portfolio-chart { max-height: 300px; }
+        }
+
+        @media (max-width: 480px) {
+            .result-card p { font-size: 1.4rem; }
+            #portfolio-chart { max-height: 240px; }
+        }
     </style>
 </head>
 

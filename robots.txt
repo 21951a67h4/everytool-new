@@ -1,16 +1,22 @@
-User-agent: *
-Allow: /
-Allow: /sitemap.html
-Allow: /sitemap.xml
-Allow: /tools/
-Allow: /categorie-page/
-Allow: /assets/
+# Robots.txt for everytool.tech
 
-# Disallow admin and private areas
+User-agent: *
+
+# Block non-public and temp areas
 Disallow: /admin/
 Disallow: /private/
 Disallow: /temp/
 Disallow: /draft/
 
+# Block single-file artifacts not meant for indexing
+Disallow: /404.html
+Disallow: /coming-soon.html
+Disallow: /coming-soon(without countdown).html
+Disallow: /header--.html
+Disallow: /header(backup).html
+Disallow: /welcome-pop-up copy.html
+Disallow: /welcome-pop-up%20copy.html
+Disallow: /{sample}.html
+
 # Sitemap location
-Sitemap: https://everytool.tech/sitemap.xml 
+Sitemap: https://everytool.tech/sitemap.xml

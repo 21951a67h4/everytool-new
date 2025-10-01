@@ -6,7 +6,7 @@
     <title>Health Tools - BMI, Calorie & Health Calculators | EveryTool.tech</title>
     <!-- Canonical URL -->
     <link rel="canonical" href="https://everytool.tech/category-pages/health-tools.html" />
-    <link rel="stylesheet" href="../back-to-top.css">
+    <link rel="stylesheet" href="/back-to-top.css">
     <meta name="description" content="Free health calculators and wellness tools. Calculate BMI, daily calories, age, and more. Track your health metrics with our accurate, easy-to-use online health tools.">
     <link rel="icon" type="image/svg+xml" href="../assets/SVG/favicon.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -494,6 +494,8 @@
         /* Responsive Design (Hero/Search adjustments for smaller screens) */
         @media (max-width: 768px) {
             /* Hero and Search adjustments for mobile */
+            .hero-layered-bg { height: auto; min-height: 340px; padding: 2rem 1rem; }
+            .hero-focus-card { height: auto; min-height: 300px; }
             .hero-title { 
                 font-size: 2.5rem; 
             }
@@ -556,9 +558,7 @@
                 margin-top: 2rem;
             }
             
-            .tool-card {
-                padding: 1.25rem;
-            }
+            .tool-card { padding: 1.25rem; box-shadow: var(--shadow-sm); }
             
             .tool-name {
                 font-size: 1.1rem;
@@ -637,10 +637,24 @@
 
         /* Header Placeholder Styles */
         #header-placeholder {
-            min-height: 80px;
+            min-height: 130px;
             position: relative; 
             z-index: 1001; 
         }
+        @media (max-width: 768px) { #header-placeholder { min-height: 64px; } }
+        
+        /* Desktop-to-tablet search positioning simplification */
+        @media (max-width: 1024px) {
+            .search-input { position: relative; left: 0; transform: none; width: 100%; max-width: 600px; margin: 0 auto; }
+            .search-icon { left: 16px !important; }
+            .search-clear-btn { right: 16px !important; }
+        }
+        
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) { .hero-card-background { animation: none; } }
+        
+        /* Full-width CTAs on mobile */
+        @media (max-width: 768px) { .hero-button, .tool-button { width: 100%; } }
     </style>
 
     <!-- Category-specific styles injected by JavaScript -->
@@ -731,7 +745,7 @@
             <article class="tool-card">
                 <div class="tool-icon"><i class="fas fa-calculator"></i></div>
                 <h2 class="tool-name">Calorie Calculator</h2>
-                <p class="tool-description">Calculate the calories burned during your workout with our Calorie Calculator. Perfect for anyone interested in their health and fitness.</p>
+                <p class="tool-description">Estimate daily calorie needs or calories burned to support your fitness goals.</p>
                 <a href="../tools/calorie-calculator.html" class="tool-button">Open Tool</a>
             </article>
         </div>
@@ -892,8 +906,8 @@
                     }
                 });
             }, { 
-                rootMargin: '0px',
-                threshold: 0.1 // Trigger when 10% of the item is visible
+                rootMargin: '100px 0px',
+                threshold: 0.05 // Trigger a bit earlier on mobile for perceived speed
             });
 
             toolCards.forEach(card => observer.observe(card));
@@ -993,6 +1007,6 @@
         loadFooter();
         });
     </script>
-    <script src="../back-to-top.js"></script>
+    <script src="/back-to-top.js"></script>
 </body>
 </html>

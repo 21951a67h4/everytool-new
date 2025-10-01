@@ -446,6 +446,26 @@ body {
     color: white;
 }
 
+/* Primary variant for tool display buttons (used by Copy button) */
+.tool-display__button--primary {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-all);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: white;
+}
+
+.tool-display__button--primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
 .tool-display__input-group {
     margin-bottom: 1rem;
 }
@@ -561,6 +581,16 @@ body {
 /* End of Tool Display Section */
 /* Responsive Design */
 @media (max-width: 768px) {
+    /* Make hero CTA buttons mobile-friendly */
+    .tool-hero__cta {
+        flex-direction: column;
+    }
+
+    .tool-button {
+        width: 100%;
+        justify-content: center;
+    }
+
     .faq-section {
         padding: 3rem 0;
     }
@@ -638,6 +668,42 @@ max-width: 90vw;
 }
 }
 
+/* Extra small devices refinements */
+@media (max-width: 400px) {
+    .tool-hero__title {
+        font-size: 2rem;
+    }
+
+    .tool-hero__description {
+        font-size: 1rem;
+    }
+
+    .case-converter-buttons {
+        gap: 12px;
+    }
+
+    .case-converter-textarea {
+        font-size: 0.95rem;
+    }
+}
+
+/* Global mobile refinements for embedded widgets/charts and tight input clusters */
+@media (max-width: 600px) {
+    /* Ensure all canvases are fluid on small screens */
+    canvas {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* Time calculator pace fields: avoid cramped fixed widths */
+    #pace-hours,
+    #pace-minutes,
+    #pace-seconds {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
 /* Header Styles */
 #header-placeholder {
     min-height: 130px;
@@ -651,3 +717,30 @@ max-width: 90vw;
 }
 
 /* End of Hero Image Stack */
+
+/* Primary button style (used by Copy button) */
+.tool-display__button--primary {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-all);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: white;
+}
+.tool-display__button--primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* Extra-small screens refinements */
+@media (max-width: 400px) {
+    .tool-hero__title { font-size: 2rem; }
+    .tool-hero__description { font-size: 1rem; }
+    .case-converter-buttons { gap: 12px; }
+    .case-converter-textarea { font-size: 0.95rem; }
+}

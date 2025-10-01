@@ -26,50 +26,103 @@
     <!-- FAQ section styling -->
     <link rel="stylesheet" href="../FAQ section/faq.css">
     <link rel="stylesheet" href="tool.css">
-    <!-- Back to top button -->
     <link rel="stylesheet" href="../back-to-top.css">
     <script src="../back-to-top.js"></script>
     <style>
-        /* Additional styles for the Word Counter tool display */
-        .tool-display__stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1rem;
-            width: 100%;
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            background-color: #f9fafb;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
         }
-        .stat-item {
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Custom styles for Words Count Tool */
+        .word-count-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            background-color: #ffffff;
-            border-radius: 6px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            gap: 20px;
+        }
+        .word-count-textarea {
+            width: 100%;
+            min-height: 200px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            padding: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            resize: vertical;
+        }
+        .word-count-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
             text-align: center;
         }
-        .stat-item__value {
-            font-size: 1.75rem;
+        .stat-value {
+            font-size: 2rem;
             font-weight: 700;
-            color: #111827;
-            line-height: 1.2;
+            color: #007bff;
+            margin-bottom: 5px;
         }
-        .stat-item__label {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-top: 0.25rem;
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .tool-display__input-section .tool-display__textarea {
-            min-height: 250px;
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .word-count-textarea { 
+                min-height: 150px; 
+                font-size: 16px; /* Prevents zoom on iOS */
+                padding: 12px; 
+            }
+            .word-count-stats { 
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+                gap: 12px; 
+            }
+            .stat-card { 
+                padding: 15px; 
+            }
+            .stat-value { 
+                font-size: 1.5rem; 
+            }
+            .stat-label { 
+                font-size: 0.8rem; 
+            }
         }
-        .tool-display__button--copy.copied {
-            background-color: #22c55e; /* green-500 */
-            border-color: #22c55e;
+
+        @media (max-width: 480px) {
+            .word-count-textarea { 
+                min-height: 120px; 
+                padding: 10px; 
+            }
+            .word-count-stats { 
+                grid-template-columns: 1fr 1fr; 
+                gap: 10px; 
+            }
+            .stat-card { 
+                padding: 12px; 
+            }
+            .stat-value { 
+                font-size: 1.3rem; 
+            }
+            .stat-label { 
+                font-size: 0.75rem; 
+            }
         }
     </style>
 </head>

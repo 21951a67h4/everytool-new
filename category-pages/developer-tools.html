@@ -642,6 +642,27 @@
             position: relative; 
             z-index: 1001; 
         }
+        
+        /* Enhancements: unified header height, hero sizing, search behavior */
+        #header-placeholder { min-height: 130px; }
+        @media (max-width: 768px) { #header-placeholder { min-height: 64px; } }
+        
+        @media (max-width: 768px) {
+            .hero-layered-bg { height: auto; min-height: 340px; padding: 2rem 1rem; }
+            .hero-focus-card { height: auto; min-height: 300px; }
+            .tool-card { box-shadow: var(--shadow-sm); }
+            .hero-button, .tool-button { width: 100%; }
+        }
+        @media (max-width: 480px) {
+            .hero-layered-bg { min-height: 300px; }
+            .hero-focus-card { min-height: 260px; }
+        }
+        @media (max-width: 1024px) {
+            .search-input { position: relative; left: 0; transform: none; width: 100%; max-width: 600px; margin: 0 auto; }
+            .search-icon { left: 16px !important; }
+            .search-clear-btn { right: 16px !important; }
+        }
+        @media (prefers-reduced-motion: reduce) { .hero-card-background { animation: none; } }
     </style>
 
     <!-- Category-specific styles injected by JavaScript -->
@@ -727,61 +748,61 @@
                 <div class="tool-icon"><i class="fas fa-code"></i></div>
                 <h2 class="tool-name">JSON Formatter & Validator</h2>
                 <p class="tool-description">Format, validate, and beautify your JSON data for easy reading and debugging.</p>
-                <a href="../tools/json-formatter.html" class="tool-button">Use Tool</a>
+                <a href="../tools/json-formatter-validator.html" class="tool-button">Use Tool</a>
             </article>
             <article class="tool-card">
-                <div class="tool-icon"><i class="fas fa-exchange-alt"></i></div>
-                <h2 class="tool-name">Base64 Encoder / Decoder</h2>
-                <p class="tool-description">Easily encode your data into a Base64 string or decode a Base64 string back to its original form.</p>
+                <div class="tool-icon"><i class="fas fa-code"></i></div>
+                <h2 class="tool-name">Base64 Encoder/Decoder</h2>
+                <p class="tool-description">Encode and decode Base64 strings for your web applications.</p>
                 <a href="../tools/base64-encoder-decoder.html" class="tool-button">Use Tool</a>
             </article>
             <article class="tool-card">
-                <div class="tool-icon"><i class="fas fa-link"></i></div>
-                <h2 class="tool-name">URL Encoder / Decoder</h2>
-                <p class="tool-description">Encode special characters in URLs to ensure they are safely transmitted over the internet.</p>
-                <a href="../tools/url-encoder-decoder.html" class="tool-button">Use Tool</a>
+                <div class="tool-icon"><i class="fas fa-eye-dropper"></i></div>
+                <h2 class="tool-name">Color Picker & Hex/RGB Converter</h2>
+                <p class="tool-description">Pick colors visually and convert between HEX, RGB, and HSL formats instantly.</p>
+                <a href="../tools/color-picker-converter.html" class="tool-button">Use Tool</a>
             </article>
             <article class="tool-card">
                 <div class="tool-icon"><i class="fas fa-fingerprint"></i></div>
-                <h2 class="tool-name">UUID/GUID Generator</h2>
-                <p class="tool-description">Generate universally unique identifiers (UUIDs) in various versions and formats.</p>
+                <h2 class="tool-name">UUID Generator</h2>
+                <p class="tool-description">Generate random UUIDs for use in databases, APIs, and development.</p>
                 <a href="../tools/uuid-generator.html" class="tool-button">Use Tool</a>
             </article>
             <article class="tool-card">
-                <div class="tool-icon"><i class="fas fa-clock"></i></div>
-                <h2 class="tool-name">Timestamp Converter</h2>
-                <p class="tool-description">Convert between Unix timestamps and human-readable dates in various timezones.</p>
-                <a href="../tools/timestamp-converter.html" class="tool-button">Use Tool</a>
-            </article>
-            <article class="tool-card">
-                <div class="tool-icon"><i class="fas fa-palette"></i></div>
-                <h2 class="tool-name">Color Converter</h2>
-                <p class="tool-description">Convert colors between Hex, RGB, HSL, and other formats for your CSS and design needs.</p>
-                <a href="../tools/color-converter.html" class="tool-button">Use Tool</a>
-            </article>
-            <article class="tool-card">
-                <div class="tool-icon"><i class="fas fa-magnifying-glass-plus"></i></div>
+                <div class="tool-icon"><i class="fas fa-asterisk"></i></div>
                 <h2 class="tool-name">Regex Tester</h2>
-                <p class="tool-description">Test and debug your regular expressions in real-time with syntax highlighting.</p>
+                <p class="tool-description">Test and debug regular expressions with instant match highlighting.</p>
                 <a href="../tools/regex-tester.html" class="tool-button">Use Tool</a>
             </article>
             <article class="tool-card">
-                <div class="tool-icon"><i class="fas fa-paragraph"></i></div>
-                <h2 class="tool-name">Lorem Ipsum Generator</h2>
-                <p class="tool-description">Generate placeholder text in paragraphs, sentences, or words for your designs.</p>
-                <a href="../tools/lorem-ipsum-generator.html" class="tool-button">Use Tool</a>
+                <div class="tool-icon"><i class="fas fa-code-compare"></i></div>
+                <h2 class="tool-name">Text Diff Checker</h2>
+                <p class="tool-description">Compare two text or code snippets with visual diff highlighting.</p>
+                <a href="../tools/text-diff-checker.html" class="tool-button">Use Tool</a>
+            </article>
+            <article class="tool-card">
+                <div class="tool-icon"><i class="fas fa-link"></i></div>
+                <h2 class="tool-name">URL Parser & Encoder/Decoder</h2>
+                <p class="tool-description">Parse URLs into components and encode/decode URL strings instantly.</p>
+                <a href="../tools/url-parser-encoder.html" class="tool-button">Use Tool</a>
             </article>
             <article class="tool-card">
                 <div class="tool-icon"><i class="fab fa-markdown"></i></div>
-                <h2 class="tool-name">Markdown Editor</h2>
-                <p class="tool-description">Write and preview Markdown formatted text with a live side-by-side view.</p>
-                <a href="../tools/markdown-editor.html" class="tool-button">Use Tool</a>
+                <h2 class="tool-name">Markdown to HTML Converter</h2>
+                <p class="tool-description">Convert Markdown text to clean, ready-to-use HTML instantly.</p>
+                <a href="../tools/markdown-to-html-converter.html" class="tool-button">Use Tool</a>
             </article>
             <article class="tool-card">
-                <div class="tool-icon"><i class="fas fa-database"></i></div>
-                <h2 class="tool-name">SQL Formatter</h2>
-                <p class="tool-description">Beautify and format your messy SQL queries to make them readable and standardized.</p>
-                <a href="../tools/sql-formatter.html" class="tool-button">Use Tool</a>
+                <div class="tool-icon"><i class="fas fa-compress"></i></div>
+                <h2 class="tool-name">Minify/Beautify Tool (JS/CSS/HTML)</h2>
+                <p class="tool-description">Minify or beautify your JavaScript, CSS, or HTML code for optimization or readability.</p>
+                <a href="../tools/minify-beautify-tool.html" class="tool-button">Use Tool</a>
+            </article>
+            <article class="tool-card">
+                <div class="tool-icon"><i class="far fa-clock"></i></div>
+                <h2 class="tool-name">Timestamp Converter</h2>
+                <p class="tool-description">Convert Unix timestamps to human-readable dates and vice versa.</p>
+                <a href="../tools/timestamp-converter.html" class="tool-button">Use Tool</a>
             </article>
         </div>
 
@@ -941,8 +962,8 @@
                     }
                 });
             }, { 
-                rootMargin: '0px',
-                threshold: 0.1 // Trigger when 10% of the item is visible
+                rootMargin: '100px 0px',
+                threshold: 0.05 // Trigger a bit earlier on mobile for perceived speed
             });
 
             toolCards.forEach(card => observer.observe(card));

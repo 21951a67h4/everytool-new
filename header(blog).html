@@ -215,21 +215,7 @@
             opacity: 0;
         }
 
-        /* Ensure search button is visible on mobile */
-        .header__search-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 0.75rem;
-            font-size: 1rem;
-            min-width: auto;
-            height: 40px;
-        }
-
-        .header__search-text {
-            display: block;
-            font-size: 0.9rem;
-        }
+        
 
         /* Ensure header top section is properly visible */
         .header__top {
@@ -398,58 +384,38 @@
         gap: 0.75rem;
     }
 
-    .header__search-btn {
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 0.5rem 1.1rem 0.5rem 0.75rem;
+    /* Social icons (match footer animations/style) */
+    .header__social {
+        display: flex;
+        gap: 0.75rem;
         margin-left: auto;
+    }
+    .header__social-link {
+        width: 34px;
+        height: 34px;
+        background: rgba(0, 0, 0, 0.06);
         color: var(--text-primary);
-        font-size: 1.25rem;
+        border-radius: 12px;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        border-radius: 50px;
-        transition: 
-            color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-            background 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-            border 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-            box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-            transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        will-change: transform, box-shadow, background, color;
-        position: relative;
-        overflow: hidden;
+        justify-content: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, border-radius 0.3s ease;
     }
-    .header__search-btn:hover, .header__search-btn:focus-visible {
-        color: var(--primary);
-        background: rgba(67, 97, 238, 0.10);
-        border: 1.5px solid var(--primary);
-        box-shadow: 0 4px 16px rgba(67, 97, 238, 0.13);
-        transform: scale(1.06) translateY(-2px);
+    .header__social-link i {
+        font-size: 0.9rem;
+        line-height: 1;
     }
-    .header__search-btn:active {
-        transform: scale(0.98) translateY(1px);
-        box-shadow: 0 2px 6px rgba(67, 97, 238, 0.10);
+    .header__social-link:hover,
+    .header__social-link:focus-visible {
+        border-radius: 25px;
+        background: #ffd700;
+        color: #1a1f36;
+        transform: translateY(-3px) scale(1.05);
+        outline: none;
     }
-    .header__search-btn .fas {
-        transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-            transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .header__search-btn:hover .fas, .header__search-btn:focus-visible .fas {
-        color: var(--primary);
-        transform: scale(1.15) rotate(-8deg);
-    }
-    .header__search-text {
-        font-size: 1.05rem;
-        font-weight: 500;
-        letter-spacing: 0.01em;
-        transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-            transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .header__search-btn:hover .header__search-text, .header__search-btn:focus-visible .header__search-text {
-        color: var(--primary);
-        transform: translateX(2px) scale(1.05);
-    }
+
+    
 
     @media (min-width: 769px) {
         .header {
@@ -479,15 +445,14 @@
         .header__container {
             padding: 0 1rem;
         }
-        
-        .header__search-btn {
-            padding: 0.4rem 0.6rem;
-            font-size: 0.9rem;
+        .header__social-link {
+            width: 30px;
+            height: 30px;
         }
-        
-        .header__search-text {
+        .header__social-link i {
             font-size: 0.85rem;
         }
+        
         
         .header__logo-img {
             width: 36px;
@@ -495,237 +460,7 @@
         }
     }
 
-    .search-popup {
-        position: fixed;
-        /* Fallback for browsers that don't support inset */
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        inset: 0;
-        z-index: var(--z-header) + 100;
-        z-index: 200; /* Fallback */
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-        -moz-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        -moz-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        padding: 1rem;
-        /* Fallback for browsers that don't support backdrop-filter */
-        background-color: rgba(0, 0, 0, 0.6);
-        background-color: rgba(0, 0, 0, 0.4);
-        -webkit-backdrop-filter: blur(8px);
-        backdrop-filter: blur(8px);
-        opacity: 0;
-        visibility: hidden;
-        -webkit-transition: opacity 0.3s ease, visibility 0s 0.3s linear;
-        -moz-transition: opacity 0.3s ease, visibility 0s 0.3s linear;
-        -o-transition: opacity 0.3s ease, visibility 0s 0.3s linear;
-        transition: opacity 0.3s ease, visibility 0s 0.3s linear;
-    }
-    .search-popup.is-open {
-        opacity: 1;
-        visibility: visible;
-        transition-delay: 0s;
-    }
-    .search-popup__content {
-        position: relative;
-        width: 100%;
-        max-width: 640px;
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        display: flex;
-        flex-direction: column;
-        max-height: 80vh;
-        transform: scale(0.95);
-        opacity: 0;
-        transition: transform 0.3s ease, opacity 0.3s ease;
-        padding-top: 1.5rem;
-    }
-    .search-popup.is-open .search-popup__content {
-        transform: scale(1);
-        opacity: 1;
-    }
-    .search-popup__close-btn {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        color: #6B7280; /* gray-500 */
-        padding: 0.6rem;
-        border-radius: 50%;
-        transition: background-color 0.2s, color 0.2s, transform 0.2s;
-    }
-    .search-popup__close-btn:hover {
-        background-color: #F3F4F6; /* gray-100 */
-        color: #1F2937; /* gray-800 */
-        transform: scale(1.1);
-    }
-    .search-popup__input-container {
-        position: relative;
-        padding: 0 1.5rem 1rem;
-        border-bottom: 1px solid #E5E7EB; /* gray-200 */
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
     
-    .search-popup__input-wrapper {
-        position: relative;
-        flex: 1;
-        display: flex;
-        align-items: center;
-    }
-    
-    .search-popup__input {
-        width: 100%;
-        font-size: 1.125rem;
-        padding: 0.75rem 3rem 0.75rem 2.5rem;
-        border: 1px solid #D1D5DB; /* gray-300 */
-        border-radius: 8px;
-        outline: none;
-        transition: border-color 0.2s, box-shadow 0.2s;
-        background: #fff;
-    }
-    
-    .search-popup__input:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-    }
-    
-    .search-popup__input-icon {
-        position: absolute;
-        left: 0.75rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #9CA3AF; /* gray-400 */
-        pointer-events: none;
-        z-index: 1;
-    }
-    
-    .search-popup__clear-btn {
-        position: absolute;
-        right: 0.5rem;
-        top: 50%;
-        transform: translateY(-50%);
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        color: #9CA3AF;
-        padding: 0.5rem;
-        border-radius: 50%;
-        display: none;
-        transition: color 0.2s, background-color 0.2s;
-        z-index: 2;
-        width: 2rem;
-        height: 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .search-popup__clear-btn:hover {
-        color: #1F2937;
-        background-color: #F3F4F6;
-    }
-    
-    .search-popup__clear-btn.visible {
-        display: flex;
-    }
-    
-    /* Responsive improvements for search popup */
-    @media (max-width: 480px) {
-        .search-popup__input-container {
-            padding: 0 1rem 1rem;
-        }
-        
-        .search-popup__input {
-            font-size: 1rem;
-            padding: 0.75rem 2.5rem 0.75rem 2rem;
-        }
-        
-        .search-popup__input-icon {
-            left: 0.5rem;
-        }
-        
-        .search-popup__clear-btn {
-            right: 0.25rem;
-            width: 1.75rem;
-            height: 1.75rem;
-        }
-    }
-    .search-popup__results-container {
-        overflow-y: auto;
-        padding: 0.5rem;
-        flex-grow: 1;
-    }
-    .search-popup__results-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-    .search-popup__result-item a {
-        display: block;
-        padding: 0.75rem 1rem;
-        color: var(--text-primary);
-        text-decoration: none;
-        border-radius: 6px;
-        transition: background-color 0.2s;
-    }
-    .search-popup__result-item a:hover {
-        background-color: rgba(67, 97, 238, 0.1);
-        color: var(--primary);
-    }
-    .search-popup__feedback {
-        padding: 2rem 1rem;
-        text-align: center;
-        color: #6B7280; /* gray-500 */
-    }
-    body.search-popup-open {
-        overflow: hidden;
-    }
-    .visually-hidden {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border-width: 0;
-    }
-    
-    .search-popup__footer {
-        padding: 0.75rem 1.5rem;
-        border-top: 1px solid #E5E7EB; /* gray-200 */
-        font-size: 0.875rem;
-        color: #6B7280; /* gray-500 */
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .search-popup__footer kbd {
-        background-color: #F3F4F6; /* gray-100 */
-        border: 1px solid #D1D5DB; /* gray-300 */
-        border-bottom-width: 2px;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-        font-size: 0.8rem;
-        color: #374151; /* gray-700 */
-    }
 
 </style>
 
@@ -734,13 +469,14 @@
     <div class="header__container">
         <!-- Section 1: Top Row -->
         <div class="header__top">
-            <a href="/index.html" class="header__logo modern-logo" aria-label="Everytool Homepage">
+            <a href="https://everytool.tech/" class="header__logo modern-logo" aria-label="Everytool Homepage">
                 <img src="/assets/SVG/logo(icon).svg" alt="Everytool Logo" class="header__logo-img" width="48" height="48" loading="eager">
             </a>
-            <button class="header__search-btn" aria-label="Search">
-                <i class="fas fa-search"></i>
-                <span class="header__search-text">Search</span>
-            </button>
+            <div class="header__social" aria-label="Social links">
+                <a href="https://x.com/varshith___2003" class="header__social-link" aria-label="Twitter" title="Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                <a href="https://www.linkedin.com/in/gubba-varshith/" class="header__social-link" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                <a href="https://www.instagram.com/yourvarshith/" class="header__social-link" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            </div>
         </div>
         
         <!-- Section 2: Bottom Row -->
@@ -755,8 +491,8 @@
                 <span></span>
             </button>
             <ul class="header__nav-list" id="headerNavList" role="menu">
-                <li role="none"><a href="/index.html" class="header__nav-link" role="menuitem" aria-current="page">Home</a></li>
-                <li role="none"><a href="/tools-hub/index.html" class="header__nav-link" role="menuitem">Tools</a></li>
+                <li role="none"><a href="https://everytool.tech/" class="header__nav-link" role="menuitem" aria-current="page">Home</a></li>
+                <li role="none"><a href="https://everytool.tech/tools-hub/index.html" class="header__nav-link" role="menuitem">Tools</a></li>
                 <li role="none"><a href="https://blog.everytool.tech" class="header__nav-link" role="menuitem">Blog</a></li>
                 <li class="header__dropdown" role="none">
                     <button class="header__nav-link header__dropdown-toggle" role="menuitem" aria-haspopup="true" aria-expanded="false">
@@ -764,68 +500,75 @@
                         <i class="fas fa-chevron-down" aria-hidden="true" style="margin-left: 0.4em; font-size: 0.85em;"></i>
                     </button>
                     <ul class="header__dropdown-menu" role="menu" aria-label="Categories submenu">
-                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="/category-pages/education-tools.html">Education</a></li>
-                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="/category-pages/developer-tools.html">Developer</a></li>
-                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="/category-pages/finance-tools.html">Finance</a></li>
-                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="/category-pages/health-tools.html">Health</a></li>
-                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="/category-pages/math-tools.html">Math</a></li>
-                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="/category-pages/productivity-tools.html">Productivity</a></li>
-                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="/category-pages/seo-tools.html">SEO</a></li>
-                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="/category-pages/date-time-tools.html">Date & Time</a></li>
+                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="https://everytool.tech/category-pages/education-tools.html">Education</a></li>
+                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="https://everytool.tech/category-pages/developer-tools.html">Developer</a></li>
+                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="https://everytool.tech/category-pages/finance-tools.html">Finance</a></li>
+                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="https://everytool.tech/category-pages/health-tools.html">Health</a></li>
+                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="https://everytool.tech/category-pages/math-tools.html">Math</a></li>
+                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="https://everytool.tech/category-pages/productivity-tools.html">Productivity</a></li>
+                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="https://everytool.tech/category-pages/seo-tools.html">SEO</a></li>
+                        <li role="none"><a role="menuitem" class="header__dropdown-link" href="https://everytool.tech/category-pages/date-time-tools.html">Date & Time</a></li>
                     </ul>
                 </li>
-                <li role="none"><a href="/contact.html" target="_blank" class="header__nav-link" role="menuitem">Contact</a></li>
-                <li role="none"><a href="/about.html" class="header__nav-link" role="menuitem">About</a></li>
+                <li role="none"><a href="https://everytool.tech/contact.html" target="_blank" class="header__nav-link" role="menuitem">Contact</a></li>
+                <li role="none"><a href="https://everytool.tech/about.html" class="header__nav-link" role="menuitem">About</a></li>
             </ul>
         </nav>
     </div>
 </header>
 
-<div id="searchPopup" class="search-popup" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="searchPopupTitle">
-    <div class="search-popup__content">
-        <h2 id="searchPopupTitle" class="visually-hidden">Search for tools and content</h2>
-        <button id="searchPopupClose" class="search-popup__close-btn" aria-label="Close search">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-        </button>
-        <div class="search-popup__input-container">
-            <div class="search-popup__input-wrapper">
-                <i class="fas fa-search search-popup__input-icon" aria-hidden="true"></i>
-                <input type="text" 
-                       id="searchPopupInput" 
-                       class="search-popup__input" 
-                       placeholder="Search for tools, calculators, etc..." 
-                       autocomplete="off"
-                       aria-label="Search input"
-                       aria-describedby="searchPopupTitle">
-                <button id="searchPopupClearBtn" 
-                        class="search-popup__clear-btn" 
-                        aria-label="Clear search input"
-                        type="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <div class="search-popup__results-container">
-            <ul id="searchPopupResultsList" class="search-popup__results-list"></ul>
-            <p id="searchPopupFeedback" class="search-popup__feedback"></p>
-        </div>
-        <div class="search-popup__footer">
-            <span>Press</span>
-            <kbd>Alt</kbd>
-            <span>+</span>
-            <kbd>S</kbd>
-            <span>to open Search</span>
-            <span>and</span>
-            <span>press</span>
-            <kbd>Esc</kbd>
-            <span>to close</span>
-        </div>
-    </div>
-</div>
 
+<script>
+        // Initialize header dropdown (Categories)
+        function initializeHeaderDropdown() {
+        var headerEl = document.querySelector('.header');
+        if (!headerEl) return;
+        var dropdown = headerEl.querySelector('.header__dropdown');
+        var toggle = headerEl.querySelector('.header__dropdown-toggle');
+        var menu = headerEl.querySelector('.header__dropdown-menu');
+        if (!dropdown || !toggle || !menu) return;
+
+        function closeDropdown() {
+            dropdown.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        function openDropdown() {
+            dropdown.classList.add('open');
+            toggle.setAttribute('aria-expanded', 'true');
+        }
+
+        // Click toggle
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (dropdown.classList.contains('open')) {
+                closeDropdown();
+            } else {
+                openDropdown();
+            }
+        });
+
+        // Outside click
+        document.addEventListener('click', function(e) {
+            if (!dropdown.contains(e.target)) closeDropdown();
+        });
+
+        // Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDropdown();
+        });
+
+        // Focus management: close when focus leaves the dropdown
+        menu.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                // If focus moves outside, close
+                setTimeout(function() {
+                    if (!dropdown.contains(document.activeElement)) closeDropdown();
+                }, 0);
+            }
+        });
+
+        // Re-close on resize to avoid stuck state between breakpoints
+        window.addEventListener('resize', closeDropdown);
+    }
+</script>

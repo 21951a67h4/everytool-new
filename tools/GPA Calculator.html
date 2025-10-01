@@ -60,11 +60,25 @@
         .gpa-result-section { margin-top: 25px; padding: 20px; background: #f0f8ff; border-radius: 8px; text-align: center; }
         .gpa-result-title { margin: 0 0 10px; font-size: 1.2rem; color: #555; }
         .gpa-final-score { font-size: 3rem; font-weight: 700; color: #0056b3; }
-        .gpa-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; text-align: left; }
         .gpa-gauge-container { width: 100%; background: #e9ecef; border-radius: 5px; height: 20px; margin-top: 15px; overflow: hidden; }
         .gpa-gauge-bar { height: 100%; background: linear-gradient(90deg, #ffc107, #28a745); transition: width 0.5s ease-in-out; }
         #gpa-summary-table { width: 100%; margin-top: 20px; border-collapse: collapse; }
         #gpa-summary-table th, #gpa-summary-table td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .course-list-header, .course-row { grid-template-columns: 2fr 1.2fr 1.2fr 0.8fr; gap: 8px; font-size: 0.95rem; }
+            .gpa-final-score { font-size: 2.4rem; }
+            .gpa-result-section { padding: 16px; }
+            .gpa-form-group input, .gpa-form-group select, .course-row input, .course-row select { font-size: 16px; }
+            #gpa-summary-table th, #gpa-summary-table td { padding: 8px; }
+        }
+
+        @media (max-width: 480px) {
+            .course-list-header, .course-row { grid-template-columns: 1.8fr 1fr 1fr 0.8fr; gap: 6px; font-size: 0.9rem; }
+            .gpa-final-score { font-size: 2rem; }
+            #gpa-summary-table th, #gpa-summary-table td { padding: 6px; font-size: 0.9rem; }
+        }
     </style>
     <!-- END: CRITICAL STYLE FOR HEADER -->
 

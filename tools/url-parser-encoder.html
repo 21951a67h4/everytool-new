@@ -1,0 +1,592 @@
+<!--
+    URL Parser & Encoder/Decoder Tool Page
+    Built using the EveryTool.tech template.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>URL Parser & Encoder/Decoder | EveryTool.tech</title>
+
+    <meta name="description" content="Parse URLs into components and encode/decode URLs and query strings instantly. Extract protocol, domain, path, and parameters.">
+
+    <meta name="keywords" content="url parser, url encoder, url decoder, query string parser">
+
+    <meta name="robots" content="index, follow">
+
+
+    <meta property="og:title" content="URL Parser & Encoder/Decoder | EveryTool.tech">
+
+    <meta property="og:description" content="Parse, encode, and decode URLs with detailed component breakdown.">
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:url" content="https://everytool.tech/url-parser-encoder">
+
+
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../FAQ section/faq.css">
+    <link rel="stylesheet" href="tool.css">
+    <link rel="stylesheet" href="../back-to-top.css">
+    <script src="../back-to-top.js"></script>
+    <style>
+        #header-placeholder {
+            min-height: 130px;
+            position: relative;
+            z-index: 2000;
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        .url-grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .url-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            padding: 24px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .url-card__title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .url-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .url-input {
+            border-radius: 12px;
+            border: 1px solid #cbd5f5;
+            padding: 12px 14px;
+            background: #f8f9ff;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.9rem;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+        .url-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.16);
+        }
+
+        .url-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .url-result-section {
+            display: none;
+        }
+
+        .url-component {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 12px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            border-left: 3px solid #4f46e5;
+        }
+
+        .url-component__label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        .url-component__value {
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.92rem;
+            color: #0f172a;
+            word-break: break-all;
+        }
+
+        .url-params-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .url-params-table th {
+            background: #f1f5f9;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            border-bottom: 2px solid #cbd5f5;
+        }
+
+        .url-params-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e5e7eb;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.85rem;
+        }
+
+        .url-params-table tr:hover {
+            background: #f8f9ff;
+        }
+
+        .url-encoder-result {
+            background: #0f172a;
+            color: #cbd5e1;
+            border-radius: 12px;
+            padding: 16px;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.88rem;
+            word-break: break-all;
+            max-height: 200px;
+            overflow: auto;
+        }
+
+        .url-feedback {
+            font-size: 0.88rem;
+            color: #10b981;
+            min-height: 18px;
+            font-weight: 500;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body data-tool-name="URL Parser & Encoder/Decoder" data-meta-description="Parse URLs and encode/decode URL components.">
+
+    <div id="header-placeholder"></div>
+
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">URL Parser & Encoder/Decoder</h1>
+
+                    <p class="tool-hero__description">
+                        Parse URLs into components, encode/decode URL strings, and extract query parameters. Perfect for web developers working with URLs and APIs.
+                    </p>
+
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-link"></i> <span>URL Breakdown</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-code"></i> <span>Encode/Decode</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-table"></i> <span>Query Params</span>
+                        </div>
+                    </div>
+
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-play"></i>
+                            Parse URL
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">URL Parser & Encoder/Decoder</h2>
+                    <p class="tool-display__description">
+                        Enter a URL to parse its components or encode/decode URL strings.
+                    </p>
+                </div>
+
+                <div class="url-grid">
+                    <div class="url-card">
+                        <h3 class="url-card__title">URL Parser</h3>
+                        <div class="url-input-group">
+                            <input type="text" id="url-input" class="url-input" placeholder="https://example.com/path?key=value&foo=bar">
+                        </div>
+                        <div class="url-actions">
+                            <button id="parse-btn" class="tool-display__button--primary">
+                                <i class="fas fa-search"></i>
+                                Parse URL
+                            </button>
+                            <button id="clear-parse-btn" class="tool-button tool-button--secondary">
+                                <i class="fas fa-eraser"></i>
+                                Clear
+                            </button>
+                        </div>
+
+                        <div id="parse-result" class="url-result-section">
+                            <h4 class="url-card__title" style="font-size: 1rem; margin-top: 12px;">URL Components</h4>
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <div class="url-component">
+                                    <span class="url-component__label">Protocol</span>
+                                    <span id="protocol" class="url-component__value">-</span>
+                                </div>
+                                <div class="url-component">
+                                    <span class="url-component__label">Domain</span>
+                                    <span id="domain" class="url-component__value">-</span>
+                                </div>
+                                <div class="url-component">
+                                    <span class="url-component__label">Port</span>
+                                    <span id="port" class="url-component__value">-</span>
+                                </div>
+                                <div class="url-component">
+                                    <span class="url-component__label">Path</span>
+                                    <span id="path" class="url-component__value">-</span>
+                                </div>
+                                <div class="url-component">
+                                    <span class="url-component__label">Hash</span>
+                                    <span id="hash" class="url-component__value">-</span>
+                                </div>
+                            </div>
+
+                            <div id="params-section" style="display: none; margin-top: 16px;">
+                                <h4 class="url-card__title" style="font-size: 1rem; margin-bottom: 10px;">Query Parameters</h4>
+                                <table class="url-params-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Key</th>
+                                            <th>Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="params-tbody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="url-card">
+                        <h3 class="url-card__title">URL Encoder/Decoder</h3>
+                        <div class="url-input-group">
+                            <input type="text" id="encode-input" class="url-input" placeholder="Enter text to encode or decode">
+                        </div>
+                        <div class="url-actions">
+                            <button id="encode-btn" class="tool-display__button--primary">
+                                <i class="fas fa-lock"></i>
+                                Encode
+                            </button>
+                            <button id="decode-btn" class="tool-display__button--primary">
+                                <i class="fas fa-unlock"></i>
+                                Decode
+                            </button>
+                            <button id="clear-encode-btn" class="tool-button tool-button--secondary">
+                                <i class="fas fa-eraser"></i>
+                                Clear
+                            </button>
+                        </div>
+
+                        <div id="encode-result" class="url-result-section">
+                            <h4 class="url-card__title" style="font-size: 1rem; margin-bottom: 10px;">Result</h4>
+                            <div class="url-encoder-result" id="encode-output"></div>
+                            <button id="copy-encode" class="tool-display__button" style="margin-top: 12px;">
+                                <i class="fas fa-copy"></i>
+                                Copy Result
+                            </button>
+                        </div>
+
+                        <p id="url-feedback" class="url-feedback" role="status" aria-live="assertive"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding URLs</h2>
+                <p class="tool-blog__subtitle">Learn about URL structure and encoding best practices.</p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">URL Structure</h3>
+                    <div class="blog-section__content">
+                        <p>A URL (Uniform Resource Locator) consists of several components:</p>
+                        <ul>
+                            <li><strong>Protocol:</strong> https:// or http://</li>
+                            <li><strong>Domain:</strong> example.com</li>
+                            <li><strong>Port:</strong> :8080 (optional, defaults to 80 for HTTP, 443 for HTTPS)</li>
+                            <li><strong>Path:</strong> /path/to/page</li>
+                            <li><strong>Query String:</strong> ?key=value&foo=bar</li>
+                            <li><strong>Fragment/Hash:</strong> #section</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">URL Encoding</h3>
+                    <div class="blog-section__content">
+                        <p>URL encoding converts special characters into percent-encoded format (%XX) so they can be safely transmitted in URLs. Spaces become %20, & becomes %26, etc. This prevents conflicts with reserved URL characters and ensures proper data transmission.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Query Parameters</h3>
+                    <div class="blog-section__content">
+                        <p>Query parameters pass data to web servers via URLs. They start with ? and use key=value pairs separated by &. Understanding query parameters is essential for API development, analytics tracking, and dynamic web applications.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Common questions about URL parsing and encoding.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        When should I URL encode?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Always encode URL parameters that contain special characters, spaces, or non-ASCII characters. This includes user input, dynamic values, and any data that might contain reserved characters like &, =, ?, or #.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What's the difference between encodeURI and encodeURIComponent?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>encodeURI encodes entire URLs but preserves special URL characters like :, /, ?, &. encodeURIComponent encodes everything, including those characters, making it suitable for encoding individual parameter values.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I parse URLs without this tool?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! In JavaScript, use the URL API: <code>new URL('https://example.com/path')</code>. In Python, use <code>urllib.parse</code>. This tool provides a quick visual breakdown without writing code.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What are common encoding mistakes?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Double-encoding (encoding already encoded values), forgetting to encode user input, and using encodeURI when encodeURIComponent is needed. Always decode before processing and encode when building URLs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../FAQ section/faq.js" defer></script>
+    <script src="../universal-search-deploy.js" defer></script>
+    <script>
+        (function () {
+            var elements = {
+                urlInput: document.getElementById('url-input'),
+                parseBtn: document.getElementById('parse-btn'),
+                clearParseBtn: document.getElementById('clear-parse-btn'),
+                parseResult: document.getElementById('parse-result'),
+                protocol: document.getElementById('protocol'),
+                domain: document.getElementById('domain'),
+                port: document.getElementById('port'),
+                path: document.getElementById('path'),
+                hash: document.getElementById('hash'),
+                paramsSection: document.getElementById('params-section'),
+                paramsTbody: document.getElementById('params-tbody'),
+                encodeInput: document.getElementById('encode-input'),
+                encodeBtn: document.getElementById('encode-btn'),
+                decodeBtn: document.getElementById('decode-btn'),
+                clearEncodeBtn: document.getElementById('clear-encode-btn'),
+                encodeResult: document.getElementById('encode-result'),
+                encodeOutput: document.getElementById('encode-output'),
+                copyEncode: document.getElementById('copy-encode'),
+                feedback: document.getElementById('url-feedback')
+            };
+
+            var feedbackTimeout = null;
+
+            function setFeedback(message, duration) {
+                if (duration === void 0) duration = 2800;
+                if (feedbackTimeout) {
+                    clearTimeout(feedbackTimeout);
+                    feedbackTimeout = null;
+                }
+                elements.feedback.textContent = message;
+                if (message && duration > 0) {
+                    feedbackTimeout = setTimeout(function () {
+                        elements.feedback.textContent = '';
+                        feedbackTimeout = null;
+                    }, duration);
+                }
+            }
+
+            function parseURL() {
+                var urlString = elements.urlInput.value.trim();
+                if (!urlString) {
+                    setFeedback('Please enter a URL to parse.', 2400);
+                    return;
+                }
+
+                try {
+                    var url = new URL(urlString);
+
+                    elements.protocol.textContent = url.protocol;
+                    elements.domain.textContent = url.hostname;
+                    elements.port.textContent = url.port || '(default)';
+                    elements.path.textContent = url.pathname || '/';
+                    elements.hash.textContent = url.hash || '(none)';
+
+                    var params = new URLSearchParams(url.search);
+                    var paramsArray = Array.from(params.entries());
+
+                    if (paramsArray.length > 0) {
+                        var tbody = '';
+                        paramsArray.forEach(function (param) {
+                            tbody += '<tr><td>' + escapeHtml(param[0]) + '</td><td>' + escapeHtml(param[1]) + '</td></tr>';
+                        });
+                        elements.paramsTbody.innerHTML = tbody;
+                        elements.paramsSection.style.display = 'block';
+                    } else {
+                        elements.paramsSection.style.display = 'none';
+                    }
+
+                    elements.parseResult.style.display = 'block';
+                    setFeedback('URL parsed successfully!', 2400);
+                } catch (err) {
+                    setFeedback('Invalid URL. Please check the format.', 2600);
+                }
+            }
+
+            function clearParse() {
+                elements.urlInput.value = '';
+                elements.parseResult.style.display = 'none';
+                setFeedback('Parser cleared.', 2200);
+            }
+
+            function encodeURL() {
+                var text = elements.encodeInput.value;
+                if (!text) {
+                    setFeedback('Enter text to encode.', 2400);
+                    return;
+                }
+
+                var encoded = encodeURIComponent(text);
+                elements.encodeOutput.textContent = encoded;
+                elements.encodeResult.style.display = 'block';
+                setFeedback('Text encoded successfully!', 2400);
+            }
+
+            function decodeURL() {
+                var text = elements.encodeInput.value.trim();
+                if (!text) {
+                    setFeedback('Enter encoded text to decode.', 2400);
+                    return;
+                }
+
+                try {
+                    var decoded = decodeURIComponent(text);
+                    elements.encodeOutput.textContent = decoded;
+                    elements.encodeResult.style.display = 'block';
+                    setFeedback('Text decoded successfully!', 2400);
+                } catch (err) {
+                    setFeedback('Invalid encoded string.', 2600);
+                }
+            }
+
+            function clearEncode() {
+                elements.encodeInput.value = '';
+                elements.encodeResult.style.display = 'none';
+                setFeedback('Encoder cleared.', 2200);
+            }
+
+            function copyEncode() {
+                var text = elements.encodeOutput.textContent;
+                if (!text) {
+                    setFeedback('No result to copy.', 2400);
+                    return;
+                }
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function () {
+                        setFeedback('Result copied!', 2400);
+                    }, function () {
+                        setFeedback('Copy failed.', 2600);
+                    });
+                } else {
+                    var temp = document.createElement('textarea');
+                    temp.value = text;
+                    temp.style.position = 'fixed';
+                    temp.style.opacity = '0';
+                    document.body.appendChild(temp);
+                    temp.select();
+                    try {
+                        document.execCommand('copy');
+                        setFeedback('Result copied!', 2400);
+                    } catch (err) {
+                        setFeedback('Copy failed.', 2600);
+                    }
+                    document.body.removeChild(temp);
+                }
+            }
+
+            function escapeHtml(text) {
+                var div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            elements.parseBtn.addEventListener('click', parseURL);
+            elements.clearParseBtn.addEventListener('click', clearParse);
+            elements.encodeBtn.addEventListener('click', encodeURL);
+            elements.decodeBtn.addEventListener('click', decodeURL);
+            elements.clearEncodeBtn.addEventListener('click', clearEncode);
+            elements.copyEncode.addEventListener('click', copyEncode);
+        })();
+    </script>
+
+</body>
+</html>
+

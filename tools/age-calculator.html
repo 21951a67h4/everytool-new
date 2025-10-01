@@ -28,6 +28,18 @@
     <link rel="stylesheet" href="tool.css">
     <link rel="stylesheet" href="../back-to-top.css">   
     <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
         /* Custom styles for Age Calculator */
         .tool-display__input-section { display: flex; flex-direction: column; gap: 1.5rem; }
         .input-group-container { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; padding: 1.5rem; }
@@ -53,6 +65,39 @@
         .milestones-list, .planets-list { list-style: none; padding: 0; }
         .milestones-list li, .planets-list li { padding: 0.5rem 0; border-bottom: 1px solid #f1f3f5; display: flex; justify-content: space-between; }
         .milestones-list li:last-child, .planets-list li:last-child { border-bottom: none; }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .tool-display__input-row { 
+                grid-template-columns: 1fr; 
+                gap: 1rem; 
+            }
+            .unit-grid { 
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+                gap: 0.75rem; 
+            }
+            .result-card { 
+                padding: 1rem; 
+            }
+            #summary-age .age-string { 
+                font-size: 1.5rem; 
+            }
+            .input-group-container { 
+                padding: 1rem; 
+            }
+            .tool-display__input { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .unit-grid { 
+                grid-template-columns: 1fr 1fr; 
+            }
+            .tool-display__input-row { 
+                gap: 0.75rem; 
+            }
+        }
     </style>
 </head>
 <body>
