@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Calculator | Descriptive Statistics & Data Analysis | EveryTool.tech</title>
+    <meta name="description" content="Calculate descriptive statistics, create histograms and boxplots, find z-scores and percentiles. Analyze your data with comprehensive statistical tools.">
+    <meta name="keywords" content="statistics calculator, descriptive statistics, histogram, boxplot, z-score calculator, percentile calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tool CSS -->
+    <link rel="stylesheet" href="../tool.css">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --radius-md: 0.75rem;
+            --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--text-primary); background: var(--bg-primary); }
+        #header-placeholder { height: 64px; }
+
+        .tool-hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+        }
+
+        .tool-hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-hero__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tool-hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .tool-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .tool-hero__features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .tool-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tool-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-display {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+        }
+
+        .tool-display__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-display__wrapper {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-display__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .tool-display__input-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .tool-display__output-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .tool-display__input-group {
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-display__textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            min-height: 120px;
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+        }
+
+        .tool-display__textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .tool-display__input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .tool-display__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .tool-display__select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            background: white;
+        }
+
+        .data-format-info {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid var(--bg-accent);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .data-format-info h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .data-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .data-example {
+            font-family: 'Courier New', monospace;
+            background: var(--bg-accent);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .result-display {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--bg-accent);
+        }
+
+        .result-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stat-item {
+            padding: 1rem;
+            background: var(--bg-accent);
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .chart-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .chart-tab {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--bg-accent);
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .chart-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .z-score-calculator {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .z-score-inputs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .z-score-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg-accent);
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                display: grid;
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .tool-display__textarea { 
+                font-size: 16px; 
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .z-score-inputs {
+                grid-template-columns: 1fr;
+            }
+            .data-examples {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Statistics Calculator</h1>
+                    <p class="tool-hero__description">
+                        Calculate descriptive statistics, create histograms and boxplots, find z-scores and percentiles. 
+                        Analyze your data with comprehensive statistical tools.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Descriptive Statistics</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Histograms & Boxplots</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-calculator"></i>
+                            <span>Z-Score Calculator</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Private</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button">
+                            <i class="fas fa-calculator"></i>
+                            Analyze Data
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Statistics Calculator</h2>
+                    <p class="tool-display__description">
+                        Enter your data below to calculate descriptive statistics and create visualizations.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Data Input</label>
+                            <textarea class="tool-display__textarea" id="data-input" placeholder="Enter numbers separated by commas, spaces, or new lines&#10;Example: 1, 2, 3, 4, 5&#10;or: 1 2 3 4 5&#10;or: 1&#10;2&#10;3&#10;4&#10;5"></textarea>
+                            <div class="data-format-info">
+                                <h4>Supported Formats:</h4>
+                                <div class="data-examples">
+                                    <div class="data-example">1,2,3,4,5</div>
+                                    <div class="data-example">1 2 3 4 5</div>
+                                    <div class="data-example">1&#10;2&#10;3</div>
+                                    <div class="data-example">1.5,2.7,3.2</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Delimiter Detection</label>
+                            <select class="tool-display__select" id="delimiter-select">
+                                <option value="auto">Auto-detect</option>
+                                <option value="comma">Comma (,)</option>
+                                <option value="space">Space</option>
+                                <option value="newline">New Line</option>
+                                <option value="tab">Tab</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Has Header Row</label>
+                            <input type="checkbox" id="has-header" style="margin-right: 0.5rem;">
+                            <label for="has-header" style="font-weight: normal;">Skip first row</label>
+                        </div>
+                        
+                        <div class="tool-display__controls">
+                            <button class="tool-button" id="calculate-stats">
+                                <i class="fas fa-calculator"></i>
+                                Calculate Statistics
+                            </button>
+                            <button class="tool-button" id="reset-stats">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                            <button class="tool-button" id="export-data">
+                                <i class="fas fa-download"></i>
+                                Export Results
+                            </button>
+                        </div>
+                        
+                        <div class="z-score-calculator">
+                            <h4>Z-Score Calculator</h4>
+                            <div class="z-score-inputs">
+                                <div>
+                                    <label class="tool-display__label">Value (x)</label>
+                                    <input type="number" class="tool-display__input" id="z-value" placeholder="Enter value" step="any">
+                                </div>
+                                <div>
+                                    <label class="tool-display__label">Mean (μ)</label>
+                                    <input type="number" class="tool-display__input" id="z-mean" placeholder="Enter mean" step="any">
+                                </div>
+                                <div>
+                                    <label class="tool-display__label">Std Dev (σ)</label>
+                                    <input type="number" class="tool-display__input" id="z-stddev" placeholder="Enter std dev" step="any">
+                                </div>
+                            </div>
+                            <button class="tool-button" id="calculate-z-score">
+                                <i class="fas fa-calculator"></i>
+                                Calculate Z-Score
+                            </button>
+                            <div class="z-score-result" id="z-score-result" style="display: none;"></div>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Statistical Results</h3>
+                        <div class="tool-display__result" id="stats-result">
+                            Your statistical analysis results will appear here...
+                        </div>
+                        <div id="results-container"></div>
+                        <div class="chart-container" id="chart-container" style="display: none;">
+                            <div class="chart-tabs">
+                                <div class="chart-tab active" data-chart="histogram">Histogram</div>
+                                <div class="chart-tab" data-chart="boxplot">Box Plot</div>
+                            </div>
+                            <canvas id="statsChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Fetch and insert header
+        fetch('../../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Statistics Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dataInput = document.getElementById('data-input');
+            const delimiterSelect = document.getElementById('delimiter-select');
+            const hasHeaderCheckbox = document.getElementById('has-header');
+            const calculateButton = document.getElementById('calculate-stats');
+            const resetButton = document.getElementById('reset-stats');
+            const exportButton = document.getElementById('export-data');
+            const zValueInput = document.getElementById('z-value');
+            const zMeanInput = document.getElementById('z-mean');
+            const zStddevInput = document.getElementById('z-stddev');
+            const calculateZButton = document.getElementById('calculate-z-score');
+            const zScoreResult = document.getElementById('z-score-result');
+            const resultDiv = document.getElementById('stats-result');
+            const resultsContainer = document.getElementById('results-container');
+            const chartContainer = document.getElementById('chart-container');
+            const chartTabs = document.querySelectorAll('.chart-tab');
+            
+            let statsChart = null;
+            let currentData = [];
+            let currentStats = null;
+
+            // Statistics calculator class
+            class StatisticsCalculator {
+                constructor(data) {
+                    this.data = data.sort((a, b) => a - b);
+                    this.n = data.length;
+                }
+                
+                mean() {
+                    return this.data.reduce((sum, x) => sum + x, 0) / this.n;
+                }
+                
+                median() {
+                    const mid = Math.floor(this.n / 2);
+                    return this.n % 2 === 0 ? 
+                        (this.data[mid - 1] + this.data[mid]) / 2 : 
+                        this.data[mid];
+                }
+                
+                mode() {
+                    const frequency = {};
+                    this.data.forEach(x => {
+                        frequency[x] = (frequency[x] || 0) + 1;
+                    });
+                    
+                    const maxFreq = Math.max(...Object.values(frequency));
+                    const modes = Object.keys(frequency).filter(x => frequency[x] === maxFreq);
+                    
+                    return modes.length === this.n ? 'No mode' : modes.map(Number);
+                }
+                
+                variance() {
+                    const mean = this.mean();
+                    return this.data.reduce((sum, x) => sum + Math.pow(x - mean, 2), 0) / this.n;
+                }
+                
+                standardDeviation() {
+                    return Math.sqrt(this.variance());
+                }
+                
+                quartiles() {
+                    const q1Index = Math.floor(this.n * 0.25);
+                    const q2Index = Math.floor(this.n * 0.5);
+                    const q3Index = Math.floor(this.n * 0.75);
+                    
+                    return {
+                        q1: this.data[q1Index],
+                        q2: this.median(),
+                        q3: this.data[q3Index]
+                    };
+                }
+                
+                iqr() {
+                    const quartiles = this.quartiles();
+                    return quartiles.q3 - quartiles.q1;
+                }
+                
+                outliers() {
+                    const quartiles = this.quartiles();
+                    const iqr = this.iqr();
+                    const lowerBound = quartiles.q1 - 1.5 * iqr;
+                    const upperBound = quartiles.q3 + 1.5 * iqr;
+                    
+                    return this.data.filter(x => x < lowerBound || x > upperBound);
+                }
+                
+                range() {
+                    return this.data[this.n - 1] - this.data[0];
+                }
+                
+                min() {
+                    return this.data[0];
+                }
+                
+                max() {
+                    return this.data[this.n - 1];
+                }
+                
+                percentile(p) {
+                    const index = (p / 100) * (this.n - 1);
+                    const lower = Math.floor(index);
+                    const upper = Math.ceil(index);
+                    const weight = index - lower;
+                    
+                    if (lower === upper) {
+                        return this.data[lower];
+                    }
+                    
+                    return this.data[lower] * (1 - weight) + this.data[upper] * weight;
+                }
+                
+                zScore(x) {
+                    return (x - this.mean()) / this.standardDeviation();
+                }
+                
+                summary() {
+                    const quartiles = this.quartiles();
+                    return {
+                        count: this.n,
+                        mean: this.mean(),
+                        median: this.median(),
+                        mode: this.mode(),
+                        standardDeviation: this.standardDeviation(),
+                        variance: this.variance(),
+                        min: this.min(),
+                        max: this.max(),
+                        range: this.range(),
+                        q1: quartiles.q1,
+                        q2: quartiles.q2,
+                        q3: quartiles.q3,
+                        iqr: this.iqr(),
+                        outliers: this.outliers()
+                    };
+                }
+            }
+
+            function parseData(input, delimiter, hasHeader) {
+                let text = input.trim();
+                
+                if (hasHeader) {
+                    const lines = text.split('\n');
+                    text = lines.slice(1).join('\n');
+                }
+                
+                let numbers = [];
+                
+                if (delimiter === 'auto') {
+                    // Try different delimiters
+                    const delimiters = [',', ' ', '\n', '\t'];
+                    for (const delim of delimiters) {
+                        const testNumbers = text.split(delim).map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
+                        if (testNumbers.length > 1) {
+                            numbers = testNumbers;
+                            break;
+                        }
+                    }
+                } else {
+                    const delimMap = {
+                        'comma': ',',
+                        'space': ' ',
+                        'newline': '\n',
+                        'tab': '\t'
+                    };
+                    numbers = text.split(delimMap[delimiter]).map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
+                }
+                
+                return numbers;
+            }
+
+            function calculateStatistics() {
+                const input = dataInput.value.trim();
+                const delimiter = delimiterSelect.value;
+                const hasHeader = hasHeaderCheckbox.checked;
+                
+                if (!input) {
+                    resultDiv.textContent = 'Please enter some data.';
+                    resultsContainer.innerHTML = '';
+                    chartContainer.style.display = 'none';
+                    return;
+                }
+                
+                try {
+                    const numbers = parseData(input, delimiter, hasHeader);
+                    
+                    if (numbers.length === 0) {
+                        resultDiv.textContent = 'No valid numbers found in the input.';
+                        resultsContainer.innerHTML = '';
+                        chartContainer.style.display = 'none';
+                        return;
+                    }
+                    
+                    if (numbers.length < 2) {
+                        resultDiv.textContent = 'At least 2 data points are required for statistical analysis.';
+                        resultsContainer.innerHTML = '';
+                        chartContainer.style.display = 'none';
+                        return;
+                    }
+                    
+                    currentData = numbers;
+                    const calculator = new StatisticsCalculator(numbers);
+                    currentStats = calculator.summary();
+                    
+                    displayResults(currentStats);
+                    createHistogram(numbers);
+                } catch (error) {
+                    resultDiv.textContent = 'Error processing data: ' + error.message;
+                    resultsContainer.innerHTML = '';
+                    chartContainer.style.display = 'none';
+                }
+            }
+
+            function displayResults(stats) {
+                const resultsHtml = `
+                    <div class="result-display">
+                        <div class="result-title">Descriptive Statistics</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-label">Count</div>
+                                <div class="stat-value">${stats.count}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Mean</div>
+                                <div class="stat-value">${stats.mean.toFixed(4)}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Median</div>
+                                <div class="stat-value">${stats.median.toFixed(4)}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Mode</div>
+                                <div class="stat-value">${Array.isArray(stats.mode) ? stats.mode.join(', ') : stats.mode}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Std Dev</div>
+                                <div class="stat-value">${stats.standardDeviation.toFixed(4)}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Variance</div>
+                                <div class="stat-value">${stats.variance.toFixed(4)}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Min</div>
+                                <div class="stat-value">${stats.min.toFixed(4)}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Max</div>
+                                <div class="stat-value">${stats.max.toFixed(4)}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Range</div>
+                                <div class="stat-value">${stats.range.toFixed(4)}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Q1</div>
+                                <div class="stat-value">${stats.q1.toFixed(4)}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Q2 (Median)</div>
+                                <div class="stat-value">${stats.q2.toFixed(4)}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Q3</div>
+                                <div class="stat-value">${stats.q3.toFixed(4)}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">IQR</div>
+                                <div class="stat-value">${stats.iqr.toFixed(4)}</div>
+                            </div>
+                        </div>
+                        ${stats.outliers.length > 0 ? `
+                            <div style="margin-top: 1rem; padding: 1rem; background: #fef2f2; border-radius: 4px; border-left: 4px solid #ef4444;">
+                                <strong>Outliers:</strong> ${stats.outliers.map(x => x.toFixed(4)).join(', ')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                
+                resultsContainer.innerHTML = resultsHtml;
+                resultDiv.textContent = 'Statistical analysis completed!';
+                chartContainer.style.display = 'block';
+            }
+
+            function createHistogram(data) {
+                if (statsChart) {
+                    statsChart.destroy();
+                }
+
+                const ctx = document.getElementById('statsChart').getContext('2d');
+                
+                // Create histogram bins
+                const min = Math.min(...data);
+                const max = Math.max(...data);
+                const binCount = Math.min(10, Math.ceil(Math.sqrt(data.length)));
+                const binWidth = (max - min) / binCount;
+                
+                const bins = Array(binCount).fill(0);
+                const binLabels = [];
+                
+                for (let i = 0; i < binCount; i++) {
+                    binLabels.push(`${(min + i * binWidth).toFixed(2)}-${(min + (i + 1) * binWidth).toFixed(2)}`);
+                }
+                
+                data.forEach(value => {
+                    const binIndex = Math.min(Math.floor((value - min) / binWidth), binCount - 1);
+                    bins[binIndex]++;
+                });
+
+                statsChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: binLabels,
+                        datasets: [{
+                            label: 'Frequency',
+                            data: bins,
+                            backgroundColor: 'rgba(67, 97, 238, 0.6)',
+                            borderColor: '#4361EE',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Histogram'
+                            },
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Value Range'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Frequency'
+                                },
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            function createBoxPlot(data) {
+                if (statsChart) {
+                    statsChart.destroy();
+                }
+
+                const ctx = document.getElementById('statsChart').getContext('2d');
+                const calculator = new StatisticsCalculator(data);
+                const stats = calculator.summary();
+                
+                // Create box plot data
+                const boxPlotData = {
+                    min: stats.min,
+                    q1: stats.q1,
+                    median: stats.median,
+                    q3: stats.q3,
+                    max: stats.max,
+                    outliers: stats.outliers
+                };
+
+                // Simple box plot using scatter points
+                const datasets = [{
+                    label: 'Box Plot',
+                    data: [
+                        {x: 1, y: stats.min},
+                        {x: 1, y: stats.q1},
+                        {x: 1, y: stats.median},
+                        {x: 1, y: stats.q3},
+                        {x: 1, y: stats.max}
+                    ],
+                    backgroundColor: '#4361EE',
+                    pointRadius: 6
+                }];
+
+                if (stats.outliers.length > 0) {
+                    datasets.push({
+                        label: 'Outliers',
+                        data: stats.outliers.map(y => ({x: 1, y: y})),
+                        backgroundColor: '#ef4444',
+                        pointRadius: 4
+                    });
+                }
+
+                statsChart = new Chart(ctx, {
+                    type: 'scatter',
+                    data: {
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Box Plot'
+                            },
+                            legend: {
+                                display: true
+                            }
+                        },
+                        scales: {
+                            x: {
+                                min: 0.5,
+                                max: 1.5,
+                                display: false
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Value'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function calculateZScore() {
+                const value = parseFloat(zValueInput.value);
+                const mean = parseFloat(zMeanInput.value);
+                const stddev = parseFloat(zStddevInput.value);
+                
+                if (isNaN(value) || isNaN(mean) || isNaN(stddev)) {
+                    zScoreResult.textContent = 'Please enter valid numbers for all fields.';
+                    zScoreResult.style.display = 'block';
+                    return;
+                }
+                
+                if (stddev === 0) {
+                    zScoreResult.textContent = 'Standard deviation cannot be zero.';
+                    zScoreResult.style.display = 'block';
+                    return;
+                }
+                
+                const zScore = (value - mean) / stddev;
+                zScoreResult.textContent = `Z-Score: ${zScore.toFixed(4)}`;
+                zScoreResult.style.display = 'block';
+            }
+
+            function exportResults() {
+                if (!currentStats) {
+                    alert('No data to export. Please calculate statistics first.');
+                    return;
+                }
+                
+                const csvContent = [
+                    'Statistic,Value',
+                    `Count,${currentStats.count}`,
+                    `Mean,${currentStats.mean.toFixed(4)}`,
+                    `Median,${currentStats.median.toFixed(4)}`,
+                    `Mode,${Array.isArray(currentStats.mode) ? currentStats.mode.join(';') : currentStats.mode}`,
+                    `Standard Deviation,${currentStats.standardDeviation.toFixed(4)}`,
+                    `Variance,${currentStats.variance.toFixed(4)}`,
+                    `Min,${currentStats.min.toFixed(4)}`,
+                    `Max,${currentStats.max.toFixed(4)}`,
+                    `Range,${currentStats.range.toFixed(4)}`,
+                    `Q1,${currentStats.q1.toFixed(4)}`,
+                    `Q2,${currentStats.q2.toFixed(4)}`,
+                    `Q3,${currentStats.q3.toFixed(4)}`,
+                    `IQR,${currentStats.iqr.toFixed(4)}`,
+                    `Outliers,${currentStats.outliers.map(x => x.toFixed(4)).join(';')}`
+                ].join('\n');
+                
+                const blob = new Blob([csvContent], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'statistics-results.csv';
+                link.click();
+                URL.revokeObjectURL(url);
+            }
+
+            function resetCalculator() {
+                dataInput.value = '';
+                delimiterSelect.value = 'auto';
+                hasHeaderCheckbox.checked = false;
+                zValueInput.value = '';
+                zMeanInput.value = '';
+                zStddevInput.value = '';
+                zScoreResult.style.display = 'none';
+                resultDiv.textContent = 'Your statistical analysis results will appear here...';
+                resultsContainer.innerHTML = '';
+                chartContainer.style.display = 'none';
+                if (statsChart) {
+                    statsChart.destroy();
+                    statsChart = null;
+                }
+                currentData = [];
+                currentStats = null;
+            }
+
+            // Event listeners
+            calculateButton.addEventListener('click', calculateStatistics);
+            resetButton.addEventListener('click', resetCalculator);
+            exportButton.addEventListener('click', exportResults);
+            calculateZButton.addEventListener('click', calculateZScore);
+
+            // Chart tab switching
+            chartTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    chartTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const chartType = this.dataset.chart;
+                    if (chartType === 'histogram') {
+                        createHistogram(currentData);
+                    } else if (chartType === 'boxplot') {
+                        createBoxPlot(currentData);
+                    }
+                });
+            });
+
+            // Allow Enter key to trigger calculation
+            dataInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && e.ctrlKey) {
+                    calculateStatistics();
+                }
+            });
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

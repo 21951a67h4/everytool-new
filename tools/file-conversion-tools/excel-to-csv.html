@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel to CSV Converter | EveryTool.tech</title>
+    <meta name="description" content="Convert XLS/XLSX to CSV in your browser. Choose sheet, delimiter, header row, preview table, batch files, download or copy CSV. Settings saved locally.">
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <style>
+        #header-placeholder { min-height: 130px; position: relative; z-index: 2000; }
+        @media (max-width: 768px){ #header-placeholder{ min-height: 64px; } }
+        .preview { overflow:auto; background:#fff; border:1px solid var(--bg-accent); border-radius: var(--radius-md); padding: .75rem; max-height: 360px; }
+        table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+        th, td { border: 1px solid #e5e7eb; padding: .4rem .5rem; text-align: left; }
+        .queue { margin-top: 1rem; display: grid; gap: .5rem; }
+        .queue-item { display:flex; align-items:center; justify-content: space-between; background:#fff; border:1px solid var(--bg-accent); border-radius: var(--radius-md); padding:.5rem .75rem; }
+        /* UI normalization overrides */
+        .tool-display__button { min-height: 40px; padding: 0.5rem 1rem; font-size: 0.95rem; }
+        .tool-display__file-label { padding: 0.75rem; }
+        .tool-display__wrapper { padding: 1.5rem; }
+        .tool-display__controls { gap: 0.5rem; }
+        .queue .tool-display__button.tool-display__button--secondary { padding: 0.4rem 0.8rem; }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Excel to CSV Converter</h1>
+                    <p class="tool-hero__description">Upload spreadsheets, select the sheet and delimiter, preview the table, then download or copy CSV. All in-browser.</p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature"><i class="fas fa-file-excel"></i><span>Sheets & Delimiters</span></div>
+                        <div class="tool-feature"><i class="fas fa-table"></i><span>Instant Preview</span></div>
+                        <div class="tool-feature"><i class="fas fa-layer-group"></i><span>Batch Convert</span></div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary"><i class="fas fa-play"></i> Use Tool Now</a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary"><i class="fas fa-book"></i> Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Convert XLS/XLSX to CSV</h2>
+                    <p class="tool-display__description">Supports .xls and .xlsx files. Settings are saved to your browser.</p>
+                </div>
+
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__file-upload">
+                            <input id="fileInput" type="file" class="tool-display__file-input" accept=".xls,.xlsx" multiple>
+                            <label for="fileInput" class="tool-display__file-label"><i class="fas fa-cloud-upload-alt"></i><span>Choose or drop XLS/XLSX files</span></label>
+                        </div>
+                        <div class="tool-display__controls">
+                            <div class="tool-display__input-group" style="min-width:180px;">
+                                <label for="sheetSelect" class="tool-display__label">Sheet</label>
+                                <select id="sheetSelect" class="tool-display__input"></select>
+                            </div>
+                            <div class="tool-display__input-group" style="min-width:180px;">
+                                <label for="delimiter" class="tool-display__label">Delimiter</label>
+                                <select id="delimiter" class="tool-display__input">
+                                    <option value=",">Comma (,)</option>
+                                    <option value=";">Semicolon (;)</option>
+                                    <option value="\t">Tab</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="tool-display__input-group" style="min-width:120px;">
+                                <label for="customDelim" class="tool-display__label">Custom</label>
+                                <input id="customDelim" class="tool-display__input" maxlength="2" placeholder="|" />
+                            </div>
+                            <div class="tool-display__input-group" style="min-width:160px; display:flex; align-items:center; gap:.5rem;">
+                                <input type="checkbox" id="headerRow" checked>
+                                <label for="headerRow">First row is header</label>
+                            </div>
+                            <button id="convertBtn" class="tool-display__button"><i class="fas fa-file-csv"></i> Convert</button>
+                            <button id="downloadBtn" class="tool-display__button tool-display__button--secondary"><i class="fas fa-download"></i> Download CSV</button>
+                            <button id="copyBtn" class="tool-display__button tool-display__button--secondary"><i class="fas fa-copy"></i> Copy</button>
+                            <button id="exportSettingsBtn" class="tool-display__button tool-display__button--secondary"><i class="fas fa-save"></i> Export Settings</button>
+                            <button id="importSettingsBtn" class="tool-display__button tool-display__button--secondary"><i class="fas fa-file-import"></i> Import Settings</button>
+                        </div>
+                        <div class="queue" id="queue"></div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <div class="preview" id="preview"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script>
+    const q=(s,d=document)=>d.querySelector(s); const qa=(s,d=document)=>Array.from(d.querySelectorAll(s));
+    const fileInput=q('#fileInput'); const sheetSelect=q('#sheetSelect'); const delimiter=q('#delimiter'); const customDelim=q('#customDelim'); const headerRow=q('#headerRow');
+    const convertBtn=q('#convertBtn'); const downloadBtn=q('#downloadBtn'); const copyBtn=q('#copyBtn');
+    const exportSettingsBtn=q('#exportSettingsBtn'); const importSettingsBtn=q('#importSettingsBtn');
+    const preview=q('#preview'); const queueEl=q('#queue');
+    const state={workbook:null, sheets:[], csv:'', currentFileName:'output.csv'};
+
+    function loadSettings(){
+        try{ const s=JSON.parse(localStorage.getItem('excel2csv-settings')||'{}');
+            if(s.delimiter){ if(['\t',',',';','custom'].includes(s.delimiter)) delimiter.value=s.delimiter; }
+            if(s.customDelim) customDelim.value=s.customDelim;
+            if(typeof s.headerRow==='boolean') headerRow.checked=s.headerRow;
+        }catch(e){}
+    }
+    function saveSettings(){
+        const sd={ delimiter: delimiter.value, customDelim: customDelim.value, headerRow: headerRow.checked };
+        localStorage.setItem('excel2csv-settings', JSON.stringify(sd));
+    }
+    function getDelim(){
+        if(delimiter.value==='\\t') return '\t'; if(delimiter.value==='custom') return customDelim.value||'|'; return delimiter.value;
+    }
+    function addToQueue(files){ [...files].forEach(f=>{ const row=document.createElement('div'); row.className='queue-item'; row.innerHTML=`<div style="display:flex;align-items:center;gap:.5rem;"><i class=\"fas fa-file-excel\" style=\"color:var(--primary)\"></i><span>${f.name}</span></div><div class=\"tool-display__controls\"><button class=\"tool-display__button tool-display__button--secondary\" data-act=\"load\">Load</button></div>`; row.file=f; queueEl.appendChild(row); }); }
+    function renderPreviewFromSheet(sheetName){
+        const ws = state.workbook.Sheets[sheetName];
+        const aoa = XLSX.utils.sheet_to_json(ws,{ header:1, raw:true, blankrows:false });
+        // preview table
+        const headers = headerRow.checked && aoa.length? aoa[0] : aoa[0]?.map((_,i)=>`Column ${i+1}`)||[];
+        const rows = headerRow.checked? aoa.slice(1): aoa;
+        let html = '<table><thead><tr>'+headers.map(h=>`<th>${XLSX.utils.escape_html(String(h??''))}</th>`).join('')+'</tr></thead><tbody>';
+        html += rows.slice(0,100).map(r=>`<tr>${headers.map((_,i)=>`<td>${XLSX.utils.escape_html(String(r?.[i]??''))}</td>`).join('')}</tr>`).join('');
+        html += '</tbody></table>';
+        preview.innerHTML = html;
+    }
+    function toCsv(sheetName){
+        const ws = state.workbook.Sheets[sheetName];
+        const csv = XLSX.utils.sheet_to_csv(ws, { FS: getDelim(), RS: '\n', strip: true, blankrows:false, forceQuotes:false });
+        state.csv = csv; state.currentFileName = sheetName.replace(/\W+/g,'_') + '.csv';
+    }
+
+    fileInput.addEventListener('change', e=> addToQueue(e.target.files));
+    queueEl.addEventListener('click', async e=>{
+        const btn=e.target.closest('button'); if(!btn) return; const row=btn.closest('.queue-item'); if(!row||!row.file) return;
+        const ab=await row.file.arrayBuffer(); const wb=XLSX.read(ab,{type:'array'}); state.workbook=wb; state.sheets=wb.SheetNames; sheetSelect.innerHTML=state.sheets.map(s=>`<option>${s}</option>`).join(''); renderPreviewFromSheet(state.sheets[0]); toCsv(state.sheets[0]);
+    });
+    sheetSelect.addEventListener('change', ()=>{ renderPreviewFromSheet(sheetSelect.value); toCsv(sheetSelect.value); saveSettings(); });
+    delimiter.addEventListener('change', ()=>{ toCsv(sheetSelect.value); saveSettings(); });
+    customDelim.addEventListener('input', ()=>{ if(delimiter.value==='custom'){ toCsv(sheetSelect.value);} saveSettings(); });
+    headerRow.addEventListener('change', ()=>{ renderPreviewFromSheet(sheetSelect.value); saveSettings(); });
+
+    convertBtn.addEventListener('click', ()=>{ if(state.workbook){ toCsv(sheetSelect.value); }});
+    downloadBtn.addEventListener('click', ()=>{ if(!state.csv) return; const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([state.csv],{type:'text/csv'})); a.download=state.currentFileName; a.click(); URL.revokeObjectURL(a.href); });
+    copyBtn.addEventListener('click', async ()=>{ if(!state.csv) return; try{ await navigator.clipboard.writeText(state.csv); copyBtn.textContent='Copied!'; setTimeout(()=>copyBtn.textContent='Copy',1200);}catch(e){console.error(e);} });
+
+    exportSettingsBtn.addEventListener('click', ()=>{ const data=localStorage.getItem('excel2csv-settings')||'{}'; const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([data],{type:'application/json'})); a.download='excel2csv-settings.json'; a.click(); URL.revokeObjectURL(a.href); });
+    importSettingsBtn.addEventListener('click', ()=>{ const inp=document.createElement('input'); inp.type='file'; inp.accept='.json'; inp.onchange=async ()=>{ const f=inp.files[0]; if(!f) return; const text=await f.text(); try{ localStorage.setItem('excel2csv-settings', text); loadSettings(); }catch(e){} }; inp.click(); });
+
+    document.addEventListener('DOMContentLoaded', loadSettings);
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const loadScript = (src) => new Promise((resolve, reject) => { const s=document.createElement('script'); s.src=src; s.onload=()=>resolve(s); s.onerror=()=>reject(new Error('load '+src)); document.body.appendChild(s); });
+        const loadHeader = () => { const el=document.getElementById('header-placeholder'); if(!el) return; fetch('/header.html').then(r=>r.ok?r.text():Promise.reject('header')).then(html=>{ el.innerHTML=html; return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2'); }).then(()=>loadScript('/header-search.js')).then(()=>{ if(typeof initializeHeader==='function') initializeHeader(); }).catch(console.error); };
+        const loadFooter = () => { const el=document.getElementById('footer-placeholder'); if(!el) return; fetch('/footer.html').then(r=>r.ok?r.text():Promise.reject('footer')).then(html=>{ el.innerHTML=html; }).catch(console.error); };
+        loadHeader(); loadFooter();
+    });
+    </script>
+    <script src="/app-loader.js" defer></script>
+</body>
+</html>
+
+

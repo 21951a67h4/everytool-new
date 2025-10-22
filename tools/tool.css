@@ -428,6 +428,7 @@ body {
     gap: 0.5rem;
     background: var(--primary);
     color: white;
+    min-height: 44px; /* normalize with input/select height */
 }
 
 .tool-display__button:hover {
@@ -484,6 +485,7 @@ body {
     border-radius: var(--radius-md);
     font-size: 1rem;
     transition: var(--transition-all);
+    height: 44px; /* consistent control height for inputs/selects */
 }
 
 .tool-display__input:focus {

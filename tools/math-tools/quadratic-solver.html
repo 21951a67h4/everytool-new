@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadratic Equation Solver | Find Roots & Graph Parabola | EveryTool.tech</title>
+    <meta name="description" content="Solve quadratic equations with step-by-step solutions. Find roots, vertex form, discriminant, and visualize the parabola with interactive graphing.">
+    <meta name="keywords" content="quadratic equation solver, quadratic formula, parabola calculator, discriminant calculator, vertex form">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tool CSS -->
+    <link rel="stylesheet" href="../tool.css">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --radius-md: 0.75rem;
+            --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--text-primary); background: var(--bg-primary); }
+        #header-placeholder { height: 64px; }
+
+        .tool-hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+        }
+
+        .tool-hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-hero__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tool-hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .tool-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .tool-hero__features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .tool-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tool-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-display {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+        }
+
+        .tool-display__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-display__wrapper {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-display__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .tool-display__input-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .tool-display__output-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .tool-display__input-group {
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-display__input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .tool-display__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .tool-display__select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            background: white;
+        }
+
+        .coefficient-inputs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .coefficient-group {
+            text-align: center;
+        }
+
+        .coefficient-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .coefficient-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .coefficient-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .equation-display {
+            text-align: center;
+            font-size: 1.5rem;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .result-display {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--bg-accent);
+        }
+
+        .result-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .roots-display {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--bg-accent);
+            border-radius: 4px;
+        }
+
+        .root-item {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .discriminant-info {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--bg-accent);
+            border-radius: 4px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .vertex-form {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--bg-accent);
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+        }
+
+        .steps-display {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .step-item {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .step-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .download-button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .download-button:hover {
+            background: var(--primary-dark);
+        }
+
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                display: grid;
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .coefficient-inputs {
+                grid-template-columns: 1fr;
+            }
+            .tool-display__input { 
+                font-size: 16px; 
+            }
+            .equation-display {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Quadratic Equation Solver</h1>
+                    <p class="tool-hero__description">
+                        Solve quadratic equations with step-by-step solutions. Find roots, vertex form, 
+                        discriminant, and visualize the parabola with interactive graphing.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-calculator"></i>
+                            <span>Step-by-Step Solutions</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Parabola Graphing</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-download"></i>
+                            <span>Download Graph</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Private</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button">
+                            <i class="fas fa-calculator"></i>
+                            Solve Quadratic
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Quadratic Equation Solver</h2>
+                    <p class="tool-display__description">
+                        Enter coefficients a, b, c for the equation ax² + bx + c = 0
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="coefficient-inputs">
+                            <div class="coefficient-group">
+                                <label class="coefficient-label">a (x²)</label>
+                                <input type="number" class="coefficient-input" id="coeff-a" placeholder="1" value="1" step="any">
+                            </div>
+                            <div class="coefficient-group">
+                                <label class="coefficient-label">b (x)</label>
+                                <input type="number" class="coefficient-input" id="coeff-b" placeholder="0" value="0" step="any">
+                            </div>
+                            <div class="coefficient-group">
+                                <label class="coefficient-label">c (constant)</label>
+                                <input type="number" class="coefficient-input" id="coeff-c" placeholder="0" value="0" step="any">
+                            </div>
+                        </div>
+                        
+                        <div class="equation-display" id="equation-display">
+                            x² + 0x + 0 = 0
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Number Format</label>
+                            <select class="tool-display__select" id="format-select">
+                                <option value="decimal">Decimal</option>
+                                <option value="fraction">Fraction</option>
+                                <option value="exact">Exact</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__controls">
+                            <button class="tool-button" id="solve-quadratic">
+                                <i class="fas fa-calculator"></i>
+                                Solve Equation
+                            </button>
+                            <button class="tool-button" id="reset-quadratic">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                            <button class="tool-button" id="copy-steps">
+                                <i class="fas fa-copy"></i>
+                                Copy Steps
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Solution Results</h3>
+                        <div class="tool-display__result" id="quadratic-result">
+                            Your quadratic equation solution will appear here...
+                        </div>
+                        <div id="results-container"></div>
+                        <div class="chart-container" id="chart-container" style="display: none;">
+                            <canvas id="quadraticChart" width="400" height="200"></canvas>
+                            <button class="download-button" id="download-graph">
+                                <i class="fas fa-download"></i>
+                                Download Graph
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Fetch and insert header
+        fetch('../../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Quadratic Equation Solver Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const coeffA = document.getElementById('coeff-a');
+            const coeffB = document.getElementById('coeff-b');
+            const coeffC = document.getElementById('coeff-c');
+            const formatSelect = document.getElementById('format-select');
+            const equationDisplay = document.getElementById('equation-display');
+            const solveButton = document.getElementById('solve-quadratic');
+            const resetButton = document.getElementById('reset-quadratic');
+            const copyButton = document.getElementById('copy-steps');
+            const downloadButton = document.getElementById('download-graph');
+            const resultDiv = document.getElementById('quadratic-result');
+            const resultsContainer = document.getElementById('results-container');
+            const chartContainer = document.getElementById('chart-container');
+            
+            let quadraticChart = null;
+
+            // Quadratic equation solver class
+            class QuadraticSolver {
+                constructor(a, b, c) {
+                    this.a = a;
+                    this.b = b;
+                    this.c = c;
+                }
+                
+                discriminant() {
+                    return this.b * this.b - 4 * this.a * this.c;
+                }
+                
+                roots() {
+                    const discriminant = this.discriminant();
+                    
+                    if (discriminant > 0) {
+                        const sqrt = Math.sqrt(discriminant);
+                        const root1 = (-this.b + sqrt) / (2 * this.a);
+                        const root2 = (-this.b - sqrt) / (2 * this.a);
+                        return {
+                            type: 'real',
+                            roots: [root1, root2],
+                            discriminant: discriminant
+                        };
+                    } else if (discriminant === 0) {
+                        const root = -this.b / (2 * this.a);
+                        return {
+                            type: 'repeated',
+                            roots: [root],
+                            discriminant: discriminant
+                        };
+                    } else {
+                        const realPart = -this.b / (2 * this.a);
+                        const imagPart = Math.sqrt(-discriminant) / (2 * this.a);
+                        return {
+                            type: 'complex',
+                            roots: [`${realPart} + ${imagPart}i`, `${realPart} - ${imagPart}i`],
+                            discriminant: discriminant
+                        };
+                    }
+                }
+                
+                vertex() {
+                    const h = -this.b / (2 * this.a);
+                    const k = this.a * h * h + this.b * h + this.c;
+                    return { h, k };
+                }
+                
+                vertexForm() {
+                    const { h, k } = this.vertex();
+                    return `y = ${this.a}(x - ${h})² + ${k}`;
+                }
+                
+                factorization() {
+                    if (this.a !== 1) return null;
+                    
+                    const roots = this.roots();
+                    if (roots.type === 'real' && roots.roots.length === 2) {
+                        const [r1, r2] = roots.roots;
+                        if (Number.isInteger(r1) && Number.isInteger(r2)) {
+                            return `(x - ${r1})(x - ${r2})`;
+                        }
+                    }
+                    return null;
+                }
+                
+                steps() {
+                    const steps = [];
+                    steps.push({
+                        title: 'Given Equation',
+                        content: `${this.a}x² + ${this.b}x + ${this.c} = 0`
+                    });
+                    
+                    steps.push({
+                        title: 'Calculate Discriminant',
+                        content: `Δ = b² - 4ac = ${this.b}² - 4(${this.a})(${this.c}) = ${this.discriminant()}`
+                    });
+                    
+                    const roots = this.roots();
+                    if (roots.type === 'real') {
+                        steps.push({
+                            title: 'Quadratic Formula',
+                            content: `x = (-b ± √Δ) / (2a) = (-${this.b} ± √${roots.discriminant}) / (2 × ${this.a})`
+                        });
+                        steps.push({
+                            title: 'Calculate Roots',
+                            content: `x₁ = ${roots.roots[0]}, x₂ = ${roots.roots[1]}`
+                        });
+                    } else if (roots.type === 'repeated') {
+                        steps.push({
+                            title: 'Repeated Root',
+                            content: `x = -b / (2a) = -${this.b} / (2 × ${this.a}) = ${roots.roots[0]}`
+                        });
+                    } else {
+                        steps.push({
+                            title: 'Complex Roots',
+                            content: `x = (-b ± i√|Δ|) / (2a) = (-${this.b} ± i√${Math.abs(roots.discriminant)}) / (2 × ${this.a})`
+                        });
+                    }
+                    
+                    return steps;
+                }
+            }
+
+            function updateEquationDisplay() {
+                const a = parseFloat(coeffA.value) || 0;
+                const b = parseFloat(coeffB.value) || 0;
+                const c = parseFloat(coeffC.value) || 0;
+                
+                let equation = '';
+                if (a !== 0) {
+                    equation += `${a === 1 ? '' : a === -1 ? '-' : a}x²`;
+                }
+                if (b !== 0) {
+                    equation += `${b > 0 && equation ? '+' : ''}${b === 1 ? '' : b === -1 ? '-' : b}x`;
+                }
+                if (c !== 0) {
+                    equation += `${c > 0 && equation ? '+' : ''}${c}`;
+                }
+                if (!equation) equation = '0';
+                equation += ' = 0';
+                
+                equationDisplay.textContent = equation;
+            }
+
+            function solveQuadratic() {
+                const a = parseFloat(coeffA.value);
+                const b = parseFloat(coeffB.value) || 0;
+                const c = parseFloat(coeffC.value) || 0;
+                
+                if (a === 0) {
+                    resultDiv.textContent = 'Error: Coefficient a cannot be zero for a quadratic equation.';
+                    resultsContainer.innerHTML = '';
+                    chartContainer.style.display = 'none';
+                    return;
+                }
+                
+                const solver = new QuadraticSolver(a, b, c);
+                const roots = solver.roots();
+                const vertex = solver.vertex();
+                const vertexForm = solver.vertexForm();
+                const factorization = solver.factorization();
+                const steps = solver.steps();
+                
+                displayResults(roots, vertex, vertexForm, factorization, steps);
+                createChart(solver);
+            }
+
+            function displayResults(roots, vertex, vertexForm, factorization, steps) {
+                let resultHtml = `
+                    <div class="result-display">
+                        <div class="result-title">Roots</div>
+                        <div class="roots-display">
+                `;
+                
+                if (roots.type === 'real') {
+                    resultHtml += `
+                        <div class="root-item">x₁ = ${roots.roots[0].toFixed(4)}</div>
+                        <div class="root-item">x₂ = ${roots.roots[1].toFixed(4)}</div>
+                    `;
+                } else if (roots.type === 'repeated') {
+                    resultHtml += `<div class="root-item">x = ${roots.roots[0].toFixed(4)} (repeated root)</div>`;
+                } else {
+                    resultHtml += `
+                        <div class="root-item">x₁ = ${roots.roots[0]}</div>
+                        <div class="root-item">x₂ = ${roots.roots[1]}</div>
+                    `;
+                }
+                
+                resultHtml += `</div></div>`;
+                
+                resultHtml += `
+                    <div class="discriminant-info">
+                        <strong>Discriminant:</strong> Δ = ${roots.discriminant.toFixed(4)}
+                        <br><strong>Nature of Roots:</strong> ${roots.type === 'real' ? 'Two distinct real roots' : 
+                                                          roots.type === 'repeated' ? 'One repeated real root' : 
+                                                          'Two complex conjugate roots'}
+                    </div>
+                `;
+                
+                resultHtml += `
+                    <div class="vertex-form">
+                        <strong>Vertex Form:</strong><br>
+                        ${vertexForm}<br>
+                        <strong>Vertex:</strong> (${vertex.h.toFixed(4)}, ${vertex.k.toFixed(4)})
+                    </div>
+                `;
+                
+                if (factorization) {
+                    resultHtml += `
+                        <div class="vertex-form">
+                            <strong>Factorization:</strong><br>
+                            ${factorization}
+                        </div>
+                    `;
+                }
+                
+                resultHtml += `
+                    <div class="steps-display">
+                        <h4>Step-by-Step Solution</h4>
+                        ${steps.map(step => `
+                            <div class="step-item">
+                                <div class="step-title">${step.title}</div>
+                                <div class="step-content">${step.content}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                resultsContainer.innerHTML = resultHtml;
+                resultDiv.textContent = 'Quadratic equation solved!';
+                chartContainer.style.display = 'block';
+            }
+
+            function createChart(solver) {
+                if (quadraticChart) {
+                    quadraticChart.destroy();
+                }
+
+                const ctx = document.getElementById('quadraticChart').getContext('2d');
+                
+                // Generate data points
+                const dataPoints = [];
+                const xValues = [];
+                const roots = solver.roots();
+                const vertex = solver.vertex();
+                
+                for (let x = vertex.h - 5; x <= vertex.h + 5; x += 0.1) {
+                    const y = solver.a * x * x + solver.b * x + solver.c;
+                    xValues.push(x);
+                    dataPoints.push(y);
+                }
+
+                const datasets = [{
+                    label: 'Parabola',
+                    data: dataPoints,
+                    borderColor: '#4361EE',
+                    backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                    fill: false,
+                    tension: 0.4
+                }];
+
+                // Add root points
+                if (roots.type === 'real') {
+                    datasets.push({
+                        label: 'Roots',
+                        data: roots.roots.map(x => ({x: x, y: 0})),
+                        backgroundColor: '#F72585',
+                        pointRadius: 8,
+                        showLine: false
+                    });
+                } else if (roots.type === 'repeated') {
+                    datasets.push({
+                        label: 'Root',
+                        data: [{x: roots.roots[0], y: 0}],
+                        backgroundColor: '#F72585',
+                        pointRadius: 8,
+                        showLine: false
+                    });
+                }
+
+                // Add vertex point
+                datasets.push({
+                    label: 'Vertex',
+                    data: [{x: vertex.h, y: vertex.k}],
+                    backgroundColor: '#28a745',
+                    pointRadius: 8,
+                    showLine: false
+                });
+
+                quadraticChart = new Chart(ctx, {
+                    type: 'scatter',
+                    data: {
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Quadratic Function Graph'
+                            },
+                            legend: {
+                                display: true
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'x'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'y'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function downloadGraph() {
+                if (quadraticChart) {
+                    const url = quadraticChart.toBase64Image();
+                    const link = document.createElement('a');
+                    link.download = 'quadratic-graph.png';
+                    link.href = url;
+                    link.click();
+                }
+            }
+
+            function copySteps() {
+                const stepsElement = document.querySelector('.steps-display');
+                if (stepsElement) {
+                    const stepsText = stepsElement.textContent;
+                    navigator.clipboard.writeText(stepsText).then(() => {
+                        copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        setTimeout(() => {
+                            copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy Steps';
+                        }, 2000);
+                    });
+                }
+            }
+
+            function resetCalculator() {
+                coeffA.value = '1';
+                coeffB.value = '0';
+                coeffC.value = '0';
+                formatSelect.value = 'decimal';
+                updateEquationDisplay();
+                resultDiv.textContent = 'Your quadratic equation solution will appear here...';
+                resultsContainer.innerHTML = '';
+                chartContainer.style.display = 'none';
+                if (quadraticChart) {
+                    quadraticChart.destroy();
+                    quadraticChart = null;
+                }
+            }
+
+            // Event listeners
+            [coeffA, coeffB, coeffC].forEach(input => {
+                input.addEventListener('input', updateEquationDisplay);
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        solveQuadratic();
+                    }
+                });
+            });
+
+            solveButton.addEventListener('click', solveQuadratic);
+            resetButton.addEventListener('click', resetCalculator);
+            copyButton.addEventListener('click', copySteps);
+            downloadButton.addEventListener('click', downloadGraph);
+
+            // Initialize
+            updateEquationDisplay();
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

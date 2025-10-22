@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gratuity Calculator | Calculate Gratuity Amount | EveryTool.tech</title>
+    <meta name="description" content="Calculate your gratuity amount with our free Gratuity Calculator. Get accurate calculations based on salary, service years, and organization type. Includes tax implications and formula explanation.">
+    <meta name="keywords" content="gratuity calculator, gratuity calculation, gratuity amount calculator, employee gratuity calculator, gratuity formula calculator">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Gratuity Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate your gratuity amount with our free Gratuity Calculator. Get accurate calculations based on salary, service years, and organization type.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/financial-tools/gratuity-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tool CSS -->
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <!-- Add in <head> if not present -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    
+    <style>
+        /* Core Variables */
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --primary-darker: #1f37a8;
+            --primary-light: #6b83f1;
+            --primary-lighter: #94a5f4;
+            --secondary: #7209B7;
+            --secondary-dark: #560BAD;
+            --accent: #F72585;
+            --accent-dark: #B5179E;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-light: #9CA3AF;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --bg-dark: #111827;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1.5rem;
+            --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        /* Header Placeholder */
+        #header-placeholder {
+            height: 64px;
+        }
+
+        /* Tool Hero Section */
+        .tool-hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="%234361EE" opacity="0.1"/></svg>');
+            opacity: 0.5;
+            animation: patternMove 20s linear infinite;
+        }
+
+        .tool-hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-hero__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tool-hero__left {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .tool-hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .tool-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .tool-hero__features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .tool-hero__cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tool-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-button--primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-button--primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-button--secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tool-hero__right {
+            position: relative;
+            animation: slideIn 1s ease-out;
+        }
+
+        /* Tool Display Section */
+        .tool-display {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .tool-display__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-display__wrapper {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-display__wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .tool-display__header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tool-display__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__description {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tool-display__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .tool-display__input-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .tool-display__output-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .tool-display__controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-display__button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-display__button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-display__button--secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__input-group {
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-display__input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .tool-display__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+            background: white;
+        }
+
+        .tool-display__select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .gratuity-summary {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            background: var(--bg-accent);
+        }
+
+        .gratuity-summary__item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--bg-secondary);
+        }
+
+        .gratuity-summary__item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .gratuity-summary__label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .gratuity-summary__value {
+            color: var(--text-secondary);
+        }
+
+        .formula-breakdown {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .formula-breakdown h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .formula-step {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+        }
+
+        .tax-notes {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: var(--radius-md);
+        }
+
+        .tax-notes h4 {
+            color: #856404;
+            margin-bottom: 0.5rem;
+        }
+
+        .tax-notes p {
+            color: #856404;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .certificate-output {
+            margin-top: 1rem;
+            padding: 1.5rem;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+
+        .certificate-output h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .certificate-output .amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .certificate-output .details {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Mobile-specific optimizations for Gratuity Calculator */
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                display: grid;
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .tool-display__input-group { 
+                margin-bottom: 1rem; 
+            }
+            .tool-display__input, .tool-display__select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .tool-display__button { 
+                width: 100%; 
+                margin-bottom: 0.5rem; 
+            }
+            .tool-display__controls { 
+                display: flex;
+                flex-direction: column; 
+            }
+            .certificate-output .amount {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-display__input { 
+                padding: 0.65rem; 
+            }
+            .tool-display__button { 
+                padding: 0.8rem; 
+                font-size: 0.95rem; 
+            }
+            .certificate-output .amount {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Calculate Your Gratuity Amount</h1>
+                    <p class="tool-hero__description">
+                        Calculate your gratuity entitlement with our accurate Gratuity Calculator. 
+                        Get detailed breakdown, tax implications, and step-by-step formula explanation.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-calculator"></i>
+                            <span>Accurate Calculation</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-file-invoice"></i>
+                            <span>Tax Implications</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-certificate"></i>
+                            <span>Printable Certificate</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Private</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Gratuity
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Gratuity Calculator</h2>
+                    <p class="tool-display__description">
+                        Enter your salary details and service period to calculate your gratuity amount.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Basic Salary (₹)</label>
+                            <input type="number" class="tool-display__input" id="basic-salary" placeholder="Enter basic salary">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Dearness Allowance (₹)</label>
+                            <input type="number" class="tool-display__input" id="da-amount" placeholder="Enter DA amount">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Years of Service</label>
+                            <input type="number" class="tool-display__input" id="service-years" placeholder="Enter years" min="0" step="0.1">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Months of Service</label>
+                            <input type="number" class="tool-display__input" id="service-months" placeholder="Enter months" min="0" max="11">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Organization Type</label>
+                            <select class="tool-display__select" id="organization-type">
+                                <option value="private">Private Sector</option>
+                                <option value="government">Government Sector</option>
+                                <option value="public">Public Sector</option>
+                            </select>
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">
+                                <input type="checkbox" id="ceiling-cap" style="margin-right: 0.5rem;">
+                                Apply Ceiling Cap (₹20 lakhs for private sector)
+                            </label>
+                        </div>
+                        <div class="tool-display__controls">
+                            <button class="tool-display__button" id="calculate-gratuity">
+                                <i class="fas fa-calculator"></i>
+                                Calculate Gratuity
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="reset-gratuity">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="print-certificate">
+                                <i class="fas fa-print"></i>
+                                Print Certificate
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Gratuity Calculation Results</h3>
+                        <div class="tool-display__result" id="gratuity-result">
+                            Your gratuity calculation results will appear here...
+                        </div>
+                        <div class="gratuity-summary" id="gratuity-summary" style="display: none;">
+                            <div class="gratuity-summary__item">
+                                <span class="gratuity-summary__label">Gratuity Amount:</span>
+                                <span class="gratuity-summary__value" id="gratuity-amount"></span>
+                            </div>
+                            <div class="gratuity-summary__item">
+                                <span class="gratuity-summary__label">Effective Years:</span>
+                                <span class="gratuity-summary__value" id="effective-years"></span>
+                            </div>
+                            <div class="gratuity-summary__item">
+                                <span class="gratuity-summary__label">Salary Used:</span>
+                                <span class="gratuity-summary__value" id="salary-used"></span>
+                            </div>
+                            <div class="gratuity-summary__item">
+                                <span class="gratuity-summary__label">Ceiling Applied:</span>
+                                <span class="gratuity-summary__value" id="ceiling-applied"></span>
+                            </div>
+                        </div>
+                        <div class="formula-breakdown" id="formula-breakdown" style="display: none;">
+                            <h4>Calculation Steps:</h4>
+                            <div id="formula-steps"></div>
+                        </div>
+                        <div class="tax-notes" id="tax-notes" style="display: none;">
+                            <h4>Tax Implications:</h4>
+                            <p id="tax-implications"></p>
+                        </div>
+                        <div class="certificate-output" id="certificate-output" style="display: none;">
+                            <h3>Gratuity Certificate</h3>
+                            <div class="amount" id="certificate-amount"></div>
+                            <div class="details" id="certificate-details"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Gratuity: A Complete Guide</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about gratuity calculation, eligibility, tax implications, and legal aspects
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is Gratuity?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Gratuity is a statutory benefit paid by employers to employees as a token of appreciation for their long-term service. 
+                            It's governed by the Payment of Gratuity Act, 1972, and is payable when an employee completes 5 years of continuous service 
+                            or upon retirement, resignation, or death.
+                        </p>
+                        <p>
+                            <strong>Key Features of Gratuity:</strong>
+                        </p>
+                        <ul>
+                            <li>Mandatory benefit for employees with 5+ years of service</li>
+                            <li>Calculated based on last drawn salary and years of service</li>
+                            <li>Tax-free up to ₹20 lakhs (as per latest amendments)</li>
+                            <li>Paid by employer without employee contribution</li>
+                            <li>Protected under labor laws</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Gratuity Calculation Formula</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            The gratuity calculation follows a specific formula:
+                        </p>
+                        <p>
+                            <strong>Formula:</strong> Gratuity = (Basic Salary + DA) × Years of Service × 15/26
+                        </p>
+                        <p>
+                            <strong>Where:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Basic Salary + DA:</strong> Last drawn basic salary plus dearness allowance</li>
+                            <li><strong>Years of Service:</strong> Total years of continuous service (fraction of year >6 months counts as 1 year)</li>
+                            <li><strong>15/26:</strong> Fixed multiplier (15 days salary for each year of service)</li>
+                        </ul>
+                        <p>
+                            <strong>Example:</strong> If your basic salary is ₹50,000, DA is ₹10,000, and you've worked for 10 years:
+                            Gratuity = (₹50,000 + ₹10,000) × 10 × 15/26 = ₹3,46,154
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Eligibility and Conditions</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            To be eligible for gratuity, you must meet certain conditions:
+                        </p>
+                        <ul>
+                            <li><strong>Minimum Service:</strong> 5 years of continuous service</li>
+                            <li><strong>Service Completion:</strong> Service can be continuous or with breaks not exceeding 6 months</li>
+                            <li><strong>Employment Status:</strong> Must be an employee (not contractor or consultant)</li>
+                            <li><strong>Organization Coverage:</strong> Employer must have 10+ employees (for private sector)</li>
+                        </ul>
+                        <p>
+                            <strong>When Gratuity is Payable:</strong>
+                        </p>
+                        <ul>
+                            <li>On retirement</li>
+                            <li>On resignation after 5 years</li>
+                            <li>On termination (except for misconduct)</li>
+                            <li>On death or disablement</li>
+                            <li>On superannuation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Tax Implications</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Understanding tax implications is crucial for gratuity planning:
+                        </p>
+                        <ul>
+                            <li><strong>Tax-Free Limit:</strong> Gratuity up to ₹20 lakhs is tax-free (as per Finance Act 2023)</li>
+                            <li><strong>Excess Amount:</strong> Amount above ₹20 lakhs is taxable as per income tax slab</li>
+                            <li><strong>Government Employees:</strong> No upper limit for government employees</li>
+                            <li><strong>Form 16:</strong> Gratuity amount is reflected in Form 16</li>
+                        </ul>
+                        <p>
+                            <strong>Tax Planning Tips:</strong>
+                        </p>
+                        <ul>
+                            <li>Plan your retirement timing to optimize tax benefits</li>
+                            <li>Consider spreading gratuity payment across financial years</li>
+                            <li>Keep proper documentation for tax filing</li>
+                            <li>Consult a tax advisor for complex situations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Gratuity Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about Gratuity Calculator</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>How is gratuity calculated?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Gratuity is calculated using the formula: (Basic Salary + DA) × Years of Service × 15/26. The 15/26 represents 15 days salary for each year of service.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What is the minimum service period for gratuity?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>You need to complete 5 years of continuous service to be eligible for gratuity. However, if you have more than 6 months in a year, it counts as a full year.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Is gratuity taxable?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Gratuity up to ₹20 lakhs is tax-free. Any amount above this limit is taxable as per your income tax slab. Government employees have no upper limit.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What is the ceiling limit for gratuity?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>The maximum gratuity payable is ₹20 lakhs for private sector employees. Government employees have no ceiling limit. The ceiling can be applied by employers.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Fetch and insert header
+        fetch('../../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Gratuity Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const basicSalaryInput = document.getElementById('basic-salary');
+            const daAmountInput = document.getElementById('da-amount');
+            const serviceYearsInput = document.getElementById('service-years');
+            const serviceMonthsInput = document.getElementById('service-months');
+            const organizationTypeSelect = document.getElementById('organization-type');
+            const ceilingCapCheckbox = document.getElementById('ceiling-cap');
+            const calculateButton = document.getElementById('calculate-gratuity');
+            const resetButton = document.getElementById('reset-gratuity');
+            const printButton = document.getElementById('print-certificate');
+            const resultDiv = document.getElementById('gratuity-result');
+            const summaryDiv = document.getElementById('gratuity-summary');
+            const formulaBreakdown = document.getElementById('formula-breakdown');
+            const taxNotes = document.getElementById('tax-notes');
+            const certificateOutput = document.getElementById('certificate-output');
+            
+            const gratuityAmountSpan = document.getElementById('gratuity-amount');
+            const effectiveYearsSpan = document.getElementById('effective-years');
+            const salaryUsedSpan = document.getElementById('salary-used');
+            const ceilingAppliedSpan = document.getElementById('ceiling-applied');
+            const formulaStepsDiv = document.getElementById('formula-steps');
+            const taxImplicationsP = document.getElementById('tax-implications');
+            const certificateAmountDiv = document.getElementById('certificate-amount');
+            const certificateDetailsDiv = document.getElementById('certificate-details');
+
+            function calculateGratuity() {
+                const basicSalary = parseFloat(basicSalaryInput.value) || 0;
+                const daAmount = parseFloat(daAmountInput.value) || 0;
+                const serviceYears = parseFloat(serviceYearsInput.value) || 0;
+                const serviceMonths = parseInt(serviceMonthsInput.value) || 0;
+                const organizationType = organizationTypeSelect.value;
+                const applyCeiling = ceilingCapCheckbox.checked;
+
+                if (basicSalary && serviceYears >= 5) {
+                    // Calculate effective years (fraction > 6 months = 1 year)
+                    let effectiveYears = serviceYears;
+                    if (serviceMonths > 6) {
+                        effectiveYears += 1;
+                    } else if (serviceMonths > 0) {
+                        effectiveYears += serviceMonths / 12;
+                    }
+
+                    const salaryUsed = basicSalary + daAmount;
+                    let gratuityAmount = salaryUsed * effectiveYears * (15/26);
+
+                    // Apply ceiling cap if applicable
+                    let ceilingApplied = 'No';
+                    if (applyCeiling && organizationType === 'private' && gratuityAmount > 2000000) {
+                        gratuityAmount = 2000000;
+                        ceilingApplied = 'Yes (₹20 lakhs)';
+                    }
+
+                    // Format numbers with commas and 2 decimal places
+                    const formatNumber = (num) => {
+                        return '₹' + num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    };
+
+                    gratuityAmountSpan.textContent = formatNumber(gratuityAmount);
+                    effectiveYearsSpan.textContent = effectiveYears.toFixed(2) + ' years';
+                    salaryUsedSpan.textContent = formatNumber(salaryUsed);
+                    ceilingAppliedSpan.textContent = ceilingApplied;
+
+                    // Create formula breakdown
+                    createFormulaBreakdown(basicSalary, daAmount, effectiveYears, gratuityAmount);
+
+                    // Create tax implications
+                    createTaxImplications(gratuityAmount, organizationType);
+
+                    // Create certificate
+                    createCertificate(basicSalary, daAmount, effectiveYears, gratuityAmount, organizationType);
+
+                    resultDiv.textContent = 'Gratuity calculation completed!';
+                    summaryDiv.style.display = 'block';
+                    formulaBreakdown.style.display = 'block';
+                    taxNotes.style.display = 'block';
+                    certificateOutput.style.display = 'block';
+
+                    // Save to localStorage
+                    saveToLocalStorage();
+                } else if (basicSalary && serviceYears < 5) {
+                    resultDiv.textContent = 'Minimum 5 years of service required for gratuity eligibility.';
+                    summaryDiv.style.display = 'none';
+                    formulaBreakdown.style.display = 'none';
+                    taxNotes.style.display = 'none';
+                    certificateOutput.style.display = 'none';
+                } else {
+                    resultDiv.textContent = 'Please enter valid salary and service details.';
+                    summaryDiv.style.display = 'none';
+                    formulaBreakdown.style.display = 'none';
+                    taxNotes.style.display = 'none';
+                    certificateOutput.style.display = 'none';
+                }
+            }
+
+            function createFormulaBreakdown(basicSalary, daAmount, effectiveYears, gratuityAmount) {
+                const salaryUsed = basicSalary + daAmount;
+                const formatNumber = (num) => {
+                    return '₹' + num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                };
+
+                formulaStepsDiv.innerHTML = `
+                    <div class="formula-step">Step 1: Basic Salary + DA = ${formatNumber(basicSalary)} + ${formatNumber(daAmount)} = ${formatNumber(salaryUsed)}</div>
+                    <div class="formula-step">Step 2: Effective Years of Service = ${effectiveYears.toFixed(2)} years</div>
+                    <div class="formula-step">Step 3: Gratuity = ${formatNumber(salaryUsed)} × ${effectiveYears.toFixed(2)} × 15/26</div>
+                    <div class="formula-step">Step 4: Gratuity = ${formatNumber(salaryUsed)} × ${effectiveYears.toFixed(2)} × 0.5769</div>
+                    <div class="formula-step">Step 5: Gratuity = ${formatNumber(gratuityAmount)}</div>
+                `;
+            }
+
+            function createTaxImplications(gratuityAmount, organizationType) {
+                let taxText = '';
+                if (organizationType === 'government') {
+                    taxText = 'Government employees: Gratuity is completely tax-free with no upper limit.';
+                } else {
+                    if (gratuityAmount <= 2000000) {
+                        taxText = 'Your gratuity amount is within the tax-free limit of ₹20 lakhs. No tax will be deducted.';
+                    } else {
+                        const taxableAmount = gratuityAmount - 2000000;
+                        taxText = `Your gratuity amount exceeds the tax-free limit. Amount above ₹20 lakhs (₹${taxableAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}) will be taxable as per your income tax slab.`;
+                    }
+                }
+                taxImplicationsP.textContent = taxText;
+            }
+
+            function createCertificate(basicSalary, daAmount, effectiveYears, gratuityAmount, organizationType) {
+                const formatNumber = (num) => {
+                    return '₹' + num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                };
+
+                certificateAmountDiv.textContent = formatNumber(gratuityAmount);
+                certificateDetailsDiv.innerHTML = `
+                    <div>Basic Salary: ${formatNumber(basicSalary)}</div>
+                    <div>Dearness Allowance: ${formatNumber(daAmount)}</div>
+                    <div>Years of Service: ${effectiveYears.toFixed(2)}</div>
+                    <div>Organization Type: ${organizationType.charAt(0).toUpperCase() + organizationType.slice(1)}</div>
+                    <div>Date: ${new Date().toLocaleDateString()}</div>
+                `;
+            }
+
+            function printCertificate() {
+                const printContent = document.getElementById('certificate-output').innerHTML;
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <html>
+                        <head>
+                            <title>Gratuity Certificate</title>
+                            <style>
+                                body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+                                .amount { font-size: 2rem; font-weight: bold; margin: 20px 0; }
+                                .details { font-size: 1rem; line-height: 1.5; }
+                            </style>
+                        </head>
+                        <body>
+                            ${printContent}
+                        </body>
+                    </html>
+                `);
+                printWindow.document.close();
+                printWindow.print();
+            }
+
+            function saveToLocalStorage() {
+                const gratuityState = {
+                    basicSalary: basicSalaryInput.value,
+                    daAmount: daAmountInput.value,
+                    serviceYears: serviceYearsInput.value,
+                    serviceMonths: serviceMonthsInput.value,
+                    organizationType: organizationTypeSelect.value,
+                    ceilingCap: ceilingCapCheckbox.checked
+                };
+                localStorage.setItem('gratuityCalculatorState', JSON.stringify(gratuityState));
+            }
+
+            function loadFromLocalStorage() {
+                const savedState = localStorage.getItem('gratuityCalculatorState');
+                if (savedState) {
+                    const state = JSON.parse(savedState);
+                    basicSalaryInput.value = state.basicSalary || '';
+                    daAmountInput.value = state.daAmount || '';
+                    serviceYearsInput.value = state.serviceYears || '';
+                    serviceMonthsInput.value = state.serviceMonths || '';
+                    organizationTypeSelect.value = state.organizationType || 'private';
+                    ceilingCapCheckbox.checked = state.ceilingCap || false;
+                }
+            }
+
+            function resetCalculator() {
+                basicSalaryInput.value = '';
+                daAmountInput.value = '';
+                serviceYearsInput.value = '';
+                serviceMonthsInput.value = '';
+                organizationTypeSelect.value = 'private';
+                ceilingCapCheckbox.checked = false;
+                resultDiv.textContent = 'Your gratuity calculation results will appear here...';
+                summaryDiv.style.display = 'none';
+                formulaBreakdown.style.display = 'none';
+                taxNotes.style.display = 'none';
+                certificateOutput.style.display = 'none';
+                localStorage.removeItem('gratuityCalculatorState');
+            }
+
+            calculateButton.addEventListener('click', calculateGratuity);
+            resetButton.addEventListener('click', resetCalculator);
+            printButton.addEventListener('click', printCertificate);
+
+            // Load saved state on page load
+            loadFromLocalStorage();
+
+            // Allow Enter key to trigger calculation
+            [basicSalaryInput, daAmountInput, serviceYearsInput, serviceMonthsInput].forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        calculateGratuity();
+                    }
+                });
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with animation classes
+        document.querySelectorAll('.tool-hero__left, .tool-hero__right, .blog-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

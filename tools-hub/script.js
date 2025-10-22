@@ -5,6 +5,24 @@
  * including component loading, dynamic filtering, animations, and voice search.
  */
 
+// ---------- HERO COUNTER: authoritative total ----------
+(function setAuthoritativeToolTotal() {
+  try {
+    // Build master list from original DOM (this captures all tool cards before any trimming)
+    const allToolNodes = Array.from(document.querySelectorAll('.tool-card'));
+    window.__EVERYTOOL_ALL_TOOL_NODES = allToolNodes; // store master list globally (read-only)
+    window.__EVERYTOOL_TOTAL_TOOLS = allToolNodes.length || 0;
+
+    // Immediately set hero counter to the true full total (so initial value is authoritative)
+    const heroEl = document.getElementById('tools-count');
+    if (heroEl) heroEl.textContent = window.__EVERYTOOL_TOTAL_TOOLS;
+    
+    console.log(`✅ Authoritative tool total set: ${window.__EVERYTOOL_TOTAL_TOOLS}`);
+  } catch (err) {
+    console.warn('Error initializing master tool count', err);
+  }
+})();
+
 /**
  * Loads HTML components like header and footer into specified placeholder elements.
  */
@@ -39,7 +57,6 @@ class DOMElementManager {
         this.filterButtonsContainer = document.querySelector('.filter-buttons');
         this.filterButtons = document.querySelectorAll('.filter-button');
         this.toolsGrid = document.getElementById('tools-grid');
-        this.toolCards = document.querySelectorAll('.tool-card');
         this.errorOverlay = document.getElementById('error-overlay');
         this.errorMessage = document.getElementById('error-message');
         this.retryButton = document.getElementById('retry-button');
@@ -52,11 +69,13 @@ class DOMElementManager {
  * Manages all filtering logic including search, category, and voice input.
  */
 class ToolsFilterManager {
-    constructor(domElements) {
+    constructor(domElements, paginationLoader) {
         this.dom = domElements;
+        this.paginationLoader = paginationLoader;
         this.activeCategory = 'all';
         this.debounceTimeout = null;
         this.originalButtonTexts = new Map(); // To store original button text
+        this.isAscending = true; // A–Z sort order
     }
 
     init() {
@@ -75,10 +94,53 @@ class ToolsFilterManager {
         this.dom.filterButtonsContainer.addEventListener('click', (e) => this.handleCategoryFilter(e));
 
         this.dom.voiceSearchBtn.addEventListener('click', () => this.startVoiceRecognition());
+
+        // Sort A–Z button
+        const sortBtn = document.getElementById('sort-az-btn');
+        if (sortBtn) {
+            sortBtn.addEventListener('click', () => {
+                this.isAscending = !this.isAscending; // toggle order
+                const icon = sortBtn.querySelector('i');
+                if (icon) {
+                    icon.className = this.isAscending
+                        ? 'fa-solid fa-arrow-down-a-z'
+                        : 'fa-solid fa-arrow-up-a-z';
+                }
+                this.sortToolsByName(this.isAscending);
+                this.filterTools();
+            });
+        }
+
+        // Grid/List toggle
+        const viewToggleBtn = document.getElementById('view-toggle-btn');
+        if (viewToggleBtn && this.dom.toolsGrid) {
+            viewToggleBtn.addEventListener('click', () => {
+                const grid = this.dom.toolsGrid;
+                const isList = grid.classList.contains('list-view');
+                if (isList) {
+                    grid.classList.remove('list-view');
+                    grid.classList.add('grid-view');
+                } else {
+                    grid.classList.remove('grid-view');
+                    grid.classList.add('list-view');
+                }
+                const icon = viewToggleBtn.querySelector('i');
+                if (icon) {
+                    const nowList = grid.classList.contains('list-view');
+                    icon.className = nowList ? 'fa-solid fa-list' : 'fa-solid fa-table-cells-large';
+                }
+            });
+        }
         
         // Handle initial page load state
         this.filterFromURL();
         console.log('ToolsFilterManager initialized.');
+    }
+
+    sortToolsByName(ascending = true) {
+        // Update the sort order and trigger filtering
+        this.isAscending = ascending;
+        this.filterTools();
     }
 
     /**
@@ -102,16 +164,15 @@ class ToolsFilterManager {
         buttonToActivate.classList.add('active');
         this.activeCategory = buttonToActivate.dataset.category;
 
-        // Calculate and append the count to the newly active button
+        // Calculate count from pagination loader
         const category = this.activeCategory;
-        const count = (category === 'all')
-            ? this.dom.toolCards.length
-            : document.querySelectorAll(`.tool-card[data-category="${category}"]`).length;
+        const filteredList = this.paginationLoader.getFilteredList('', category, this.isAscending);
+        const count = filteredList.length;
         
         const originalText = this.originalButtonTexts.get(buttonToActivate);
         buttonToActivate.textContent = `${originalText} (${count})`;
 
-        // Perform the filtering
+        // Perform the filtering (this will also update the hero count)
         this.filterTools();
     }
 
@@ -125,21 +186,23 @@ class ToolsFilterManager {
     filterTools() {
         const searchTerm = this.dom.searchInput.value.toLowerCase().trim();
         
-        this.dom.toolCards.forEach(card => {
-            const name = card.querySelector('.tool-name').textContent.toLowerCase();
-            const description = card.querySelector('.tool-description').textContent.toLowerCase();
-            const category = card.dataset.category;
-
-            const matchesSearch = name.includes(searchTerm) || description.includes(searchTerm);
-            const matchesCategory = this.activeCategory === 'all' || this.activeCategory === category;
-
-            if (matchesSearch && matchesCategory) {
-                card.classList.remove('hidden');
-            } else {
-                card.classList.add('hidden');
-            }
-        });
-        console.log(`Filtered tools for: [Category: ${this.activeCategory}, Search: "${searchTerm}"]`);
+        // Get filtered list from pagination loader
+        const filteredList = this.paginationLoader.getFilteredList(searchTerm, this.activeCategory, this.isAscending);
+        
+        // Reset pagination to show first batch of filtered results
+        this.paginationLoader.resetToList(filteredList);
+        
+        // Update tools count: show filtered count only if there's an active filter/search
+        // Otherwise, show the authoritative total (77)
+        if (searchTerm || (this.activeCategory && this.activeCategory !== 'all')) {
+            updateToolsCountDisplay(filteredList.length);
+            console.log(`Filtered tools for: [Category: ${this.activeCategory}, Search: "${searchTerm}"] - ${filteredList.length} results`);
+        } else {
+            // No active filter - show authoritative total
+            const authoritativeTotal = window.__EVERYTOOL_TOTAL_TOOLS || 0;
+            updateToolsCountDisplay(authoritativeTotal);
+            console.log(`No active filter - showing authoritative total: ${authoritativeTotal}`);
+        }
     }
 
     handleCategoryFilter(e) {
@@ -225,7 +288,6 @@ class AnimationManager {
     init() {
         if (!('IntersectionObserver' in window)) {
             console.warn('IntersectionObserver not supported. Animations will be disabled.');
-            this.dom.toolCards.forEach(card => card.classList.add('visible'));
             return;
         }
 
@@ -244,8 +306,14 @@ class AnimationManager {
             });
         }, options);
 
-        this.dom.toolCards.forEach(card => this.observer.observe(card));
         console.log('AnimationManager initialized with IntersectionObserver.');
+    }
+
+    // Method to observe newly added tool cards
+    observeNewCards(cards) {
+        if (this.observer) {
+            cards.forEach(card => this.observer.observe(card));
+        }
     }
 }
 
@@ -271,6 +339,257 @@ class HeaderManager {
 }
 
 /**
+ * Manages pagination and incremental loading of tool cards.
+ */
+class PaginationLoader {
+    constructor(domElements, animationManager = null) {
+        this.dom = domElements;
+        this.animationManager = animationManager;
+        this.allToolNodes = [];
+        this.currentList = [];
+        this.currentIndex = 0;
+        this.initialBatch = 30;
+        this.batchSize = 30;
+        this.loadMoreBtn = document.getElementById('load-more-btn');
+        this.loadMoreContainer = document.getElementById('load-more-container');
+        this.ariaUpdates = document.getElementById('aria-updates');
+        this.isLoading = false;
+    }
+
+    init() {
+        // Check for rollback flag
+        if (window.FORCE_FULL_RENDER) {
+            console.log('FORCE_FULL_RENDER flag detected, skipping pagination');
+            return;
+        }
+        
+        this.initMasterList();
+        this.renderInitial();
+        this.setupLoadMoreButton();
+        console.log('PaginationLoader initialized.');
+    }
+
+    initMasterList() {
+        // Use the authoritative master list if available, otherwise capture from DOM
+        if (window.__EVERYTOOL_ALL_TOOL_NODES && window.__EVERYTOOL_ALL_TOOL_NODES.length > 0) {
+            this.allToolNodes = [...window.__EVERYTOOL_ALL_TOOL_NODES];
+            console.log(`Master list initialized from authoritative source: ${this.allToolNodes.length} tools`);
+        } else {
+            // Fallback: capture all tool cards in their original order
+            this.allToolNodes = Array.from(document.querySelectorAll('.tool-card'));
+            console.log(`Master list initialized from DOM fallback: ${this.allToolNodes.length} tools`);
+        }
+        
+        // Validate that we have tool cards
+        if (this.allToolNodes.length === 0) {
+            console.warn('No tool cards found in the DOM');
+            return;
+        }
+        
+        this.currentList = [...this.allToolNodes];
+        console.log(`Master list initialized with ${this.allToolNodes.length} tools`);
+    }
+
+    renderInitial() {
+        // Clear the grid and render first batch
+        this.dom.toolsGrid.innerHTML = '';
+        this.currentIndex = 0;
+        
+        // Check if we have tools to render
+        if (this.currentList.length === 0) {
+            console.warn('No tools to render');
+            this.hideLoadMoreButton();
+            return;
+        }
+        
+        const fragment = document.createDocumentFragment();
+        const initialTools = this.currentList.slice(0, this.initialBatch);
+        
+        initialTools.forEach(tool => {
+            // Add animation classes for newly rendered tools
+            tool.classList.add('animate-fade-up');
+            fragment.appendChild(tool);
+        });
+        
+        this.dom.toolsGrid.appendChild(fragment);
+        this.currentIndex = initialTools.length;
+        
+        // Observe new cards for animations
+        if (this.animationManager) {
+            this.animationManager.observeNewCards(initialTools);
+        }
+        
+        // Update button visibility
+        this.updateLoadMoreButton();
+        
+        // Announce to screen readers
+        this.announceUpdate(`Showing 1–${this.currentIndex} of ${this.currentList.length} tools`);
+        
+        console.log(`Rendered initial batch: ${initialTools.length} tools`);
+    }
+
+    loadMore() {
+        if (this.isLoading) return;
+        
+        this.isLoading = true;
+        this.loadMoreBtn.disabled = true;
+        this.loadMoreBtn.setAttribute('aria-busy', 'true');
+        
+        const remainingTools = this.currentList.slice(this.currentIndex);
+        const nextBatch = remainingTools.slice(0, this.batchSize);
+        
+        if (nextBatch.length === 0) {
+            this.hideLoadMoreButton();
+            this.isLoading = false;
+            return;
+        }
+        
+        const fragment = document.createDocumentFragment();
+        nextBatch.forEach(tool => {
+            // Add animation classes for newly loaded tools
+            tool.classList.add('animate-fade-up');
+            fragment.appendChild(tool);
+        });
+        
+        this.dom.toolsGrid.appendChild(fragment);
+        this.currentIndex += nextBatch.length;
+        
+        // Observe new cards for animations
+        if (this.animationManager) {
+            this.animationManager.observeNewCards(nextBatch);
+        }
+        
+        // Update button state
+        this.loadMoreBtn.disabled = false;
+        this.loadMoreBtn.removeAttribute('aria-busy');
+        this.isLoading = false;
+        
+        // Update button visibility
+        this.updateLoadMoreButton();
+        
+        // Announce to screen readers
+        this.announceUpdate(`${nextBatch.length} more tools loaded`);
+        
+        console.log(`Loaded ${nextBatch.length} more tools. Total visible: ${this.currentIndex}`);
+    }
+
+    resetToList(listArray) {
+        // Clear current display and render first batch of new list
+        this.currentList = [...listArray];
+        this.renderInitial();
+        console.log(`Reset to new list with ${listArray.length} tools`);
+    }
+
+    getFilteredList(searchTerm, activeCategory, sortOrder) {
+        let filtered = [...this.allToolNodes];
+        
+        // Apply search filter
+        if (searchTerm) {
+            filtered = filtered.filter(tool => {
+                try {
+                    const nameElement = tool.querySelector('.tool-name');
+                    const descElement = tool.querySelector('.tool-description');
+                    
+                    if (!nameElement || !descElement) {
+                        console.warn('Tool card missing required elements:', tool);
+                        return false;
+                    }
+                    
+                    const name = nameElement.textContent.toLowerCase();
+                    const description = descElement.textContent.toLowerCase();
+                    return name.includes(searchTerm) || description.includes(searchTerm);
+                } catch (error) {
+                    console.warn('Error processing tool card:', error, tool);
+                    return false;
+                }
+            });
+        }
+        
+        // Apply category filter
+        if (activeCategory && activeCategory !== 'all') {
+            filtered = filtered.filter(tool => tool.dataset.category === activeCategory);
+        }
+        
+        // Apply sorting
+        if (sortOrder !== undefined) {
+            filtered.sort((a, b) => {
+                try {
+                    const nameA = a.querySelector('.tool-name')?.textContent.toLowerCase() || '';
+                    const nameB = b.querySelector('.tool-name')?.textContent.toLowerCase() || '';
+                    if (nameA < nameB) return sortOrder ? -1 : 1;
+                    if (nameA > nameB) return sortOrder ? 1 : -1;
+                    return 0;
+                } catch (error) {
+                    console.warn('Error sorting tool cards:', error);
+                    return 0;
+                }
+            });
+        }
+        
+        return filtered;
+    }
+
+    setupLoadMoreButton() {
+        if (this.loadMoreBtn) {
+            this.loadMoreBtn.addEventListener('click', () => this.loadMore());
+        }
+    }
+
+    updateLoadMoreButton() {
+        if (!this.loadMoreContainer) return;
+        
+        const hasMore = this.currentIndex < this.currentList.length;
+        if (hasMore) {
+            this.loadMoreContainer.style.display = 'block';
+        } else {
+            this.hideLoadMoreButton();
+        }
+    }
+
+    hideLoadMoreButton() {
+        if (this.loadMoreContainer) {
+            this.loadMoreContainer.style.display = 'none';
+        }
+    }
+
+    announceUpdate(message) {
+        if (this.ariaUpdates) {
+            this.ariaUpdates.textContent = message;
+        }
+    }
+
+    // Method to get current visible count for stats
+    getVisibleCount() {
+        return this.currentIndex;
+    }
+
+    // Method to get total available count
+    getTotalCount() {
+        return this.currentList.length;
+    }
+}
+
+/**
+ * Global function to update the hero tools count display
+ */
+function updateToolsCountDisplay(count) {
+    const countEl = document.getElementById('tools-count');
+    if (countEl) {
+        countEl.textContent = count;
+    }
+}
+
+/**
+ * Global function to update the hero categories count display
+ */
+function updateCategoriesCountDisplay(count) {
+    const countEl = document.getElementById('categories-count');
+    if (countEl) {
+        countEl.textContent = count;
+    }
+}
+
+/**
  * Main application class to orchestrate all modules.
  */
 class ToolsHubApp {
@@ -280,6 +599,7 @@ class ToolsHubApp {
         this.filterManager = null;
         this.animationManager = null;
         this.headerManager = null;
+        this.paginationLoader = null;
     }
 
     async init() {
@@ -292,13 +612,30 @@ class ToolsHubApp {
             
             // Initialize managers that depend on the DOM
             this.dom = new DOMElementManager();
-            this.filterManager = new ToolsFilterManager(this.dom);
             this.animationManager = new AnimationManager(this.dom);
+            this.paginationLoader = new PaginationLoader(this.dom, this.animationManager);
+            this.filterManager = new ToolsFilterManager(this.dom, this.paginationLoader);
             this.headerManager = new HeaderManager();
             
+            // Set initial tools count to authoritative total (no DOM counting)
+            const totalTools = window.__EVERYTOOL_TOTAL_TOOLS || 0;
+            updateToolsCountDisplay(totalTools);
+            
+            // Set initial categories count
+            const totalCategories = document.querySelectorAll('.filter-button[data-category]:not([data-category="all"])').length;
+            updateCategoriesCountDisplay(totalCategories);
+            
+            // Last-resort microtask to ensure count stays correct after all initialization
+            Promise.resolve().then(() => {
+                const authoritativeTotal = window.__EVERYTOOL_TOTAL_TOOLS || 0;
+                updateToolsCountDisplay(authoritativeTotal);
+                console.log(`Last-resort count verification: ${authoritativeTotal}`);
+            });
+            
             // Start the managers
-            this.filterManager.init();
             this.animationManager.init();
+            this.paginationLoader.init();
+            this.filterManager.init();
             this.headerManager.init();
             
             // Set up retry logic

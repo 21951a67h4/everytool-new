@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Speed Test | WPM Calculator with Comprehension Quiz | EveryTool.tech</title>
+    <meta name="description" content="Test your reading speed and comprehension. Calculate WPM, take comprehension quizzes, and get personalized reading recommendations for improved productivity.">
+    <meta name="keywords" content="reading speed test, WPM calculator, reading comprehension, speed reading, reading assessment">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Reading Speed Test | EveryTool.tech">
+    <meta property="og:description" content="Test your reading speed and comprehension. Calculate WPM, take comprehension quizzes, and get personalized reading recommendations for improved productivity.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/productivity-tools/reading-speed-test">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Reading Speed Test Specific Styles */
+        .reading-calc-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .reading-calc-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .reading-calc-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .reading-calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .reading-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .reading-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .reading-form-group input, .reading-form-group select, .reading-form-group textarea { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .reading-text-area {
+            min-height: 300px;
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            resize: vertical;
+        }
+        
+        .test-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .test-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+        
+        .test-btn.start {
+            background: #28a745;
+            color: white;
+        }
+        
+        .test-btn.stop {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .test-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .timer-display {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .timer-time {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 10px;
+        }
+        
+        .timer-status {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .results-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .result-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        
+        .result-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .comprehension-quiz {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .quiz-question {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .quiz-options {
+            margin-top: 10px;
+        }
+        
+        .quiz-option {
+            margin-bottom: 8px;
+            padding: 8px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .quiz-option:hover {
+            background: #e3f2fd;
+            border-color: #007bff;
+        }
+        
+        .quiz-option.selected {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        
+        .recommendations {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .recommendation-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .certificate-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+            text-align: center;
+        }
+        
+        .certificate-btn {
+            background: #ffc107;
+            color: #333;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .certificate-btn:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .reading-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .reading-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .test-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            .test-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+            .timer-time {
+                font-size: 2rem;
+            }
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .reading-form-group input, .reading-form-group select, .reading-form-group textarea { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .reading-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .timer-time {
+                font-size: 1.8rem;
+            }
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            .reading-form-group input, .reading-form-group select, .reading-form-group textarea { 
+                padding: 8px; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="Reading Speed Test" data-meta-description="Test your reading speed and comprehension. Calculate WPM, take comprehension quizzes, and get personalized reading recommendations for improved productivity.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Reading Speed Test: Measure Your WPM & Comprehension</h1>
+                    <p class="tool-hero__description">
+                        Test your reading speed and comprehension. Calculate WPM, take comprehension quizzes, 
+                        and get personalized reading recommendations for improved productivity.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>WPM Calculation</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Comprehension Quiz</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Progress Tracking</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-certificate"></i>
+                            <span>Certificate Generation</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-play"></i>
+                            Start Reading Test
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Speed Reading
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Reading Speed Test</h2>
+                    <p class="tool-display__description">
+                        Measure your reading speed and comprehension to improve your productivity and learning efficiency.
+                    </p>
+                </div>
+                
+                <!-- Reading Speed Test Custom Interface -->
+                <div class="reading-calc-container">
+                    <div class="reading-calc-section">
+                        <h4>1. Test Settings</h4>
+                        <div class="reading-calc-grid">
+                            <div class="reading-form-group">
+                                <label for="passage-length">Passage Length</label>
+                                <select id="passage-length">
+                                    <option value="short">Short (200-300 words)</option>
+                                    <option value="medium" selected>Medium (400-600 words)</option>
+                                    <option value="long">Long (800-1000 words)</option>
+                                    <option value="custom">Custom Text</option>
+                                </select>
+                            </div>
+                            
+                            <div class="reading-form-group">
+                                <label for="difficulty-level">Difficulty Level</label>
+                                <select id="difficulty-level">
+                                    <option value="easy">Easy</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                            </div>
+                            
+                            <div class="reading-form-group">
+                                <label for="reading-mode">Reading Mode</label>
+                                <select id="reading-mode">
+                                    <option value="normal">Normal Reading</option>
+                                    <option value="skim">Skimming</option>
+                                    <option value="deep">Deep Reading</option>
+                                </select>
+                            </div>
+                            
+                            <div class="reading-form-group">
+                                <label for="font-size">Font Size</label>
+                                <select id="font-size">
+                                    <option value="small">Small</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="large">Large</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reading-calc-section">
+                        <h4>2. Reading Text</h4>
+                        <div class="reading-form-group">
+                            <label for="reading-text">Text to Read</label>
+                            <textarea id="reading-text" class="reading-text-area" placeholder="Paste your text here or select a passage length above..."></textarea>
+                        </div>
+                        
+                        <div class="test-controls">
+                            <button class="test-btn start" id="start-test" onclick="startReadingTest()">
+                                <i class="fas fa-play"></i> Start Test
+                            </button>
+                            <button class="test-btn stop" id="stop-test" onclick="stopReadingTest()" disabled>
+                                <i class="fas fa-stop"></i> Stop Test
+                            </button>
+                        </div>
+                        
+                        <div class="timer-display" id="timer-display" style="display: none;">
+                            <div class="timer-time" id="timer-time">00:00</div>
+                            <div class="timer-status" id="timer-status">Reading...</div>
+                        </div>
+                    </div>
+
+                    <div class="results-section" id="results-section" style="display: none;">
+                        <h4>3. Test Results</h4>
+                        <div class="results-grid" id="results-grid">
+                            <div class="result-item">
+                                <div class="result-value" id="wpm-result">0</div>
+                                <div class="result-label">Words Per Minute</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-value" id="reading-time">0s</div>
+                                <div class="result-label">Reading Time</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-value" id="word-count">0</div>
+                                <div class="result-label">Words Read</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-value" id="accuracy-score">0%</div>
+                                <div class="result-label">Accuracy</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comprehension-quiz" id="comprehension-quiz" style="display: none;">
+                        <h4>4. Comprehension Quiz</h4>
+                        <div id="quiz-questions">
+                            <!-- Quiz questions will be added here -->
+                        </div>
+                        <div style="text-align: center; margin-top: 20px;">
+                            <button class="test-btn start" onclick="submitQuiz()">
+                                <i class="fas fa-check"></i> Submit Quiz
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="recommendations" id="recommendations" style="display: none;">
+                        <h4>5. Personalized Recommendations</h4>
+                        <div id="recommendations-list">
+                            <!-- Recommendations will be added here -->
+                        </div>
+                    </div>
+
+                    <div class="certificate-section" id="certificate-section" style="display: none;">
+                        <h4>6. Generate Certificate</h4>
+                        <p>Congratulations! You've completed the reading speed test. Generate a certificate to share your achievement.</p>
+                        <button class="certificate-btn" onclick="generateCertificate()">
+                            <i class="fas fa-certificate"></i> Generate Certificate
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Improve Your Reading Speed & Comprehension</h2>
+                <p class="tool-blog__subtitle">
+                    Learn techniques to read faster while maintaining comprehension for better productivity
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Understanding Reading Speed</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Reading speed is measured in Words Per Minute (WPM). The average adult reads at about 200-250 WPM, 
+                            while speed readers can achieve 400-600 WPM or more.
+                        </p>
+                        <p>
+                            <strong>Reading Speed Categories:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Slow (150-200 WPM):</strong> Below average, may indicate reading difficulties</li>
+                            <li><strong>Average (200-300 WPM):</strong> Typical adult reading speed</li>
+                            <li><strong>Above Average (300-400 WPM):</strong> Good reading speed with practice</li>
+                            <li><strong>Fast (400-600 WPM):</strong> Speed reading techniques applied</li>
+                            <li><strong>Very Fast (600+ WPM):</strong> Advanced speed reading skills</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Speed Reading Techniques</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Eliminate Subvocalization:</strong> Stop pronouncing words in your head. This is one of the biggest barriers to speed reading.
+                        </p>
+                        <p>
+                            <strong>Use Peripheral Vision:</strong> Expand your visual span to capture more words at once, reducing the number of eye movements.
+                        </p>
+                        <p>
+                            <strong>Reduce Regression:</strong> Avoid going back to re-read text. Trust your comprehension and keep moving forward.
+                        </p>
+                        <p>
+                            <strong>Chunk Reading:</strong> Read groups of words together instead of individual words.
+                        </p>
+                        <p>
+                            <strong>Use a Pointer:</strong> Guide your eyes with your finger or a pen to maintain focus and rhythm.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Maintaining Comprehension</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Preview the Text:</strong> Skim headings, subheadings, and first sentences to understand structure.
+                        </p>
+                        <p>
+                            <strong>Set a Purpose:</strong> Know what you're looking for before you start reading.
+                        </p>
+                        <p>
+                            <strong>Take Notes:</strong> Jot down key points and questions as you read.
+                        </p>
+                        <p>
+                            <strong>Practice Regularly:</strong> Like any skill, speed reading improves with consistent practice.
+                        </p>
+                        <p>
+                            <strong>Adjust Speed:</strong> Slow down for complex material, speed up for familiar content.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Reading Speed Test FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about reading speed and comprehension</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>What is a good reading speed?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>The average adult reads at 200-250 WPM. A good reading speed is 300-400 WPM with good comprehension. Speed readers can achieve 400-600 WPM or more, but comprehension may decrease at very high speeds.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How can I improve my reading speed?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Practice regularly, eliminate subvocalization, use peripheral vision, reduce regression, and read in chunks. Start with easier material and gradually increase difficulty. Focus on comprehension first, then speed.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Does reading faster affect comprehension?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Initially, yes. As you increase speed, comprehension may decrease. However, with practice, you can maintain good comprehension at higher speeds. The key is finding your optimal balance between speed and understanding.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What factors affect reading speed?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Text difficulty, familiarity with the topic, font size, line spacing, lighting, distractions, and your physical and mental state all affect reading speed. Practice and technique are the most controllable factors.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Reading Speed Test Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const passageLength = document.getElementById('passage-length');
+            const difficultyLevel = document.getElementById('difficulty-level');
+            const readingMode = document.getElementById('reading-mode');
+            const fontSize = document.getElementById('font-size');
+            const readingText = document.getElementById('reading-text');
+            const startBtn = document.getElementById('start-test');
+            const stopBtn = document.getElementById('stop-test');
+            const timerDisplay = document.getElementById('timer-display');
+            const timerTime = document.getElementById('timer-time');
+            const timerStatus = document.getElementById('timer-status');
+            const resultsSection = document.getElementById('results-section');
+            const comprehensionQuiz = document.getElementById('comprehension-quiz');
+            const recommendations = document.getElementById('recommendations');
+            const certificateSection = document.getElementById('certificate-section');
+            
+            let testRunning = false;
+            let startTime = null;
+            let endTime = null;
+            let testResults = {};
+            let quizAnswers = {};
+            
+            // Sample passages
+            const passages = {
+                easy: {
+                    short: "The sun was shining brightly in the clear blue sky. Birds were singing in the trees, and a gentle breeze was blowing through the grass. It was a perfect day for a walk in the park. Children were playing on the swings, and families were having picnics on the green grass. Everyone seemed happy and relaxed, enjoying the beautiful weather.",
+                    medium: "The ancient library stood majestically in the center of the city, its tall columns reaching toward the sky. Inside, thousands of books lined the shelves, each one containing stories and knowledge from different times and places. Scholars and students visited daily, seeking wisdom and inspiration. The quiet atmosphere encouraged deep thinking and learning. The librarian, a kind elderly woman, helped visitors find exactly what they needed. She knew every book in the collection and could recommend the perfect reading material for any interest or need.",
+                    long: "The small town of Millbrook had always been known for its peaceful atmosphere and friendly residents. Every morning, the local bakery opened its doors, filling the air with the delicious smell of fresh bread and pastries. The town square was always bustling with activity, from the farmers market on weekends to the children playing after school. The local school was small but excellent, with dedicated teachers who knew every student by name. The community center hosted various events throughout the year, bringing neighbors together for celebrations and fundraisers. The town's charm lay not in its size or wealth, but in the genuine care its residents showed for one another. Everyone looked out for their neighbors, and newcomers were always welcomed with open arms."
+                },
+                medium: {
+                    short: "The concept of artificial intelligence has evolved significantly over the past few decades. Initially, AI systems were limited to simple rule-based operations, but modern machine learning algorithms can now process vast amounts of data and make complex decisions. These systems are being integrated into various industries, from healthcare to finance, revolutionizing how we approach problem-solving.",
+                    medium: "Climate change represents one of the most pressing challenges of our time, affecting ecosystems, weather patterns, and human societies worldwide. The scientific consensus is clear: human activities, particularly the burning of fossil fuels, have significantly contributed to rising global temperatures. This warming trend has led to more frequent extreme weather events, rising sea levels, and shifts in precipitation patterns. Addressing climate change requires coordinated international efforts, technological innovation, and changes in individual behavior. Renewable energy sources, energy efficiency improvements, and sustainable practices offer promising pathways toward mitigation.",
+                    long: "The digital revolution has fundamentally transformed how we communicate, work, and access information. Social media platforms have created new forms of social interaction, enabling people to connect across vast distances and share experiences in real-time. However, this connectivity also brings challenges, including concerns about privacy, misinformation, and the impact on mental health. The workplace has also been revolutionized by digital tools, enabling remote work and collaboration across time zones. While these changes offer unprecedented flexibility and efficiency, they also require new skills and adaptability from workers. As we navigate this digital landscape, it's crucial to balance the benefits of technology with thoughtful consideration of its potential drawbacks."
+                },
+                hard: {
+                    short: "The epistemological foundations of quantum mechanics challenge our classical understanding of reality, introducing probabilistic interpretations that fundamentally alter our conception of measurement and observation. These theoretical frameworks necessitate a reconsideration of the observer's role in the construction of physical phenomena.",
+                    medium: "The intersection of cognitive neuroscience and artificial intelligence presents fascinating opportunities for understanding human consciousness and developing more sophisticated computational models. Recent advances in neural network architectures, inspired by biological neural systems, have demonstrated remarkable capabilities in pattern recognition and decision-making. However, the gap between artificial and biological intelligence remains substantial, particularly in areas requiring contextual understanding, emotional intelligence, and creative problem-solving. Bridging this gap requires interdisciplinary collaboration and continued research into the fundamental mechanisms underlying human cognition.",
+                    long: "The philosophical implications of artificial general intelligence extend far beyond technical considerations, touching upon fundamental questions about consciousness, free will, and the nature of intelligence itself. As we approach the possibility of creating machines that rival or exceed human cognitive capabilities, we must grapple with ethical dilemmas surrounding machine rights, responsibility, and the potential for technological unemployment. The development of AGI also raises questions about the singularity hypothesis, which posits that artificial intelligence could eventually surpass human intelligence in all domains, potentially leading to rapid technological advancement beyond human comprehension or control. These considerations necessitate careful philosophical reflection and proactive policy development to ensure that AI advancement serves human flourishing rather than undermining it."
+                }
+            };
+            
+            // Quiz questions for each passage
+            const quizQuestions = {
+                easy: [
+                    {
+                        question: "What was the weather like in the first passage?",
+                        options: ["Sunny and clear", "Cloudy and rainy", "Snowy and cold", "Foggy and misty"],
+                        correct: 0
+                    },
+                    {
+                        question: "Where were the children playing?",
+                        options: ["In the library", "On the swings", "In the school", "At home"],
+                        correct: 1
+                    }
+                ],
+                medium: [
+                    {
+                        question: "What has significantly contributed to rising global temperatures?",
+                        options: ["Solar activity", "Burning fossil fuels", "Volcanic eruptions", "Deforestation only"],
+                        correct: 1
+                    },
+                    {
+                        question: "What are mentioned as promising pathways toward climate change mitigation?",
+                        options: ["Nuclear energy only", "Renewable energy sources", "Fossil fuel expansion", "Industrial growth"],
+                        correct: 1
+                    }
+                ],
+                hard: [
+                    {
+                        question: "What do the epistemological foundations of quantum mechanics challenge?",
+                        options: ["Mathematical principles", "Classical understanding of reality", "Biological systems", "Economic theories"],
+                        correct: 1
+                    },
+                    {
+                        question: "What remains substantial between artificial and biological intelligence?",
+                        options: ["Computational speed", "The gap in contextual understanding", "Memory capacity", "Processing power"],
+                        correct: 1
+                    }
+                ]
+            };
+            
+            // Event listeners
+            passageLength.addEventListener('change', loadPassage);
+            difficultyLevel.addEventListener('change', loadPassage);
+            fontSize.addEventListener('change', updateFontSize);
+            
+            // Load initial passage
+            loadPassage();
+            
+            function loadPassage() {
+                if (passageLength.value === 'custom') {
+                    readingText.value = '';
+                    readingText.placeholder = 'Paste your custom text here...';
+                } else {
+                    const passage = passages[difficultyLevel.value][passageLength.value];
+                    readingText.value = passage;
+                }
+            }
+            
+            function updateFontSize() {
+                const sizes = {
+                    small: '0.9rem',
+                    medium: '1.1rem',
+                    large: '1.3rem'
+                };
+                readingText.style.fontSize = sizes[fontSize.value];
+            }
+            
+            window.startReadingTest = function() {
+                if (!readingText.value.trim()) {
+                    alert('Please enter some text to read or select a passage.');
+                    return;
+                }
+                
+                testRunning = true;
+                startTime = Date.now();
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+                timerDisplay.style.display = 'block';
+                
+                // Start timer
+                const timer = setInterval(() => {
+                    if (!testRunning) {
+                        clearInterval(timer);
+                        return;
+                    }
+                    
+                    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                    const minutes = Math.floor(elapsed / 60);
+                    const seconds = elapsed % 60;
+                    timerTime.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }, 1000);
+                
+                // Focus on text area
+                readingText.focus();
+            };
+            
+            window.stopReadingTest = function() {
+                if (!testRunning) return;
+                
+                testRunning = false;
+                endTime = Date.now();
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                timerDisplay.style.display = 'none';
+                
+                // Calculate results
+                calculateResults();
+                showResults();
+                showComprehensionQuiz();
+            };
+            
+            function calculateResults() {
+                const readingTime = Math.floor((endTime - startTime) / 1000);
+                const wordCount = readingText.value.trim().split(/\s+/).length;
+                const wpm = Math.round((wordCount / readingTime) * 60);
+                
+                testResults = {
+                    wpm: wpm,
+                    readingTime: readingTime,
+                    wordCount: wordCount,
+                    accuracy: 100 // Placeholder - would need more sophisticated tracking
+                };
+            }
+            
+            function showResults() {
+                document.getElementById('wpm-result').textContent = testResults.wpm;
+                document.getElementById('reading-time').textContent = `${testResults.readingTime}s`;
+                document.getElementById('word-count').textContent = testResults.wordCount;
+                document.getElementById('accuracy-score').textContent = `${testResults.accuracy}%`;
+                
+                resultsSection.style.display = 'block';
+            }
+            
+            function showComprehensionQuiz() {
+                const questions = quizQuestions[difficultyLevel.value];
+                const quizContainer = document.getElementById('quiz-questions');
+                
+                quizContainer.innerHTML = questions.map((q, index) => `
+                    <div class="quiz-question">
+                        <h5>Question ${index + 1}: ${q.question}</h5>
+                        <div class="quiz-options">
+                            ${q.options.map((option, optIndex) => `
+                                <div class="quiz-option" onclick="selectAnswer(${index}, ${optIndex})" data-question="${index}" data-option="${optIndex}">
+                                    ${option}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `).join('');
+                
+                comprehensionQuiz.style.display = 'block';
+            }
+            
+            window.selectAnswer = function(questionIndex, optionIndex) {
+                // Remove previous selection
+                const options = document.querySelectorAll(`[data-question="${questionIndex}"]`);
+                options.forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selection
+                const selectedOption = document.querySelector(`[data-question="${questionIndex}"][data-option="${optionIndex}"]`);
+                selectedOption.classList.add('selected');
+                
+                quizAnswers[questionIndex] = optionIndex;
+            };
+            
+            window.submitQuiz = function() {
+                const questions = quizQuestions[difficultyLevel.value];
+                let correctAnswers = 0;
+                
+                // Check answers
+                questions.forEach((q, index) => {
+                    const selectedOption = document.querySelector(`[data-question="${index}"].selected`);
+                    if (selectedOption) {
+                        const selectedIndex = parseInt(selectedOption.dataset.option);
+                        const correctIndex = q.correct;
+                        
+                        if (selectedIndex === correctIndex) {
+                            correctAnswers++;
+                            selectedOption.classList.add('correct');
+                        } else {
+                            selectedOption.classList.add('incorrect');
+                            // Highlight correct answer
+                            const correctOption = document.querySelector(`[data-question="${index}"][data-option="${correctIndex}"]`);
+                            correctOption.classList.add('correct');
+                        }
+                    }
+                });
+                
+                const comprehensionScore = Math.round((correctAnswers / questions.length) * 100);
+                testResults.comprehension = comprehensionScore;
+                
+                showRecommendations();
+                showCertificate();
+            };
+            
+            function showRecommendations() {
+                const recommendationsList = document.getElementById('recommendations-list');
+                const recs = generateRecommendations();
+                
+                recommendationsList.innerHTML = recs.map(rec => `
+                    <div class="recommendation-item">
+                        <strong>${rec.title}:</strong> ${rec.description}
+                    </div>
+                `).join('');
+                
+                recommendations.style.display = 'block';
+            }
+            
+            function generateRecommendations() {
+                const recs = [];
+                
+                if (testResults.wpm < 200) {
+                    recs.push({
+                        title: "Improve Reading Speed",
+                        description: "Your reading speed is below average. Practice reading regularly and try to eliminate subvocalization."
+                    });
+                } else if (testResults.wpm > 400) {
+                    recs.push({
+                        title: "Excellent Speed",
+                        description: "You're reading at an above-average speed! Focus on maintaining comprehension at this pace."
+                    });
+                }
+                
+                if (testResults.comprehension < 70) {
+                    recs.push({
+                        title: "Focus on Comprehension",
+                        description: "Work on understanding the material better. Try slowing down slightly and taking notes."
+                    });
+                }
+                
+                recs.push({
+                    title: "Practice Regularly",
+                    description: "Consistent practice is key to improving both speed and comprehension. Try reading for 15-20 minutes daily."
+                });
+                
+                return recs;
+            }
+            
+            function showCertificate() {
+                certificateSection.style.display = 'block';
+            }
+            
+            window.generateCertificate = function() {
+                // Create a simple certificate using canvas
+                const canvas = document.createElement('canvas');
+                canvas.width = 800;
+                canvas.height = 600;
+                const ctx = canvas.getContext('2d');
+                
+                // Background
+                ctx.fillStyle = '#f8f9fa';
+                ctx.fillRect(0, 0, 800, 600);
+                
+                // Border
+                ctx.strokeStyle = '#007bff';
+                ctx.lineWidth = 10;
+                ctx.strokeRect(50, 50, 700, 500);
+                
+                // Title
+                ctx.fillStyle = '#007bff';
+                ctx.font = 'bold 36px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Reading Speed Certificate', 400, 120);
+                
+                // Content
+                ctx.fillStyle = '#333';
+                ctx.font = '24px Arial';
+                ctx.fillText('This certifies that', 400, 180);
+                
+                ctx.font = 'bold 28px Arial';
+                ctx.fillText('You have completed', 400, 240);
+                ctx.fillText('a Reading Speed Test', 400, 280);
+                
+                ctx.font = '20px Arial';
+                ctx.fillText(`Reading Speed: ${testResults.wpm} WPM`, 400, 340);
+                ctx.fillText(`Comprehension: ${testResults.comprehension}%`, 400, 380);
+                ctx.fillText(`Date: ${new Date().toLocaleDateString()}`, 400, 420);
+                
+                // Convert to image and download
+                const link = document.createElement('a');
+                link.download = 'reading-speed-certificate.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            };
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

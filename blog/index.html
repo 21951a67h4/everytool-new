@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Hub | EveryTool.tech</title>
+    <meta name="description" content="Explore our latest blogs: insights, tutorials, news, and updates from EveryTool.tech.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Dynamic Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Hero Section -->
+    <section class="blog-hero">
+        <div class="blog-hero__bg"></div>
+        <div class="blog-hero__inner container">
+            <div class="blog-hero__content">
+                <div class="blog-hero__badge"><i class="fa-solid fa-pen-nib"></i><span>Zero tracking • 100% free</span></div>
+                <h1 class="blog-hero__title">Explore Our <span class="ink-gradient">Blog</span></h1>
+                <p class="blog-hero__subtitle">Actionable guides, developer tips, product updates, and behind‑the‑scenes notes from EveryTool.tech.</p>
+                <div class="blog-hero__actions">
+                    <a href="#blog-section" class="blog-hero__cta"><span>Browse Posts</span><i class="fa-solid fa-arrow-down"></i></a>
+                    <a href="#blog-section" class="blog-hero__cta --outline"><span>Latest Articles</span></a>
+                </div>
+            </div>
+        </div>
+        <div class="blog-hero__scroll-indicator"><div class="mouse"></div></div>
+    </section>
+
+    <main id="blog-section" class="blog-main">
+        <div class="container">
+            <!-- Section Header -->
+            <header class="section-header">
+                <h2>All Blogs</h2>
+                <p>Find tutorials, product updates, and deep dives from our team.</p>
+            </header>
+
+            <!-- Search and Controls -->
+            <div class="search-section">
+                <div class="search-controls">
+                    <div class="search-bar-wrapper">
+                        <i class="fa-solid fa-search search-icon"></i>
+                        <input id="search-input" type="text" placeholder="Search posts by title or summary...">
+                        <button id="clear-search" class="clear-search hidden" aria-label="Clear search">×</button>
+                    </div>
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-button active" data-category="all">All</button>
+                    <button class="filter-button" data-category="development">Development</button>
+                    <button class="filter-button" data-category="design">Design</button>
+                    <button class="filter-button" data-category="productivity">Productivity</button>
+                    <button class="filter-button" data-category="seo">SEO</button>
+                    <button class="filter-button" data-category="announcements">Announcements</button>
+                </div>
+            </div>
+
+            <!-- Blog Grid -->
+            <div id="blogs-grid" class="blogs-grid grid-view">
+                <!-- Sample Blog Cards (inline, filterable) -->
+                <article class="blog-card animate-fade-up" data-category="Finance">
+                    <div class="flip">
+                        <div class="flip__inner">
+                            <!-- Front Side: Image + Title -->
+                            <div class="flip__front">
+                                <div class="card-image-container">
+                                    <img src="blog-images/Free-Financial-Calculators-Guide.webp" alt="Financial calculators and budgeting tools" class="card-image">
+                                </div>
+                                <div class="card-title-container">
+                                    <span class="pill">Finance</span>
+                                    <h3 class="card-title">Free Financial Calculators Guide</h3>
+                                </div>
+                            </div>
+                            <!-- Back Side: Description + Meta + Button -->
+                            <div class="flip__back">
+                                <div class="card-description">
+                                    <p class="excerpt">Learn how to use free online financial calculators for budgeting, loans, investments, and more—practical step-by-step guides for smarter personal finance.</p>
+                                </div>
+                                <div class="card-meta">
+                                    <span class="meta-item"><i class="fa-regular fa-calendar"></i> Sep 20, 2025</span>
+                                    <span class="meta-item"><i class="fa-regular fa-clock"></i> 6 min read</span>
+                                </div>
+                                <a class="read-btn" href="/blog/articals/Free Financial Calculators Guide.html">Read</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article class="blog-card animate-fade-up" data-category="Finance">
+                    <div class="flip">
+                        <div class="flip__inner">
+                            <!-- Front Side: Image + Title -->
+                            <div class="flip__front">
+                                <div class="card-image-container">
+                                    <img src="blog-images/Free-Financial-Calculators-Guide.webp" alt="Financial calculators and budgeting tools" class="card-image">
+                                </div>
+                                <div class="card-title-container">
+                                    <span class="pill">Finance</span>
+                                    <h3 class="card-title">Free Financial Calculators Guide</h3>
+                                </div>
+                            </div>
+                            <!-- Back Side: Description + Meta + Button -->
+                            <div class="flip__back">
+                                <div class="card-description">
+                                    <p class="excerpt">Learn how to use free online financial calculators for budgeting, loans, investments, and more—practical step-by-step guides for smarter personal finance.</p>
+                                </div>
+                                <div class="card-meta">
+                                    <span class="meta-item"><i class="fa-regular fa-calendar"></i> Sep 20, 2025</span>
+                                    <span class="meta-item"><i class="fa-regular fa-clock"></i> 6 min read</span>
+                                </div>
+                                <a class="read-btn" href="/blog/articals/Free Financial Calculators Guide.html">Read</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state hidden">
+                <i class="fa-solid fa-book"></i>
+                <h3>No posts found</h3>
+                <p>Try another search or filter.</p>
+            </div>
+
+            <!-- ARIA Live Region for updates -->
+            <div id="aria-updates" aria-live="polite" class="visually-hidden"></div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer-placeholder"></footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="/app-loader.js" defer></script>
+</body>
+</html>
+
+

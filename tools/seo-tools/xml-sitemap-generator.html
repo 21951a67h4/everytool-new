@@ -1,0 +1,590 @@
+<!--
+    XML Sitemap Generator Tool Page
+    Built using the EveryTool.tech template.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>XML Sitemap Generator | EveryTool.tech</title>
+
+    <meta name="description" content="Create a valid XML sitemap from a manual list of URLs. Paste your links, set preferences, and download a ready-to-submit sitemap.">
+
+    <meta name="keywords" content="xml sitemap generator, sitemap builder, seo tools, sitemap downloader">
+
+    <meta name="robots" content="index, follow">
+
+
+    <meta property="og:title" content="XML Sitemap Generator | EveryTool.tech">
+
+    <meta property="og:description" content="Generate compliant XML sitemaps by pasting your URLs. No crawl required—just copy, download, and deploy.">
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:url" content="https://everytool.tech/xml-sitemap-generator">
+
+
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    <style>
+        #header-placeholder {
+            min-height: 130px;
+            position: relative;
+            z-index: 2000;
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        .sitemap-grid {
+            display: grid;
+            gap: 24px;
+        }
+        @media (min-width: 992px) {
+            .sitemap-grid {
+                grid-template-columns: 1fr 1fr;
+                align-items: start;
+            }
+        }
+
+        .sitemap-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .sitemap-card__title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .sitemap-input {
+            width: 100%;
+            min-height: 220px;
+            border-radius: 14px;
+            border: 1px solid #cbd5f5;
+            padding: 18px;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.95rem;
+            background: #f8f9ff;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+        .sitemap-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.16);
+        }
+
+        .sitemap-settings {
+            display: grid;
+            gap: 16px;
+        }
+        @media (min-width: 600px) {
+            .sitemap-settings {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .sitemap-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .sitemap-label {
+            font-weight: 600;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .sitemap-select,
+        .sitemap-input-inline {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid #d7dce8;
+            padding: 10px 12px;
+            font-size: 0.95rem;
+            background: #ffffff;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+        .sitemap-select:focus,
+        .sitemap-input-inline:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+        }
+
+        .sitemap-checkbox {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .sitemap-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .sitemap-actions .tool-display__button,
+        .sitemap-actions .tool-display__button--primary,
+        .sitemap-actions .tool-button {
+            flex-grow: 1;
+            justify-content: center;
+        }
+        @media (min-width: 768px) {
+            .sitemap-actions {
+                justify-content: flex-start;
+            }
+            .sitemap-actions .tool-display__button,
+            .sitemap-actions .tool-display__button--primary,
+            .sitemap-actions .tool-button {
+                flex-grow: 0;
+            }
+        }
+
+        .sitemap-preview {
+            background: #0f172a;
+            color: #e2e8f0;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+        .sitemap-preview__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .sitemap-preview__title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .sitemap-preview pre {
+            background: rgba(15, 23, 42, 0.78);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.92rem;
+            max-height: 420px;
+            overflow: auto;
+            white-space: pre;
+        }
+        .sitemap-feedback {
+            min-height: 18px;
+            font-size: 0.88rem;
+            color: #cbd5f5;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body data-tool-name="XML Sitemap Generator" data-meta-description="Generate valid XML sitemaps by pasting URLs and downloading the finished file instantly.">
+
+    <div id="header-placeholder"></div>
+
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Manual XML Sitemap Generator</h1>
+
+                    <p class="tool-hero__description">
+                        Turn any list of URLs into an XML sitemap ready for Google Search Console. Paste your links, choose optional metadata, and export a compliant sitemap in seconds.
+                    </p>
+
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-file-code"></i> <span>Valid XML Output</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-pen"></i> <span>Manual URL Control</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-download"></i> <span>Instant Download</span>
+                        </div>
+                    </div>
+
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-sitemap"></i>
+                            Build My Sitemap
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book-open"></i>
+                            Sitemap Basics
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">XML Sitemap Builder</h2>
+                    <p class="tool-display__description">
+                        Paste each URL on a new line, configure optional defaults, then generate your sitemap. We never upload your data—everything runs in your browser.
+                    </p>
+                </div>
+
+                <div class="sitemap-grid">
+                    <div class="sitemap-card" aria-labelledby="url-input-label">
+                        <div>
+                            <h3 class="sitemap-card__title" id="url-input-label">Paste URLs</h3>
+                            <p class="tool-display__description">Include fully-qualified URLs (with https://). Blank lines are ignored.</p>
+                        </div>
+                        <textarea id="url-input" class="sitemap-input" placeholder="https://example.com/
+https://example.com/about
+https://example.com/blog/article-1"></textarea>
+
+                        <div class="sitemap-settings">
+                            <label class="sitemap-field">
+                                <span class="sitemap-label"><i class="fas fa-sync-alt"></i> Default Change Frequency (optional)</span>
+                                <select id="changefreq" class="sitemap-select">
+                                    <option value="">None selected</option>
+                                    <option value="always">always</option>
+                                    <option value="hourly">hourly</option>
+                                    <option value="daily">daily</option>
+                                    <option value="weekly">weekly</option>
+                                    <option value="monthly">monthly</option>
+                                    <option value="yearly">yearly</option>
+                                    <option value="never">never</option>
+                                </select>
+                            </label>
+
+                            <label class="sitemap-field">
+                                <span class="sitemap-label"><i class="fas fa-star"></i> Default Priority (optional)</span>
+                                <input id="priority" class="sitemap-input-inline" type="number" step="0.1" min="0" max="1" placeholder="e.g., 0.7">
+                            </label>
+                        </div>
+
+                        <label class="sitemap-checkbox">
+                            <input type="checkbox" id="include-lastmod" checked>
+                            <span>Include last modified date (today's date)</span>
+                        </label>
+
+                        <div class="sitemap-actions">
+                            <button id="generate-sitemap" class="tool-display__button--primary">
+                                <i class="fas fa-cogs"></i>
+                                Generate Sitemap
+                            </button>
+                            <button id="clear-sitemap" class="tool-button tool-button--secondary">
+                                <i class="fas fa-eraser"></i>
+                                Clear All
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="sitemap-preview" aria-live="polite">
+                        <div class="sitemap-preview__header">
+                            <h3 class="sitemap-preview__title">Sitemap Preview</h3>
+                            <div class="sitemap-actions" style="margin:0;">
+                                <button id="copy-sitemap" class="tool-display__button" aria-label="Copy sitemap XML">
+                                    <i class="fas fa-copy"></i>
+                                    Copy XML
+                                </button>
+                                <button id="download-sitemap" class="tool-display__button--primary" aria-label="Download sitemap XML">
+                                    <i class="fas fa-download"></i>
+                                    Download XML
+                                </button>
+                            </div>
+                        </div>
+                        <pre id="sitemap-output" tabindex="0"></pre>
+                        <p id="sitemap-feedback" class="sitemap-feedback" role="status" aria-live="assertive"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Manual XML Sitemaps</h2>
+                <p class="tool-blog__subtitle">Know when to maintain your sitemap manually and how to keep it search-engine friendly.</p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">When Manual Sitemaps Make Sense</h3>
+                    <div class="blog-section__content">
+                        <p>Hand-crafted sitemaps work well for sites without an automated CMS feed, static microsites, private documentation, or collections of landing pages. Because you decide which URLs to include, you can exclude experimental or seasonal pages while still guiding crawlers toward the canonical version of your content.</p>
+                    </div>
+                </div>
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Best Practices for Clean XML</h3>
+                    <div class="blog-section__content">
+                        <ul>
+                            <li>Use absolute URLs (with https://) and confirm they return status 200.</li>
+                            <li>Keep the file under 50,000 URLs or 50 MB before compression. Split larger sites into multiple sitemaps.</li>
+                            <li>Update the <code>lastmod</code> field when content changes and keep <code>changefreq</code> realistic.</li>
+                            <li>Submit the sitemap in Google Search Console and Bing Webmaster Tools for quicker discovery.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Answers to common questions about building and maintaining XML sitemaps.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do I have to include every URL in my sitemap?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No. Focus on canonical, indexable pages that you want search engines to discover. Avoid thin or duplicate content to keep crawl budgets efficient.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How often should I regenerate the sitemap?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Regenerate when you publish new content, remove outdated pages, or update key areas of the site. Upload the revised sitemap and ping search engines so they re-crawl promptly.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I include URLs from different domains?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No. A single sitemap should reference URLs from one host. If you manage multiple domains or subdomains, create individual sitemaps for each.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Will an XML sitemap guarantee rankings?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A sitemap improves discovery but doesn’t influence rankings directly. Combine it with high-quality content, structured data, and solid technical SEO for the best results.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../FAQ section/faq.js" defer></script>
+    <script src="/universal-search-deploy.js" defer></script>
+    <script>
+        (function () {
+            var urlInput = document.getElementById('url-input');
+            var changefreq = document.getElementById('changefreq');
+            var priority = document.getElementById('priority');
+            var includeLastmod = document.getElementById('include-lastmod');
+            var generateButton = document.getElementById('generate-sitemap');
+            var clearButton = document.getElementById('clear-sitemap');
+            var copyButton = document.getElementById('copy-sitemap');
+            var downloadButton = document.getElementById('download-sitemap');
+            var output = document.getElementById('sitemap-output');
+            var feedback = document.getElementById('sitemap-feedback');
+
+            var feedbackTimeout = null;
+
+            function setFeedback(message, duration) {
+                if (duration === void 0) {
+                    duration = 3200;
+                }
+                if (feedbackTimeout !== null) {
+                    clearTimeout(feedbackTimeout);
+                    feedbackTimeout = null;
+                }
+                feedback.textContent = message;
+                if (message && duration > 0) {
+                    feedbackTimeout = setTimeout(function () {
+                        feedback.textContent = '';
+                        feedbackTimeout = null;
+                    }, duration);
+                }
+            }
+
+            function sanitizeUrl(value) {
+                var trimmed = value.trim();
+                if (!trimmed) {
+                    return '';
+                }
+                try {
+                    var parsed = new URL(trimmed);
+                    return parsed.href;
+                } catch (err) {
+                    return '';
+                }
+            }
+
+            function buildSitemap() {
+                var raw = urlInput.value.split(/\r?\n/);
+                var urls = [];
+
+                raw.forEach(function (line) {
+                    var valid = sanitizeUrl(line);
+                    if (valid) {
+                        urls.push(valid);
+                    }
+                });
+
+                if (urls.length === 0) {
+                    setFeedback('Add at least one valid URL (include https://).', 4000);
+                    output.textContent = '';
+                    return;
+                }
+
+                var today = new Date().toISOString().split('T')[0];
+                var cf = changefreq.value.trim();
+                var pr = priority.value.trim();
+                var includeLast = includeLastmod.checked;
+
+                var lines = [];
+                lines.push('<?xml version="1.0" encoding="UTF-8"?>');
+                lines.push('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
+
+                urls.forEach(function (loc) {
+                    lines.push('  <url>');
+                    lines.push('    <loc>' + loc.replace(/&/g, '&amp;') + '</loc>');
+                    if (includeLast) {
+                        lines.push('    <lastmod>' + today + '</lastmod>');
+                    }
+                    if (cf) {
+                        lines.push('    <changefreq>' + cf + '</changefreq>');
+                    }
+                    if (pr && !isNaN(pr)) {
+                        var priorityValue = Math.min(1, Math.max(0, parseFloat(pr)));
+                        lines.push('    <priority>' + priorityValue.toFixed(1) + '</priority>');
+                    }
+                    lines.push('  </url>');
+                });
+
+                lines.push('</urlset>');
+                output.textContent = lines.join('\n');
+                setFeedback('Sitemap generated for ' + urls.length + ' URL' + (urls.length > 1 ? 's' : '') + '.', 3000);
+            }
+
+            function clearAll() {
+                urlInput.value = '';
+                changefreq.value = '';
+                priority.value = '';
+                includeLastmod.checked = true;
+                output.textContent = '';
+                setFeedback('Inputs cleared.', 2200);
+            }
+
+            function copySitemap() {
+                var text = output.textContent;
+                if (!text) {
+                    setFeedback('Generate the sitemap before copying.', 3000);
+                    return;
+                }
+
+                function onSuccess() {
+                    setFeedback('Sitemap XML copied to clipboard.', 2800);
+                }
+                function onFailure() {
+                    setFeedback('Copy failed. Select the XML manually and copy.', 3800);
+                }
+
+                if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+                    navigator.clipboard.writeText(text).then(onSuccess, onFailure);
+                } else {
+                    var temp = document.createElement('textarea');
+                    temp.value = text;
+                    temp.setAttribute('readonly', '');
+                    temp.style.position = 'fixed';
+                    temp.style.top = '0';
+                    temp.style.left = '0';
+                    temp.style.opacity = '0';
+                    document.body.appendChild(temp);
+                    temp.focus();
+                    temp.select();
+                    try {
+                        if (document.execCommand('copy')) {
+                            onSuccess();
+                        } else {
+                            onFailure();
+                        }
+                    } catch (err) {
+                        onFailure();
+                    }
+                    document.body.removeChild(temp);
+                }
+            }
+
+            function downloadSitemap() {
+                var text = output.textContent;
+                if (!text) {
+                    setFeedback('Generate the sitemap before downloading.', 3000);
+                    return;
+                }
+                var blob = new Blob([text], { type: 'application/xml' });
+                var url = URL.createObjectURL(blob);
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = 'sitemap.xml';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                setFeedback('sitemap.xml downloaded.', 2600);
+            }
+
+            generateButton.addEventListener('click', buildSitemap);
+            clearButton.addEventListener('click', clearAll);
+            copyButton.addEventListener('click', copySitemap);
+            downloadButton.addEventListener('click', downloadSitemap);
+        })();
+    </script>
+
+</body>
+</html>

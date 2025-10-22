@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator | Calculate Age in Years, Months, Days & More | EveryTool.tech</title>
+    <meta name="description" content="Calculate your exact age in years, months, and days with our free Age Calculator. Find out fun facts, your age on other planets, and see a countdown to your next birthday.">
+    <meta name="keywords" content="age calculator, calculate age, how old am i, date of birth calculator, birthday calculator, date duration calculator">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Advanced Age Calculator with Fun Facts & Milestones | EveryTool.tech">
+    <meta property="og:description" content="Calculate your exact age in years, months, and days. Find out fun facts, your age on other planets, and see a countdown to your next birthday.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/age-calculator">
+    <meta property="og:image" content="https://everytool.tech/assets/tool-preview.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <link rel="stylesheet" href="../tool.css">
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Custom styles for Age Calculator */
+        .tool-display__input-section { display: flex; flex-direction: column; gap: 1.5rem; }
+        .input-group-container { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; padding: 1.5rem; }
+        .input-group-container h3 { margin-top: 0; margin-bottom: 1.5rem; font-size: 1.2rem; color: #343a40; display: flex; align-items: center; gap: 0.5rem; }
+        .tool-display__input { width: 100%; padding: 0.75rem; border: 1px solid #ced4da; border-radius: 8px; font-size: 1rem; font-family: 'Inter', sans-serif; box-sizing: border-box;}
+        .tool-display__input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end;}
+
+        .tool-display__output-section { display: flex; flex-direction: column; gap: 1.5rem; }
+        .result-card { background: #fff; border: 1px solid #e9ecef; border-radius: 12px; padding: 1.5rem; }
+        .result-card h4 { margin-top: 0; color: #007bff; font-size: 1.2rem; border-bottom: 1px solid #dee2e6; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+        
+        #summary-age { text-align: center; }
+        #summary-age .age-string { font-size: 1.8rem; font-weight: 600; color: #343a40; }
+        #summary-age .zodiac-info { font-size: 1rem; color: #6c757d; margin-top: 0.5rem; }
+        
+        .unit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .unit-box { background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center; }
+        .unit-box .value { font-size: 1.5rem; font-weight: 600; color: #007bff; }
+        .unit-box .label { font-size: 0.9rem; color: #6c757d; }
+
+        #birthday-countdown { font-size: 1.5rem; font-weight: 600; text-align: center; color: #28a745; }
+        
+        .milestones-list, .planets-list { list-style: none; padding: 0; }
+        .milestones-list li, .planets-list li { padding: 0.5rem 0; border-bottom: 1px solid #f1f3f5; display: flex; justify-content: space-between; }
+        .milestones-list li:last-child, .planets-list li:last-child { border-bottom: none; }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .tool-display__input-row { 
+                grid-template-columns: 1fr; 
+                gap: 1rem; 
+            }
+            .unit-grid { 
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+                gap: 0.75rem; 
+            }
+            .result-card { 
+                padding: 1rem; 
+            }
+            #summary-age .age-string { 
+                font-size: 1.5rem; 
+            }
+            .input-group-container { 
+                padding: 1rem; 
+            }
+            .tool-display__input { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .unit-grid { 
+                grid-template-columns: 1fr 1fr; 
+            }
+            .tool-display__input-row { 
+                gap: 0.75rem; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Age Calculator: How Old Are You?</h1>
+                    <p class="tool-hero__description">
+                        Discover your exact age in years, months, days, and even seconds! Our calculator also shows a countdown to your next birthday, your age on other planets, and key life milestones.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-stopwatch-20"></i>
+                            <span>Precise Age Calculation</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-birthday-cake"></i>
+                            <span>Birthday Countdown</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-globe-americas"></i>
+                            <span>Age on Other Planets</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-ruler-horizontal"></i>
+                            <span>Date Duration Tool</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-play"></i>
+                            Calculate Your Age
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Age
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                 <div class="tool-display__header">
+                    <h2 class="tool-display__title">Find Your Age & More</h2>
+                    <p class="tool-display__description">
+                        Enter your date of birth to begin your journey through time.
+                    </p>
+                </div>
+                <div class="tool-display__input-section">
+                    <!-- Core Inputs -->
+                    <div class="input-group-container">
+                        <h3><i class="fas fa-calendar-alt"></i> Age Calculator</h3>
+                        <div class="tool-display__input-row">
+                            <div class="tool-display__input-group">
+                                <label class="tool-display__label">Date of Birth</label>
+                                <input type="date" id="dob" class="tool-display__input">
+                            </div>
+                            <div class="tool-display__input-group">
+                                <label class="tool-display__label">Age at the Date of</label>
+                                <input type="date" id="age-at-date" class="tool-display__input">
+                            </div>
+                        </div>
+                         <div class="tool-display__controls" style="margin-top:1.5rem;">
+                            <button id="calculate-btn" class="tool-display__button">
+                                <i class="fas fa-magic"></i> Calculate
+                            </button>
+                        </div>
+                    </div>
+                     <!-- Date Duration Calculator -->
+                    <div class="input-group-container">
+                        <h3><i class="fas fa-ruler-horizontal"></i> Date Duration Calculator</h3>
+                        <div class="tool-display__input-row">
+                            <div class="tool-display__input-group">
+                                <label class="tool-display__label">Start Date</label>
+                                <input type="date" id="start-date" class="tool-display__input">
+                            </div>
+                            <div class="tool-display__input-group">
+                                <label class="tool-display__label">End Date</label>
+                                <input type="date" id="end-date" class="tool-display__input">
+                            </div>
+                        </div>
+                        <div id="duration-result" class="unit-box" style="margin-top: 1rem; display: none;"></div>
+                    </div>
+                </div>
+                <div id="results-section" class="tool-display__output-section hidden">
+                    <!-- Summary Card -->
+                    <div id="summary-card" class="result-card">
+                         <h4>Your Age</h4>
+                         <div id="summary-age">
+                             <p class="age-string">-- years, -- months, -- days</p>
+                             <p class="zodiac-info"></p>
+                         </div>
+                    </div>
+                    <!-- Time Units Card -->
+                    <div class="result-card">
+                         <h4>Age in Other Units</h4>
+                         <div class="unit-grid">
+                            <div class="unit-box"><div id="total-months" class="value">0</div><div class="label">Months</div></div>
+                            <div class="unit-box"><div id="total-weeks" class="value">0</div><div class="label">Weeks</div></div>
+                            <div class="unit-box"><div id="total-days" class="value">0</div><div class="label">Days</div></div>
+                            <div class="unit-box"><div id="total-hours" class="value">0</div><div class="label">Hours</div></div>
+                            <div class="unit-box"><div id="total-minutes" class="value">0</div><div class="label">Minutes</div></div>
+                            <div class="unit-box"><div id="total-seconds" class="value">0</div><div class="label">Seconds</div></div>
+                         </div>
+                    </div>
+                     <!-- Birthday Card -->
+                    <div class="result-card">
+                         <h4>Next Birthday</h4>
+                         <p id="next-birthday-info"></p>
+                         <div id="birthday-countdown"></div>
+                    </div>
+                    <!-- Planets Card -->
+                    <div class="result-card">
+                         <h4>Age on Other Planets</h4>
+                         <ul id="planets-list" class="planets-list"></ul>
+                    </div>
+                    <!-- Milestones Card -->
+                    <div class="result-card">
+                         <h4>Life Milestones</h4>
+                         <ul id="milestones-list" class="milestones-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">More Than a Number: The Fascinating Mathematics of Your Age</h2>
+                <p class="tool-blog__subtitle">
+                    Explore how your age is calculated, the concepts of time, and the fun facts hidden within your date of birth.
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Introduction: The Simple Question with a Complex Answer</h3>
+                    <div class="blog-section__content">
+                        <p>
+                           "How old are you?" It's one of the first questions we learn to answer. We typically respond with a single number representing the years we've been alive. But have you ever stopped to think about what that really means? Your age is a constantly updating measure of your journey through time, a number that can be expressed in years, months, days, hours, and even seconds. Using a tool like our <strong>Age Calculator</strong> can transform this simple question into a fascinating exploration of time itself.
+                        </p>
+                        <p>
+                            This guide will delve into how age is calculated precisely, why it's more complex than it seems (thanks, leap years!), and how our calculator goes beyond a single number to provide engaging insights. From your next birthday countdown to your age on Mars, we'll show you the fun and practical applications of calculating your age.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">The Core Calculation: Years, Months, and Days</h3>
+                    <div class="blog-section__content">
+                        <p>
+                           Calculating age isn't as simple as subtracting the birth year from the current year. To get an accurate result in years, months, and days, we have to account for the specific dates. The process is similar to how you "borrow" in manual subtraction.
+                        </p>
+                        <ol>
+                            <li><strong>Subtract the Days:</strong> If the current day is less than the birth day, we "borrow" the number of days from the previous month and add it to the current day before subtracting.</li>
+                             <li><strong>Subtract the Months:</strong> After adjusting the days, we subtract the birth month from the current month. If the current month is now less than the birth month, we "borrow" 12 months from the year.</li>
+                            <li><strong>Subtract the Years:</strong> Finally, we subtract the birth year from the (potentially adjusted) current year.</li>
+                        </ol>
+                        <p>This method, which our <strong>Age Calculator</strong> performs instantly, ensures a precise result that accounts for the varying lengths of months and the occurrence of leap years.</p>
+                    </div>
+                </div>
+                
+                 <div class="blog-section">
+                    <h3 class="blog-section__title">Expanding Time: Age in Different Units</h3>
+                    <div class="blog-section__content">
+                        <p>
+                           While "years, months, and days" is the standard format, seeing your age in other units can provide a powerful perspective on the time you've lived. Our calculator breaks it down:
+                        </p>
+                         <ul>
+                            <li><strong>Total Days:</strong> This is the simplest and most precise measure of your time alive. It's the total number of days that have passed since the day you were born.</li>
+                            <li><strong>Total Weeks, Hours, Minutes, Seconds:</strong> These are straightforward conversions from the total number of days. Seeing your age in millions of minutes or hundreds of thousands of hours can be a mind-boggling experience!</li>
+                        </ul>
+                         <p>This breakdown highlights the sheer amount of time we have and can be a great motivator to make the most of it.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Fun with Astronomy: Your Age on Other Planets</h3>
+                    <div class="blog-section__content">
+                        <p>
+                           A "year" is defined by how long it takes a planet to orbit the Sun. Since each planet has a different orbital period, your age would be different if you lived on another world! Our <strong>Age Calculator</strong> includes this fun feature by taking your age in Earth days and dividing it by the length of a year on other planets:
+                        </p>
+                        <ul>
+                            <li><strong>Mercury:</strong> With a year of only 88 Earth days, you'd be much "older" on Mercury.</li>
+                            <li><strong>Mars:</strong> A Martian year is about 687 Earth days, so your age in Mars years would be roughly half your Earth age.</li>
+                            <li><strong>Jupiter:</strong> It takes Jupiter almost 12 Earth years to orbit the Sun. If you're 30 on Earth, you wouldn't have even celebrated your 3rd birthday on Jupiter!</li>
+                        </ul>
+                        <p>This feature is a great way to understand the vastness of our solar system and the astronomical basis of how we measure time.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Practical Applications: Beyond Your Birthday</h3>
+                    <div class="blog-section__content">
+                       <p>An age calculator's logic can be applied to many real-world scenarios. Our tool includes a "Date Duration Calculator" mode for this very reason.</p>
+                       <p>You can use it to find:</p>
+                       <ul>
+                           <li>The exact duration of a project from its start date to its end date.</li>
+                           <li>How long you've been in a relationship or at a job.</li>
+                           <li>The time remaining until a significant future event, like a graduation, wedding, or retirement date.</li>
+                           <li>The age of a historical artifact or the time between two historical events.</li>
+                       </ul>
+                       <p>This turns a simple "age" tool into a versatile date and time utility for all kinds of planning and analysis.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Conclusion: Celebrating Every Moment</h3>
+                    <div class="blog-section__content">
+                        <p>
+                           Calculating your age is more than just a novelty. It's an opportunity to reflect on the time that has passed and to look forward to the time ahead. Tools like our <strong>Age Calculator</strong> provide fun facts, useful perspectives, and practical utilities that help us connect with the abstract concept of time.
+                        </p>
+                        <p>
+                            Enter your birth date, explore your milestones, see your countdown to the next celebration, and maybe even plan your 10th birthday party on Jupiter. Time is a journey, and it's fun to see just how far you've come.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Common questions about calculating age and time.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How does the calculator handle leap years?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our calculator's algorithm accurately accounts for leap years. When calculating the total number of days between two dates, it correctly includes the extra day (February 29th) for each leap year that falls within the period, ensuring a precise result.</p>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <div class="faq-question">
+                        Why is my calculated age different from what I thought?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Most people calculate their age just in years. Our calculator provides a more precise age in years, months, and days. For example, if your birthday was 6 months ago, you might say you're "30," but the calculator will specify you are "30 years and 6 months" old.</p>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <div class="faq-question">
+                        How is my "Age on Other Planets" calculated?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We first calculate your age in total Earth days. Then, we divide that number by the orbital period (the length of one year) of another planet in Earth days. For example, a year on Mars is 687 Earth days long, so your age in Earth days / 687 = your age in Mars years.</p>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <div class="faq-question">
+                        What if I was born on February 29th?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our calculator handles this correctly. For non-leap years, your "birthday" for calculation purposes is typically considered to be February 28th or March 1st. The countdown to your next birthday will correctly point to the next February 29th when it occurs.</p>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <div class="faq-question">
+                        Can I calculate the time between two future dates?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Use the "Date Duration Calculator" mode. You can input any two dates, past, present, or future, and it will calculate the exact time difference between them in years, months, and days.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- CRITICAL: Universal Search Script - DO NOT REMOVE -->
+    <script src="/universal-search-deploy.js"></script>
+    <script src="/back-to-top.js"></script>
+    <script>
+        // Backup simple loader for footer only
+        document.addEventListener('DOMContentLoaded', function() {
+            // Footer loading backup (header handled by universal script)
+            var footerPlaceholder = document.getElementById('footer-placeholder');
+            if (footerPlaceholder && !footerPlaceholder.innerHTML.trim()) {
+                fetch('../footer.html')
+                    .then(function(r) { return r.text(); })
+                    .then(function(h) { footerPlaceholder.innerHTML = h; })
+                    .catch(function(error) {
+                        console.error('Error loading footer:', error);
+                    });
+            }
+        });
+
+        // Age Calculator Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const dobInput = document.getElementById('dob');
+            const ageAtDateInput = document.getElementById('age-at-date');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const resultsSection = document.getElementById('results-section');
+            const startDateInput = document.getElementById('start-date');
+            const endDateInput = document.getElementById('end-date');
+
+            let countdownInterval;
+
+            // Set default dates
+            const today = new Date();
+            const todayString = today.toISOString().split('T')[0];
+            ageAtDateInput.value = todayString;
+            endDateInput.value = todayString;
+            
+            // --- Event Listeners ---
+            calculateBtn.addEventListener('click', calculateAge);
+            startDateInput.addEventListener('input', calculateDuration);
+            endDateInput.addEventListener('input', calculateDuration);
+
+            function calculateDuration() {
+                const startDate = new Date(startDateInput.value);
+                const endDate = new Date(endDateInput.value);
+                const resultEl = document.getElementById('duration-result');
+
+                if (isValidDate(startDate) && isValidDate(endDate) && endDate >= startDate) {
+                    const diff = calculateDifference(startDate, endDate);
+                    resultEl.innerHTML = `<div class="value">${diff.years}y ${diff.months}m ${diff.days}d</div>`;
+                    resultEl.style.display = 'block';
+                } else {
+                     resultEl.style.display = 'none';
+                }
+            }
+
+            function calculateAge() {
+                const dob = new Date(dobInput.value);
+                const ageAtDate = new Date(ageAtDateInput.value);
+
+                if (!isValidDate(dob) || !isValidDate(ageAtDate) || ageAtDate < dob) {
+                    alert('Please enter a valid Date of Birth and ensure the "Age at" date is not earlier than the birth date.');
+                    return;
+                }
+
+                resultsSection.classList.remove('hidden');
+
+                // 1. Summary Age
+                const age = calculateDifference(dob, ageAtDate);
+                document.querySelector('#summary-age .age-string').textContent = `${age.years} years, ${age.months} months, and ${age.days} days old.`;
+
+                // 2. Birth Date Facts
+                const zodiac = getZodiacSign(dob);
+                const chineseZodiac = getChineseZodiac(dob.getFullYear());
+                const birthDay = dob.toLocaleDateString('en-US', { weekday: 'long' });
+                document.querySelector('#summary-age .zodiac-info').textContent = `Born on a ${birthDay} • ${zodiac} • ${chineseZodiac}`;
+
+                // 3. Time Units
+                const totalDays = Math.floor((ageAtDate - dob) / (1000 * 60 * 60 * 24));
+                document.getElementById('total-days').textContent = totalDays.toLocaleString();
+                document.getElementById('total-months').textContent = (age.years * 12 + age.months).toLocaleString();
+                document.getElementById('total-weeks').textContent = Math.floor(totalDays / 7).toLocaleString();
+                document.getElementById('total-hours').textContent = (totalDays * 24).toLocaleString();
+                document.getElementById('total-minutes').textContent = (totalDays * 24 * 60).toLocaleString();
+                document.getElementById('total-seconds').textContent = (totalDays * 24 * 60 * 60).toLocaleString();
+
+                // 4. Next Birthday
+                updateNextBirthday(dob);
+
+                // 5. Age on Planets
+                updatePlanetsAge(totalDays);
+                
+                // 6. Milestones
+                updateMilestones(dob);
+            }
+            
+            function calculateDifference(startDate, endDate) {
+                let end = new Date(endDate);
+                let start = new Date(startDate);
+                
+                let years = end.getFullYear() - start.getFullYear();
+                let months = end.getMonth() - start.getMonth();
+                let days = end.getDate() - start.getDate();
+
+                if (days < 0) {
+                    months--;
+                    const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0);
+                    days += prevMonth.getDate();
+                }
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+                return { years, months, days };
+            }
+            
+            function updateNextBirthday(dob) {
+                if(countdownInterval) clearInterval(countdownInterval);
+
+                const today = new Date();
+                let nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+                if (today > nextBirthday) {
+                    nextBirthday.setFullYear(today.getFullYear() + 1);
+                }
+
+                const dayOfWeek = nextBirthday.toLocaleDateString('en-US', { weekday: 'long' });
+                document.getElementById('next-birthday-info').textContent = `Your next birthday is on ${dayOfWeek}, ${nextBirthday.toLocaleDateString()}`;
+
+                const countdownEl = document.getElementById('birthday-countdown');
+                function updateCountdown() {
+                    const now = new Date();
+                    const diff = nextBirthday - now;
+                    if (diff <= 0) {
+                        countdownEl.textContent = 'Happy Birthday!';
+                        clearInterval(countdownInterval);
+                        return;
+                    }
+                    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const s = Math.floor((diff % (1000 * 60)) / 1000);
+                    countdownEl.textContent = `${d}d ${h}h ${m}m ${s}s`;
+                }
+                updateCountdown();
+                countdownInterval = setInterval(updateCountdown, 1000);
+            }
+
+            function updatePlanetsAge(totalEarthDays) {
+                const planets = [
+                    { name: 'Mercury', period: 87.97 },
+                    { name: 'Venus', period: 224.7 },
+                    { name: 'Mars', period: 686.98 },
+                    { name: 'Jupiter', period: 4332.59 },
+                    { name: 'Saturn', period: 10759.22 },
+                    { name: 'Uranus', period: 30688.5 },
+                    { name: 'Neptune', period: 60182 },
+                ];
+                const listEl = document.getElementById('planets-list');
+                listEl.innerHTML = '';
+                planets.forEach(planet => {
+                    const age = (totalEarthDays / planet.period).toFixed(2);
+                    listEl.innerHTML += `<li><span>${planet.name}</span><strong>${age} years</strong></li>`;
+                });
+            }
+            
+            function updateMilestones(dob) {
+                const listEl = document.getElementById('milestones-list');
+                listEl.innerHTML = '';
+                const milestones = [
+                    { label: '1000th Day', days: 1000 },
+                    { label: '5000th Day', days: 5000 },
+                    { label: '16th Birthday', years: 16 },
+                    { label: '18th Birthday', years: 18 },
+                    { label: '21st Birthday', years: 21 },
+                    { label: '10,000th Day', days: 10000 },
+                    { label: '25th Birthday', years: 25 },
+                    { label: '30th Birthday', years: 30 },
+                    { label: '15,000th Day', days: 15000 },
+                    { label: '40th Birthday', years: 40 },
+                    { label: '20,000th Day', days: 20000 },
+                    { label: '50th Birthday', years: 50 },
+                ];
+                
+                milestones.forEach(m => {
+                    let milestoneDate = new Date(dob);
+                    if (m.days) {
+                        milestoneDate.setDate(dob.getDate() + m.days);
+                    } else if (m.years) {
+                        milestoneDate.setFullYear(dob.getFullYear() + m.years);
+                    }
+                    listEl.innerHTML += `<li><span>${m.label}</span><strong>${milestoneDate.toLocaleDateString()}</strong></li>`;
+                });
+            }
+
+            function getZodiacSign(date) {
+                const day = date.getDate();
+                const month = date.getMonth() + 1;
+                if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Aquarius";
+                if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "Pisces";
+                if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Aries";
+                if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Taurus";
+                if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Gemini";
+                if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cancer";
+                if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Leo";
+                if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Virgo";
+                if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Libra";
+                if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Scorpio";
+                if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Sagittarius";
+                if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) return "Capricorn";
+            }
+
+            function getChineseZodiac(year) {
+                const animals = ["Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"];
+                return animals[(year - 4) % 12];
+            }
+
+            function isValidDate(d) {
+                return d instanceof Date && !isNaN(d);
+            }
+        });
+    </script>
+    <script src="../FAQ section/faq.js"></script>
+    <script src="../view.js"></script>
+
+    <script>
+        // =====================================================================
+        // ====== START: MAGIC BLOCK TO COPY FOR EVERY NEW PAGE ======
+        // =====================================================================
+            document.addEventListener('DOMContentLoaded', () => {
+        
+        const loadScript = (src) => {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = () => resolve(script);
+                script.onerror = () => reject(new Error(`Script load error for ${src}`));
+                document.body.appendChild(script);
+            });
+        };
+        
+        const loadHeader = () => {
+            const headerPlaceholder = document.getElementById('header-placeholder');
+            if (!headerPlaceholder) return;
+        
+            // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+            fetch('/header.html') 
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response for header.html was not ok.');
+                    return response.text();
+                })
+                .then(html => {
+                    headerPlaceholder.innerHTML = html;
+                    return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2');
+                })
+                .then(() => {
+                    // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+                    return loadScript('/header-search.js');
+                })
+                .then(() => {
+                    if (typeof initializeHeader === 'function') {
+                        initializeHeader(); 
+                    } else {
+                        throw new Error('initializeHeader function not found.');
+                    }
+                })
+                .catch(error => {
+                    console.error('CRITICAL ERROR during header loading process:', error);
+                });
+        };
+        
+        const loadFooter = () => {
+            const footerPlaceholder = document.getElementById('footer-placeholder');
+            if (footerPlaceholder) {
+                // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+                fetch('/footer.html')
+                    .then(response => response.ok ? response.text() : Promise.reject('Failed to load footer'))
+                    .then(html => { footerPlaceholder.innerHTML = html; })
+                    .catch(error => console.error('Error loading footer:', error));
+            }
+        };
+        
+        loadHeader();
+        loadFooter();
+        });
+        
+    </script>
+    <script src="/app-loader.js" defer></script>
+</body>
+</html>

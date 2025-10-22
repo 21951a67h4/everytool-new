@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Time Zone Converter | Convert Time Between Cities & Timezones | EveryTool.tech</title>
+    <meta name="description" content="Convert time between cities and timezones with DST awareness. Get team overlap hours, world clock grid, and share meeting links. Perfect for global teams and scheduling.">
+    <meta name="keywords" content="timezone converter, world clock, time zone calculator, DST converter, global time, meeting scheduler">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="World Time Zone Converter | EveryTool.tech">
+    <meta property="og:description" content="Convert time between cities and timezones with DST awareness. Get team overlap hours, world clock grid, and share meeting links. Perfect for global teams and scheduling.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/datetime-tools/world-timezone-converter">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* World Time Zone Converter Specific Styles */
+        .timezone-calc-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .timezone-calc-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .timezone-calc-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .timezone-calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .timezone-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .timezone-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .timezone-form-group input, .timezone-form-group select { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .conversion-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .timezone-input-group {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .timezone-input-group h4 {
+            margin: 0 0 15px 0;
+            color: #007bff;
+            font-size: 1.1rem;
+        }
+        
+        .timezone-results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .conversion-result {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #28a745;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .timezone-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .timezone-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .timezone-city {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .timezone-time {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        
+        .timezone-offset {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .world-clock-grid {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .world-clock-grid h5 {
+            margin: 0 0 15px 0;
+            color: #333;
+        }
+        
+        .clock-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        
+        .clock-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+        
+        .clock-city {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .clock-time {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #007bff;
+        }
+        
+        .clock-offset {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .favorites-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .favorites-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .favorite-item {
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .favorite-item:hover {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        
+        .overlap-heatmap {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(24, 1fr);
+            gap: 2px;
+            margin-top: 10px;
+        }
+        
+        .heatmap-hour {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        
+        .heatmap-hour.overlap-0 { background: #f8f9fa; color: #6c757d; }
+        .heatmap-hour.overlap-1 { background: #d4edda; color: #155724; }
+        .heatmap-hour.overlap-2 { background: #fff3cd; color: #856404; }
+        .heatmap-hour.overlap-3 { background: #f8d7da; color: #721c24; }
+        
+        .share-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .timezone-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .timezone-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .conversion-inputs {
+                grid-template-columns: 1fr;
+            }
+            .timezone-info {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .clock-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .heatmap-grid {
+                grid-template-columns: repeat(12, 1fr);
+            }
+            .share-buttons {
+                flex-direction: column;
+            }
+            .timezone-form-group input, .timezone-form-group select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timezone-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .timezone-info {
+                grid-template-columns: 1fr;
+            }
+            .clock-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .timezone-form-group input, .timezone-form-group select { 
+                padding: 8px; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="World Time Zone Converter" data-meta-description="Convert time between cities and timezones with DST awareness. Get team overlap hours, world clock grid, and share meeting links. Perfect for global teams and scheduling.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">World Time Zone Converter: Global Time Conversion</h1>
+                    <p class="tool-hero__description">
+                        Convert time between cities and timezones with DST awareness. Get team overlap hours, 
+                        world clock grid, and share meeting links. Perfect for global teams and scheduling.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-globe"></i>
+                            <span>DST Awareness</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-users"></i>
+                            <span>Team Overlap</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-star"></i>
+                            <span>Favorites</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-share"></i>
+                            <span>Share Links</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-clock"></i>
+                            Convert Time
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Timezones
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">World Time Zone Converter</h2>
+                    <p class="tool-display__description">
+                        Convert time between cities and timezones with automatic DST handling and team overlap analysis.
+                    </p>
+                </div>
+                
+                <!-- World Time Zone Converter Custom Interface -->
+                <div class="timezone-calc-container">
+                    <div class="timezone-calc-section">
+                        <h4>1. Time Conversion</h4>
+                        <div class="conversion-inputs">
+                            <div class="timezone-input-group">
+                                <h4>From</h4>
+                                <div class="timezone-calc-grid">
+                                    <div class="timezone-form-group">
+                                        <label for="from-city">City</label>
+                                        <select id="from-city">
+                                            <option value="New York">New York</option>
+                                            <option value="Los Angeles">Los Angeles</option>
+                                            <option value="London">London</option>
+                                            <option value="Paris">Paris</option>
+                                            <option value="Tokyo">Tokyo</option>
+                                            <option value="Sydney">Sydney</option>
+                                            <option value="Dubai">Dubai</option>
+                                            <option value="Mumbai">Mumbai</option>
+                                        </select>
+                                    </div>
+                                    <div class="timezone-form-group">
+                                        <label for="from-date">Date</label>
+                                        <input type="date" id="from-date">
+                                    </div>
+                                    <div class="timezone-form-group">
+                                        <label for="from-time">Time</label>
+                                        <input type="time" id="from-time" value="12:00">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timezone-input-group">
+                                <h4>To</h4>
+                                <div class="timezone-calc-grid">
+                                    <div class="timezone-form-group">
+                                        <label for="to-city">City</label>
+                                        <select id="to-city">
+                                            <option value="London">London</option>
+                                            <option value="New York">New York</option>
+                                            <option value="Los Angeles">Los Angeles</option>
+                                            <option value="Paris">Paris</option>
+                                            <option value="Tokyo">Tokyo</option>
+                                            <option value="Sydney">Sydney</option>
+                                            <option value="Dubai">Dubai</option>
+                                            <option value="Mumbai">Mumbai</option>
+                                        </select>
+                                    </div>
+                                    <div class="timezone-form-group">
+                                        <label for="to-date">Date</label>
+                                        <input type="date" id="to-date">
+                                    </div>
+                                    <div class="timezone-form-group">
+                                        <label for="to-time">Time</label>
+                                        <input type="time" id="to-time" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timezone-calc-grid">
+                            <div class="timezone-form-group">
+                                <button class="tool-display__button tool-display__button--primary" onclick="convertTime()">
+                                    <i class="fas fa-exchange-alt"></i>
+                                    Convert Time
+                                </button>
+                            </div>
+                            <div class="timezone-form-group">
+                                <button class="tool-display__button" onclick="addToFavorites()">
+                                    <i class="fas fa-star"></i>
+                                    Add to Favorites
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timezone-results" id="timezone-results" style="display: none;">
+                        <h4>Conversion Results</h4>
+                        <div class="conversion-result" id="conversion-result">12:00 PM</div>
+                        
+                        <div class="timezone-info" id="timezone-info">
+                            <!-- Timezone info will be added here -->
+                        </div>
+                    </div>
+
+                    <div class="world-clock-grid">
+                        <h5>World Clock</h5>
+                        <div class="clock-grid" id="world-clock-grid">
+                            <!-- World clock will be added here -->
+                        </div>
+                    </div>
+
+                    <div class="favorites-section">
+                        <h4>2. Favorite Cities</h4>
+                        <div class="favorites-list" id="favorites-list">
+                            <!-- Favorites will be added here -->
+                        </div>
+                    </div>
+
+                    <div class="overlap-heatmap">
+                        <h4>3. Team Overlap Hours</h4>
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                            Heatmap showing working hours overlap (9 AM - 5 PM local time)
+                        </p>
+                        <div class="heatmap-grid" id="overlap-heatmap">
+                            <!-- Heatmap will be added here -->
+                        </div>
+                    </div>
+
+                    <div class="share-section">
+                        <h4>4. Share & Export</h4>
+                        <div class="share-buttons">
+                            <button class="tool-display__button" onclick="shareMeetingLink()">
+                                <i class="fas fa-link"></i> Share Meeting Link
+                            </button>
+                            <button class="tool-display__button" onclick="copyToClipboard()">
+                                <i class="fas fa-copy"></i> Copy Results
+                            </button>
+                            <button class="tool-display__button" onclick="exportWorldClock()">
+                                <i class="fas fa-download"></i> Export World Clock
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Time Zones and Global Time Management</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about time zones, daylight saving time, and how to effectively manage time across different regions
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What are Time Zones?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Time zones are regions of the Earth that observe a uniform standard time for legal, commercial, 
+                            and social purposes. They are based on the Earth's rotation and divided into 24 main zones, 
+                            each approximately 15 degrees of longitude apart.
+                        </p>
+                        <p>
+                            <strong>Key Concepts:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>UTC (Coordinated Universal Time):</strong> The primary time standard</li>
+                            <li><strong>GMT (Greenwich Mean Time):</strong> Based on the Prime Meridian</li>
+                            <li><strong>DST (Daylight Saving Time):</strong> Seasonal time adjustments</li>
+                            <li><strong>IANA Time Zones:</strong> Standardized timezone identifiers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Daylight Saving Time (DST)</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            DST is the practice of advancing clocks during warmer months to extend evening daylight. 
+                            Not all countries observe DST, and those that do have different start and end dates.
+                        </p>
+                        <p>
+                            <strong>DST Rules:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>United States:</strong> Second Sunday in March to first Sunday in November</li>
+                            <li><strong>European Union:</strong> Last Sunday in March to last Sunday in October</li>
+                            <li><strong>Australia:</strong> First Sunday in October to first Sunday in April</li>
+                            <li><strong>No DST:</strong> Most of Asia, Africa, and parts of South America</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Global Team Coordination</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Working Hours Overlap:</strong> Identify common working hours across time zones for meetings.
+                        </p>
+                        <p>
+                            <strong>Meeting Scheduling:</strong> Find optimal times that work for all team members.
+                        </p>
+                        <p>
+                            <strong>Deadline Management:</strong> Account for time zone differences in project deadlines.
+                        </p>
+                        <p>
+                            <strong>Communication:</strong> Be aware of local times when sending messages or emails.
+                        </p>
+                        <p>
+                            <strong>Travel Planning:</strong> Calculate arrival times and jet lag considerations.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Best Practices for Global Teams</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Use UTC:</strong> Always specify UTC times for global communications.
+                        </p>
+                        <p>
+                            <strong>Include Time Zones:</strong> Always include timezone information in meeting invites.
+                        </p>
+                        <p>
+                            <strong>Rotate Meeting Times:</strong> Alternate meeting times to share the burden of odd hours.
+                        </p>
+                        <p>
+                            <strong>Document Time Zones:</strong> Keep a reference of team members' time zones.
+                        </p>
+                        <p>
+                            <strong>Use Tools:</strong> Leverage timezone conversion tools and world clocks.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">World Time Zone Converter FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about timezone conversion</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>How accurate is the DST handling?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Our converter uses the latest DST rules for each timezone. However, DST rules can change, so for critical applications, always verify with official sources. The converter automatically detects DST transitions and adjusts times accordingly.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I add custom cities?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Currently, the converter includes major cities worldwide. You can save frequently used conversions as favorites for quick access. Custom city support may be added in future updates.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How does the team overlap heatmap work?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>The heatmap shows working hours overlap (9 AM - 5 PM local time) between selected cities. Green indicates good overlap, yellow moderate overlap, and red minimal overlap. This helps identify optimal meeting times.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I share meeting links with specific times?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes! Use the "Share Meeting Link" button to generate a URL with prefilled times for both cities. This makes it easy to share meeting times with team members in different time zones.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // World Time Zone Converter Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const fromCity = document.getElementById('from-city');
+            const fromDate = document.getElementById('from-date');
+            const fromTime = document.getElementById('from-time');
+            const toCity = document.getElementById('to-city');
+            const toDate = document.getElementById('to-date');
+            const toTime = document.getElementById('to-time');
+            const timezoneResults = document.getElementById('timezone-results');
+            const conversionResult = document.getElementById('conversion-result');
+            const timezoneInfo = document.getElementById('timezone-info');
+            const worldClockGrid = document.getElementById('world-clock-grid');
+            const favoritesList = document.getElementById('favorites-list');
+            const overlapHeatmap = document.getElementById('overlap-heatmap');
+            
+            // Timezone database with major cities
+            const timezones = {
+                'New York': { offset: -5, dstOffset: -4, dstStart: '2025-03-09', dstEnd: '2025-11-02', country: 'US' },
+                'Los Angeles': { offset: -8, dstOffset: -7, dstStart: '2025-03-09', dstEnd: '2025-11-02', country: 'US' },
+                'London': { offset: 0, dstOffset: 1, dstStart: '2025-03-30', dstEnd: '2025-10-26', country: 'UK' },
+                'Paris': { offset: 1, dstOffset: 2, dstStart: '2025-03-30', dstEnd: '2025-10-26', country: 'FR' },
+                'Tokyo': { offset: 9, dstOffset: 9, dstStart: null, dstEnd: null, country: 'JP' },
+                'Sydney': { offset: 10, dstOffset: 11, dstStart: '2025-10-05', dstEnd: '2025-04-06', country: 'AU' },
+                'Dubai': { offset: 4, dstOffset: 4, dstStart: null, dstEnd: null, country: 'AE' },
+                'Mumbai': { offset: 5.5, dstOffset: 5.5, dstStart: null, dstEnd: null, country: 'IN' }
+            };
+            
+            let favorites = JSON.parse(localStorage.getItem('timezoneFavorites') || '[]');
+            
+            // Initialize with current date
+            const today = new Date().toISOString().split('T')[0];
+            fromDate.value = today;
+            toDate.value = today;
+            
+            // Event listeners
+            [fromCity, fromDate, fromTime, toCity].forEach(element => {
+                element.addEventListener('change', convertTime);
+            });
+            
+            function convertTime() {
+                const fromCityValue = fromCity.value;
+                const toCityValue = toCity.value;
+                const fromDateValue = fromDate.value;
+                const fromTimeValue = fromTime.value;
+                
+                if (!fromCityValue || !toCityValue || !fromDateValue || !fromTimeValue) {
+                    timezoneResults.style.display = 'none';
+                    return;
+                }
+                
+                const fromTimezone = timezones[fromCityValue];
+                const toTimezone = timezones[toCityValue];
+                
+                if (!fromTimezone || !toTimezone) {
+                    alert('Invalid city selection.');
+                    return;
+                }
+                
+                // Calculate current offsets (considering DST)
+                const fromOffset = getCurrentOffset(fromTimezone, fromDateValue);
+                const toOffset = getCurrentOffset(toTimezone, toDateValue);
+                
+                // Convert time
+                const fromDateTime = new Date(`${fromDateValue}T${fromTimeValue}:00`);
+                const utcTime = new Date(fromDateTime.getTime() - (fromOffset * 60 * 60 * 1000));
+                const toDateTime = new Date(utcTime.getTime() + (toOffset * 60 * 60 * 1000));
+                
+                // Update results
+                toDate.value = toDateTime.toISOString().split('T')[0];
+                toTime.value = toDateTime.toTimeString().split(' ')[0].substring(0, 5);
+                
+                displayResults(fromCityValue, toCityValue, fromOffset, toOffset);
+                updateWorldClock();
+                updateOverlapHeatmap(fromCityValue, toCityValue);
+            }
+            
+            function getCurrentOffset(timezone, date) {
+                const currentDate = new Date(date);
+                const year = currentDate.getFullYear();
+                
+                // Check if DST is active
+                if (timezone.dstStart && timezone.dstEnd) {
+                    const dstStart = new Date(`${year}-${timezone.dstStart}`);
+                    const dstEnd = new Date(`${year}-${timezone.dstEnd}`);
+                    
+                    if (currentDate >= dstStart && currentDate < dstEnd) {
+                        return timezone.dstOffset;
+                    }
+                }
+                
+                return timezone.offset;
+            }
+            
+            function displayResults(fromCity, toCity, fromOffset, toOffset) {
+                timezoneResults.style.display = 'block';
+                
+                const fromTime = `${fromTime.value} ${fromCity}`;
+                const toTime = `${toTime.value} ${toCity}`;
+                
+                conversionResult.textContent = `${fromTime} = ${toTime}`;
+                
+                timezoneInfo.innerHTML = `
+                    <div class="timezone-card">
+                        <div class="timezone-city">${fromCity}</div>
+                        <div class="timezone-time">${fromTime}</div>
+                        <div class="timezone-offset">UTC${fromOffset >= 0 ? '+' : ''}${fromOffset}</div>
+                    </div>
+                    <div class="timezone-card">
+                        <div class="timezone-city">${toCity}</div>
+                        <div class="timezone-time">${toTime}</div>
+                        <div class="timezone-offset">UTC${toOffset >= 0 ? '+' : ''}${toOffset}</div>
+                    </div>
+                `;
+            }
+            
+            function updateWorldClock() {
+                const now = new Date();
+                const cities = Object.keys(timezones);
+                
+                worldClockGrid.innerHTML = cities.map(city => {
+                    const timezone = timezones[city];
+                    const offset = getCurrentOffset(timezone, now.toISOString().split('T')[0]);
+                    const cityTime = new Date(now.getTime() + (offset * 60 * 60 * 1000));
+                    
+                    return `
+                        <div class="clock-item">
+                            <div class="clock-city">${city}</div>
+                            <div class="clock-time">${cityTime.toTimeString().split(' ')[0].substring(0, 5)}</div>
+                            <div class="clock-offset">UTC${offset >= 0 ? '+' : ''}${offset}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            function updateOverlapHeatmap(fromCity, toCity) {
+                const fromTimezone = timezones[fromCity];
+                const toTimezone = timezones[toCity];
+                
+                if (!fromTimezone || !toTimezone) return;
+                
+                const fromOffset = getCurrentOffset(fromTimezone, fromDate.value);
+                const toOffset = getCurrentOffset(toTimezone, toDate.value);
+                
+                // Calculate working hours overlap (9 AM - 5 PM local time)
+                const overlapHours = [];
+                
+                for (let hour = 0; hour < 24; hour++) {
+                    const fromHour = (hour + fromOffset) % 24;
+                    const toHour = (hour + toOffset) % 24;
+                    
+                    const fromWorking = fromHour >= 9 && fromHour < 17;
+                    const toWorking = toHour >= 9 && toHour < 17;
+                    
+                    let overlap = 0;
+                    if (fromWorking && toWorking) overlap = 2;
+                    else if (fromWorking || toWorking) overlap = 1;
+                    
+                    overlapHours.push(overlap);
+                }
+                
+                overlapHeatmap.innerHTML = overlapHours.map((overlap, hour) => {
+                    const className = `heatmap-hour overlap-${overlap}`;
+                    return `<div class="${className}" title="${hour}:00 - Overlap: ${overlap}">${hour}</div>`;
+                }).join('');
+            }
+            
+            function updateFavorites() {
+                favoritesList.innerHTML = favorites.map((fav, index) => `
+                    <div class="favorite-item" onclick="loadFavorite(${index})">
+                        ${fav.fromCity} → ${fav.toCity}
+                    </div>
+                `).join('');
+            }
+            
+            window.addToFavorites = function() {
+                const favorite = {
+                    fromCity: fromCity.value,
+                    toCity: toCity.value,
+                    fromDate: fromDate.value,
+                    fromTime: fromTime.value,
+                    timestamp: Date.now()
+                };
+                
+                favorites.unshift(favorite);
+                favorites = favorites.slice(0, 10); // Keep only last 10
+                localStorage.setItem('timezoneFavorites', JSON.stringify(favorites));
+                updateFavorites();
+            };
+            
+            window.loadFavorite = function(index) {
+                const favorite = favorites[index];
+                fromCity.value = favorite.fromCity;
+                toCity.value = favorite.toCity;
+                fromDate.value = favorite.fromDate;
+                fromTime.value = favorite.fromTime;
+                convertTime();
+            };
+            
+            window.shareMeetingLink = function() {
+                const params = new URLSearchParams();
+                params.set('from', fromCity.value);
+                params.set('to', toCity.value);
+                params.set('date', fromDate.value);
+                params.set('time', fromTime.value);
+                
+                const url = window.location.pathname + '?' + params.toString();
+                navigator.clipboard.writeText(window.location.origin + url).then(() => {
+                    alert('Meeting link copied to clipboard!');
+                });
+            };
+            
+            window.copyToClipboard = function() {
+                const text = `${fromCity.value} ${fromTime.value} = ${toCity.value} ${toTime.value}`;
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Conversion copied to clipboard!');
+                });
+            };
+            
+            window.exportWorldClock = function() {
+                const clockData = Array.from(worldClockGrid.children).map(item => ({
+                    city: item.querySelector('.clock-city').textContent,
+                    time: item.querySelector('.clock-time').textContent,
+                    offset: item.querySelector('.clock-offset').textContent
+                }));
+                
+                const csv = 'City,Time,Offset\n' + clockData.map(item => 
+                    `${item.city},${item.time},${item.offset}`
+                ).join('\n');
+                
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'world-clock.csv';
+                link.click();
+                URL.revokeObjectURL(url);
+            };
+            
+            // Initialize
+            convertTime();
+            updateWorldClock();
+            updateFavorites();
+            
+            // Update world clock every minute
+            setInterval(updateWorldClock, 60000);
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

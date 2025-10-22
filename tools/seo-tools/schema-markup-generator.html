@@ -1,0 +1,691 @@
+<!--
+    Schema Markup Generator Tool Page
+    Built using the EveryTool.tech template.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Schema Markup Generator | EveryTool.tech</title>
+
+    <meta name="description" content="Generate valid JSON-LD schema markup for Articles, FAQs, Products, and more. Improve your SEO with structured data.">
+
+    <meta name="keywords" content="schema markup generator, json-ld generator, structured data, seo schema">
+
+    <meta name="robots" content="index, follow">
+
+
+    <meta property="og:title" content="Schema Markup Generator | EveryTool.tech">
+
+    <meta property="og:description" content="Generate valid JSON-LD schema markup to boost your SEO with structured data.">
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:url" content="https://everytool.tech/schema-markup-generator">
+
+
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    <style>
+        #header-placeholder {
+            min-height: 130px;
+            position: relative;
+            z-index: 2000;
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        .schema-grid {
+            display: grid;
+            gap: 24px;
+        }
+        @media (min-width: 992px) {
+            .schema-grid {
+                grid-template-columns: 1fr 1fr;
+                align-items: start;
+            }
+        }
+
+        .schema-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            padding: 24px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .schema-card__title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .schema-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .schema-form-label {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .schema-form-label--required::after {
+            content: '*';
+            color: #ef4444;
+            margin-left: 4px;
+        }
+
+        .schema-form-input,
+        .schema-form-select,
+        .schema-form-textarea {
+            border-radius: 12px;
+            border: 1px solid #cbd5f5;
+            padding: 12px 14px;
+            background: #f8f9ff;
+            font-size: 0.95rem;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .schema-form-input:focus,
+        .schema-form-select:focus,
+        .schema-form-textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.16);
+        }
+
+        .schema-form-input.error {
+            border-color: #ef4444;
+        }
+
+        .schema-form-textarea {
+            min-height: 100px;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .schema-error-message {
+            color: #ef4444;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        .schema-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .schema-preview {
+            background: #0f172a;
+            color: #e2e8f0;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .schema-preview__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .schema-preview__title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin: 0;
+        }
+
+        .schema-preview__code {
+            background: rgba(15, 23, 42, 0.78);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.88rem;
+            max-height: 500px;
+            overflow: auto;
+            white-space: pre;
+            color: #cbd5e1;
+        }
+
+        .schema-validation-errors {
+            background: #fee2e2;
+            border: 1px solid #fca5a5;
+            border-radius: 12px;
+            padding: 16px;
+            display: none;
+        }
+
+        .schema-validation-errors__title {
+            color: #b91c1c;
+            font-weight: 600;
+            font-size: 0.92rem;
+            margin-bottom: 8px;
+        }
+
+        .schema-validation-errors__list {
+            color: #dc2626;
+            font-size: 0.88rem;
+            list-style: disc;
+            margin-left: 20px;
+        }
+
+        .schema-feedback {
+            font-size: 0.88rem;
+            color: #cbd5f5;
+            min-height: 18px;
+            font-weight: 500;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body data-tool-name="Schema Markup Generator" data-meta-description="Generate valid JSON-LD schema markup for Articles, FAQs, Products, and more.">
+
+    <div id="header-placeholder"></div>
+
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Schema Markup Generator</h1>
+
+                    <p class="tool-hero__description">
+                        Create valid JSON-LD structured data for your website. Boost your SEO with schema markup for Articles, Products, FAQs, and more.
+                    </p>
+
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-sitemap"></i> <span>Multiple Schema Types</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check-circle"></i> <span>Auto Validation</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-code"></i> <span>JSON-LD Output</span>
+                        </div>
+                    </div>
+
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-cog"></i>
+                            Generate Schema
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-info-circle"></i>
+                            Learn About Schema
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Schema Markup Generator</h2>
+                    <p class="tool-display__description">
+                        Select a schema type, fill in the required fields, and get valid JSON-LD markup instantly.
+                    </p>
+                </div>
+
+                <div class="schema-grid">
+                    <div class="schema-card">
+                        <h3 class="schema-card__title">Schema Configuration</h3>
+
+                        <div class="schema-form-group">
+                            <label class="schema-form-label schema-form-label--required" for="schema-type">Schema Type</label>
+                            <select id="schema-type" class="schema-form-select">
+                                <option value="">Select a schema type...</option>
+                                <option value="Article">Article</option>
+                                <option value="BlogPosting">Blog Post</option>
+                                <option value="Product">Product</option>
+                                <option value="FAQPage">FAQ Page</option>
+                                <option value="Organization">Organization</option>
+                                <option value="LocalBusiness">Local Business</option>
+                            </select>
+                        </div>
+
+                        <div id="schema-fields"></div>
+
+                        <div class="schema-actions">
+                            <button id="generate-schema" class="tool-display__button--primary">
+                                <i class="fas fa-magic"></i>
+                                Generate Schema
+                            </button>
+                            <button id="clear-schema" class="tool-button tool-button--secondary">
+                                <i class="fas fa-eraser"></i>
+                                Clear All
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="schema-preview">
+                        <div class="schema-preview__header">
+                            <h3 class="schema-preview__title">Generated Schema</h3>
+                            <div class="schema-actions" style="margin: 0;">
+                                <button id="copy-schema" class="tool-display__button">
+                                    <i class="fas fa-copy"></i>
+                                    Copy Code
+                                </button>
+                            </div>
+                        </div>
+
+                        <pre id="schema-output" class="schema-preview__code" tabindex="0">Select a schema type and fill in the fields to generate markup...</pre>
+
+                        <div id="validation-errors" class="schema-validation-errors">
+                            <div class="schema-validation-errors__title">Validation Errors:</div>
+                            <ul id="validation-errors-list" class="schema-validation-errors__list"></ul>
+                        </div>
+
+                        <p id="schema-feedback" class="schema-feedback" role="status" aria-live="assertive"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Schema Markup</h2>
+                <p class="tool-blog__subtitle">Learn how structured data helps search engines understand your content better.</p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is Schema Markup?</h3>
+                    <div class="blog-section__content">
+                        <p>Schema markup is structured data vocabulary that helps search engines understand your content. By adding schema to your pages, you can enable rich snippets in search results, improving click-through rates and visibility.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Common Schema Types</h3>
+                    <div class="blog-section__content">
+                        <ul>
+                            <li><strong>Article:</strong> For news articles, blog posts, and editorial content</li>
+                            <li><strong>Product:</strong> E-commerce items with pricing, ratings, and availability</li>
+                            <li><strong>FAQPage:</strong> Frequently asked questions with answers</li>
+                            <li><strong>Organization:</strong> Company or organization information</li>
+                            <li><strong>LocalBusiness:</strong> Physical business locations with hours and contact info</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">How to Implement Schema</h3>
+                    <div class="blog-section__content">
+                        <p>Copy the generated JSON-LD code and paste it into a <code>&lt;script type="application/ld+json"&gt;</code> tag in your page's <code>&lt;head&gt;</code> or <code>&lt;body&gt;</code> section. Test your markup using Google's Rich Results Test tool to ensure it's valid.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Common questions about schema markup implementation.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Will schema markup guarantee rich snippets?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No, adding schema doesn't guarantee rich snippets. Google decides whether to show them based on relevance, quality, and policies. However, valid schema significantly increases your chances of getting enhanced search results.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What's the difference between JSON-LD and Microdata?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>JSON-LD is Google's recommended format because it's easier to implement (just add a script tag) and doesn't require modifying your HTML structure. Microdata embeds schema within HTML tags, which is harder to maintain.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I use multiple schema types on one page?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! You can include multiple schema types on a single page. For example, an article page might have both Article schema and Organization schema. Just add separate script tags for each schema object.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I test my schema markup?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Use Google's Rich Results Test or Schema Markup Validator to test your code. These tools will show any errors and preview how your structured data might appear in search results.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../FAQ section/faq.js" defer></script>
+    <script src="/universal-search-deploy.js" defer></script>
+    <script>
+        (function () {
+            var elements = {
+                schemaType: document.getElementById('schema-type'),
+                schemaFields: document.getElementById('schema-fields'),
+                generateBtn: document.getElementById('generate-schema'),
+                clearBtn: document.getElementById('clear-schema'),
+                copyBtn: document.getElementById('copy-schema'),
+                output: document.getElementById('schema-output'),
+                validationErrors: document.getElementById('validation-errors'),
+                validationErrorsList: document.getElementById('validation-errors-list'),
+                feedback: document.getElementById('schema-feedback')
+            };
+
+            var feedbackTimeout = null;
+            var currentFields = {};
+
+            var schemaTemplates = {
+                Article: [
+                    { name: 'headline', label: 'Headline', type: 'text', required: true },
+                    { name: 'author', label: 'Author Name', type: 'text', required: true },
+                    { name: 'datePublished', label: 'Date Published', type: 'date', required: true },
+                    { name: 'image', label: 'Image URL', type: 'url', required: false },
+                    { name: 'description', label: 'Description', type: 'textarea', required: false }
+                ],
+                BlogPosting: [
+                    { name: 'headline', label: 'Headline', type: 'text', required: true },
+                    { name: 'author', label: 'Author Name', type: 'text', required: true },
+                    { name: 'datePublished', label: 'Date Published', type: 'date', required: true },
+                    { name: 'image', label: 'Image URL', type: 'url', required: false },
+                    { name: 'description', label: 'Description', type: 'textarea', required: false }
+                ],
+                Product: [
+                    { name: 'name', label: 'Product Name', type: 'text', required: true },
+                    { name: 'description', label: 'Description', type: 'textarea', required: true },
+                    { name: 'image', label: 'Image URL', type: 'url', required: false },
+                    { name: 'brand', label: 'Brand Name', type: 'text', required: false },
+                    { name: 'price', label: 'Price', type: 'number', required: false },
+                    { name: 'priceCurrency', label: 'Currency (e.g., USD)', type: 'text', required: false }
+                ],
+                FAQPage: [
+                    { name: 'question1', label: 'Question 1', type: 'text', required: true },
+                    { name: 'answer1', label: 'Answer 1', type: 'textarea', required: true },
+                    { name: 'question2', label: 'Question 2', type: 'text', required: false },
+                    { name: 'answer2', label: 'Answer 2', type: 'textarea', required: false }
+                ],
+                Organization: [
+                    { name: 'name', label: 'Organization Name', type: 'text', required: true },
+                    { name: 'url', label: 'Website URL', type: 'url', required: true },
+                    { name: 'logo', label: 'Logo URL', type: 'url', required: false },
+                    { name: 'description', label: 'Description', type: 'textarea', required: false }
+                ],
+                LocalBusiness: [
+                    { name: 'name', label: 'Business Name', type: 'text', required: true },
+                    { name: 'address', label: 'Street Address', type: 'text', required: true },
+                    { name: 'city', label: 'City', type: 'text', required: true },
+                    { name: 'state', label: 'State/Region', type: 'text', required: true },
+                    { name: 'zipCode', label: 'ZIP/Postal Code', type: 'text', required: true },
+                    { name: 'telephone', label: 'Phone Number', type: 'tel', required: false }
+                ]
+            };
+
+            function setFeedback(message, duration) {
+                if (duration === void 0) duration = 2800;
+                if (feedbackTimeout) {
+                    clearTimeout(feedbackTimeout);
+                    feedbackTimeout = null;
+                }
+                elements.feedback.textContent = message;
+                if (message && duration > 0) {
+                    feedbackTimeout = setTimeout(function () {
+                        elements.feedback.textContent = '';
+                        feedbackTimeout = null;
+                    }, duration);
+                }
+            }
+
+            function renderFields() {
+                var type = elements.schemaType.value;
+                elements.schemaFields.innerHTML = '';
+                currentFields = {};
+
+                if (!type || !schemaTemplates[type]) {
+                    elements.output.textContent = 'Select a schema type to begin...';
+                    return;
+                }
+
+                var fields = schemaTemplates[type];
+                fields.forEach(function (field) {
+                    var group = document.createElement('div');
+                    group.className = 'schema-form-group';
+
+                    var label = document.createElement('label');
+                    label.className = 'schema-form-label' + (field.required ? ' schema-form-label--required' : '');
+                    label.setAttribute('for', 'field-' + field.name);
+                    label.textContent = field.label;
+
+                    var input;
+                    if (field.type === 'textarea') {
+                        input = document.createElement('textarea');
+                        input.className = 'schema-form-textarea';
+                    } else {
+                        input = document.createElement('input');
+                        input.type = field.type;
+                        input.className = 'schema-form-input';
+                    }
+                    input.id = 'field-' + field.name;
+                    input.dataset.fieldName = field.name;
+                    input.dataset.required = field.required;
+
+                    var errorMsg = document.createElement('span');
+                    errorMsg.className = 'schema-error-message';
+                    errorMsg.textContent = 'This field is required';
+
+                    group.appendChild(label);
+                    group.appendChild(input);
+                    group.appendChild(errorMsg);
+                    elements.schemaFields.appendChild(group);
+
+                    currentFields[field.name] = { element: input, required: field.required, error: errorMsg };
+                });
+            }
+
+            function validateFields() {
+                var errors = [];
+                var isValid = true;
+
+                Object.keys(currentFields).forEach(function (key) {
+                    var field = currentFields[key];
+                    field.element.classList.remove('error');
+                    field.error.style.display = 'none';
+
+                    if (field.required && !field.element.value.trim()) {
+                        field.element.classList.add('error');
+                        field.error.style.display = 'block';
+                        errors.push(field.element.previousElementSibling.textContent.replace('*', '') + ' is required');
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    elements.validationErrors.style.display = 'block';
+                    elements.validationErrorsList.innerHTML = errors.map(function (e) {
+                        return '<li>' + e + '</li>';
+                    }).join('');
+                } else {
+                    elements.validationErrors.style.display = 'none';
+                }
+
+                return isValid;
+            }
+
+            function generateSchema() {
+                var type = elements.schemaType.value;
+                if (!type) {
+                    setFeedback('Please select a schema type.', 2400);
+                    return;
+                }
+
+                if (!validateFields()) {
+                    setFeedback('Please fix validation errors.', 2600);
+                    return;
+                }
+
+                var schema = {
+                    "@context": "https://schema.org",
+                    "@type": type
+                };
+
+                Object.keys(currentFields).forEach(function (key) {
+                    var value = currentFields[key].element.value.trim();
+                    if (value) {
+                        if (type === 'Article' || type === 'BlogPosting') {
+                            if (key === 'author') {
+                                schema.author = { "@type": "Person", "name": value };
+                            } else {
+                                schema[key] = value;
+                            }
+                        } else if (type === 'Product') {
+                            if (key === 'price' || key === 'priceCurrency') {
+                                if (!schema.offers) schema.offers = { "@type": "Offer" };
+                                schema.offers[key] = key === 'price' ? parseFloat(value) : value;
+                            } else if (key === 'brand') {
+                                schema.brand = { "@type": "Brand", "name": value };
+                            } else {
+                                schema[key] = value;
+                            }
+                        } else if (type === 'FAQPage') {
+                            if (!schema.mainEntity) schema.mainEntity = [];
+                            if (key.startsWith('question')) {
+                                var num = key.replace('question', '');
+                                var answerKey = 'answer' + num;
+                                var answer = currentFields[answerKey] ? currentFields[answerKey].element.value.trim() : '';
+                                if (answer) {
+                                    schema.mainEntity.push({
+                                        "@type": "Question",
+                                        "name": value,
+                                        "acceptedAnswer": {
+                                            "@type": "Answer",
+                                            "text": answer
+                                        }
+                                    });
+                                }
+                            }
+                        } else if (type === 'LocalBusiness') {
+                            if (key === 'address' || key === 'city' || key === 'state' || key === 'zipCode') {
+                                if (!schema.address) schema.address = { "@type": "PostalAddress" };
+                                var mapping = { address: 'streetAddress', city: 'addressLocality', state: 'addressRegion', zipCode: 'postalCode' };
+                                schema.address[mapping[key]] = value;
+                            } else {
+                                schema[key] = value;
+                            }
+                        } else {
+                            schema[key] = value;
+                        }
+                    }
+                });
+
+                var jsonOutput = JSON.stringify(schema, null, 2);
+                elements.output.textContent = jsonOutput;
+                elements.validationErrors.style.display = 'none';
+                setFeedback('Schema generated successfully!', 2600);
+            }
+
+            function copySchema() {
+                var text = elements.output.textContent;
+                if (!text || text.includes('Select a schema')) {
+                    setFeedback('Generate schema first.', 2400);
+                    return;
+                }
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function () {
+                        setFeedback('Schema copied to clipboard!', 2400);
+                    }, function () {
+                        setFeedback('Copy failed. Select text manually.', 3000);
+                    });
+                } else {
+                    var temp = document.createElement('textarea');
+                    temp.value = text;
+                    temp.style.position = 'fixed';
+                    temp.style.opacity = '0';
+                    document.body.appendChild(temp);
+                    temp.select();
+                    try {
+                        document.execCommand('copy');
+                        setFeedback('Schema copied to clipboard!', 2400);
+                    } catch (err) {
+                        setFeedback('Copy failed. Select text manually.', 3000);
+                    }
+                    document.body.removeChild(temp);
+                }
+            }
+
+            function clearAll() {
+                elements.schemaType.value = '';
+                elements.schemaFields.innerHTML = '';
+                elements.output.textContent = 'Select a schema type to begin...';
+                elements.validationErrors.style.display = 'none';
+                currentFields = {};
+                setFeedback('All fields cleared.', 2200);
+            }
+
+            elements.schemaType.addEventListener('change', renderFields);
+            elements.generateBtn.addEventListener('click', generateSchema);
+            elements.copyBtn.addEventListener('click', copySchema);
+            elements.clearBtn.addEventListener('click', clearAll);
+        })();
+    </script>
+
+</body>
+</html>
+

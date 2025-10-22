@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Old vs New Tax Regime Calculator | India Tax Calculator 2024-25 | EveryTool.tech</title>
+    <meta name="description" content="Compare Old vs New Tax Regime for FY 2024-25. Calculate tax liability, effective tax rate, and find the best regime for your income. Free India tax calculator with detailed breakdown.">
+    <meta name="keywords" content="tax regime calculator, old vs new tax regime, india tax calculator, fy 2024-25 tax calculator, income tax calculator india, tax comparison calculator">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Old vs New Tax Regime Calculator | EveryTool.tech">
+    <meta property="og:description" content="Compare Old vs New Tax Regime for FY 2024-25. Calculate tax liability, effective tax rate, and find the best regime for your income.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/financial-tools/tax-regime-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tool CSS -->
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <!-- Add in <head> if not present -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Core Variables */
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --primary-darker: #1f37a8;
+            --primary-light: #6b83f1;
+            --primary-lighter: #94a5f4;
+            --secondary: #7209B7;
+            --secondary-dark: #560BAD;
+            --accent: #F72585;
+            --accent-dark: #B5179E;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-light: #9CA3AF;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --bg-dark: #111827;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1.5rem;
+            --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        /* Header Placeholder */
+        #header-placeholder {
+            height: 64px;
+        }
+
+        /* Tool Hero Section */
+        .tool-hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="%234361EE" opacity="0.1"/></svg>');
+            opacity: 0.5;
+            animation: patternMove 20s linear infinite;
+        }
+
+        .tool-hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-hero__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tool-hero__left {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .tool-hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .tool-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .tool-hero__features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .tool-hero__cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tool-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-button--primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-button--primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-button--secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tool-hero__right {
+            position: relative;
+            animation: slideIn 1s ease-out;
+        }
+
+        /* Tool Display Section */
+        .tool-display {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .tool-display__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-display__wrapper {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-display__wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .tool-display__header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tool-display__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__description {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tool-display__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .tool-display__input-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .tool-display__output-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .tool-display__controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-display__button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-display__button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-display__button--secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__input-group {
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-display__input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .tool-display__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+            background: white;
+        }
+
+        .tool-display__select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .tax-summary {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            background: var(--bg-accent);
+        }
+
+        .tax-summary__item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--bg-secondary);
+        }
+
+        .tax-summary__item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .tax-summary__label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tax-summary__value {
+            color: var(--text-secondary);
+        }
+
+        .comparison-table {
+            margin-top: 1rem;
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--bg-accent);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--bg-accent);
+        }
+
+        .comparison-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .deduction-group {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .deduction-group h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .deduction-group p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--text-primary);
+            color: white;
+            text-align: center;
+            border-radius: var(--radius-sm);
+            padding: 0.5rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.875rem;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Mobile-specific optimizations for Tax Calculator */
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                display: grid;
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .tool-display__input-group { 
+                margin-bottom: 1rem; 
+            }
+            .tool-display__input, .tool-display__select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .tool-display__button { 
+                width: 100%; 
+                margin-bottom: 0.5rem; 
+            }
+            .tool-display__controls { 
+                display: flex;
+                flex-direction: column; 
+            }
+            .comparison-table {
+                font-size: 0.875rem;
+            }
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-display__input { 
+                padding: 0.65rem; 
+            }
+            .tool-display__button { 
+                padding: 0.8rem; 
+                font-size: 0.95rem; 
+            }
+            .comparison-table {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Compare Old vs New Tax Regime</h1>
+                    <p class="tool-hero__description">
+                        Calculate and compare tax liability under both Old and New Tax Regime for FY 2024-25. 
+                        Find out which regime saves you more money based on your income and deductions.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-calculator"></i>
+                            <span>FY 2024-25 Slabs</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Side-by-Side Comparison</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Smart Recommendations</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Private</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Tax
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Tax Regime Calculator</h2>
+                    <p class="tool-display__description">
+                        Enter your income details and deductions to compare tax liability under both regimes.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Gross Salary (₹)</label>
+                            <input type="number" class="tool-display__input" id="gross-salary" placeholder="Enter gross salary">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Age Group</label>
+                            <select class="tool-display__select" id="age-group">
+                                <option value="below-60">Below 60 years</option>
+                                <option value="60-80">60-80 years</option>
+                                <option value="above-80">Above 80 years</option>
+                            </select>
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Other Income (₹)</label>
+                            <input type="number" class="tool-display__input" id="other-income" placeholder="Interest, rental, etc.">
+                        </div>
+                        
+                        <h3 style="margin: 1.5rem 0 1rem 0; color: var(--text-primary);">Deductions (Old Regime Only)</h3>
+                        
+                        <div class="deduction-group">
+                            <h4>Section 80C <span class="tooltip">ℹ️<span class="tooltiptext">Life insurance, PPF, ELSS, EPF, NSC, etc. (Max ₹1.5 lakh)</span></span></h4>
+                            <p>Life insurance, PPF, ELSS, EPF, NSC, etc.</p>
+                            <input type="number" class="tool-display__input" id="deduction-80c" placeholder="Max ₹1,50,000">
+                        </div>
+                        
+                        <div class="deduction-group">
+                            <h4>Section 80D <span class="tooltip">ℹ️<span class="tooltiptext">Health insurance premium (Max ₹25,000-₹1 lakh)</span></span></h4>
+                            <p>Health insurance premium</p>
+                            <input type="number" class="tool-display__input" id="deduction-80d" placeholder="Max ₹25,000-₹1,00,000">
+                        </div>
+                        
+                        <div class="deduction-group">
+                            <h4>HRA <span class="tooltip">ℹ️<span class="tooltiptext">House Rent Allowance exemption</span></span></h4>
+                            <p>House Rent Allowance exemption</p>
+                            <input type="number" class="tool-display__input" id="hra-exemption" placeholder="HRA exemption amount">
+                        </div>
+                        
+                        <div class="deduction-group">
+                            <h4>LTA <span class="tooltip">ℹ️<span class="tooltiptext">Leave Travel Allowance (Max ₹20,000)</span></span></h4>
+                            <p>Leave Travel Allowance</p>
+                            <input type="number" class="tool-display__input" id="lta-exemption" placeholder="Max ₹20,000">
+                        </div>
+                        
+                        <div class="deduction-group">
+                            <h4>Section 80CCD(1B) <span class="tooltip">ℹ️<span class="tooltiptext">Additional NPS contribution (Max ₹50,000)</span></span></h4>
+                            <p>Additional NPS contribution</p>
+                            <input type="number" class="tool-display__input" id="deduction-80ccd" placeholder="Max ₹50,000">
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">
+                                <input type="checkbox" id="standard-deduction" style="margin-right: 0.5rem;">
+                                Standard Deduction (₹50,000)
+                            </label>
+                        </div>
+                        
+                        <div class="tool-display__controls">
+                            <button class="tool-display__button" id="calculate-tax">
+                                <i class="fas fa-calculator"></i>
+                                Calculate Tax
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="reset-tax">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="export-tax">
+                                <i class="fas fa-download"></i>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Tax Comparison Results</h3>
+                        <div class="tool-display__result" id="tax-result">
+                            Your tax calculation results will appear here...
+                        </div>
+                        <div class="tax-summary" id="tax-summary" style="display: none;">
+                            <div class="tax-summary__item">
+                                <span class="tax-summary__label">Old Regime Tax:</span>
+                                <span class="tax-summary__value" id="old-regime-tax"></span>
+                            </div>
+                            <div class="tax-summary__item">
+                                <span class="tax-summary__label">New Regime Tax:</span>
+                                <span class="tax-summary__value" id="new-regime-tax"></span>
+                            </div>
+                            <div class="tax-summary__item">
+                                <span class="tax-summary__label">Savings:</span>
+                                <span class="tax-summary__value" id="tax-savings"></span>
+                            </div>
+                            <div class="tax-summary__item">
+                                <span class="tax-summary__label">Recommended Regime:</span>
+                                <span class="tax-summary__value" id="recommended-regime"></span>
+                            </div>
+                        </div>
+                        <table class="comparison-table" id="comparison-table" style="display: none;">
+                            <thead>
+                                <tr>
+                                    <th>Particulars</th>
+                                    <th>Old Regime</th>
+                                    <th>New Regime</th>
+                                </tr>
+                            </thead>
+                            <tbody id="comparison-body">
+                            </tbody>
+                        </table>
+                        <div class="chart-container" id="chart-container" style="display: none;">
+                            <canvas id="taxChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Old vs New Tax Regime in India</h2>
+                <p class="tool-blog__subtitle">
+                    A comprehensive guide to choosing between Old and New Tax Regime for FY 2024-25
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What are Old and New Tax Regimes?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            The Indian government introduced the New Tax Regime in Budget 2020 as an alternative to the existing Old Tax Regime. 
+                            Both regimes have different tax slabs and deduction structures, allowing taxpayers to choose the one that benefits them most.
+                        </p>
+                        <p>
+                            <strong>Old Tax Regime:</strong> Allows various deductions and exemptions like Section 80C, 80D, HRA, LTA, etc., 
+                            but has higher tax rates in some brackets.
+                        </p>
+                        <p>
+                            <strong>New Tax Regime:</strong> Offers lower tax rates but with limited deductions and exemptions. 
+                            It's designed to simplify tax calculations and reduce compliance burden.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">FY 2024-25 Tax Slabs</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Here are the tax slabs for FY 2024-25 under both regimes:
+                        </p>
+                        <h4>Old Tax Regime:</h4>
+                        <ul>
+                            <li>Up to ₹2.5 lakh: No tax</li>
+                            <li>₹2.5 lakh - ₹5 lakh: 5%</li>
+                            <li>₹5 lakh - ₹10 lakh: 20%</li>
+                            <li>Above ₹10 lakh: 30%</li>
+                        </ul>
+                        <h4>New Tax Regime:</h4>
+                        <ul>
+                            <li>Up to ₹3 lakh: No tax</li>
+                            <li>₹3 lakh - ₹6 lakh: 5%</li>
+                            <li>₹6 lakh - ₹9 lakh: 10%</li>
+                            <li>₹9 lakh - ₹12 lakh: 15%</li>
+                            <li>₹12 lakh - ₹15 lakh: 20%</li>
+                            <li>Above ₹15 lakh: 30%</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Key Deductions and Exemptions</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Understanding available deductions is crucial for choosing the right regime:
+                        </p>
+                        <ul>
+                            <li><strong>Section 80C:</strong> Life insurance, PPF, ELSS, EPF, NSC (Max ₹1.5 lakh)</li>
+                            <li><strong>Section 80D:</strong> Health insurance premium (Max ₹25,000-₹1 lakh)</li>
+                            <li><strong>HRA:</strong> House Rent Allowance exemption</li>
+                            <li><strong>LTA:</strong> Leave Travel Allowance (Max ₹20,000)</li>
+                            <li><strong>Section 80CCD(1B):</strong> Additional NPS contribution (Max ₹50,000)</li>
+                            <li><strong>Standard Deduction:</strong> ₹50,000 (available in both regimes)</li>
+                        </ul>
+                        <p>
+                            Note: Most deductions are available only in the Old Regime. The New Regime offers limited deductions.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">How to Choose the Right Regime?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Here are some guidelines to help you choose:
+                        </p>
+                        <ul>
+                            <li><strong>High Deductions:</strong> If you have significant deductions (>₹1.5 lakh), Old Regime might be better</li>
+                            <li><strong>Low Deductions:</strong> If you have minimal deductions, New Regime might save you tax</li>
+                            <li><strong>Income Level:</strong> Middle-income earners often benefit from New Regime</li>
+                            <li><strong>Simplicity:</strong> New Regime offers simpler tax calculations</li>
+                            <li><strong>Future Planning:</strong> Consider your long-term investment and deduction plans</li>
+                        </ul>
+                        <p>
+                            Use our calculator to compare both regimes based on your specific income and deduction profile.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Tax Regime Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about Tax Regime Calculator</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>Which tax regime should I choose?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>It depends on your income level and available deductions. Use our calculator to compare both regimes based on your specific situation. Generally, if you have significant deductions (>₹1.5 lakh), Old Regime might be better.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I switch between regimes?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes, you can choose a different regime each financial year. However, once you choose a regime for a year, you cannot change it for that year.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Are the tax slabs the same for all age groups?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>No, senior citizens (60-80 years) and super senior citizens (above 80 years) have different tax slabs with higher exemption limits.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What deductions are available in New Regime?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>New Regime offers limited deductions including standard deduction (₹50,000), Section 80CCD(2) for employer NPS contribution, and some specific deductions like Section 80G.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Fetch and insert header
+        fetch('../../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Tax Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const grossSalaryInput = document.getElementById('gross-salary');
+            const ageGroupSelect = document.getElementById('age-group');
+            const otherIncomeInput = document.getElementById('other-income');
+            const deduction80CInput = document.getElementById('deduction-80c');
+            const deduction80DInput = document.getElementById('deduction-80d');
+            const hraExemptionInput = document.getElementById('hra-exemption');
+            const ltaExemptionInput = document.getElementById('lta-exemption');
+            const deduction80CCDInput = document.getElementById('deduction-80ccd');
+            const standardDeductionCheckbox = document.getElementById('standard-deduction');
+            const calculateButton = document.getElementById('calculate-tax');
+            const resetButton = document.getElementById('reset-tax');
+            const exportButton = document.getElementById('export-tax');
+            const resultDiv = document.getElementById('tax-result');
+            const summaryDiv = document.getElementById('tax-summary');
+            const comparisonTable = document.getElementById('comparison-table');
+            const chartContainer = document.getElementById('chart-container');
+            
+            const oldRegimeTaxSpan = document.getElementById('old-regime-tax');
+            const newRegimeTaxSpan = document.getElementById('new-regime-tax');
+            const taxSavingsSpan = document.getElementById('tax-savings');
+            const recommendedRegimeSpan = document.getElementById('recommended-regime');
+            
+            let taxChart = null;
+
+            // FY 2024-25 Tax Slabs
+            const taxSlabs = {
+                oldRegime: {
+                    below60: [
+                        { min: 0, max: 250000, rate: 0 },
+                        { min: 250000, max: 500000, rate: 5 },
+                        { min: 500000, max: 1000000, rate: 20 },
+                        { min: 1000000, max: Infinity, rate: 30 }
+                    ],
+                    '60-80': [
+                        { min: 0, max: 300000, rate: 0 },
+                        { min: 300000, max: 500000, rate: 5 },
+                        { min: 500000, max: 1000000, rate: 20 },
+                        { min: 1000000, max: Infinity, rate: 30 }
+                    ],
+                    above80: [
+                        { min: 0, max: 500000, rate: 0 },
+                        { min: 500000, max: 1000000, rate: 20 },
+                        { min: 1000000, max: Infinity, rate: 30 }
+                    ]
+                },
+                newRegime: {
+                    below60: [
+                        { min: 0, max: 300000, rate: 0 },
+                        { min: 300000, max: 600000, rate: 5 },
+                        { min: 600000, max: 900000, rate: 10 },
+                        { min: 900000, max: 1200000, rate: 15 },
+                        { min: 1200000, max: 1500000, rate: 20 },
+                        { min: 1500000, max: Infinity, rate: 30 }
+                    ],
+                    '60-80': [
+                        { min: 0, max: 300000, rate: 0 },
+                        { min: 300000, max: 600000, rate: 5 },
+                        { min: 600000, max: 900000, rate: 10 },
+                        { min: 900000, max: 1200000, rate: 15 },
+                        { min: 1200000, max: 1500000, rate: 20 },
+                        { min: 1500000, max: Infinity, rate: 30 }
+                    ],
+                    above80: [
+                        { min: 0, max: 300000, rate: 0 },
+                        { min: 300000, max: 600000, rate: 5 },
+                        { min: 600000, max: 900000, rate: 10 },
+                        { min: 900000, max: 1200000, rate: 15 },
+                        { min: 1200000, max: 1500000, rate: 20 },
+                        { min: 1500000, max: Infinity, rate: 30 }
+                    ]
+                }
+            };
+
+            function calculateTax(income, regime, ageGroup) {
+                const slabs = taxSlabs[regime][ageGroup];
+                let tax = 0;
+                let remainingIncome = income;
+
+                for (const slab of slabs) {
+                    if (remainingIncome <= 0) break;
+                    
+                    const taxableInThisSlab = Math.min(remainingIncome, slab.max - slab.min);
+                    tax += taxableInThisSlab * (slab.rate / 100);
+                    remainingIncome -= taxableInThisSlab;
+                }
+
+                return tax;
+            }
+
+            function calculateSurcharge(tax, income) {
+                if (income > 5000000) return tax * 0.15; // 15% surcharge
+                if (income > 2000000) return tax * 0.10; // 10% surcharge
+                if (income > 1000000) return tax * 0.05; // 5% surcharge
+                return 0;
+            }
+
+            function calculateCess(tax, surcharge) {
+                return (tax + surcharge) * 0.04; // 4% cess
+            }
+
+            function calculateTotalTax() {
+                const grossSalary = parseFloat(grossSalaryInput.value) || 0;
+                const otherIncome = parseFloat(otherIncomeInput.value) || 0;
+                const ageGroup = ageGroupSelect.value;
+                const standardDeduction = standardDeductionCheckbox.checked ? 50000 : 0;
+                
+                const deduction80C = Math.min(parseFloat(deduction80CInput.value) || 0, 150000);
+                const deduction80D = parseFloat(deduction80DInput.value) || 0;
+                const hraExemption = parseFloat(hraExemptionInput.value) || 0;
+                const ltaExemption = Math.min(parseFloat(ltaExemptionInput.value) || 0, 20000);
+                const deduction80CCD = Math.min(parseFloat(deduction80CCDInput.value) || 0, 50000);
+
+                if (grossSalary > 0) {
+                    const totalIncome = grossSalary + otherIncome;
+                    
+                    // Old Regime Calculation
+                    const oldRegimeDeductions = deduction80C + deduction80D + hraExemption + ltaExemption + deduction80CCD + standardDeduction;
+                    const oldRegimeTaxableIncome = Math.max(0, totalIncome - oldRegimeDeductions);
+                    const oldRegimeTax = calculateTax(oldRegimeTaxableIncome, 'oldRegime', ageGroup);
+                    const oldRegimeSurcharge = calculateSurcharge(oldRegimeTax, oldRegimeTaxableIncome);
+                    const oldRegimeCess = calculateCess(oldRegimeTax, oldRegimeSurcharge);
+                    const oldRegimeTotalTax = oldRegimeTax + oldRegimeSurcharge + oldRegimeCess;
+
+                    // New Regime Calculation
+                    const newRegimeDeductions = standardDeduction;
+                    const newRegimeTaxableIncome = Math.max(0, totalIncome - newRegimeDeductions);
+                    const newRegimeTax = calculateTax(newRegimeTaxableIncome, 'newRegime', ageGroup);
+                    const newRegimeSurcharge = calculateSurcharge(newRegimeTax, newRegimeTaxableIncome);
+                    const newRegimeCess = calculateCess(newRegimeTax, newRegimeSurcharge);
+                    const newRegimeTotalTax = newRegimeTax + newRegimeSurcharge + newRegimeCess;
+
+                    // Format numbers with commas and 2 decimal places
+                    const formatNumber = (num) => {
+                        return '₹' + num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    };
+
+                    const savings = Math.abs(oldRegimeTotalTax - newRegimeTotalTax);
+                    const recommendedRegime = oldRegimeTotalTax < newRegimeTotalTax ? 'Old Regime' : 'New Regime';
+
+                    oldRegimeTaxSpan.textContent = formatNumber(oldRegimeTotalTax);
+                    newRegimeTaxSpan.textContent = formatNumber(newRegimeTotalTax);
+                    taxSavingsSpan.textContent = formatNumber(savings);
+                    recommendedRegimeSpan.textContent = recommendedRegime;
+
+                    resultDiv.textContent = 'Tax calculation completed!';
+                    summaryDiv.style.display = 'block';
+                    comparisonTable.style.display = 'table';
+                    chartContainer.style.display = 'block';
+
+                    // Create comparison table
+                    createComparisonTable(totalIncome, oldRegimeDeductions, newRegimeDeductions, 
+                                        oldRegimeTaxableIncome, newRegimeTaxableIncome, 
+                                        oldRegimeTotalTax, newRegimeTotalTax);
+
+                    // Create chart
+                    createChart(oldRegimeTotalTax, newRegimeTotalTax);
+
+                    // Save to localStorage
+                    saveToLocalStorage();
+                } else {
+                    resultDiv.textContent = 'Please enter valid income details.';
+                    summaryDiv.style.display = 'none';
+                    comparisonTable.style.display = 'none';
+                    chartContainer.style.display = 'none';
+                }
+            }
+
+            function createComparisonTable(totalIncome, oldDeductions, newDeductions, 
+                                         oldTaxableIncome, newTaxableIncome, 
+                                         oldTotalTax, newTotalTax) {
+                const tbody = document.getElementById('comparison-body');
+                tbody.innerHTML = '';
+
+                const rows = [
+                    ['Gross Income', formatNumber(totalIncome), formatNumber(totalIncome)],
+                    ['Deductions', formatNumber(oldDeductions), formatNumber(newDeductions)],
+                    ['Taxable Income', formatNumber(oldTaxableIncome), formatNumber(newTaxableIncome)],
+                    ['Tax Liability', formatNumber(oldTotalTax), formatNumber(newTotalTax)],
+                    ['Effective Tax Rate', ((oldTotalTax / totalIncome) * 100).toFixed(2) + '%', 
+                                         ((newTotalTax / totalIncome) * 100).toFixed(2) + '%']
+                ];
+
+                rows.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${row[0]}</td>
+                        <td>${row[1]}</td>
+                        <td>${row[2]}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            function createChart(oldTax, newTax) {
+                if (taxChart) {
+                    taxChart.destroy();
+                }
+
+                const ctx = document.getElementById('taxChart').getContext('2d');
+                taxChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Old Regime', 'New Regime'],
+                        datasets: [{
+                            label: 'Tax Liability',
+                            data: [oldTax, newTax],
+                            backgroundColor: ['#4361EE', '#F72585'],
+                            borderColor: ['#2945c8', '#B5179E'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Tax Comparison Chart'
+                            },
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return '₹' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function formatNumber(num) {
+                return '₹' + num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+
+            function exportToCSV() {
+                const grossSalary = parseFloat(grossSalaryInput.value) || 0;
+                if (grossSalary === 0) {
+                    alert('Please calculate tax first before exporting.');
+                    return;
+                }
+
+                let csv = 'Particulars,Old Regime,New Regime\n';
+                csv += `Gross Income,${grossSalary},${grossSalary}\n`;
+                csv += `Tax Liability,${oldRegimeTaxSpan.textContent},${newRegimeTaxSpan.textContent}\n`;
+                csv += `Recommended Regime,${recommendedRegimeSpan.textContent},\n`;
+
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'tax-comparison.csv';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+
+            function saveToLocalStorage() {
+                const taxState = {
+                    grossSalary: grossSalaryInput.value,
+                    ageGroup: ageGroupSelect.value,
+                    otherIncome: otherIncomeInput.value,
+                    deduction80C: deduction80CInput.value,
+                    deduction80D: deduction80DInput.value,
+                    hraExemption: hraExemptionInput.value,
+                    ltaExemption: ltaExemptionInput.value,
+                    deduction80CCD: deduction80CCDInput.value,
+                    standardDeduction: standardDeductionCheckbox.checked
+                };
+                localStorage.setItem('taxCalculatorState', JSON.stringify(taxState));
+            }
+
+            function loadFromLocalStorage() {
+                const savedState = localStorage.getItem('taxCalculatorState');
+                if (savedState) {
+                    const state = JSON.parse(savedState);
+                    grossSalaryInput.value = state.grossSalary || '';
+                    ageGroupSelect.value = state.ageGroup || 'below-60';
+                    otherIncomeInput.value = state.otherIncome || '';
+                    deduction80CInput.value = state.deduction80C || '';
+                    deduction80DInput.value = state.deduction80D || '';
+                    hraExemptionInput.value = state.hraExemption || '';
+                    ltaExemptionInput.value = state.ltaExemption || '';
+                    deduction80CCDInput.value = state.deduction80CCD || '';
+                    standardDeductionCheckbox.checked = state.standardDeduction || false;
+                }
+            }
+
+            function resetCalculator() {
+                grossSalaryInput.value = '';
+                ageGroupSelect.value = 'below-60';
+                otherIncomeInput.value = '';
+                deduction80CInput.value = '';
+                deduction80DInput.value = '';
+                hraExemptionInput.value = '';
+                ltaExemptionInput.value = '';
+                deduction80CCDInput.value = '';
+                standardDeductionCheckbox.checked = false;
+                resultDiv.textContent = 'Your tax calculation results will appear here...';
+                summaryDiv.style.display = 'none';
+                comparisonTable.style.display = 'none';
+                chartContainer.style.display = 'none';
+                if (taxChart) {
+                    taxChart.destroy();
+                    taxChart = null;
+                }
+                localStorage.removeItem('taxCalculatorState');
+            }
+
+            calculateButton.addEventListener('click', calculateTotalTax);
+            resetButton.addEventListener('click', resetCalculator);
+            exportButton.addEventListener('click', exportToCSV);
+
+            // Load saved state on page load
+            loadFromLocalStorage();
+
+            // Allow Enter key to trigger calculation
+            [grossSalaryInput, otherIncomeInput].forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        calculateTotalTax();
+                    }
+                });
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with animation classes
+        document.querySelectorAll('.tool-hero__left, .tool-hero__right, .blog-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

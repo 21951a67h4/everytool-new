@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Gradient Generator | Create Beautiful Gradients | EveryTool.tech</title>
+    <meta name="description" content="Create stunning CSS gradients with drag handles, color pickers, and transparency controls. Export code with prefixes and save presets for your projects.">
+    <meta name="keywords" content="css gradient generator, gradient maker, css gradients, linear gradient, radial gradient, conic gradient">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="CSS Gradient Generator | EveryTool.tech">
+    <meta property="og:description" content="Create stunning CSS gradients with drag handles, color pickers, and transparency controls. Export code with prefixes and save presets for your projects.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/developer-tools/css-gradient-generator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* CSS Gradient Generator Specific Styles */
+        .gradient-calc-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .gradient-calc-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .gradient-calc-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .gradient-calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .gradient-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .gradient-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .gradient-form-group input, .gradient-form-group select { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .gradient-preview {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gradient-controls {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .color-stops {
+            margin-top: 15px;
+        }
+        
+        .color-stop {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+        
+        .color-stop input[type="color"] {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .color-stop input[type="range"] {
+            flex: 1;
+            margin: 0 10px;
+        }
+        
+        .color-stop input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .color-stop button {
+            padding: 5px 10px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .gradient-results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .code-output {
+            margin-top: 15px;
+            padding: 15px;
+            background: #2d3748;
+            color: #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+        
+        .code-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .code-tab {
+            padding: 8px 15px;
+            background: #4a5568;
+            color: white;
+            border: none;
+            border-radius: 4px 4px 0 0;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .code-tab.active {
+            background: #2d3748;
+        }
+        
+        .presets-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .presets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .preset-item {
+            height: 60px;
+            border-radius: 6px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .preset-item:hover {
+            border-color: #007bff;
+            transform: scale(1.05);
+        }
+        
+        .export-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .gradient-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .gradient-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .color-stop {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .color-stop input[type="range"] {
+                margin: 0;
+            }
+            .presets-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .export-buttons {
+                flex-direction: column;
+            }
+            .gradient-form-group input, .gradient-form-group select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gradient-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .presets-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .gradient-form-group input, .gradient-form-group select { 
+                padding: 8px; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="CSS Gradient Generator" data-meta-description="Create stunning CSS gradients with drag handles, color pickers, and transparency controls. Export code with prefixes and save presets for your projects.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">CSS Gradient Generator: Beautiful Gradients Made Easy</h1>
+                    <p class="tool-hero__description">
+                        Create stunning CSS gradients with drag handles, color pickers, and transparency controls. 
+                        Export code with prefixes and save presets for your projects.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-palette"></i>
+                            <span>Color Pickers</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-code"></i>
+                            <span>Code Export</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-save"></i>
+                            <span>Save Presets</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-eye"></i>
+                            <span>Live Preview</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-paint-brush"></i>
+                            Create Gradient
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About CSS Gradients
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">CSS Gradient Generator</h2>
+                    <p class="tool-display__description">
+                        Create beautiful CSS gradients with an intuitive interface and export ready-to-use code.
+                    </p>
+                </div>
+                
+                <!-- CSS Gradient Generator Custom Interface -->
+                <div class="gradient-calc-container">
+                    <div class="gradient-calc-section">
+                        <h4>1. Gradient Type</h4>
+                        <div class="gradient-calc-grid">
+                            <div class="gradient-form-group">
+                                <label for="gradient-type">Gradient Type</label>
+                                <select id="gradient-type">
+                                    <option value="linear">Linear Gradient</option>
+                                    <option value="radial">Radial Gradient</option>
+                                    <option value="conic">Conic Gradient</option>
+                                </select>
+                            </div>
+                            
+                            <div class="gradient-form-group">
+                                <label for="gradient-angle">Angle/Direction</label>
+                                <select id="gradient-angle">
+                                    <option value="to right">To Right (0deg)</option>
+                                    <option value="to bottom">To Bottom (90deg)</option>
+                                    <option value="to left">To Left (180deg)</option>
+                                    <option value="to top">To Top (270deg)</option>
+                                    <option value="45deg">Diagonal (45deg)</option>
+                                    <option value="135deg">Diagonal (135deg)</option>
+                                    <option value="225deg">Diagonal (225deg)</option>
+                                    <option value="315deg">Diagonal (315deg)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gradient-calc-section">
+                        <h4>2. Gradient Preview</h4>
+                        <div class="gradient-preview" id="gradient-preview"></div>
+                    </div>
+
+                    <div class="gradient-calc-section">
+                        <h4>3. Color Stops</h4>
+                        <div class="gradient-controls">
+                            <div class="gradient-calc-grid">
+                                <div class="gradient-form-group">
+                                    <button class="tool-display__button" onclick="addColorStop()">
+                                        <i class="fas fa-plus"></i>
+                                        Add Color Stop
+                                    </button>
+                                </div>
+                                <div class="gradient-form-group">
+                                    <button class="tool-display__button" onclick="randomizeGradient()">
+                                        <i class="fas fa-random"></i>
+                                        Randomize
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="color-stops" id="color-stops">
+                                <!-- Color stops will be added here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gradient-results" id="gradient-results" style="display: none;">
+                        <h4>Generated CSS Code</h4>
+                        <div class="code-tabs">
+                            <button class="code-tab active" onclick="showCodeTab('css')">CSS</button>
+                            <button class="code-tab" onclick="showCodeTab('tailwind')">Tailwind</button>
+                            <button class="code-tab" onclick="showCodeTab('scss')">SCSS</button>
+                        </div>
+                        <div class="code-output" id="code-output">
+                            <!-- Code will be added here -->
+                        </div>
+                    </div>
+
+                    <div class="presets-section">
+                        <h4>4. Gradient Presets</h4>
+                        <div class="presets-grid" id="presets-grid">
+                            <!-- Presets will be added here -->
+                        </div>
+                    </div>
+
+                    <div class="export-section">
+                        <h4>5. Export & Save</h4>
+                        <div class="export-buttons">
+                            <button class="tool-display__button" onclick="copyCSS()">
+                                <i class="fas fa-copy"></i> Copy CSS
+                            </button>
+                            <button class="tool-display__button" onclick="savePreset()">
+                                <i class="fas fa-save"></i> Save Preset
+                            </button>
+                            <button class="tool-display__button" onclick="exportGradient()">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Mastering CSS Gradients</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about different types of CSS gradients and how to use them effectively in your designs
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Types of CSS Gradients</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Linear Gradients:</strong> Create gradients that flow in a straight line from one point to another.
+                        </p>
+                        <p>
+                            <strong>Radial Gradients:</strong> Create gradients that radiate outward from a central point in a circular or elliptical pattern.
+                        </p>
+                        <p>
+                            <strong>Conic Gradients:</strong> Create gradients that sweep around a central point, like a pie chart.
+                        </p>
+                        <p>
+                            Each type offers unique visual effects and can be customized with multiple color stops and positioning.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Color Stops and Positioning</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Color Stops:</strong> Define where colors change in the gradient. You can have as many stops as needed.
+                        </p>
+                        <p>
+                            <strong>Positioning:</strong> Control where each color appears using percentages, pixels, or keywords.
+                        </p>
+                        <p>
+                            <strong>Transparency:</strong> Use rgba() or hsla() color values to create gradients with transparency effects.
+                        </p>
+                        <p>
+                            <strong>Best Practice:</strong> Use smooth transitions between colors for the most appealing results.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Browser Compatibility</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Modern Browsers:</strong> All current browsers support CSS gradients without prefixes.
+                        </p>
+                        <p>
+                            <strong>Legacy Support:</strong> Older browsers may require vendor prefixes (-webkit-, -moz-, -o-).
+                        </p>
+                        <p>
+                            <strong>Fallbacks:</strong> Always provide a solid color fallback for browsers that don't support gradients.
+                        </p>
+                        <p>
+                            Our generator automatically includes vendor prefixes when needed for maximum compatibility.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">CSS Gradient Generator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about CSS gradient generation</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>What's the difference between linear, radial, and conic gradients?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Linear gradients flow in a straight line, radial gradients radiate outward from a center point, and conic gradients sweep around a center point like a pie chart. Each creates different visual effects suitable for different design needs.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How many color stops can I use?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>You can use as many color stops as needed, but typically 2-5 stops create the most appealing gradients. Too many stops can make gradients look muddy or overly complex.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I use transparency in gradients?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes! You can use rgba() or hsla() color values to create gradients with transparency. This is great for overlay effects and creating depth in your designs.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Do I need vendor prefixes for gradients?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Modern browsers support CSS gradients without prefixes, but our generator includes them automatically for maximum compatibility with older browsers. Always test your gradients across different browsers.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // CSS Gradient Generator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const gradientType = document.getElementById('gradient-type');
+            const gradientAngle = document.getElementById('gradient-angle');
+            const gradientPreview = document.getElementById('gradient-preview');
+            const colorStops = document.getElementById('color-stops');
+            const gradientResults = document.getElementById('gradient-results');
+            const codeOutput = document.getElementById('code-output');
+            const presetsGrid = document.getElementById('presets-grid');
+            
+            let currentGradient = {
+                type: 'linear',
+                angle: 'to right',
+                stops: [
+                    { color: '#ff6b6b', position: 0 },
+                    { color: '#4ecdc4', position: 100 }
+                ]
+            };
+            
+            // Default presets
+            const presets = [
+                { name: 'Sunset', type: 'linear', angle: '45deg', stops: [
+                    { color: '#ff9a9e', position: 0 },
+                    { color: '#fecfef', position: 50 },
+                    { color: '#fecfef', position: 100 }
+                ]},
+                { name: 'Ocean', type: 'linear', angle: 'to bottom', stops: [
+                    { color: '#667eea', position: 0 },
+                    { color: '#764ba2', position: 100 }
+                ]},
+                { name: 'Forest', type: 'linear', angle: '135deg', stops: [
+                    { color: '#134e5e', position: 0 },
+                    { color: '#71b280', position: 100 }
+                ]},
+                { name: 'Fire', type: 'radial', angle: 'circle', stops: [
+                    { color: '#ff416c', position: 0 },
+                    { color: '#ff4b2b', position: 100 }
+                ]},
+                { name: 'Purple', type: 'conic', angle: 'from 0deg', stops: [
+                    { color: '#667eea', position: 0 },
+                    { color: '#764ba2', position: 50 },
+                    { color: '#667eea', position: 100 }
+                ]},
+                { name: 'Rainbow', type: 'linear', angle: 'to right', stops: [
+                    { color: '#ff0000', position: 0 },
+                    { color: '#ff8000', position: 16.66 },
+                    { color: '#ffff00', position: 33.33 },
+                    { color: '#00ff00', position: 50 },
+                    { color: '#0080ff', position: 66.66 },
+                    { color: '#8000ff', position: 83.33 },
+                    { color: '#ff0000', position: 100 }
+                ]}
+            ];
+            
+            // Event listeners
+            gradientType.addEventListener('change', updateGradient);
+            gradientAngle.addEventListener('change', updateGradient);
+            
+            function initializeColorStops() {
+                colorStops.innerHTML = '';
+                currentGradient.stops.forEach((stop, index) => {
+                    addColorStopElement(stop, index);
+                });
+                updateGradient();
+            }
+            
+            function addColorStopElement(stop, index) {
+                const stopElement = document.createElement('div');
+                stopElement.className = 'color-stop';
+                stopElement.innerHTML = `
+                    <input type="color" value="${stop.color}" onchange="updateColorStop(${index}, this.value)">
+                    <input type="range" min="0" max="100" value="${stop.position}" onchange="updatePosition(${index}, this.value)">
+                    <input type="number" min="0" max="100" value="${stop.position}" onchange="updatePosition(${index}, this.value)">
+                    <button onclick="removeColorStop(${index})">Remove</button>
+                `;
+                colorStops.appendChild(stopElement);
+            }
+            
+            window.addColorStop = function() {
+                const newStop = {
+                    color: '#ffffff',
+                    position: 50
+                };
+                currentGradient.stops.push(newStop);
+                currentGradient.stops.sort((a, b) => a.position - b.position);
+                initializeColorStops();
+            };
+            
+            window.removeColorStop = function(index) {
+                if (currentGradient.stops.length > 2) {
+                    currentGradient.stops.splice(index, 1);
+                    initializeColorStops();
+                } else {
+                    alert('You need at least 2 color stops for a gradient.');
+                }
+            };
+            
+            window.updateColorStop = function(index, color) {
+                currentGradient.stops[index].color = color;
+                updateGradient();
+            };
+            
+            window.updatePosition = function(index, position) {
+                currentGradient.stops[index].position = parseFloat(position);
+                currentGradient.stops.sort((a, b) => a.position - b.position);
+                initializeColorStops();
+            };
+            
+            function updateGradient() {
+                currentGradient.type = gradientType.value;
+                currentGradient.angle = gradientAngle.value;
+                
+                const gradientString = generateGradientString();
+                gradientPreview.style.background = gradientString;
+                
+                displayCode();
+                gradientResults.style.display = 'block';
+            }
+            
+            function generateGradientString() {
+                let gradientString = '';
+                
+                if (currentGradient.type === 'linear') {
+                    gradientString = `linear-gradient(${currentGradient.angle}`;
+                } else if (currentGradient.type === 'radial') {
+                    gradientString = `radial-gradient(circle`;
+                } else if (currentGradient.type === 'conic') {
+                    gradientString = `conic-gradient(from 0deg`;
+                }
+                
+                currentGradient.stops.forEach(stop => {
+                    gradientString += `, ${stop.color} ${stop.position}%`;
+                });
+                
+                gradientString += ')';
+                return gradientString;
+            }
+            
+            function displayCode() {
+                const gradientString = generateGradientString();
+                
+                const cssCode = `.gradient {
+    background: ${gradientString};
+}`;
+                
+                const tailwindCode = `<!-- Tailwind CSS -->
+<div class="bg-gradient-to-r from-red-500 to-blue-500">
+    <!-- Your content -->
+</div>`;
+                
+                const scssCode = `// SCSS
+.gradient {
+    background: ${gradientString};
+    
+    // Fallback for older browsers
+    background-color: ${currentGradient.stops[0].color};
+}`;
+                
+                codeOutput.innerHTML = cssCode;
+                window.currentCode = { css: cssCode, tailwind: tailwindCode, scss: scssCode };
+            }
+            
+            window.showCodeTab = function(tab) {
+                document.querySelectorAll('.code-tab').forEach(tab => tab.classList.remove('active'));
+                event.target.classList.add('active');
+                
+                if (window.currentCode) {
+                    codeOutput.innerHTML = window.currentCode[tab];
+                }
+            };
+            
+            window.randomizeGradient = function() {
+                const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd'];
+                const angles = ['to right', 'to bottom', '45deg', '135deg', 'to left', 'to top'];
+                
+                currentGradient.type = gradientType.value;
+                currentGradient.angle = angles[Math.floor(Math.random() * angles.length)];
+                currentGradient.stops = [
+                    { color: colors[Math.floor(Math.random() * colors.length)], position: 0 },
+                    { color: colors[Math.floor(Math.random() * colors.length)], position: 100 }
+                ];
+                
+                gradientAngle.value = currentGradient.angle;
+                initializeColorStops();
+            };
+            
+            function initializePresets() {
+                presetsGrid.innerHTML = presets.map(preset => `
+                    <div class="preset-item" style="background: ${generatePresetGradient(preset)}" onclick="loadPreset('${preset.name}')" title="${preset.name}"></div>
+                `).join('');
+            }
+            
+            function generatePresetGradient(preset) {
+                let gradientString = '';
+                
+                if (preset.type === 'linear') {
+                    gradientString = `linear-gradient(${preset.angle}`;
+                } else if (preset.type === 'radial') {
+                    gradientString = `radial-gradient(circle`;
+                } else if (preset.type === 'conic') {
+                    gradientString = `conic-gradient(from 0deg`;
+                }
+                
+                preset.stops.forEach(stop => {
+                    gradientString += `, ${stop.color} ${stop.position}%`;
+                });
+                
+                gradientString += ')';
+                return gradientString;
+            }
+            
+            window.loadPreset = function(presetName) {
+                const preset = presets.find(p => p.name === presetName);
+                if (preset) {
+                    currentGradient = JSON.parse(JSON.stringify(preset));
+                    gradientType.value = preset.type;
+                    gradientAngle.value = preset.angle;
+                    initializeColorStops();
+                }
+            };
+            
+            window.copyCSS = function() {
+                if (window.currentCode) {
+                    navigator.clipboard.writeText(window.currentCode.css).then(() => {
+                        alert('CSS code copied to clipboard!');
+                    });
+                }
+            };
+            
+            window.savePreset = function() {
+                const name = prompt('Enter a name for this preset:');
+                if (name) {
+                    const preset = {
+                        name: name,
+                        type: currentGradient.type,
+                        angle: currentGradient.angle,
+                        stops: [...currentGradient.stops]
+                    };
+                    presets.push(preset);
+                    localStorage.setItem('gradientPresets', JSON.stringify(presets));
+                    initializePresets();
+                    alert('Preset saved successfully!');
+                }
+            };
+            
+            window.exportGradient = function() {
+                const exportData = {
+                    gradient: currentGradient,
+                    css: window.currentCode?.css || '',
+                    timestamp: new Date().toISOString()
+                };
+                
+                const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'gradient-export.json';
+                link.click();
+                URL.revokeObjectURL(url);
+            };
+            
+            // Initialize
+            initializeColorStops();
+            initializePresets();
+            
+            // Load saved presets
+            const savedPresets = localStorage.getItem('gradientPresets');
+            if (savedPresets) {
+                try {
+                    const parsed = JSON.parse(savedPresets);
+                    presets.push(...parsed);
+                    initializePresets();
+                } catch (e) {
+                    console.error('Error loading saved presets:', e);
+                }
+            }
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

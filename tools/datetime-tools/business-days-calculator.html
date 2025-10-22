@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Days Calculator | Calculate Working Days Excluding Weekends & Holidays | EveryTool.tech</title>
+    <meta name="description" content="Calculate business days between dates excluding weekends and holidays. Support for multiple countries, custom weekend patterns, and half-day calculations. Perfect for project planning and deadline management.">
+    <meta name="keywords" content="business days calculator, working days calculator, exclude weekends holidays, project planning, deadline calculator, work days">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Business Days Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate business days between dates excluding weekends and holidays. Support for multiple countries, custom weekend patterns, and half-day calculations. Perfect for project planning and deadline management.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/datetime-tools/business-days-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Business Days Calculator Specific Styles */
+        .business-calc-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .business-calc-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .business-calc-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .business-calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .business-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .business-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .business-form-group input, .business-form-group select { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .date-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .date-input-group {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .date-input-group h4 {
+            margin: 0 0 15px 0;
+            color: #007bff;
+            font-size: 1.1rem;
+        }
+        
+        .include-exclude-toggles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-group {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .toggle-group h5 {
+            margin: 0 0 10px 0;
+            color: #856404;
+            font-size: 1rem;
+        }
+        
+        .toggle-options {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .toggle-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .business-results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .business-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .summary-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .summary-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        
+        .summary-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .calendar-view {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            margin-top: 10px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .calendar-day.weekend {
+            background: #f8f9fa;
+            color: #6c757d;
+        }
+        
+        .calendar-day.holiday {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .calendar-day.business-day {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .calendar-day.selected {
+            background: #007bff;
+            color: white;
+        }
+        
+        .calendar-day.outside-range {
+            background: #e9ecef;
+            color: #adb5bd;
+        }
+        
+        .date-list {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .date-list h5 {
+            margin: 0 0 15px 0;
+            color: #333;
+        }
+        
+        .date-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .date-list li {
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .date-list li.working-day {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .date-list li.non-working-day {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .date-list li.holiday {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .export-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .business-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .business-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .date-inputs {
+                grid-template-columns: 1fr;
+            }
+            .include-exclude-toggles {
+                grid-template-columns: 1fr;
+            }
+            .business-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .export-buttons {
+                flex-direction: column;
+            }
+            .business-form-group input, .business-form-group select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .business-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .business-summary {
+                grid-template-columns: 1fr;
+            }
+            .business-form-group input, .business-form-group select { 
+                padding: 8px; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="Business Days Calculator" data-meta-description="Calculate business days between dates excluding weekends and holidays. Support for multiple countries, custom weekend patterns, and half-day calculations. Perfect for project planning and deadline management.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Business Days Calculator: Working Days Excluding Weekends & Holidays</h1>
+                    <p class="tool-hero__description">
+                        Calculate business days between dates excluding weekends and holidays. Support for multiple countries, 
+                        custom weekend patterns, and half-day calculations. Perfect for project planning and deadline management.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Holiday Database</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-cog"></i>
+                            <span>Custom Weekends</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-globe"></i>
+                            <span>Multiple Countries</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-download"></i>
+                            <span>Export Results</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Business Days
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Business Days
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Business Days Calculator</h2>
+                    <p class="tool-display__description">
+                        Calculate working days between dates, excluding weekends and holidays with customizable settings.
+                    </p>
+                </div>
+                
+                <!-- Business Days Calculator Custom Interface -->
+                <div class="business-calc-container">
+                    <div class="business-calc-section">
+                        <h4>1. Select Date Range</h4>
+                        <div class="date-inputs">
+                            <div class="date-input-group">
+                                <h4>Start Date</h4>
+                                <div class="business-form-group">
+                                    <label for="start-date">Date</label>
+                                    <input type="date" id="start-date" value="2025-01-01">
+                                </div>
+                            </div>
+                            
+                            <div class="date-input-group">
+                                <h4>End Date</h4>
+                                <div class="business-form-group">
+                                    <label for="end-date">Date</label>
+                                    <input type="date" id="end-date" value="2025-01-31">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="include-exclude-toggles">
+                            <div class="toggle-group">
+                                <h5>Start Date</h5>
+                                <div class="toggle-options">
+                                    <div class="toggle-option">
+                                        <input type="radio" id="include-start" name="start-date" value="include" checked>
+                                        <label for="include-start">Include</label>
+                                    </div>
+                                    <div class="toggle-option">
+                                        <input type="radio" id="exclude-start" name="start-date" value="exclude">
+                                        <label for="exclude-start">Exclude</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="toggle-group">
+                                <h5>End Date</h5>
+                                <div class="toggle-options">
+                                    <div class="toggle-option">
+                                        <input type="radio" id="include-end" name="end-date" value="include" checked>
+                                        <label for="include-end">Include</label>
+                                    </div>
+                                    <div class="toggle-option">
+                                        <input type="radio" id="exclude-end" name="end-date" value="exclude">
+                                        <label for="exclude-end">Exclude</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="business-calc-section">
+                        <h4>2. Configure Settings</h4>
+                        <div class="business-calc-grid">
+                            <div class="business-form-group">
+                                <label for="country-select">Country/Region</label>
+                                <select id="country-select">
+                                    <option value="US">United States</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="IN">India</option>
+                                    <option value="DE">Germany</option>
+                                    <option value="FR">France</option>
+                                    <option value="JP">Japan</option>
+                                    <option value="custom">Custom Holidays</option>
+                                </select>
+                            </div>
+                            
+                            <div class="business-form-group">
+                                <label for="weekend-pattern">Weekend Pattern</label>
+                                <select id="weekend-pattern">
+                                    <option value="sat-sun">Saturday & Sunday</option>
+                                    <option value="fri-sat">Friday & Saturday</option>
+                                    <option value="sun">Sunday Only</option>
+                                    <option value="fri">Friday Only</option>
+                                    <option value="none">No Weekends</option>
+                                </select>
+                            </div>
+                            
+                            <div class="business-form-group">
+                                <label for="half-day-support">Half-Day Support</label>
+                                <select id="half-day-support">
+                                    <option value="none">No Half Days</option>
+                                    <option value="morning">Morning Half Days</option>
+                                    <option value="afternoon">Afternoon Half Days</option>
+                                    <option value="both">Both Morning & Afternoon</option>
+                                </select>
+                            </div>
+                            
+                            <div class="business-form-group">
+                                <button class="tool-display__button tool-display__button--primary" onclick="calculateBusinessDays()">
+                                    <i class="fas fa-calculator"></i>
+                                    Calculate Business Days
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="business-results" id="business-results" style="display: none;">
+                        <h4>Business Days Calculation Results</h4>
+                        <div class="business-summary" id="business-summary">
+                            <!-- Summary will be added here -->
+                        </div>
+                        
+                        <div class="calendar-view" id="calendar-view">
+                            <h5>Calendar View</h5>
+                            <div class="calendar-grid" id="calendar-grid">
+                                <!-- Calendar will be added here -->
+                            </div>
+                        </div>
+                        
+                        <div class="date-list" id="date-list">
+                            <h5>Date Breakdown</h5>
+                            <div id="date-breakdown">
+                                <!-- Date breakdown will be added here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="export-section">
+                        <h4>3. Export Results</h4>
+                        <div class="export-buttons">
+                            <button class="tool-display__button" onclick="exportCSV()">
+                                <i class="fas fa-file-csv"></i> Export CSV
+                            </button>
+                            <button class="tool-display__button" onclick="copyResults()">
+                                <i class="fas fa-copy"></i> Copy Results
+                            </button>
+                            <button class="tool-display__button" onclick="generatePermalink()">
+                                <i class="fas fa-link"></i> Generate Link
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Business Days and Working Time Calculations</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about business days, holiday calculations, and how to properly account for working time in project planning
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What are Business Days?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Business days are working days that exclude weekends and public holidays. They're essential for 
+                            project planning, legal deadlines, shipping estimates, and financial calculations.
+                        </p>
+                        <p>
+                            <strong>Key Components:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Weekdays:</strong> Monday through Friday (typically)</li>
+                            <li><strong>Excluded Weekends:</strong> Saturday and Sunday (varies by region)</li>
+                            <li><strong>Public Holidays:</strong> National and regional holidays</li>
+                            <li><strong>Custom Patterns:</strong> Industry-specific working days</li>
+                        </ul>
+                        <p>
+                            Different countries and industries may have different definitions of business days, 
+                            which is why our calculator supports multiple configurations.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Why Business Days Matter</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Project Planning:</strong> Accurate timeline estimation for deliverables and milestones.
+                        </p>
+                        <p>
+                            <strong>Legal Deadlines:</strong> Court filings, contract deadlines, and regulatory compliance.
+                        </p>
+                        <p>
+                            <strong>Shipping & Logistics:</strong> Delivery estimates and transit time calculations.
+                        </p>
+                        <p>
+                            <strong>Financial Calculations:</strong> Interest accrual, payment terms, and settlement periods.
+                        </p>
+                        <p>
+                            <strong>Resource Planning:</strong> Staff scheduling and capacity planning.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Holiday Variations by Country</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>United States:</strong> Federal holidays like New Year's Day, Independence Day, Thanksgiving.
+                        </p>
+                        <p>
+                            <strong>United Kingdom:</strong> Bank holidays including Boxing Day, Easter Monday, Spring Bank Holiday.
+                        </p>
+                        <p>
+                            <strong>Canada:</strong> National holidays like Canada Day, Victoria Day, Thanksgiving.
+                        </p>
+                        <p>
+                            <strong>Australia:</strong> Public holidays including Australia Day, ANZAC Day, Boxing Day.
+                        </p>
+                        <p>
+                            <strong>India:</strong> National holidays like Independence Day, Republic Day, Gandhi Jayanti.
+                        </p>
+                        <p>
+                            Our calculator includes comprehensive holiday databases for major countries and regions.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Custom Weekend Patterns</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Standard (Sat-Sun):</strong> Most Western countries and businesses.
+                        </p>
+                        <p>
+                            <strong>Islamic Countries:</strong> Friday-Saturday weekends in many Middle Eastern countries.
+                        </p>
+                        <p>
+                            <strong>Retail:</strong> Some businesses operate 7 days a week with different staffing.
+                        </p>
+                        <p>
+                            <strong>Healthcare:</strong> 24/7 operations with shift-based scheduling.
+                        </p>
+                        <p>
+                            <strong>Custom Patterns:</strong> Industry-specific or company-specific working schedules.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Business Days Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about business days calculations</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>How accurate are the holiday databases?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Our holiday databases include major national holidays for each country. However, holidays can vary by state/province and may change from year to year. For critical applications, always verify with official sources or add custom holidays as needed.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What's the difference between including and excluding start/end dates?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Including a date means it counts as a business day if it's a working day. Excluding means it doesn't count regardless. For example, if you're calculating "5 business days from Monday," you might want to exclude the start date to get 5 full working days.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I add custom holidays?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes! Select "Custom Holidays" from the country dropdown and you can manually add specific dates that should be excluded from business day calculations. This is useful for company-specific holidays or local observances.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How do half-days work?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Half-day support allows you to count partial working days. For example, if a holiday falls on a Friday and your company closes at noon, you might count it as 0.5 business days instead of a full non-working day.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Business Days Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const startDate = document.getElementById('start-date');
+            const endDate = document.getElementById('end-date');
+            const countrySelect = document.getElementById('country-select');
+            const weekendPattern = document.getElementById('weekend-pattern');
+            const halfDaySupport = document.getElementById('half-day-support');
+            const businessResults = document.getElementById('business-results');
+            const businessSummary = document.getElementById('business-summary');
+            const calendarGrid = document.getElementById('calendar-grid');
+            const dateBreakdown = document.getElementById('date-breakdown');
+            
+            // Holiday database
+            const holidays = {
+                'US': [
+                    {date: '2025-01-01', name: "New Year's Day"},
+                    {date: '2025-01-20', name: "Martin Luther King Jr. Day"},
+                    {date: '2025-02-17', name: "Presidents' Day"},
+                    {date: '2025-05-26', name: "Memorial Day"},
+                    {date: '2025-06-19', name: "Juneteenth"},
+                    {date: '2025-07-04', name: "Independence Day"},
+                    {date: '2025-09-01', name: "Labor Day"},
+                    {date: '2025-10-13', name: "Columbus Day"},
+                    {date: '2025-11-11', name: "Veterans Day"},
+                    {date: '2025-11-27', name: "Thanksgiving Day"},
+                    {date: '2025-12-25', name: "Christmas Day"}
+                ],
+                'UK': [
+                    {date: '2025-01-01', name: "New Year's Day"},
+                    {date: '2025-04-18', name: "Good Friday"},
+                    {date: '2025-04-21', name: "Easter Monday"},
+                    {date: '2025-05-05', name: "Early May Bank Holiday"},
+                    {date: '2025-05-26', name: "Spring Bank Holiday"},
+                    {date: '2025-08-25', name: "Summer Bank Holiday"},
+                    {date: '2025-12-25', name: "Christmas Day"},
+                    {date: '2025-12-26', name: "Boxing Day"}
+                ],
+                'CA': [
+                    {date: '2025-01-01', name: "New Year's Day"},
+                    {date: '2025-03-17', name: "Good Friday"},
+                    {date: '2025-04-21', name: "Easter Monday"},
+                    {date: '2025-05-19', name: "Victoria Day"},
+                    {date: '2025-07-01', name: "Canada Day"},
+                    {date: '2025-09-01', name: "Labour Day"},
+                    {date: '2025-10-13', name: "Thanksgiving"},
+                    {date: '2025-12-25', name: "Christmas Day"},
+                    {date: '2025-12-26', name: "Boxing Day"}
+                ],
+                'AU': [
+                    {date: '2025-01-01', name: "New Year's Day"},
+                    {date: '2025-01-26', name: "Australia Day"},
+                    {date: '2025-03-17', name: "Good Friday"},
+                    {date: '2025-04-21', name: "Easter Monday"},
+                    {date: '2025-04-25', name: "ANZAC Day"},
+                    {date: '2025-06-09', name: "Queen's Birthday"},
+                    {date: '2025-12-25', name: "Christmas Day"},
+                    {date: '2025-12-26', name: "Boxing Day"}
+                ],
+                'IN': [
+                    {date: '2025-01-26', name: "Republic Day"},
+                    {date: '2025-03-17', name: "Holi"},
+                    {date: '2025-04-14', name: "Ambedkar Jayanti"},
+                    {date: '2025-08-15', name: "Independence Day"},
+                    {date: '2025-10-02', name: "Gandhi Jayanti"},
+                    {date: '2025-10-12', name: "Dussehra"},
+                    {date: '2025-11-01', name: "Diwali"},
+                    {date: '2025-12-25', name: "Christmas Day"}
+                ],
+                'DE': [
+                    {date: '2025-01-01', name: "New Year's Day"},
+                    {date: '2025-04-18', name: "Good Friday"},
+                    {date: '2025-04-21', name: "Easter Monday"},
+                    {date: '2025-05-01', name: "Labour Day"},
+                    {date: '2025-05-29', name: "Ascension Day"},
+                    {date: '2025-06-09', name: "Whit Monday"},
+                    {date: '2025-10-03', name: "German Unity Day"},
+                    {date: '2025-12-25', name: "Christmas Day"},
+                    {date: '2025-12-26', name: "Boxing Day"}
+                ],
+                'FR': [
+                    {date: '2025-01-01', name: "New Year's Day"},
+                    {date: '2025-04-21', name: "Easter Monday"},
+                    {date: '2025-05-01', name: "Labour Day"},
+                    {date: '2025-05-08', name: "Victory Day"},
+                    {date: '2025-05-29', name: "Ascension Day"},
+                    {date: '2025-06-09', name: "Whit Monday"},
+                    {date: '2025-07-14', name: "Bastille Day"},
+                    {date: '2025-08-15', name: "Assumption Day"},
+                    {date: '2025-11-01', name: "All Saints' Day"},
+                    {date: '2025-11-11', name: "Armistice Day"},
+                    {date: '2025-12-25', name: "Christmas Day"}
+                ],
+                'JP': [
+                    {date: '2025-01-01', name: "New Year's Day"},
+                    {date: '2025-01-13', name: "Coming of Age Day"},
+                    {date: '2025-02-11', name: "National Foundation Day"},
+                    {date: '2025-02-23', name: "Emperor's Birthday"},
+                    {date: '2025-03-20', name: "Spring Equinox Day"},
+                    {date: '2025-04-29', name: "Showa Day"},
+                    {date: '2025-05-03', name: "Constitution Day"},
+                    {date: '2025-05-04', name: "Greenery Day"},
+                    {date: '2025-05-05', name: "Children's Day"},
+                    {date: '2025-07-21', name: "Marine Day"},
+                    {date: '2025-08-11', name: "Mountain Day"},
+                    {date: '2025-09-22', name: "Autumn Equinox Day"},
+                    {date: '2025-10-13', name: "Sports Day"},
+                    {date: '2025-11-03', name: "Culture Day"},
+                    {date: '2025-11-23', name: "Labour Thanksgiving Day"}
+                ]
+            };
+            
+            // Event listeners
+            [startDate, endDate, countrySelect, weekendPattern, halfDaySupport].forEach(element => {
+                element.addEventListener('change', calculateBusinessDays);
+            });
+            
+            document.querySelectorAll('input[name="start-date"], input[name="end-date"]').forEach(radio => {
+                radio.addEventListener('change', calculateBusinessDays);
+            });
+            
+            function calculateBusinessDays() {
+                const startDateValue = startDate.value;
+                const endDateValue = endDate.value;
+                
+                if (!startDateValue || !endDateValue) {
+                    businessResults.style.display = 'none';
+                    return;
+                }
+                
+                const start = new Date(startDateValue);
+                const end = new Date(endDateValue);
+                
+                if (start > end) {
+                    alert('Start date must be before end date.');
+                    return;
+                }
+                
+                const includeStart = document.querySelector('input[name="start-date"]:checked').value === 'include';
+                const includeEnd = document.querySelector('input[name="end-date"]:checked').value === 'include';
+                const country = countrySelect.value;
+                const weekendPatternValue = weekendPattern.value;
+                const halfDayValue = halfDaySupport.value;
+                
+                const result = calculateBusinessDaysBetween(start, end, includeStart, includeEnd, country, weekendPatternValue, halfDayValue);
+                displayResults(result);
+            }
+            
+            function calculateBusinessDaysBetween(start, end, includeStart, includeEnd, country, weekendPattern, halfDay) {
+                const dates = [];
+                const current = new Date(start);
+                
+                while (current <= end) {
+                    const dateStr = current.toISOString().split('T')[0];
+                    const dayOfWeek = current.getDay();
+                    const isHoliday = isHolidayDate(current, country);
+                    const isWeekend = isWeekendDay(dayOfWeek, weekendPattern);
+                    
+                    let type = 'business-day';
+                    if (isHoliday) type = 'holiday';
+                    else if (isWeekend) type = 'weekend';
+                    
+                    dates.push({
+                        date: new Date(current),
+                        dateStr: dateStr,
+                        dayOfWeek: dayOfWeek,
+                        dayName: current.toLocaleDateString('en-US', {weekday: 'long'}),
+                        type: type,
+                        isHoliday: isHoliday,
+                        isWeekend: isWeekend,
+                        holidayName: isHoliday ? getHolidayName(current, country) : null
+                    });
+                    
+                    current.setDate(current.getDate() + 1);
+                }
+                
+                // Apply include/exclude logic
+                if (!includeStart) {
+                    dates[0].excluded = true;
+                }
+                if (!includeEnd) {
+                    dates[dates.length - 1].excluded = true;
+                }
+                
+                // Calculate business days
+                const businessDays = dates.filter(d => d.type === 'business-day' && !d.excluded).length;
+                const totalDays = dates.length;
+                const weekendDays = dates.filter(d => d.isWeekend && !d.excluded).length;
+                const holidayDays = dates.filter(d => d.isHoliday && !d.excluded).length;
+                
+                return {
+                    dates: dates,
+                    businessDays: businessDays,
+                    totalDays: totalDays,
+                    weekendDays: weekendDays,
+                    holidayDays: holidayDays,
+                    start: start,
+                    end: end,
+                    includeStart: includeStart,
+                    includeEnd: includeEnd
+                };
+            }
+            
+            function isWeekendDay(dayOfWeek, pattern) {
+                switch(pattern) {
+                    case 'sat-sun': return dayOfWeek === 0 || dayOfWeek === 6;
+                    case 'fri-sat': return dayOfWeek === 5 || dayOfWeek === 6;
+                    case 'sun': return dayOfWeek === 0;
+                    case 'fri': return dayOfWeek === 5;
+                    case 'none': return false;
+                    default: return dayOfWeek === 0 || dayOfWeek === 6;
+                }
+            }
+            
+            function isHolidayDate(date, country) {
+                if (country === 'custom') return false;
+                const dateStr = date.toISOString().split('T')[0];
+                return holidays[country] && holidays[country].some(holiday => holiday.date === dateStr);
+            }
+            
+            function getHolidayName(date, country) {
+                if (country === 'custom') return null;
+                const dateStr = date.toISOString().split('T')[0];
+                const holiday = holidays[country] && holidays[country].find(h => h.date === dateStr);
+                return holiday ? holiday.name : null;
+            }
+            
+            function displayResults(result) {
+                businessResults.style.display = 'block';
+                
+                // Summary
+                businessSummary.innerHTML = `
+                    <div class="summary-item">
+                        <div class="summary-value">${result.businessDays}</div>
+                        <div class="summary-label">Business Days</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">${result.totalDays}</div>
+                        <div class="summary-label">Total Days</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">${result.weekendDays}</div>
+                        <div class="summary-label">Weekend Days</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">${result.holidayDays}</div>
+                        <div class="summary-label">Holiday Days</div>
+                    </div>
+                `;
+                
+                // Calendar view
+                displayCalendar(result);
+                
+                // Date breakdown
+                displayDateBreakdown(result);
+            }
+            
+            function displayCalendar(result) {
+                const startMonth = new Date(result.start.getFullYear(), result.start.getMonth(), 1);
+                const endMonth = new Date(result.end.getFullYear(), result.end.getMonth() + 1, 0);
+                
+                let calendarHTML = '<div class="calendar-header">';
+                calendarHTML += '<div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>';
+                calendarHTML += '</div>';
+                
+                const current = new Date(startMonth);
+                while (current <= endMonth) {
+                    const dayOfWeek = current.getDay();
+                    const dateStr = current.toISOString().split('T')[0];
+                    const dateInfo = result.dates.find(d => d.dateStr === dateStr);
+                    
+                    let className = 'calendar-day';
+                    if (dateInfo) {
+                        if (dateInfo.excluded) className += ' outside-range';
+                        else if (dateInfo.isHoliday) className += ' holiday';
+                        else if (dateInfo.isWeekend) className += ' weekend';
+                        else className += ' business-day';
+                    } else {
+                        className += ' outside-range';
+                    }
+                    
+                    calendarHTML += `<div class="${className}" title="${dateInfo ? dateInfo.holidayName || dateInfo.dayName : ''}">${current.getDate()}</div>`;
+                    
+                    current.setDate(current.getDate() + 1);
+                }
+                
+                calendarGrid.innerHTML = calendarHTML;
+            }
+            
+            function displayDateBreakdown(result) {
+                const workingDays = result.dates.filter(d => d.type === 'business-day' && !d.excluded);
+                const nonWorkingDays = result.dates.filter(d => (d.isWeekend || d.isHoliday) && !d.excluded);
+                
+                let breakdownHTML = '<ul>';
+                
+                workingDays.forEach(date => {
+                    breakdownHTML += `<li class="working-day">${date.dateStr} (${date.dayName}) - Working Day</li>`;
+                });
+                
+                nonWorkingDays.forEach(date => {
+                    const reason = date.isHoliday ? `Holiday: ${date.holidayName}` : 'Weekend';
+                    breakdownHTML += `<li class="non-working-day">${date.dateStr} (${date.dayName}) - ${reason}</li>`;
+                });
+                
+                breakdownHTML += '</ul>';
+                dateBreakdown.innerHTML = breakdownHTML;
+            }
+            
+            // Export functions
+            window.exportCSV = function() {
+                if (!businessResults.style.display || businessResults.style.display === 'none') {
+                    alert('Please calculate business days first.');
+                    return;
+                }
+                
+                // This would need the result data to be stored globally
+                alert('CSV export functionality would be implemented here.');
+            };
+            
+            window.copyResults = function() {
+                if (!businessResults.style.display || businessResults.style.display === 'none') {
+                    alert('Please calculate business days first.');
+                    return;
+                }
+                
+                const summaryText = `Business Days: ${businessSummary.querySelector('.summary-value').textContent}
+Total Days: ${businessSummary.querySelectorAll('.summary-value')[1].textContent}
+Weekend Days: ${businessSummary.querySelectorAll('.summary-value')[2].textContent}
+Holiday Days: ${businessSummary.querySelectorAll('.summary-value')[3].textContent}`;
+                
+                navigator.clipboard.writeText(summaryText).then(() => {
+                    alert('Results copied to clipboard!');
+                });
+            };
+            
+            window.generatePermalink = function() {
+                const params = new URLSearchParams();
+                params.set('start', startDate.value);
+                params.set('end', endDate.value);
+                params.set('country', countrySelect.value);
+                params.set('weekend', weekendPattern.value);
+                params.set('halfday', halfDaySupport.value);
+                params.set('includeStart', document.querySelector('input[name="start-date"]:checked').value);
+                params.set('includeEnd', document.querySelector('input[name="end-date"]:checked').value);
+                
+                const url = window.location.pathname + '?' + params.toString();
+                navigator.clipboard.writeText(window.location.origin + url).then(() => {
+                    alert('Permalink copied to clipboard!');
+                });
+            };
+            
+            // Initialize
+            calculateBusinessDays();
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protein Calculator | Daily Protein Needs | EveryTool.tech</title>
+    <meta name="description" content="Calculate your daily protein requirements based on weight, body fat percentage, activity level, and fitness goals. Get personalized protein distribution and meal planning tips.">
+    <meta name="keywords" content="protein calculator, daily protein needs, protein requirements, macronutrient calculator, protein intake, muscle building">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Protein Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate your daily protein requirements based on weight, body fat percentage, activity level, and fitness goals. Get personalized protein distribution and meal planning tips.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/health-tools/protein-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tool CSS -->
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <!-- Add in <head> if not present -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Core Variables */
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --primary-darker: #1f37a8;
+            --primary-light: #6b83f1;
+            --primary-lighter: #94a5f4;
+            --secondary: #7209B7;
+            --secondary-dark: #560BAD;
+            --accent: #F72585;
+            --accent-dark: #B5179E;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-light: #9CA3AF;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --bg-dark: #111827;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1.5rem;
+            --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        /* Header Placeholder */
+        #header-placeholder {
+            height: 64px;
+        }
+
+        /* Tool Hero Section */
+        .tool-hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-hero__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tool-hero__left {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .tool-hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .tool-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .tool-hero__features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .tool-hero__cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tool-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-button--primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-button--primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-button--secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Tool Display Section */
+        .tool-display {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .tool-display__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-display__wrapper {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-display__wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .tool-display__header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tool-display__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__description {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tool-display__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .tool-display__input-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .tool-display__output-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .tool-display__controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-display__button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-display__button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-display__button--secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__input-group {
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-display__input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .tool-display__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+            background: white;
+        }
+
+        .tool-display__select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--bg-accent);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-range {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .meal-distribution {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .meal-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--bg-accent);
+        }
+
+        .meal-item:last-child {
+            border-bottom: none;
+        }
+
+        .meal-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .meal-amount {
+            color: var(--text-secondary);
+        }
+
+        .protein-sources {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .source-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--bg-accent);
+        }
+
+        .source-item:last-child {
+            border-bottom: none;
+        }
+
+        .source-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .source-amount {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .unit-switcher {
+            display: flex;
+            border: 1px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .unit-switcher button {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .unit-switcher button.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .preset-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .preset-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--bg-accent);
+            border-radius: var(--radius-sm);
+            background: white;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: var(--transition-all);
+        }
+
+        .preset-button:hover {
+            background: var(--bg-secondary);
+        }
+
+        .preset-button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Mobile-specific optimizations for Protein Calculator */
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                display: grid;
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .tool-display__input-group { 
+                margin-bottom: 1rem; 
+            }
+            .tool-display__input, .tool-display__select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .tool-display__button { 
+                width: 100%; 
+                margin-bottom: 0.5rem; 
+            }
+            .tool-display__controls { 
+                display: flex;
+                flex-direction: column; 
+            }
+            .preset-buttons {
+                flex-direction: column;
+            }
+            .preset-button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-display__input { 
+                padding: 0.65rem; 
+            }
+            .tool-display__button { 
+                padding: 0.8rem; 
+                font-size: 0.95rem; 
+            }
+            .result-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Calculate Your Daily Protein Needs</h1>
+                    <p class="tool-hero__description">
+                        Determine your optimal protein intake based on your weight, body composition, 
+                        activity level, and fitness goals. Get personalized meal distribution and protein sources.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-dumbbell"></i>
+                            <span>Goal-Based Calculation</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-utensils"></i>
+                            <span>Meal Distribution</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-seedling"></i>
+                            <span>Diet-Specific Sources</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Private</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Protein
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Protein Calculator</h2>
+                    <p class="tool-display__description">
+                        Enter your details to get personalized protein recommendations and meal planning guidance.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="unit-switcher">
+                            <button id="btn-metric" class="active">Metric (kg)</button>
+                            <button id="btn-imperial">Imperial (lbs)</button>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Weight</label>
+                            <input type="number" class="tool-display__input" id="weight" placeholder="Enter your weight" step="0.1">
+                            <span id="weight-unit">kg</span>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Body Fat Percentage (Optional)</label>
+                            <input type="number" class="tool-display__input" id="bodyfat" placeholder="Enter body fat %" step="0.1" min="0" max="50">
+                            <small style="color: var(--text-light);">Leave empty to use total body weight</small>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Fitness Goal</label>
+                            <select class="tool-display__select" id="goal">
+                                <option value="maintain">Maintain Weight</option>
+                                <option value="lose">Lose Weight</option>
+                                <option value="gain">Gain Weight</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Activity Level</label>
+                            <select class="tool-display__select" id="activity-level">
+                                <option value="sedentary">Sedentary (Little to no exercise)</option>
+                                <option value="light">Light Activity (Light exercise 1-3 days/week)</option>
+                                <option value="moderate">Moderate Activity (Moderate exercise 3-5 days/week)</option>
+                                <option value="high">High Activity (Heavy exercise 6-7 days/week)</option>
+                                <option value="very-high">Very High Activity (Very heavy exercise, physical job)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Diet Type</label>
+                            <select class="tool-display__select" id="diet-type">
+                                <option value="omnivore">Omnivore</option>
+                                <option value="vegetarian">Vegetarian</option>
+                                <option value="vegan">Vegan</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Number of Meals</label>
+                            <select class="tool-display__select" id="meals">
+                                <option value="3">3 Meals</option>
+                                <option value="4">4 Meals</option>
+                                <option value="5">5 Meals</option>
+                                <option value="6">6 Meals</option>
+                            </select>
+                        </div>
+                        
+                        <div class="preset-buttons">
+                            <button class="preset-button" data-preset="sedentary">Sedentary</button>
+                            <button class="preset-button" data-preset="active">Active</button>
+                            <button class="preset-button" data-preset="athlete">Athlete</button>
+                            <button class="preset-button" data-preset="bodybuilder">Bodybuilder</button>
+                        </div>
+                        
+                        <div class="tool-display__controls">
+                            <button class="tool-display__button" id="calculate-protein">
+                                <i class="fas fa-calculator"></i>
+                                Calculate Protein
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="reset-protein">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="export-protein">
+                                <i class="fas fa-download"></i>
+                                Export Plan
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Your Protein Plan</h3>
+                        <div class="tool-display__result" id="protein-result">
+                            Your protein calculation results will appear here...
+                        </div>
+                        <div id="results-container"></div>
+                        <div class="chart-container" id="chart-container" style="display: none;">
+                            <canvas id="proteinChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Protein Requirements</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about protein needs, sources, timing, and how to optimize your protein intake for your goals
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Why is Protein Important?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Protein is essential for numerous bodily functions and is particularly important for:
+                        </p>
+                        <ul>
+                            <li><strong>Muscle Building:</strong> Provides amino acids needed for muscle protein synthesis</li>
+                            <li><strong>Muscle Maintenance:</strong> Prevents muscle loss during weight loss or aging</li>
+                            <li><strong>Recovery:</strong> Helps repair damaged tissues after exercise</li>
+                            <li><strong>Satiety:</strong> Increases feelings of fullness and helps with weight management</li>
+                            <li><strong>Immune Function:</strong> Supports immune system health</li>
+                            <li><strong>Hormone Production:</strong> Essential for creating hormones and enzymes</li>
+                            <li><strong>Bone Health:</strong> Important for maintaining bone density</li>
+                        </ul>
+                        <p>
+                            Unlike carbohydrates and fats, the body cannot store protein, making regular intake crucial.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">How Much Protein Do You Need?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Protein requirements vary based on several factors:
+                        </p>
+                        <ul>
+                            <li><strong>Body Weight:</strong> Generally 0.8-2.2g per kg body weight</li>
+                            <li><strong>Lean Body Mass:</strong> More accurate when body fat percentage is known</li>
+                            <li><strong>Activity Level:</strong> Higher activity requires more protein</li>
+                            <li><strong>Goals:</strong> Muscle building requires more than maintenance</li>
+                            <li><strong>Age:</strong> Older adults may need more protein</li>
+                            <li><strong>Health Status:</strong> Illness or injury may increase needs</li>
+                        </ul>
+                        <p>
+                            <strong>General Guidelines:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Sedentary:</strong> 0.8-1.0g per kg body weight</li>
+                            <li><strong>Active:</strong> 1.2-1.4g per kg body weight</li>
+                            <li><strong>Athletes:</strong> 1.4-2.0g per kg body weight</li>
+                            <li><strong>Muscle Building:</strong> 1.6-2.2g per kg body weight</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Protein Sources by Diet Type</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Omnivore Sources:</strong>
+                        </p>
+                        <ul>
+                            <li>Lean meats (chicken, turkey, beef)</li>
+                            <li>Fish and seafood</li>
+                            <li>Eggs and dairy products</li>
+                            <li>Plant-based proteins (legumes, nuts, seeds)</li>
+                        </ul>
+                        <p>
+                            <strong>Vegetarian Sources:</strong>
+                        </p>
+                        <ul>
+                            <li>Dairy products (milk, yogurt, cheese)</li>
+                            <li>Eggs</li>
+                            <li>Legumes (beans, lentils, chickpeas)</li>
+                            <li>Nuts and seeds</li>
+                            <li>Whole grains (quinoa, brown rice)</li>
+                        </ul>
+                        <p>
+                            <strong>Vegan Sources:</strong>
+                        </p>
+                        <ul>
+                            <li>Legumes (beans, lentils, chickpeas, soy)</li>
+                            <li>Nuts and seeds</li>
+                            <li>Whole grains (quinoa, brown rice, oats)</li>
+                            <li>Vegetables (broccoli, spinach, peas)</li>
+                            <li>Plant-based protein powders</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Protein Timing and Distribution</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Meal Distribution:</strong> Spread protein intake evenly throughout the day for optimal muscle protein synthesis.
+                        </p>
+                        <p>
+                            <strong>Post-Workout:</strong> Consume protein within 2 hours after exercise for optimal recovery.
+                        </p>
+                        <p>
+                            <strong>Before Bed:</strong> Casein protein or slow-digesting proteins can help with overnight recovery.
+                        </p>
+                        <p>
+                            <strong>Per Meal:</strong> Aim for 20-40g of protein per meal for optimal muscle protein synthesis.
+                        </p>
+                        <p>
+                            <strong>Complete Proteins:</strong> Include all essential amino acids, especially leucine, which triggers muscle protein synthesis.
+                        </p>
+                        <p>
+                            <strong>Protein Quality:</strong> Consider biological value and amino acid profile when choosing protein sources.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Protein Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about Protein Calculator</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>Is it better to calculate protein based on total weight or lean body mass?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Lean body mass is more accurate since muscle tissue has higher protein requirements than fat tissue. If you know your body fat percentage, use lean body mass for more precise calculations.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can you eat too much protein?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>While high protein intake is generally safe for healthy individuals, excessive amounts (over 3g per kg body weight) may strain the kidneys and should be monitored, especially for those with kidney issues.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Do vegetarians and vegans need more protein?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Plant-based proteins may have lower biological value, so vegetarians and vegans might need 10-20% more protein to compensate for incomplete amino acid profiles in some plant sources.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>When is the best time to consume protein?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Distribute protein evenly throughout the day, with particular attention to post-workout consumption (within 2 hours) and before bed for overnight recovery. Aim for 20-40g per meal.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Fetch and insert header
+        fetch('../../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Protein Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const weightInput = document.getElementById('weight');
+            const bodyfatInput = document.getElementById('bodyfat');
+            const goalSelect = document.getElementById('goal');
+            const activityLevelSelect = document.getElementById('activity-level');
+            const dietTypeSelect = document.getElementById('diet-type');
+            const mealsSelect = document.getElementById('meals');
+            const calculateButton = document.getElementById('calculate-protein');
+            const resetButton = document.getElementById('reset-protein');
+            const exportButton = document.getElementById('export-protein');
+            const resultDiv = document.getElementById('protein-result');
+            const resultsContainer = document.getElementById('results-container');
+            const chartContainer = document.getElementById('chart-container');
+            
+            let proteinChart = null;
+            let isMetric = true;
+            let proteinData = [];
+
+            // Unit switcher
+            const metricBtn = document.getElementById('btn-metric');
+            const imperialBtn = document.getElementById('btn-imperial');
+            const weightUnitSpan = document.getElementById('weight-unit');
+
+            metricBtn.addEventListener('click', () => {
+                isMetric = true;
+                metricBtn.classList.add('active');
+                imperialBtn.classList.remove('active');
+                weightUnitSpan.textContent = 'kg';
+                if (weightInput.value) {
+                    weightInput.value = (parseFloat(weightInput.value) * 0.453592).toFixed(1);
+                }
+            });
+
+            imperialBtn.addEventListener('click', () => {
+                isMetric = false;
+                imperialBtn.classList.add('active');
+                metricBtn.classList.remove('active');
+                weightUnitSpan.textContent = 'lbs';
+                if (weightInput.value) {
+                    weightInput.value = (parseFloat(weightInput.value) / 0.453592).toFixed(1);
+                }
+            });
+
+            // Preset buttons
+            const presetButtons = document.querySelectorAll('.preset-button');
+            presetButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    presetButtons.forEach(b => b.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    const preset = button.dataset.preset;
+                    applyPreset(preset);
+                });
+            });
+
+            function applyPreset(preset) {
+                const presets = {
+                    sedentary: { activity: 'sedentary', goal: 'maintain' },
+                    active: { activity: 'moderate', goal: 'maintain' },
+                    athlete: { activity: 'very-high', goal: 'gain' },
+                    bodybuilder: { activity: 'very-high', goal: 'gain' }
+                };
+                
+                const presetData = presets[preset];
+                if (presetData) {
+                    activityLevelSelect.value = presetData.activity;
+                    goalSelect.value = presetData.goal;
+                }
+            }
+
+            function calculateProtein() {
+                const weight = parseFloat(weightInput.value) || 0;
+                const bodyfat = parseFloat(bodyfatInput.value) || 0;
+                const goal = goalSelect.value;
+                const activityLevel = activityLevelSelect.value;
+                const dietType = dietTypeSelect.value;
+                const meals = parseInt(mealsSelect.value);
+
+                if (weight) {
+                    // Convert weight to kg if imperial
+                    const weightKg = isMetric ? weight : weight * 0.453592;
+                    
+                    // Calculate lean body mass if body fat percentage is provided
+                    let baseWeight = weightKg;
+                    if (bodyfat > 0) {
+                        const leanBodyMass = weightKg * (1 - bodyfat / 100);
+                        baseWeight = leanBodyMass;
+                    }
+                    
+                    // Base protein requirements per kg
+                    const baseProteinPerKg = 0.8;
+                    
+                    // Activity level multipliers
+                    const activityMultipliers = {
+                        'sedentary': 1.0,
+                        'light': 1.2,
+                        'moderate': 1.4,
+                        'high': 1.6,
+                        'very-high': 1.8
+                    };
+                    
+                    // Goal adjustments
+                    const goalMultipliers = {
+                        'maintain': 1.0,
+                        'lose': 1.2, // Higher protein for weight loss to preserve muscle
+                        'gain': 1.4  // Higher protein for muscle building
+                    };
+                    
+                    // Diet type adjustments
+                    const dietMultipliers = {
+                        'omnivore': 1.0,
+                        'vegetarian': 1.1,
+                        'vegan': 1.2
+                    };
+                    
+                    const activityMultiplier = activityMultipliers[activityLevel];
+                    const goalMultiplier = goalMultipliers[goal];
+                    const dietMultiplier = dietMultipliers[dietType];
+                    
+                    const proteinPerKg = baseProteinPerKg * activityMultiplier * goalMultiplier * dietMultiplier;
+                    const dailyProtein = baseWeight * proteinPerKg;
+                    
+                    // Calculate range (minimum and maximum)
+                    const minProtein = dailyProtein * 0.9;
+                    const maxProtein = dailyProtein * 1.1;
+                    
+                    // Calculate per meal distribution
+                    const proteinPerMeal = dailyProtein / meals;
+                    
+                    displayResults(dailyProtein, minProtein, maxProtein, proteinPerMeal, meals, dietType);
+                    saveToLocalStorage(dailyProtein, goal, activityLevel);
+                    createChart();
+                } else {
+                    resultDiv.textContent = 'Please enter your weight.';
+                    resultsContainer.innerHTML = '';
+                    chartContainer.style.display = 'none';
+                }
+            }
+
+            function displayResults(dailyProtein, minProtein, maxProtein, proteinPerMeal, meals, dietType) {
+                resultsContainer.innerHTML = `
+                    <div class="result-card">
+                        <div class="result-value">${dailyProtein.toFixed(0)}g</div>
+                        <div class="result-range">Range: ${minProtein.toFixed(0)}g - ${maxProtein.toFixed(0)}g</div>
+                        <div class="result-description">
+                            Daily protein requirement based on your goals and activity level
+                        </div>
+                    </div>
+                    
+                    <div class="meal-distribution">
+                        <h4>Protein Distribution (${meals} meals)</h4>
+                        ${generateMealDistribution(proteinPerMeal, meals)}
+                    </div>
+                    
+                    <div class="protein-sources">
+                        <h4>Protein Sources (${dietType})</h4>
+                        ${generateProteinSources(dietType)}
+                    </div>
+                `;
+
+                resultDiv.textContent = 'Protein calculation completed!';
+                chartContainer.style.display = 'block';
+            }
+
+            function generateMealDistribution(proteinPerMeal, meals) {
+                const mealNames = ['Breakfast', 'Lunch', 'Dinner', 'Snack 1', 'Snack 2', 'Snack 3'];
+                let html = '';
+                
+                for (let i = 0; i < meals; i++) {
+                    const mealName = mealNames[i] || `Meal ${i + 1}`;
+                    html += `
+                        <div class="meal-item">
+                            <span class="meal-name">${mealName}</span>
+                            <span class="meal-amount">${proteinPerMeal.toFixed(0)}g protein</span>
+                        </div>
+                    `;
+                }
+                
+                return html;
+            }
+
+            function generateProteinSources(dietType) {
+                const sources = {
+                    omnivore: [
+                        { name: 'Chicken Breast (100g)', amount: '31g protein' },
+                        { name: 'Salmon (100g)', amount: '25g protein' },
+                        { name: 'Greek Yogurt (1 cup)', amount: '20g protein' },
+                        { name: 'Eggs (2 large)', amount: '12g protein' },
+                        { name: 'Lean Beef (100g)', amount: '26g protein' }
+                    ],
+                    vegetarian: [
+                        { name: 'Greek Yogurt (1 cup)', amount: '20g protein' },
+                        { name: 'Cottage Cheese (1 cup)', amount: '28g protein' },
+                        { name: 'Eggs (2 large)', amount: '12g protein' },
+                        { name: 'Lentils (1 cup cooked)', amount: '18g protein' },
+                        { name: 'Quinoa (1 cup cooked)', amount: '8g protein' }
+                    ],
+                    vegan: [
+                        { name: 'Tofu (100g)', amount: '8g protein' },
+                        { name: 'Lentils (1 cup cooked)', amount: '18g protein' },
+                        { name: 'Chickpeas (1 cup cooked)', amount: '15g protein' },
+                        { name: 'Quinoa (1 cup cooked)', amount: '8g protein' },
+                        { name: 'Almonds (1 oz)', amount: '6g protein' }
+                    ]
+                };
+                
+                const dietSources = sources[dietType] || sources.omnivore;
+                let html = '';
+                
+                dietSources.forEach(source => {
+                    html += `
+                        <div class="source-item">
+                            <span class="source-name">${source.name}</span>
+                            <span class="source-amount">${source.amount}</span>
+                        </div>
+                    `;
+                });
+                
+                return html;
+            }
+
+            function createChart() {
+                if (proteinChart) {
+                    proteinChart.destroy();
+                }
+
+                const ctx = document.getElementById('proteinChart').getContext('2d');
+                proteinChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Protein', 'Carbohydrates', 'Fats'],
+                        datasets: [{
+                            data: [25, 45, 30], // Example macro distribution
+                            backgroundColor: [
+                                '#4361EE',
+                                '#28a745',
+                                '#ffc107'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Sample Macro Distribution'
+                            },
+                            legend: {
+                                display: true,
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            function exportToCSV() {
+                const weight = parseFloat(weightInput.value) || 0;
+                if (weight === 0) {
+                    alert('Please calculate protein needs first before exporting.');
+                    return;
+                }
+
+                let csv = 'Protein Plan\n';
+                csv += 'Meal,Protein Amount\n';
+                
+                const mealItems = document.querySelectorAll('.meal-item');
+                mealItems.forEach(item => {
+                    const mealName = item.querySelector('.meal-name').textContent;
+                    const proteinAmount = item.querySelector('.meal-amount').textContent;
+                    csv += `${mealName},${proteinAmount}\n`;
+                });
+
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'protein-plan.csv';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+
+            function saveToLocalStorage(dailyProtein, goal, activityLevel) {
+                const proteinState = {
+                    weight: weightInput.value,
+                    bodyfat: bodyfatInput.value,
+                    goal: goal,
+                    activityLevel: activityLevel,
+                    dietType: dietTypeSelect.value,
+                    meals: mealsSelect.value,
+                    dailyProtein: dailyProtein,
+                    isMetric: isMetric
+                };
+                localStorage.setItem('proteinCalculatorState', JSON.stringify(proteinState));
+            }
+
+            function loadFromLocalStorage() {
+                const savedState = localStorage.getItem('proteinCalculatorState');
+                if (savedState) {
+                    const state = JSON.parse(savedState);
+                    weightInput.value = state.weight || '';
+                    bodyfatInput.value = state.bodyfat || '';
+                    goalSelect.value = state.goal || 'maintain';
+                    activityLevelSelect.value = state.activityLevel || 'sedentary';
+                    dietTypeSelect.value = state.dietType || 'omnivore';
+                    mealsSelect.value = state.meals || '3';
+                    isMetric = state.isMetric !== false;
+                    
+                    if (isMetric) {
+                        metricBtn.classList.add('active');
+                        imperialBtn.classList.remove('active');
+                        weightUnitSpan.textContent = 'kg';
+                    } else {
+                        imperialBtn.classList.add('active');
+                        metricBtn.classList.remove('active');
+                        weightUnitSpan.textContent = 'lbs';
+                    }
+                }
+            }
+
+            function resetCalculator() {
+                weightInput.value = '';
+                bodyfatInput.value = '';
+                goalSelect.value = 'maintain';
+                activityLevelSelect.value = 'sedentary';
+                dietTypeSelect.value = 'omnivore';
+                mealsSelect.value = '3';
+                presetButtons.forEach(b => b.classList.remove('active'));
+                resultDiv.textContent = 'Your protein calculation results will appear here...';
+                resultsContainer.innerHTML = '';
+                chartContainer.style.display = 'none';
+                if (proteinChart) {
+                    proteinChart.destroy();
+                    proteinChart = null;
+                }
+                localStorage.removeItem('proteinCalculatorState');
+            }
+
+            calculateButton.addEventListener('click', calculateProtein);
+            resetButton.addEventListener('click', resetCalculator);
+            exportButton.addEventListener('click', exportToCSV);
+
+            // Load saved state on page load
+            loadFromLocalStorage();
+
+            // Allow Enter key to trigger calculation
+            [weightInput, bodyfatInput].forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        calculateProtein();
+                    }
+                });
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with animation classes
+        document.querySelectorAll('.tool-hero__left, .tool-hero__right, .blog-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

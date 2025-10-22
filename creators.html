@@ -738,43 +738,7 @@
     });
   </script>
 
-<script>
-    // Load header and footer
-    fetch('header.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('header-placeholder').innerHTML = data;
-        })
-        .catch(error => console.error('Error loading header:', error));
-
-    fetch('/footer.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('footer-placeholder').innerHTML = data;
-        })
-        .catch(error => console.error('Error loading footer:', error));
-
-    // Initialize FAQ functionality
-    document.addEventListener('DOMContentLoaded', () => {
-        if (window.faqManager) {
-            window.faqManager.init();
-        }
-    });
-
-    // Scroll-triggered animation for journey items
-    window.addEventListener('DOMContentLoaded', function() {
-        const items = document.querySelectorAll('.journey-item');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.2 });
-        items.forEach(item => observer.observe(item));
-    });
-</script>
+<script src="/app-loader.js" defer></script>
 
 <script>
   // Map Featured Tool cards to category pages

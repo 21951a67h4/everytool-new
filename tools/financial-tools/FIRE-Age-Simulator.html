@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>FIRE Age Simulator | Advanced Financial Independence Calculator | EveryTool.tech</title>
+    
+    <meta name="description" content="A professional-grade FIRE Age Simulator to precisely calculate your financial independence date. Features multi-currency support, interactive charts, and advanced scenario planning for a global audience.">
+    
+    <meta name="keywords" content="FIRE calculator, financial independence calculator, retire early calculator, FIRE age, investment growth projection, safe withdrawal rate, financial planning tool, FIRE age simulator, multi-currency finance tool, advanced FIRE tool">
+    
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:title" content="Advanced FIRE Age Simulator | EveryTool.tech">
+    <meta property="og:description" content="A professional-grade FIRE Age Simulator to precisely calculate your financial independence date. Features multi-currency support, interactive charts, and advanced scenario planning.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/fire-age-simulator">
+    
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../../FAQ section/faq.css"> 
+    <link rel="stylesheet" href="../tool.css"> 
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* CORE STYLES - DO NOT MODIFY */
+        #header-placeholder { min-height: 130px; position: relative; z-index: 2000; }
+        @media (max-width: 768px) { #header-placeholder { min-height: 64px; } }
+
+        /* ADVANCED CUSTOM STYLING FOR FIRE SIMULATOR */
+        :root {
+            --primary-blue: #005A9C;
+            --primary-dark: #003d69;
+            --secondary-accent: #00B4D8;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --dark-gray: #343a40;
+            --success-green: #2a9d8f;
+            --error-red: #e76f51;
+            --white: #ffffff;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+        }
+
+        .tool-display__wrapper {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+        @media (max-width: 768px) {
+             .tool-display__wrapper {
+                padding: 1.5rem;
+             }
+        }
+        
+        /* Form Layout & Styling */
+        .fire-simulator-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        @media (max-width: 992px) {
+            .fire-simulator-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        .input-group {
+            background-color: var(--light-gray);
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .input-group h3 {
+            margin: 0;
+            font-weight: 600;
+            color: var(--primary-blue);
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #dce2e6;
+        }
+        
+        .form-field label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #495057;
+            font-size: 0.9rem;
+        }
+        
+        .form-field input, .form-field select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            background-color: var(--white);
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-field input:focus, .form-field select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 90, 156, 0.15);
+        }
+
+        /* Calculate Button */
+        #calculate-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50%;
+            margin: 2rem auto 0 auto;
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, var(--secondary-accent), var(--primary-blue));
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        #calculate-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 90, 156, 0.25);
+        }
+
+        #calculate-btn:focus {
+            box-shadow: 0 6px 20px rgba(0, 90, 156, 0.25);
+        }
+
+        #calculate-btn i {
+            margin-right: 10px;
+        }
+        
+        /* Results & Error Styling */
+        #error-message-container {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-weight: 500;
+            color: var(--error-red);
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+            text-align: center;
+        }
+        @media (max-width: 992px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .result-card {
+            background-color: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 5px solid;
+        }
+        
+        .result-card h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+            color: #495057;
+            font-weight: 500;
+        }
+        
+        .result-card p {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .result-card--age { border-color: var(--success-green); }
+        .result-card--age p { color: var(--success-green); }
+
+        .result-card--years { border-color: var(--secondary-accent); }
+        .result-card--years p { color: var(--primary-blue); }
+
+        .result-card--nestegg { border-color: var(--primary-dark); }
+        .result-card--nestegg p { color: var(--primary-dark); font-size: 1.75rem; }
+
+        .projection-container {
+            margin-top: 2.5rem;
+        }
+
+        /* Mobile-specific tweaks */
+        @media (max-width: 768px) {
+            #calculate-btn { width: 100%; }
+            .result-card p { font-size: 1.6rem; }
+            .form-field input, .form-field select { font-size: 16px; }
+            .projection-container { margin-top: 1.5rem; }
+            #results-container { margin-top: 0.5rem; }
+            #portfolio-chart { max-height: 300px; }
+        }
+
+        @media (max-width: 480px) {
+            .result-card p { font-size: 1.4rem; }
+            #portfolio-chart { max-height: 240px; }
+        }
+    </style>
+</head>
+
+<body data-tool-name="FIRE Age Simulator" data-meta-description="A professional-grade FIRE Age Simulator to precisely calculate your financial independence date. Features multi-currency support, interactive charts, and advanced scenario planning for a global audience.">
+    
+    <div id="header-placeholder"></div>
+
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Advanced FIRE Age Simulator</h1>
+                    <p class="tool-hero__description">
+                        Chart your course to financial freedom. Our professional-grade simulator provides a precise, personalized projection for when you can achieve Financial Independence, Retire Early (FIRE).
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature"><i class="fas fa-globe-americas"></i> <span>Global Currency Support</span></div>
+                        <div class="tool-feature"><i class="fas fa-chart-line"></i> <span>Dynamic Projections</span></div>
+                        <div class="tool-feature"><i class="fas fa-cogs"></i> <span>Scenario Planning</span></div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary"><i class="fas fa-play"></i> Use The Simulator Now</a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary"><i class="fas fa-book"></i> Learn About FIRE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Your Financial Independence Dashboard</h2>
+                    <p class="tool-display__description">Enter your details to generate your personalized FIRE projection.</p>
+                </div>
+                
+                <form id="fire-form">
+                    <div class="fire-simulator-container">
+                        <div class="input-group">
+                            <h3><i class="fas fa-user-circle"></i> Current Situation</h3>
+                            <div class="form-field">
+                                <label for="currency-select">Your Currency</label>
+                                <select id="currency-select">
+                                    <option value="USD" data-symbol="$">USD – United States Dollar</option>
+                                    <option value="EUR" data-symbol="€">EUR – Euro</option>
+                                    <option value="JPY" data-symbol="¥">JPY – Japanese Yen</option>
+                                    <option value="GBP" data-symbol="£">GBP – British Pound</option>
+                                    <option value="INR" data-symbol="₹">INR – Indian Rupee</option>
+                                    <option value="AUD" data-symbol="A$">AUD – Australian Dollar</option>
+                                    <option value="CAD" data-symbol="C$">CAD – Canadian Dollar</option>
+                                    <option value="CHF" data-symbol="CHF">CHF – Swiss Franc</option>
+                                    <option value="CNY" data-symbol="¥">CNY – Chinese Yuan</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label for="current-age">Your Current Age</label>
+                                <input type="number" id="current-age" placeholder="e.g., 30" value="30">
+                            </div>
+                            <div class="form-field">
+                                <label for="current-savings">Current Investments / Net Worth</label>
+                                <input type="number" id="current-savings" placeholder="e.g., 50000" value="50000">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                             <h3><i class="fas fa-piggy-bank"></i> Savings & Investments</h3>
+                            <div class="form-field">
+                                <label for="annual-savings">Annual Savings Amount</label>
+                                <input type="number" id="annual-savings" placeholder="e.g., 25000" value="25000">
+                            </div>
+                             <div class="form-field">
+                                <label for="investment-return">Expected Annual Real Return (%)</label>
+                                <input type="number" id="investment-return" placeholder="e.g., 7" value="7">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <h3><i class="fas fa-bullseye"></i> Retirement Goals</h3>
+                            <div class="form-field">
+                                <label for="retirement-expenses">Desired Annual Expenses in Retirement</label>
+                                <input type="number" id="retirement-expenses" placeholder="e.g., 40000" value="40000">
+                            </div>
+                            <div class="form-field">
+                                <label for="swr">Safe Withdrawal Rate (SWR) (%)</label>
+                                <input type="number" id="swr" placeholder="e.g., 4" value="4">
+                            </div>
+                        </div>
+                    </div>
+                
+                    <button id="calculate-btn" type="button">
+                        <i class="fas fa-calculator"></i>Calculate My FIRE Projection
+                    </button>
+                </form>
+
+                <div id="error-message-container" aria-live="polite"></div>
+                
+                <div id="results-container" style="display: none;" aria-live="polite">
+                    <div class="results-grid">
+                        <div class="result-card result-card--age">
+                            <h4>FIRE Age</h4>
+                            <p id="fire-age-result">--</p>
+                        </div>
+                        <div class="result-card result-card--years">
+                            <h4>Years to FIRE</h4>
+                            <p id="years-to-fire-result">--</p>
+                        </div>
+                        <div class="result-card result-card--nestegg">
+                            <h4>Target Nest Egg</h4>
+                            <p id="nest-egg-result">--</p>
+                        </div>
+                    </div>
+                    <div class="projection-container">
+                        <canvas id="portfolio-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+             <div class="tool-blog__header">
+                <h2 class="tool-blog__title">The Definitive Guide to Financial Independence, Retire Early (FIRE)</h2>
+                <p class="tool-blog__subtitle">
+                    A deep dive into the strategies, mindset, and calculations required to take control of your financial future and retire on your own terms.
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is the FIRE Movement? Deconstructing the Philosophy</h3>
+                    <div class="blog-section__content">
+                        <p>The Financial Independence, Retire Early (FIRE) movement is a modern lifestyle and financial framework adopted by individuals determined to break the chains of traditional career timelines. At its core, FIRE is about achieving **financial independence**—the state where your passive income from accumulated assets is sufficient to cover all your living expenses indefinitely. Reaching this point grants you the ultimate freedom: the freedom to choose. You can choose to stop working, pursue a passion project, work part-time, or travel the world, all without being driven by financial necessity.</p>
+                        <blockquote>"The goal isn't just to stop working. It's to have the power and freedom to build a life you truly love, on your own schedule."</blockquote>
+                        <p>This powerful idea has resonated globally, especially among those who question the "work-until-65" model. The philosophy is built on a simple but profound principle: aggressively maximize the gap between your income and expenses. The money saved is not left idle; it is diligently invested in assets that generate returns, primarily low-cost index funds. This creates a wealth-generating engine powered by the magic of compound interest, accelerating the journey to financial freedom.</p>
+                        <p>The FIRE movement is not monolithic. It has several popular variants to suit different lifestyles and financial goals:</p>
+                        <ul>
+                            <li><strong>Lean FIRE:</strong> Characterized by minimalism and extreme frugality. Adherents plan to live on a modest annual budget in retirement (e.g., under $40,000/year), which significantly lowers the required nest egg size and shortens the accumulation phase.</li>
+                            <li><strong>Fat FIRE:</strong> For those who desire a higher standard of living in retirement (e.g., $100,000+/year). This path demands a much larger portfolio but affords luxuries, travel, and a greater financial cushion.</li>
+                            <li><strong>Barista FIRE:</strong> A hybrid model where an individual has saved enough to cover most expenses but chooses to work a low-stress, part-time job (like a barista) to cover the remaining costs and often for benefits like health insurance. It’s an early exit from a high-pressure career.</li>
+                            <li><strong>Coast FIRE:</strong> The point at which your existing retirement portfolio is large enough that it will grow to support a traditional retirement at age 65+ *without any further contributions*. Once you hit this number, you only need to earn enough to cover your current living expenses, removing the pressure to save aggressively.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">The Unbreakable Pillars of a Successful FIRE Plan</h3>
+                    <div class="blog-section__content">
+                        <p>Achieving FIRE isn't magic; it's math. It rests on a few core pillars that our simulator uses to make its projections. Understanding these is non-negotiable for anyone serious about this path.</p>
+                        
+                        <h4>Pillar 1: The Savings Rate is King</h4>
+                        <p>Your **savings rate**—the percentage of your after-tax income you invest—is the single most powerful lever you can pull. While traditional advice hovers around 15%, FIRE followers often aim for **50% or more**. A high savings rate has a dual benefit: it rapidly increases the size of your investment portfolio while simultaneously training you to live on less, which reduces the amount of passive income you'll need in retirement. It fundamentally rewrites the timeline to financial independence.</p>
+
+                        <h4>Pillar 2: Intelligent, Low-Cost Investing</h4>
+                        <p>You cannot save your way to early retirement in a bank account; inflation would erode your purchasing power. You must **invest**. The goal is to make your money work for you, generating returns that outpace inflation. The dominant strategy within the FIRE community is investing in **low-cost, broad-market index funds or ETFs**. These instruments provide instant diversification across hundreds or thousands of companies at a minimal cost, allowing your portfolio to grow efficiently with the overall market. This strategy harnesses the power of **compound interest**, where your investment returns themselves begin to generate more returns, creating an unstoppable snowball of wealth.</p>
+                        
+                        <h4>Pillar 3: The 4% Rule and Your FIRE Number</h4>
+                        <p>How do you know when you have enough? The answer usually lies in the **4% Rule**, a guideline derived from the 1998 Trinity Study. It states that you can safely withdraw 4% of your portfolio's value in your first year of retirement, and then adjust that amount for inflation each following year, with a very high probability of the money lasting for at least 30 years. To find your "FIRE Number," you simply invert this rule: **Your Target Nest Egg = Desired Annual Expenses / 0.04 (or multiply by 25).** For example, if you want to live on $50,000 a year, you'll need a portfolio of $1,250,000. Our simulator calculates this number for you based on your inputs. For longer retirements (50+ years), many opt for a more conservative Safe Withdrawal Rate (SWR) of 3% to 3.5%.</p>
+                    </div>
+                </div>
+                 <div class="blog-section">
+                    <h3 class="blog-section__title">Mastering the Simulator to Map Your Journey</h3>
+                    <div class="blog-section__content">
+                        <p>Our FIRE Simulator is a powerful dashboard for scenario planning. Here’s how to leverage it to its full potential:</p>
+                        <ol>
+                            <li><strong>Set Your Foundation:</strong> Select your currency and input your current age and existing investment portfolio value. This is your starting point.</li>
+                            <li><strong>Define Your Engine:</strong> Input your `Annual Savings Amount`. This is the raw fuel for your FIRE journey. Then, set your `Expected Annual Real Return`. A 5-7% real (after-inflation) return is a common and reasonable assumption for a globally diversified stock portfolio.</li>
+                            <li><strong>Set Your Destination:</strong> Define your `Desired Annual Expenses in Retirement`. This is arguably the most important number, as it sets your ultimate target. Then, choose your `Safe Withdrawal Rate` (SWR). Start with 4% and see how changing it to 3.5% impacts your timeline for a more conservative plan.</li>
+                            <li><strong>Analyze and Iterate:</strong> Hit the "Calculate" button. The dashboard will instantly show your FIRE Age, the years it will take, and your target nest egg. The interactive chart visualizes your entire journey. Now, treat it like a sandbox. What happens if you can save an extra $5,000 per year? What if you lower your retirement expenses by $10,000? Use the tool to see which changes have the biggest impact and build a plan that is both ambitious and realistic for you.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Quick answers to common questions about FIRE and our simulator.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">Is the "Expected Annual Real Return" the same as my total investment return?<i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer"><p>Not quite. "Real Return" is your total investment return minus the rate of inflation. For long-term planning, using a real return is crucial because it reflects the actual growth of your purchasing power. A good estimate for a diversified stock portfolio is 5-7%, which accounts for historical market returns and an average inflation rate of 2-3%.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Why is the Safe Withdrawal Rate (SWR) so important?<i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer"><p>The SWR is the linchpin of your FIRE calculation. It directly connects your annual spending in retirement to the total portfolio size you need to accumulate. A lower SWR (e.g., 3.5%) is more conservative and provides a higher safety margin for your portfolio to last through market downturns over a very long retirement, but it requires a larger nest egg. A higher SWR (e.g., 4.5%) allows you to retire with less capital but carries a higher risk of depleting your funds.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What if the calculation says it will take 100+ years?<i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer"><p>If you get a very long timeline, it's a sign that the gap between your annual savings and your target retirement expenses is too large. The most powerful levers you can pull are increasing your annual savings or decreasing your desired retirement expenses. Use the simulator to model different scenarios and find a more achievable path.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Can I really achieve FIRE on an average income?<i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer"><p>Absolutely. FIRE is less about how much you earn and more about your **savings rate**. A person earning $60,000 and saving 50% ($30,000/year) will reach FIRE far sooner than someone earning $150,000 and saving only 10% ($15,000/year). The key is to optimize your spending, avoid lifestyle inflation as your income grows, and focus on consistently widening the gap between your earnings and expenses.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Is the data I enter into this tool saved or stored?<i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer"><p>No. Your privacy and security are paramount. All calculations are performed directly in your browser. No financial data you enter is ever sent to, stored on, or seen by our servers. Once you close the page, the information is gone.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ui = {
+                form: document.getElementById('fire-form'),
+                calculateBtn: document.getElementById('calculate-btn'),
+                currencySelect: document.getElementById('currency-select'),
+                currentAge: document.getElementById('current-age'),
+                currentSavings: document.getElementById('current-savings'),
+                annualSavings: document.getElementById('annual-savings'),
+                investmentReturn: document.getElementById('investment-return'),
+                retirementExpenses: document.getElementById('retirement-expenses'),
+                swr: document.getElementById('swr'),
+                errorMessageContainer: document.getElementById('error-message-container'),
+                resultsContainer: document.getElementById('results-container'),
+                fireAgeResult: document.getElementById('fire-age-result'),
+                yearsToFireResult: document.getElementById('years-to-fire-result'),
+                nestEggResult: document.getElementById('nest-egg-result'),
+                chartCanvas: document.getElementById('portfolio-chart'),
+            };
+
+            let portfolioChart = null;
+
+            function getInputs() {
+                return {
+                    currencyCode: ui.currencySelect.value,
+                    currentAge: parseFloat(ui.currentAge.value),
+                    currentSavings: parseFloat(ui.currentSavings.value),
+                    annualSavings: parseFloat(ui.annualSavings.value),
+                    investmentReturn: parseFloat(ui.investmentReturn.value) / 100,
+                    retirementExpenses: parseFloat(ui.retirementExpenses.value),
+                    swr: parseFloat(ui.swr.value) / 100,
+                };
+            }
+            
+            function validateInputs(inputs) {
+                const errors = [];
+                const allInputs = Object.values(inputs).slice(1); // Exclude currency code
+                if (allInputs.some(isNaN)) {
+                    errors.push('All fields must be filled with valid numbers.');
+                }
+                if (inputs.currentAge < 0 || inputs.currentSavings < 0 || inputs.annualSavings < 0 || inputs.retirementExpenses < 0) {
+                    errors.push('Financial values and age cannot be negative.');
+                }
+                if (inputs.swr <= 0) {
+                    errors.push('Safe Withdrawal Rate (SWR) must be greater than 0.');
+                }
+                 if (inputs.retirementExpenses <= 0) {
+                    errors.push('Retirement Expenses must be greater than 0.');
+                }
+                if (inputs.annualSavings <= 0) {
+                    errors.push('Annual Savings must be positive to make progress towards your FIRE goal.');
+                }
+                return errors;
+            }
+
+            function calculateFireProjection(inputs) {
+                const fireTarget = inputs.retirementExpenses / inputs.swr;
+                let portfolioValue = inputs.currentSavings;
+                let yearsToFire = 0;
+                const projectionData = [{ year: 0, age: inputs.currentAge, value: portfolioValue }];
+
+                if (portfolioValue >= fireTarget) {
+                    return { fireAge: inputs.currentAge, yearsToFire: 0, fireTarget, projectionData };
+                }
+
+                while (portfolioValue < fireTarget) {
+                    portfolioValue = portfolioValue * (1 + inputs.investmentReturn) + inputs.annualSavings;
+                    yearsToFire++;
+                    projectionData.push({ year: yearsToFire, age: inputs.currentAge + yearsToFire, value: portfolioValue });
+
+                    if (yearsToFire > 150) { // Safety break
+                        return { error: 'Calculation exceeds 150 years. Please adjust your inputs for a more feasible projection.' };
+                    }
+                }
+                return { fireAge: inputs.currentAge + yearsToFire, yearsToFire, fireTarget, projectionData };
+            }
+
+            function formatCurrency(value, currencyCode) {
+                 return new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyCode, minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
+            }
+
+            function displayResults(result, currencyCode) {
+                ui.fireAgeResult.textContent = result.fireAge;
+                ui.yearsToFireResult.textContent = result.yearsToFire;
+                ui.nestEggResult.textContent = formatCurrency(result.fireTarget, currencyCode);
+                ui.resultsContainer.style.display = 'block';
+            }
+
+            function updateChart(projectionData, currencyCode) {
+                if (portfolioChart) {
+                    portfolioChart.destroy();
+                }
+                const labels = projectionData.map(d => d.age);
+                const data = projectionData.map(d => d.value);
+
+                portfolioChart = new Chart(ui.chartCanvas, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Projected Portfolio Value',
+                            data: data,
+                            borderColor: 'var(--primary-blue)',
+                            backgroundColor: 'rgba(0, 90, 156, 0.1)',
+                            fill: true,
+                            tension: 0.2,
+                            pointRadius: 0,
+                            pointHoverRadius: 6,
+                            pointBackgroundColor: 'var(--primary-blue)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                displayColors: false,
+                                callbacks: {
+                                    title: (tooltipItems) => `Age: ${tooltipItems[0].label}`,
+                                    label: (context) => `Portfolio: ${formatCurrency(context.parsed.y, currencyCode)}`,
+                                }
+                            }
+                        },
+                        scales: {
+                            x: { title: { display: true, text: 'Age' } },
+                            y: {
+                                title: { display: true, text: 'Portfolio Value' },
+                                ticks: { callback: (value) => formatCurrency(value, currencyCode) }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            function handleCalculation() {
+                const inputs = getInputs();
+                const errors = validateInputs(inputs);
+
+                ui.resultsContainer.style.display = 'none';
+                ui.errorMessageContainer.innerHTML = '';
+                
+                if (errors.length > 0) {
+                    ui.errorMessageContainer.innerHTML = errors.join('<br>');
+                    return;
+                }
+
+                const result = calculateFireProjection(inputs);
+                
+                if (result.error) {
+                    ui.errorMessageContainer.textContent = result.error;
+                } else {
+                    displayResults(result, inputs.currencyCode);
+                    updateChart(result.projectionData, inputs.currencyCode);
+                }
+            }
+
+            ui.calculateBtn.addEventListener('click', handleCalculation);
+        });
+    </script>
+    <script src="../scripts/page-loader.js" defer></script> 
+    <script src="../scripts/footer.js" defer></script>
+    <script src="../FAQ section/faq.js" defer></script> 
+    <script src="/universal-search-deploy.js" defer></script>
+
+</body>
+</html>

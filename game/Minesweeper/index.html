@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper - Classic Puzzle Game | EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Play Minesweeper - the classic puzzle game. Find all mines without detonating them!">
+</head>
+<body>
+    <!-- Game Controls -->
+    <div class="game-controls">
+        <button id="back-btn" class="back-btn" aria-label="Go back">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="switch-track">
+                <span class="switch-thumb">
+                    <i class="fas fa-moon theme-icon moon-icon"></i>
+                    <i class="fas fa-sun theme-icon sun-icon"></i>
+                </span>
+            </span>
+        </label>
+    </div>
+
+    <main class="game-container" role="main">
+        <div class="game-header">
+            <h1 class="game-title">Minesweeper</h1>
+            <p class="game-subtitle">Find all mines without detonating them!</p>
+        </div>
+
+        <div class="game-stats">
+            <div class="stat">
+                <span class="stat-label">Time</span>
+                <span id="timer" class="stat-value">000</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Mines</span>
+                <span id="mines-count" class="stat-value">10</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Flags</span>
+                <span id="flags-count" class="stat-value">0</span>
+            </div>
+        </div>
+
+        <div class="game-controls-panel">
+            <div class="difficulty-selector">
+                <label for="difficulty">Difficulty:</label>
+                <select id="difficulty" class="select">
+                    <option value="easy">Easy (9×9, 10 mines)</option>
+                    <option value="medium" selected>Medium (16×16, 40 mines)</option>
+                    <option value="hard">Hard (16×30, 99 mines)</option>
+                </select>
+            </div>
+            <div class="game-buttons">
+                <button id="new-game" class="btn primary">
+                    <i class="fas fa-plus"></i>
+                    New Game
+                </button>
+                <button id="restart-btn" class="btn secondary">
+                    <i class="fas fa-redo"></i>
+                    Restart
+                </button>
+                <button id="reveal-all" class="btn secondary">
+                    <i class="fas fa-eye"></i>
+                    Reveal All
+                </button>
+            </div>
+        </div>
+
+        <div class="game-board-container">
+            <div id="game-board" class="game-board" role="grid" aria-label="Minesweeper game board">
+                <!-- Grid will be dynamically generated -->
+            </div>
+        </div>
+
+        <div class="game-instructions">
+            <p><strong>How to play:</strong></p>
+            <ul>
+                <li><strong>Left click</strong> to reveal a cell</li>
+                <li><strong>Right click</strong> to flag/unflag suspected mines</li>
+                <li><strong>Numbers</strong> show how many mines are adjacent</li>
+                <li><strong>Goal:</strong> Flag all mines without detonating any</li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="game-over-title" style="display: none;">
+        <div class="modal-content">
+            <h2 id="game-over-title">Game Over!</h2>
+            <div class="modal-body">
+                <p id="game-over-message">You hit a mine!</p>
+                <div class="final-stats">
+                    <div class="final-stat">
+                        <span class="label">Time:</span>
+                        <span id="modal-time" class="value">000</span>
+                    </div>
+                    <div class="final-stat">
+                        <span class="label">Difficulty:</span>
+                        <span id="modal-difficulty" class="value">Medium</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="play-again" class="btn primary">Play Again</button>
+                <button id="close-modal" class="btn secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Win Modal -->
+    <div id="win-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="win-title" style="display: none;">
+        <div class="modal-content">
+            <h2 id="win-title">Congratulations!</h2>
+            <div class="modal-body">
+                <p>You found all the mines!</p>
+                <div class="final-stats">
+                    <div class="final-stat">
+                        <span class="label">Time:</span>
+                        <span id="win-time" class="value">000</span>
+                    </div>
+                    <div class="final-stat">
+                        <span class="label">Difficulty:</span>
+                        <span id="win-difficulty" class="value">Medium</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="new-game-win" class="btn primary">New Game</button>
+                <button id="close-win-modal" class="btn secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="game-footer">
+        <p><span id="copyright-year"></span> EveryTool.tech</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

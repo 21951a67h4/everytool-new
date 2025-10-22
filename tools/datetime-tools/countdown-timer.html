@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer | Multiple Timers with Notifications | EveryTool.tech</title>
+    <meta name="description" content="Create multiple countdown timers with sound alerts, desktop notifications, and large-screen mode. Perfect for presentations, cooking, workouts, and productivity.">
+    <meta name="keywords" content="countdown timer, multiple timers, timer app, productivity timer, pomodoro timer, workout timer">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Countdown Timer | EveryTool.tech">
+    <meta property="og:description" content="Create multiple countdown timers with sound alerts, desktop notifications, and large-screen mode. Perfect for presentations, cooking, workouts, and productivity.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/datetime-tools/countdown-timer">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Countdown Timer Specific Styles */
+        .timer-calc-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .timer-calc-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .timer-calc-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .timer-calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .timer-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .timer-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .timer-form-group input, .timer-form-group select { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .timer-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .timer-input-group {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .timer-input-group h4 {
+            margin: 0 0 15px 0;
+            color: #007bff;
+            font-size: 1.1rem;
+        }
+        
+        .timer-display {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .timer-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+        
+        .timer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .timer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .timer-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .timer-control-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .timer-control-btn.play {
+            background: #28a745;
+            color: white;
+        }
+        
+        .timer-control-btn.pause {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .timer-control-btn.stop {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .timer-control-btn.delete {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .timer-control-btn:hover {
+            opacity: 0.8;
+            transform: translateY(-1px);
+        }
+        
+        .timer-countdown {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .timer-time {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #007bff;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .timer-progress {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .timer-progress-bar {
+            height: 100%;
+            background: #007bff;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .timer-status {
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .timer-status.running {
+            color: #28a745;
+        }
+        
+        .timer-status.paused {
+            color: #ffc107;
+        }
+        
+        .timer-status.finished {
+            color: #dc3545;
+        }
+        
+        .large-screen-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            color: white;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .large-screen-mode.active {
+            display: flex;
+        }
+        
+        .large-screen-timer {
+            font-size: 8rem;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 20px;
+        }
+        
+        .large-screen-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .large-screen-controls {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .large-screen-btn {
+            padding: 15px 30px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .large-screen-btn:hover {
+            background: white;
+            color: #000;
+        }
+        
+        .timer-settings {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .export-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .timer-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .timer-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .timer-inputs {
+                grid-template-columns: 1fr;
+            }
+            .timer-time {
+                font-size: 2.5rem;
+            }
+            .large-screen-timer {
+                font-size: 4rem;
+            }
+            .large-screen-title {
+                font-size: 1.5rem;
+            }
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+            .export-buttons {
+                flex-direction: column;
+            }
+            .timer-form-group input, .timer-form-group select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timer-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .timer-time {
+                font-size: 2rem;
+            }
+            .timer-form-group input, .timer-form-group select { 
+                padding: 8px; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="Countdown Timer" data-meta-description="Create multiple countdown timers with sound alerts, desktop notifications, and large-screen mode. Perfect for presentations, cooking, workouts, and productivity.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Countdown Timer: Multiple Timers with Notifications</h1>
+                    <p class="tool-hero__description">
+                        Create multiple countdown timers with sound alerts, desktop notifications, and large-screen mode. 
+                        Perfect for presentations, cooking, workouts, and productivity.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-clock"></i>
+                            <span>Multiple Timers</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-volume-up"></i>
+                            <span>Sound Alerts</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-bell"></i>
+                            <span>Notifications</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-expand"></i>
+                            <span>Large Screen</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-play"></i>
+                            Start Timer
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Timers
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Countdown Timer</h2>
+                    <p class="tool-display__description">
+                        Create and manage multiple countdown timers with advanced features and notifications.
+                    </p>
+                </div>
+                
+                <!-- Countdown Timer Custom Interface -->
+                <div class="timer-calc-container">
+                    <div class="timer-calc-section">
+                        <h4>1. Create New Timer</h4>
+                        <div class="timer-inputs">
+                            <div class="timer-input-group">
+                                <h4>Time</h4>
+                                <div class="timer-calc-grid">
+                                    <div class="timer-form-group">
+                                        <label for="timer-hours">Hours</label>
+                                        <input type="number" id="timer-hours" placeholder="0" min="0" max="23" value="0">
+                                    </div>
+                                    <div class="timer-form-group">
+                                        <label for="timer-minutes">Minutes</label>
+                                        <input type="number" id="timer-minutes" placeholder="5" min="0" max="59" value="5">
+                                    </div>
+                                    <div class="timer-form-group">
+                                        <label for="timer-seconds">Seconds</label>
+                                        <input type="number" id="timer-seconds" placeholder="0" min="0" max="59" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timer-input-group">
+                                <h4>Settings</h4>
+                                <div class="timer-calc-grid">
+                                    <div class="timer-form-group">
+                                        <label for="timer-label">Label</label>
+                                        <input type="text" id="timer-label" placeholder="My Timer" value="My Timer">
+                                    </div>
+                                    <div class="timer-form-group">
+                                        <label for="timer-sound">Sound Alert</label>
+                                        <select id="timer-sound">
+                                            <option value="beep">Beep</option>
+                                            <option value="chime">Chime</option>
+                                            <option value="alarm">Alarm</option>
+                                            <option value="none">No Sound</option>
+                                        </select>
+                                    </div>
+                                    <div class="timer-form-group">
+                                        <label for="timer-repeat">Repeat</label>
+                                        <select id="timer-repeat">
+                                            <option value="none">No Repeat</option>
+                                            <option value="once">Repeat Once</option>
+                                            <option value="loop">Loop Forever</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timer-calc-grid">
+                            <div class="timer-form-group">
+                                <button class="tool-display__button tool-display__button--primary" onclick="createTimer()">
+                                    <i class="fas fa-plus"></i>
+                                    Create Timer
+                                </button>
+                            </div>
+                            <div class="timer-form-group">
+                                <button class="tool-display__button" onclick="requestNotificationPermission()">
+                                    <i class="fas fa-bell"></i>
+                                    Enable Notifications
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timer-display" id="timer-display">
+                        <h4>Active Timers</h4>
+                        <div id="timers-container">
+                            <!-- Timers will be added here -->
+                        </div>
+                    </div>
+
+                    <div class="timer-settings">
+                        <h4>2. Global Settings</h4>
+                        <div class="settings-grid">
+                            <div class="timer-form-group">
+                                <label for="global-sound">Default Sound</label>
+                                <select id="global-sound">
+                                    <option value="beep">Beep</option>
+                                    <option value="chime">Chime</option>
+                                    <option value="alarm">Alarm</option>
+                                    <option value="none">No Sound</option>
+                                </select>
+                            </div>
+                            <div class="timer-form-group">
+                                <label for="auto-start">Auto-start New Timers</label>
+                                <select id="auto-start">
+                                    <option value="false">No</option>
+                                    <option value="true">Yes</option>
+                                </select>
+                            </div>
+                            <div class="timer-form-group">
+                                <label for="show-seconds">Show Seconds</label>
+                                <select id="show-seconds">
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="export-section">
+                        <h4>3. Export & Share</h4>
+                        <div class="export-buttons">
+                            <button class="tool-display__button" onclick="exportTimers()">
+                                <i class="fas fa-download"></i> Export Timers
+                            </button>
+                            <button class="tool-display__button" onclick="shareTimer()">
+                                <i class="fas fa-share"></i> Share Timer
+                            </button>
+                            <button class="tool-display__button" onclick="saveTimers()">
+                                <i class="fas fa-save"></i> Save Timers
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Large Screen Mode -->
+    <div class="large-screen-mode" id="large-screen-mode">
+        <div class="large-screen-title" id="large-screen-title">Timer</div>
+        <div class="large-screen-timer" id="large-screen-timer">00:00</div>
+        <div class="large-screen-controls">
+            <button class="large-screen-btn" onclick="exitLargeScreen()">
+                <i class="fas fa-times"></i> Exit
+            </button>
+        </div>
+    </div>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Effective Timer Usage for Productivity and Focus</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about different timer techniques and how to use them effectively for productivity, focus, and time management
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">The Pomodoro Technique</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            The Pomodoro Technique is a time management method that uses 25-minute focused work sessions 
+                            followed by 5-minute breaks. It's designed to improve focus and productivity.
+                        </p>
+                        <p>
+                            <strong>How it works:</strong>
+                        </p>
+                        <ul>
+                            <li>Work for 25 minutes (one Pomodoro)</li>
+                            <li>Take a 5-minute break</li>
+                            <li>Repeat 3-4 times</li>
+                            <li>Take a longer 15-30 minute break</li>
+                        </ul>
+                        <p>
+                            <strong>Benefits:</strong> Improved focus, reduced burnout, better time awareness, increased productivity.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Timer Applications</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Work & Productivity:</strong> Focus sessions, meeting time limits, task deadlines.
+                        </p>
+                        <p>
+                            <strong>Cooking & Baking:</strong> Recipe timing, multiple dish coordination, rest periods.
+                        </p>
+                        <p>
+                            <strong>Exercise & Fitness:</strong> Workout intervals, rest periods, circuit training.
+                        </p>
+                        <p>
+                            <strong>Study & Learning:</strong> Study sessions, break reminders, exam practice.
+                        </p>
+                        <p>
+                            <strong>Presentations:</strong> Speech timing, slide transitions, Q&A sessions.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Multiple Timer Management</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Parallel Tasks:</strong> Run multiple timers for different activities simultaneously.
+                        </p>
+                        <p>
+                            <strong>Sequential Tasks:</strong> Chain timers for complex workflows with dependencies.
+                        </p>
+                        <p>
+                            <strong>Different Durations:</strong> Mix short and long timers for varied activities.
+                        </p>
+                        <p>
+                            <strong>Custom Labels:</strong> Name timers clearly to avoid confusion.
+                        </p>
+                        <p>
+                            <strong>Sound Differentiation:</strong> Use different sounds for different types of timers.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Best Practices</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Set Realistic Times:</strong> Don't underestimate how long tasks actually take.
+                        </p>
+                        <p>
+                            <strong>Use Visual Cues:</strong> Progress bars help maintain awareness of time remaining.
+                        </p>
+                        <p>
+                            <strong>Enable Notifications:</strong> Desktop notifications ensure you don't miss timer completions.
+                        </p>
+                        <p>
+                            <strong>Take Breaks Seriously:</strong> Respect break times to maintain effectiveness.
+                        </p>
+                        <p>
+                            <strong>Adjust as Needed:</strong> Modify timer durations based on your actual performance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Countdown Timer FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about countdown timers</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>How many timers can I run simultaneously?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>You can run unlimited timers simultaneously. Each timer operates independently with its own countdown, controls, and notifications. This is perfect for managing multiple tasks or activities at once.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Do the timers work when the browser is closed?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Timers will pause when the browser tab is not active or when the browser is closed. However, desktop notifications will still work if you've granted permission, and timers will resume when you return to the tab.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I customize the sound alerts?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes! You can choose from different sound options (beep, chime, alarm) for each timer, or disable sounds entirely. The sound will play when the timer reaches zero, and you can also enable desktop notifications for visual alerts.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What is large-screen mode?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Large-screen mode displays a timer in fullscreen with large, easy-to-read numbers. This is perfect for presentations, cooking, or any situation where you need a prominent timer display. Press the expand button on any timer to enter large-screen mode.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Countdown Timer Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const timerHours = document.getElementById('timer-hours');
+            const timerMinutes = document.getElementById('timer-minutes');
+            const timerSeconds = document.getElementById('timer-seconds');
+            const timerLabel = document.getElementById('timer-label');
+            const timerSound = document.getElementById('timer-sound');
+            const timerRepeat = document.getElementById('timer-repeat');
+            const timersContainer = document.getElementById('timers-container');
+            const largeScreenMode = document.getElementById('large-screen-mode');
+            const largeScreenTitle = document.getElementById('large-screen-title');
+            const largeScreenTimer = document.getElementById('large-screen-timer');
+            
+            let timers = [];
+            let timerId = 0;
+            let notificationPermission = false;
+            
+            // Request notification permission
+            function requestNotificationPermission() {
+                if ('Notification' in window) {
+                    Notification.requestPermission().then(permission => {
+                        notificationPermission = permission === 'granted';
+                        if (notificationPermission) {
+                            alert('Notifications enabled! You will receive alerts when timers finish.');
+                        } else {
+                            alert('Notifications not enabled. You can still use timers with sound alerts.');
+                        }
+                    });
+                } else {
+                    alert('Your browser does not support notifications.');
+                }
+            }
+            
+            window.createTimer = function() {
+                const hours = parseInt(timerHours.value) || 0;
+                const minutes = parseInt(timerMinutes.value) || 0;
+                const seconds = parseInt(timerSeconds.value) || 0;
+                const label = timerLabel.value.trim() || 'Timer';
+                const sound = timerSound.value;
+                const repeat = timerRepeat.value;
+                
+                if (hours === 0 && minutes === 0 && seconds === 0) {
+                    alert('Please set a valid time for the timer.');
+                    return;
+                }
+                
+                const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+                
+                const timer = {
+                    id: timerId++,
+                    label: label,
+                    totalSeconds: totalSeconds,
+                    remainingSeconds: totalSeconds,
+                    sound: sound,
+                    repeat: repeat,
+                    status: 'stopped', // stopped, running, paused, finished
+                    intervalId: null
+                };
+                
+                timers.push(timer);
+                renderTimer(timer);
+                
+                // Auto-start if enabled
+                if (document.getElementById('auto-start').value === 'true') {
+                    startTimer(timer.id);
+                }
+            };
+            
+            function renderTimer(timer) {
+                const timerCard = document.createElement('div');
+                timerCard.className = 'timer-card';
+                timerCard.id = `timer-${timer.id}`;
+                
+                const timeDisplay = formatTime(timer.remainingSeconds);
+                const progressPercent = ((timer.totalSeconds - timer.remainingSeconds) / timer.totalSeconds) * 100;
+                
+                timerCard.innerHTML = `
+                    <div class="timer-header">
+                        <div class="timer-title">${timer.label}</div>
+                        <div class="timer-controls">
+                            <button class="timer-control-btn play" onclick="startTimer(${timer.id})" ${timer.status === 'running' ? 'style="display:none"' : ''}>
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="timer-control-btn pause" onclick="pauseTimer(${timer.id})" ${timer.status !== 'running' ? 'style="display:none"' : ''}>
+                                <i class="fas fa-pause"></i>
+                            </button>
+                            <button class="timer-control-btn stop" onclick="stopTimer(${timer.id})">
+                                <i class="fas fa-stop"></i>
+                            </button>
+                            <button class="timer-control-btn" onclick="toggleLargeScreen(${timer.id})">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                            <button class="timer-control-btn delete" onclick="deleteTimer(${timer.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="timer-countdown">
+                        <div class="timer-time">${timeDisplay}</div>
+                        <div class="timer-progress">
+                            <div class="timer-progress-bar" style="width: ${progressPercent}%"></div>
+                        </div>
+                        <div class="timer-status ${timer.status}">${getStatusText(timer.status)}</div>
+                    </div>
+                `;
+                
+                timersContainer.appendChild(timerCard);
+            }
+            
+            function formatTime(seconds) {
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const secs = seconds % 60;
+                
+                if (hours > 0) {
+                    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                } else {
+                    return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                }
+            }
+            
+            function getStatusText(status) {
+                switch(status) {
+                    case 'running': return 'Running';
+                    case 'paused': return 'Paused';
+                    case 'finished': return 'Finished';
+                    default: return 'Stopped';
+                }
+            }
+            
+            window.startTimer = function(timerId) {
+                const timer = timers.find(t => t.id === timerId);
+                if (!timer) return;
+                
+                timer.status = 'running';
+                timer.intervalId = setInterval(() => {
+                    timer.remainingSeconds--;
+                    updateTimerDisplay(timer);
+                    
+                    if (timer.remainingSeconds <= 0) {
+                        finishTimer(timer);
+                    }
+                }, 1000);
+                
+                updateTimerDisplay(timer);
+            };
+            
+            window.pauseTimer = function(timerId) {
+                const timer = timers.find(t => t.id === timerId);
+                if (!timer) return;
+                
+                timer.status = 'paused';
+                clearInterval(timer.intervalId);
+                timer.intervalId = null;
+                updateTimerDisplay(timer);
+            };
+            
+            window.stopTimer = function(timerId) {
+                const timer = timers.find(t => t.id === timerId);
+                if (!timer) return;
+                
+                timer.status = 'stopped';
+                timer.remainingSeconds = timer.totalSeconds;
+                clearInterval(timer.intervalId);
+                timer.intervalId = null;
+                updateTimerDisplay(timer);
+            };
+            
+            window.deleteTimer = function(timerId) {
+                const timer = timers.find(t => t.id === timerId);
+                if (!timer) return;
+                
+                clearInterval(timer.intervalId);
+                timers = timers.filter(t => t.id !== timerId);
+                
+                const timerCard = document.getElementById(`timer-${timerId}`);
+                if (timerCard) {
+                    timerCard.remove();
+                }
+            };
+            
+            function finishTimer(timer) {
+                timer.status = 'finished';
+                clearInterval(timer.intervalId);
+                timer.intervalId = null;
+                
+                // Play sound
+                if (timer.sound !== 'none') {
+                    playSound(timer.sound);
+                }
+                
+                // Show notification
+                if (notificationPermission) {
+                    new Notification(`Timer Finished: ${timer.label}`, {
+                        body: 'Your timer has completed!',
+                        icon: '/assets/favicon.png'
+                    });
+                }
+                
+                // Handle repeat
+                if (timer.repeat === 'once') {
+                    timer.repeat = 'none';
+                    timer.remainingSeconds = timer.totalSeconds;
+                    timer.status = 'stopped';
+                } else if (timer.repeat === 'loop') {
+                    timer.remainingSeconds = timer.totalSeconds;
+                    timer.status = 'stopped';
+                    setTimeout(() => startTimer(timer.id), 1000);
+                }
+                
+                updateTimerDisplay(timer);
+            }
+            
+            function playSound(soundType) {
+                // Create audio context for sound generation
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                switch(soundType) {
+                    case 'beep':
+                        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.2);
+                        break;
+                    case 'chime':
+                        oscillator.frequency.setValueAtTime(523, audioContext.currentTime);
+                        oscillator.frequency.setValueAtTime(659, audioContext.currentTime + 0.1);
+                        oscillator.frequency.setValueAtTime(784, audioContext.currentTime + 0.2);
+                        gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.5);
+                        break;
+                    case 'alarm':
+                        oscillator.frequency.setValueAtTime(1000, audioContext.currentTime);
+                        oscillator.frequency.setValueAtTime(800, audioContext.currentTime + 0.1);
+                        oscillator.frequency.setValueAtTime(1000, audioContext.currentTime + 0.2);
+                        gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.6);
+                        break;
+                }
+            }
+            
+            function updateTimerDisplay(timer) {
+                const timerCard = document.getElementById(`timer-${timer.id}`);
+                if (!timerCard) return;
+                
+                const timeElement = timerCard.querySelector('.timer-time');
+                const progressBar = timerCard.querySelector('.timer-progress-bar');
+                const statusElement = timerCard.querySelector('.timer-status');
+                const playBtn = timerCard.querySelector('.timer-control-btn.play');
+                const pauseBtn = timerCard.querySelector('.timer-control-btn.pause');
+                
+                timeElement.textContent = formatTime(timer.remainingSeconds);
+                statusElement.textContent = getStatusText(timer.status);
+                statusElement.className = `timer-status ${timer.status}`;
+                
+                const progressPercent = ((timer.totalSeconds - timer.remainingSeconds) / timer.totalSeconds) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+                
+                // Update button visibility
+                if (timer.status === 'running') {
+                    playBtn.style.display = 'none';
+                    pauseBtn.style.display = 'inline-block';
+                } else {
+                    playBtn.style.display = 'inline-block';
+                    pauseBtn.style.display = 'none';
+                }
+            }
+            
+            window.toggleLargeScreen = function(timerId) {
+                const timer = timers.find(t => t.id === timerId);
+                if (!timer) return;
+                
+                largeScreenTitle.textContent = timer.label;
+                largeScreenTimer.textContent = formatTime(timer.remainingSeconds);
+                largeScreenMode.classList.add('active');
+                
+                // Update large screen timer every second
+                const updateInterval = setInterval(() => {
+                    if (!largeScreenMode.classList.contains('active')) {
+                        clearInterval(updateInterval);
+                        return;
+                    }
+                    
+                    const currentTimer = timers.find(t => t.id === timerId);
+                    if (currentTimer) {
+                        largeScreenTimer.textContent = formatTime(currentTimer.remainingSeconds);
+                    }
+                }, 1000);
+            };
+            
+            window.exitLargeScreen = function() {
+                largeScreenMode.classList.remove('active');
+            };
+            
+            window.exportTimers = function() {
+                const timerData = timers.map(timer => ({
+                    label: timer.label,
+                    totalSeconds: timer.totalSeconds,
+                    sound: timer.sound,
+                    repeat: timer.repeat
+                }));
+                
+                const dataStr = JSON.stringify(timerData, null, 2);
+                const blob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'timers.json';
+                link.click();
+                URL.revokeObjectURL(url);
+            };
+            
+            window.shareTimer = function() {
+                if (timers.length === 0) {
+                    alert('No timers to share.');
+                    return;
+                }
+                
+                const timer = timers[0]; // Share first timer
+                const params = new URLSearchParams();
+                params.set('label', timer.label);
+                params.set('seconds', timer.totalSeconds);
+                params.set('sound', timer.sound);
+                
+                const url = window.location.pathname + '?' + params.toString();
+                navigator.clipboard.writeText(window.location.origin + url).then(() => {
+                    alert('Timer link copied to clipboard!');
+                });
+            };
+            
+            window.saveTimers = function() {
+                localStorage.setItem('savedTimers', JSON.stringify(timers));
+                alert('Timers saved successfully!');
+            };
+            
+            // Load saved timers
+            function loadSavedTimers() {
+                const saved = localStorage.getItem('savedTimers');
+                if (saved) {
+                    try {
+                        const savedTimers = JSON.parse(saved);
+                        savedTimers.forEach(timerData => {
+                            const timer = {
+                                id: timerId++,
+                                label: timerData.label,
+                                totalSeconds: timerData.totalSeconds,
+                                remainingSeconds: timerData.totalSeconds,
+                                sound: timerData.sound,
+                                repeat: timerData.repeat,
+                                status: 'stopped',
+                                intervalId: null
+                            };
+                            timers.push(timer);
+                            renderTimer(timer);
+                        });
+                    } catch (e) {
+                        console.error('Error loading saved timers:', e);
+                    }
+                }
+            }
+            
+            // Load timers from URL parameters
+            function loadFromURL() {
+                const params = new URLSearchParams(window.location.search);
+                const label = params.get('label');
+                const seconds = params.get('seconds');
+                const sound = params.get('sound');
+                
+                if (label && seconds) {
+                    timerLabel.value = label;
+                    timerHours.value = Math.floor(seconds / 3600);
+                    timerMinutes.value = Math.floor((seconds % 3600) / 60);
+                    timerSeconds.value = seconds % 60;
+                    if (sound) timerSound.value = sound;
+                    
+                    createTimer();
+                }
+            }
+            
+            // Initialize
+            loadSavedTimers();
+            loadFromURL();
+            
+            // Auto-save timers every 30 seconds
+            setInterval(() => {
+                localStorage.setItem('savedTimers', JSON.stringify(timers));
+            }, 30000);
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

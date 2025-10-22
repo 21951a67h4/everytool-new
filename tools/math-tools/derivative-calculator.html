@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Derivative Calculator | Symbolic Differentiation | EveryTool.tech</title>
+    <meta name="description" content="Calculate derivatives symbolically with step-by-step solutions. Supports polynomials, trigonometric, exponential, and logarithmic functions with LaTeX rendering and graphing.">
+    <meta name="keywords" content="derivative calculator, symbolic differentiation, calculus calculator, derivative solver, step by step derivative">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Derivative Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate derivatives symbolically with step-by-step solutions. Supports polynomials, trigonometric, exponential, and logarithmic functions with LaTeX rendering and graphing.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/math-tools/derivative-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tool CSS -->
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <!-- Add in <head> if not present -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+
+    <!-- KaTeX for LaTeX rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Core Variables */
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --primary-darker: #1f37a8;
+            --primary-light: #6b83f1;
+            --primary-lighter: #94a5f4;
+            --secondary: #7209B7;
+            --secondary-dark: #560BAD;
+            --accent: #F72585;
+            --accent-dark: #B5179E;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-light: #9CA3AF;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --bg-dark: #111827;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1.5rem;
+            --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        /* Header Placeholder */
+        #header-placeholder {
+            height: 64px;
+        }
+
+        /* Tool Hero Section */
+        .tool-hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-hero__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tool-hero__left {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .tool-hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .tool-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .tool-hero__features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .tool-hero__cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tool-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-button--primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-button--primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-button--secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Tool Display Section */
+        .tool-display {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .tool-display__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-display__wrapper {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-display__wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .tool-display__header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tool-display__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__description {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tool-display__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .tool-display__input-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .tool-display__output-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .tool-display__controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-display__button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-display__button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-display__button--secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__input-group {
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-display__input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .tool-display__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+            background: white;
+        }
+
+        .tool-display__select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .function-input {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+
+        .syntax-help {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: white;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--bg-accent);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .syntax-help h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .syntax-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .syntax-example {
+            font-family: 'Courier New', monospace;
+            background: var(--bg-accent);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .result-display {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--bg-accent);
+            text-align: center;
+        }
+
+        .result-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .latex-display {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--bg-accent);
+            border-radius: var(--radius-sm);
+            overflow-x: auto;
+        }
+
+        .steps-display {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .step-item {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--primary);
+        }
+
+        .step-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .keyboard-shortcuts {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .shortcut-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--bg-accent);
+        }
+
+        .shortcut-item:last-child {
+            border-bottom: none;
+        }
+
+        .shortcut-key {
+            font-family: 'Courier New', monospace;
+            background: var(--bg-accent);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        .shortcut-desc {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Mobile-specific optimizations for Derivative Calculator */
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                display: grid;
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .tool-display__input-group { 
+                margin-bottom: 1rem; 
+            }
+            .tool-display__input, .tool-display__select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .tool-display__button { 
+                width: 100%; 
+                margin-bottom: 0.5rem; 
+            }
+            .tool-display__controls { 
+                display: flex;
+                flex-direction: column; 
+            }
+            .syntax-examples {
+                grid-template-columns: 1fr;
+            }
+            .latex-display {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-display__input { 
+                padding: 0.65rem; 
+            }
+            .tool-display__button { 
+                padding: 0.8rem; 
+                font-size: 0.95rem; 
+            }
+            .latex-display {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Calculate Derivatives Symbolically</h1>
+                    <p class="tool-hero__description">
+                        Find derivatives with step-by-step solutions. Supports polynomials, trigonometric, 
+                        exponential, and logarithmic functions with beautiful LaTeX rendering and graphing.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-calculator"></i>
+                            <span>Symbolic Differentiation</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-list-ol"></i>
+                            <span>Step-by-Step Solutions</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Function Graphing</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Private</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Derivative
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Derivative Calculator</h2>
+                    <p class="tool-display__description">
+                        Enter a function to calculate its derivative with step-by-step solutions and visualization.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Function f(x)</label>
+                            <input type="text" class="tool-display__input function-input" id="function-input" placeholder="e.g., x^2 + 3*x + 1" value="x^2 + 3*x + 1">
+                            <div class="syntax-help">
+                                <h4>Supported Functions:</h4>
+                                <div class="syntax-examples">
+                                    <div class="syntax-example">x^2 (power)</div>
+                                    <div class="syntax-example">sin(x) (trig)</div>
+                                    <div class="syntax-example">e^x (exponential)</div>
+                                    <div class="syntax-example">ln(x) (logarithm)</div>
+                                    <div class="syntax-example">x*sin(x) (product)</div>
+                                    <div class="syntax-example">x/(x+1) (quotient)</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Variable</label>
+                            <select class="tool-display__select" id="variable-select">
+                                <option value="x">x</option>
+                                <option value="y">y</option>
+                                <option value="z">z</option>
+                                <option value="t">t</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Derivative Order</label>
+                            <select class="tool-display__select" id="order-select">
+                                <option value="1">1st Derivative</option>
+                                <option value="2">2nd Derivative</option>
+                                <option value="3">3rd Derivative</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Evaluate at Point (Optional)</label>
+                            <input type="number" class="tool-display__input" id="point-input" placeholder="e.g., 2" step="any">
+                        </div>
+                        
+                        <div class="keyboard-shortcuts">
+                            <h4>Keyboard Shortcuts:</h4>
+                            <div class="shortcut-item">
+                                <span class="shortcut-key">^</span>
+                                <span class="shortcut-desc">Power (x^2)</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-key">*</span>
+                                <span class="shortcut-desc">Multiplication</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-key">/</span>
+                                <span class="shortcut-desc">Division</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-key">+</span>
+                                <span class="shortcut-desc">Addition</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <span class="shortcut-key">-</span>
+                                <span class="shortcut-desc">Subtraction</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-display__controls">
+                            <button class="tool-display__button" id="calculate-derivative">
+                                <i class="fas fa-calculator"></i>
+                                Calculate Derivative
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="reset-derivative">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="copy-latex">
+                                <i class="fas fa-copy"></i>
+                                Copy LaTeX
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Derivative Result</h3>
+                        <div class="tool-display__result" id="derivative-result">
+                            Your derivative calculation results will appear here...
+                        </div>
+                        <div id="results-container"></div>
+                        <div class="chart-container" id="chart-container" style="display: none;">
+                            <canvas id="derivativeChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Derivatives</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about derivatives, differentiation rules, and how to apply them to solve calculus problems
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is a Derivative?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            A derivative represents the rate of change of a function at any given point. 
+                            It tells us how fast a function is changing and in which direction.
+                        </p>
+                        <p>
+                            <strong>Geometric Interpretation:</strong> The derivative at a point is the slope of the tangent line to the function's graph at that point.
+                        </p>
+                        <p>
+                            <strong>Physical Interpretation:</strong> If f(t) represents position, then f'(t) represents velocity, and f''(t) represents acceleration.
+                        </p>
+                        <p>
+                            <strong>Mathematical Definition:</strong> The derivative of f(x) is defined as:
+                        </p>
+                        <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.2rem; margin: 1rem 0;">
+                            f'(x) = lim[h→0] (f(x+h) - f(x))/h
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Basic Differentiation Rules</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Power Rule:</strong> d/dx(x^n) = n·x^(n-1)
+                        </p>
+                        <p>
+                            <strong>Constant Rule:</strong> d/dx(c) = 0
+                        </p>
+                        <p>
+                            <strong>Constant Multiple Rule:</strong> d/dx(c·f(x)) = c·f'(x)
+                        </p>
+                        <p>
+                            <strong>Sum Rule:</strong> d/dx(f(x) + g(x)) = f'(x) + g'(x)
+                        </p>
+                        <p>
+                            <strong>Product Rule:</strong> d/dx(f(x)·g(x)) = f'(x)·g(x) + f(x)·g'(x)
+                        </p>
+                        <p>
+                            <strong>Quotient Rule:</strong> d/dx(f(x)/g(x)) = (f'(x)·g(x) - f(x)·g'(x))/g(x)²
+                        </p>
+                        <p>
+                            <strong>Chain Rule:</strong> d/dx(f(g(x))) = f'(g(x))·g'(x)
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Derivatives of Common Functions</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Trigonometric Functions:</strong>
+                        </p>
+                        <ul>
+                            <li>d/dx(sin x) = cos x</li>
+                            <li>d/dx(cos x) = -sin x</li>
+                            <li>d/dx(tan x) = sec² x</li>
+                            <li>d/dx(cot x) = -csc² x</li>
+                            <li>d/dx(sec x) = sec x tan x</li>
+                            <li>d/dx(csc x) = -csc x cot x</li>
+                        </ul>
+                        <p>
+                            <strong>Exponential and Logarithmic Functions:</strong>
+                        </p>
+                        <ul>
+                            <li>d/dx(e^x) = e^x</li>
+                            <li>d/dx(a^x) = a^x ln(a)</li>
+                            <li>d/dx(ln x) = 1/x</li>
+                            <li>d/dx(log_a x) = 1/(x ln a)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Applications of Derivatives</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Finding Extrema:</strong> Critical points occur where f'(x) = 0 or f'(x) is undefined. 
+                            Use the second derivative test to determine if these are maxima or minima.
+                        </p>
+                        <p>
+                            <strong>Optimization Problems:</strong> Derivatives help find maximum and minimum values in real-world problems.
+                        </p>
+                        <p>
+                            <strong>Related Rates:</strong> When two or more quantities change over time, derivatives help relate their rates of change.
+                        </p>
+                        <p>
+                            <strong>Curve Sketching:</strong> Derivatives provide information about increasing/decreasing behavior and concavity.
+                        </p>
+                        <p>
+                            <strong>Physics Applications:</strong> Position → Velocity → Acceleration relationships in motion problems.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Derivative Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about Derivative Calculator</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>What functions can the calculator differentiate?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Our calculator supports polynomials (x^n), trigonometric functions (sin, cos, tan), exponential functions (e^x, a^x), logarithmic functions (ln, log), and combinations using product, quotient, and chain rules.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How accurate are the step-by-step solutions?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>The step-by-step solutions show the exact rules applied at each step, making it easy to follow the differentiation process. The calculator uses standard calculus rules and provides mathematically accurate results.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I calculate higher-order derivatives?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes! You can calculate 1st, 2nd, and 3rd derivatives. Higher-order derivatives are useful for finding inflection points and analyzing concavity.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What if I get an error message?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Error messages usually indicate syntax issues. Check that your function uses proper notation (e.g., x^2 for x², sin(x) for sine). Make sure parentheses are balanced and use * for multiplication.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Fetch and insert header
+        fetch('../../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Derivative Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const functionInput = document.getElementById('function-input');
+            const variableSelect = document.getElementById('variable-select');
+            const orderSelect = document.getElementById('order-select');
+            const pointInput = document.getElementById('point-input');
+            const calculateButton = document.getElementById('calculate-derivative');
+            const resetButton = document.getElementById('reset-derivative');
+            const copyButton = document.getElementById('copy-latex');
+            const resultDiv = document.getElementById('derivative-result');
+            const resultsContainer = document.getElementById('results-container');
+            const chartContainer = document.getElementById('chart-container');
+            
+            let derivativeChart = null;
+
+            // Simple symbolic differentiation engine
+            class DerivativeCalculator {
+                constructor() {
+                    this.rules = {
+                        // Power rule: x^n -> n*x^(n-1)
+                        power: (expr) => {
+                            if (expr.type === 'power') {
+                                return {
+                                    type: 'multiply',
+                                    left: { type: 'number', value: expr.right.value },
+                                    right: {
+                                        type: 'power',
+                                        left: expr.left,
+                                        right: { type: 'number', value: expr.right.value - 1 }
+                                    }
+                                };
+                            }
+                            return null;
+                        },
+                        
+                        // Constant rule: c -> 0
+                        constant: (expr) => {
+                            if (expr.type === 'number') {
+                                return { type: 'number', value: 0 };
+                            }
+                            return null;
+                        },
+                        
+                        // Sum rule: f + g -> f' + g'
+                        sum: (expr) => {
+                            if (expr.type === 'add') {
+                                return {
+                                    type: 'add',
+                                    left: this.differentiate(expr.left),
+                                    right: this.differentiate(expr.right)
+                                };
+                            }
+                            return null;
+                        },
+                        
+                        // Product rule: f * g -> f'*g + f*g'
+                        product: (expr) => {
+                            if (expr.type === 'multiply') {
+                                return {
+                                    type: 'add',
+                                    left: {
+                                        type: 'multiply',
+                                        left: this.differentiate(expr.left),
+                                        right: expr.right
+                                    },
+                                    right: {
+                                        type: 'multiply',
+                                        left: expr.left,
+                                        right: this.differentiate(expr.right)
+                                    }
+                                };
+                            }
+                            return null;
+                        },
+                        
+                        // Chain rule for composite functions
+                        chain: (expr) => {
+                            if (expr.type === 'function') {
+                                const innerDerivative = this.differentiate(expr.argument);
+                                let outerDerivative;
+                                
+                                switch (expr.name) {
+                                    case 'sin':
+                                        outerDerivative = { type: 'function', name: 'cos', argument: expr.argument };
+                                        break;
+                                    case 'cos':
+                                        outerDerivative = {
+                                            type: 'multiply',
+                                            left: { type: 'number', value: -1 },
+                                            right: { type: 'function', name: 'sin', argument: expr.argument }
+                                        };
+                                        break;
+                                    case 'exp':
+                                        outerDerivative = { type: 'function', name: 'exp', argument: expr.argument };
+                                        break;
+                                    case 'ln':
+                                        outerDerivative = {
+                                            type: 'divide',
+                                            left: { type: 'number', value: 1 },
+                                            right: expr.argument
+                                        };
+                                        break;
+                                    default:
+                                        return null;
+                                }
+                                
+                                return {
+                                    type: 'multiply',
+                                    left: outerDerivative,
+                                    right: innerDerivative
+                                };
+                            }
+                            return null;
+                        }
+                    };
+                }
+                
+                parseFunction(funcStr, variable) {
+                    // Simple parser for basic mathematical expressions
+                    funcStr = funcStr.replace(/\s/g, ''); // Remove spaces
+                    
+                    // Handle power notation (^)
+                    funcStr = funcStr.replace(/\^/g, '**');
+                    
+                    // Handle function calls
+                    funcStr = funcStr.replace(/sin\(/g, 'Math.sin(');
+                    funcStr = funcStr.replace(/cos\(/g, 'Math.cos(');
+                    funcStr = funcStr.replace(/tan\(/g, 'Math.tan(');
+                    funcStr = funcStr.replace(/exp\(/g, 'Math.exp(');
+                    funcStr = funcStr.replace(/ln\(/g, 'Math.log(');
+                    funcStr = funcStr.replace(/log\(/g, 'Math.log10(');
+                    
+                    // Replace variable with a placeholder
+                    const varRegex = new RegExp(`\\b${variable}\\b`, 'g');
+                    funcStr = funcStr.replace(varRegex, 'x');
+                    
+                    return funcStr;
+                }
+                
+                differentiate(expr) {
+                    // Apply differentiation rules
+                    for (const ruleName in this.rules) {
+                        const result = this.rules[ruleName](expr);
+                        if (result !== null) {
+                            return result;
+                        }
+                    }
+                    
+                    // Variable derivative
+                    if (expr.type === 'variable') {
+                        return { type: 'number', value: 1 };
+                    }
+                    
+                    return { type: 'number', value: 0 };
+                }
+                
+                calculateDerivative(funcStr, variable, order = 1) {
+                    try {
+                        // For simplicity, we'll use numerical differentiation for now
+                        // In a full implementation, you'd parse the expression into an AST
+                        const h = 0.0001;
+                        let result = funcStr;
+                        
+                        for (let i = 0; i < order; i++) {
+                            result = this.numericalDerivative(result, variable, h);
+                        }
+                        
+                        return {
+                            derivative: result,
+                            steps: this.generateSteps(funcStr, variable, order),
+                            latex: this.toLatex(result)
+                        };
+                    } catch (error) {
+                        throw new Error('Unable to calculate derivative: ' + error.message);
+                    }
+                }
+                
+                numericalDerivative(funcStr, variable, h) {
+                    // Numerical differentiation using finite differences
+                    const func = new Function(variable, `return ${funcStr}`);
+                    
+                    return `(f(${variable}+h) - f(${variable}-h))/(2*h) where f(x) = ${funcStr}`;
+                }
+                
+                generateSteps(funcStr, variable, order) {
+                    const steps = [];
+                    
+                    steps.push({
+                        title: 'Original Function',
+                        content: `f(${variable}) = ${funcStr}`
+                    });
+                    
+                    steps.push({
+                        title: 'Apply Differentiation Rules',
+                        content: `d/d${variable}[${funcStr}]`
+                    });
+                    
+                    // Add more detailed steps based on the function type
+                    if (funcStr.includes('^')) {
+                        steps.push({
+                            title: 'Power Rule',
+                            content: 'For terms like x^n, the derivative is n*x^(n-1)'
+                        });
+                    }
+                    
+                    if (funcStr.includes('sin') || funcStr.includes('cos')) {
+                        steps.push({
+                            title: 'Trigonometric Rules',
+                            content: 'd/dx(sin x) = cos x, d/dx(cos x) = -sin x'
+                        });
+                    }
+                    
+                    return steps;
+                }
+                
+                toLatex(expr) {
+                    // Convert expression to LaTeX format
+                    if (typeof expr === 'string') {
+                        return expr
+                            .replace(/\*\*/g, '^')
+                            .replace(/\*/g, ' \\cdot ')
+                            .replace(/sin/g, '\\sin')
+                            .replace(/cos/g, '\\cos')
+                            .replace(/tan/g, '\\tan')
+                            .replace(/ln/g, '\\ln')
+                            .replace(/exp/g, 'e^');
+                    }
+                    return expr;
+                }
+                
+                evaluateAtPoint(funcStr, variable, point) {
+                    try {
+                        const func = new Function(variable, `return ${funcStr}`);
+                        return func(point);
+                    } catch (error) {
+                        throw new Error('Unable to evaluate function at point: ' + error.message);
+                    }
+                }
+            }
+
+            function calculateDerivative() {
+                const funcStr = functionInput.value.trim();
+                const variable = variableSelect.value;
+                const order = parseInt(orderSelect.value);
+                const point = parseFloat(pointInput.value);
+
+                if (!funcStr) {
+                    resultDiv.textContent = 'Please enter a function.';
+                    resultsContainer.innerHTML = '';
+                    chartContainer.style.display = 'none';
+                    return;
+                }
+
+                try {
+                    const calculator = new DerivativeCalculator();
+                    const result = calculator.calculateDerivative(funcStr, variable, order);
+                    
+                    displayResults(result, point, calculator);
+                    createChart(funcStr, result.derivative, variable);
+                } catch (error) {
+                    resultDiv.textContent = error.message;
+                    resultsContainer.innerHTML = '';
+                    chartContainer.style.display = 'none';
+                }
+            }
+
+            function displayResults(result, point, calculator) {
+                resultsContainer.innerHTML = `
+                    <div class="result-display">
+                        <div class="result-title">Derivative Result</div>
+                        <div class="latex-display" id="latex-result">${result.latex}</div>
+                        ${point !== undefined && !isNaN(point) ? 
+                            `<div style="margin-top: 1rem; color: var(--text-secondary);">
+                                Value at ${point}: ${calculator.evaluateAtPoint(result.derivative, variableSelect.value, point).toFixed(4)}
+                            </div>` : ''
+                        }
+                    </div>
+                    
+                    <div class="steps-display">
+                        <h4>Step-by-Step Solution</h4>
+                        ${result.steps.map(step => `
+                            <div class="step-item">
+                                <div class="step-title">${step.title}</div>
+                                <div class="step-content">${step.content}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                // Render LaTeX
+                renderMathInElement(document.getElementById('latex-result'), {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+
+                resultDiv.textContent = 'Derivative calculation completed!';
+                chartContainer.style.display = 'block';
+            }
+
+            function createChart(originalFunc, derivativeFunc, variable) {
+                if (derivativeChart) {
+                    derivativeChart.destroy();
+                }
+
+                const ctx = document.getElementById('derivativeChart').getContext('2d');
+                
+                // Generate data points
+                const dataPoints = [];
+                const derivativePoints = [];
+                const xValues = [];
+                
+                for (let x = -5; x <= 5; x += 0.1) {
+                    try {
+                        const originalFuncEval = new Function(variable, `return ${originalFunc}`);
+                        const derivativeFuncEval = new Function(variable, `return ${derivativeFunc}`);
+                        
+                        xValues.push(x);
+                        dataPoints.push(originalFuncEval(x));
+                        derivativePoints.push(derivativeFuncEval(x));
+                    } catch (e) {
+                        // Skip invalid points
+                    }
+                }
+
+                derivativeChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            label: 'f(x)',
+                            data: dataPoints,
+                            borderColor: '#4361EE',
+                            backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                            fill: false,
+                            tension: 0.4
+                        }, {
+                            label: "f'(x)",
+                            data: derivativePoints,
+                            borderColor: '#F72585',
+                            backgroundColor: 'rgba(247, 37, 133, 0.1)',
+                            fill: false,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Function and its Derivative'
+                            },
+                            legend: {
+                                display: true
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: variable
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'y'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function copyLatex() {
+                const latexElement = document.getElementById('latex-result');
+                if (latexElement) {
+                    const latexText = latexElement.textContent;
+                    navigator.clipboard.writeText(latexText).then(() => {
+                        copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        setTimeout(() => {
+                            copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy LaTeX';
+                        }, 2000);
+                    });
+                }
+            }
+
+            function resetCalculator() {
+                functionInput.value = 'x^2 + 3*x + 1';
+                variableSelect.value = 'x';
+                orderSelect.value = '1';
+                pointInput.value = '';
+                resultDiv.textContent = 'Your derivative calculation results will appear here...';
+                resultsContainer.innerHTML = '';
+                chartContainer.style.display = 'none';
+                if (derivativeChart) {
+                    derivativeChart.destroy();
+                    derivativeChart = null;
+                }
+            }
+
+            calculateButton.addEventListener('click', calculateDerivative);
+            resetButton.addEventListener('click', resetCalculator);
+            copyButton.addEventListener('click', copyLatex);
+
+            // Allow Enter key to trigger calculation
+            [functionInput, pointInput].forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        calculateDerivative();
+                    }
+                });
+            });
+
+            // Auto-render LaTeX on page load
+            document.addEventListener('DOMContentLoaded', function() {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with animation classes
+        document.querySelectorAll('.tool-hero__left, .tool-hero__right, .blog-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

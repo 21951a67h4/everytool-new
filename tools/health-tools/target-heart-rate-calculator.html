@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Target Heart Rate Calculator | Exercise Heart Rate Zones | EveryTool.tech</title>
+    <meta name="description" content="Calculate your target heart rate zones for optimal exercise training. Get personalized heart rate ranges for fat burning, cardio, and peak performance using multiple formulas.">
+    <meta name="keywords" content="target heart rate calculator, heart rate zones, exercise heart rate, training zones, cardio zones, fat burning heart rate">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Target Heart Rate Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate your target heart rate zones for optimal exercise training. Get personalized heart rate ranges for fat burning, cardio, and peak performance using multiple formulas.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/health-tools/target-heart-rate-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tool CSS -->
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <!-- Add in <head> if not present -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Core Variables */
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --primary-darker: #1f37a8;
+            --primary-light: #6b83f1;
+            --primary-lighter: #94a5f4;
+            --secondary: #7209B7;
+            --secondary-dark: #560BAD;
+            --accent: #F72585;
+            --accent-dark: #B5179E;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-light: #9CA3AF;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --bg-dark: #111827;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1.5rem;
+            --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        /* Header Placeholder */
+        #header-placeholder {
+            height: 64px;
+        }
+
+        /* Tool Hero Section */
+        .tool-hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-hero__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tool-hero__left {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .tool-hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .tool-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .tool-hero__features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .tool-hero__cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tool-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-button--primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-button--primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-button--secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Tool Display Section */
+        .tool-display {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .tool-display__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-display__wrapper {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-display__wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .tool-display__header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tool-display__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__description {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tool-display__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .tool-display__input-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .tool-display__output-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .tool-display__controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-display__button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-display__button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-display__button--secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__input-group {
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-display__input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .tool-display__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+            background: white;
+        }
+
+        .tool-display__select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .zone-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--bg-accent);
+        }
+
+        .zone-table th,
+        .zone-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--bg-accent);
+        }
+
+        .zone-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .zone-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .zone-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .zone-range {
+            color: var(--text-secondary);
+        }
+
+        .zone-description {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .max-hr-display {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--bg-accent);
+            text-align: center;
+        }
+
+        .max-hr-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .max-hr-label {
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+        }
+
+        .formula-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .formula-info h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .formula-info p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .zone-slider {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .slider-container {
+            margin-bottom: 1rem;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--bg-accent);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: none;
+        }
+
+        .workout-card {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+            text-align: center;
+        }
+
+        .workout-card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .workout-card p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Mobile-specific optimizations for Target Heart Rate Calculator */
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                display: grid;
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .tool-display__input-group { 
+                margin-bottom: 1rem; 
+            }
+            .tool-display__input, .tool-display__select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .tool-display__button { 
+                width: 100%; 
+                margin-bottom: 0.5rem; 
+            }
+            .tool-display__controls { 
+                display: flex;
+                flex-direction: column; 
+            }
+            .zone-table {
+                font-size: 0.875rem;
+            }
+            .zone-table th,
+            .zone-table td {
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-display__input { 
+                padding: 0.65rem; 
+            }
+            .tool-display__button { 
+                padding: 0.8rem; 
+                font-size: 0.95rem; 
+            }
+            .max-hr-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Calculate Your Target Heart Rate Zones</h1>
+                    <p class="tool-hero__description">
+                        Determine your optimal heart rate zones for different types of exercise. 
+                        Get personalized ranges for fat burning, cardio, and peak performance training.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-heartbeat"></i>
+                            <span>Multiple Formulas</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Zone Visualization</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-dumbbell"></i>
+                            <span>Workout Guidance</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Private</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Zones
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Target Heart Rate Calculator</h2>
+                    <p class="tool-display__description">
+                        Enter your details to get personalized heart rate zones for optimal training.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Age</label>
+                            <input type="number" class="tool-display__input" id="age" placeholder="Enter your age" min="1" max="120">
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Resting Heart Rate (Optional)</label>
+                            <input type="number" class="tool-display__input" id="resting-hr" placeholder="Enter resting HR" min="30" max="120">
+                            <small style="color: var(--text-light);">Leave empty to use age-based formula only</small>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Formula</label>
+                            <select class="tool-display__select" id="formula">
+                                <option value="fox">Fox Formula (220 - age)</option>
+                                <option value="tanaka">Tanaka Formula (208 - 0.7 × age)</option>
+                                <option value="karvonen">Karvonen Formula (with resting HR)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Display Units</label>
+                            <select class="tool-display__select" id="units">
+                                <option value="bpm">BPM (Beats Per Minute)</option>
+                                <option value="percentage">Percentage of Max HR</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__controls">
+                            <button class="tool-display__button" id="calculate-hr">
+                                <i class="fas fa-calculator"></i>
+                                Calculate Zones
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="reset-hr">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="export-hr">
+                                <i class="fas fa-download"></i>
+                                Export Card
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Your Heart Rate Zones</h3>
+                        <div class="tool-display__result" id="hr-result">
+                            Your heart rate zone calculation results will appear here...
+                        </div>
+                        <div id="results-container"></div>
+                        <div class="chart-container" id="chart-container" style="display: none;">
+                            <canvas id="hrChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Heart Rate Zones</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about heart rate zones, training benefits, and how to use them effectively for your fitness goals
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What are Heart Rate Zones?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Heart rate zones are ranges of heartbeats per minute that correspond to different levels of exercise intensity. 
+                            Each zone provides specific training benefits and is suited for different fitness goals.
+                        </p>
+                        <p>
+                            <strong>The Five Heart Rate Zones:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Zone 1 (50-60%):</strong> Recovery/Easy - Light activity, warm-up, cool-down</li>
+                            <li><strong>Zone 2 (60-70%):</strong> Fat Burn - Moderate intensity, sustainable for long periods</li>
+                            <li><strong>Zone 3 (70-80%):</strong> Aerobic - Cardio fitness, endurance building</li>
+                            <li><strong>Zone 4 (80-90%):</strong> Anaerobic - High intensity, lactate threshold training</li>
+                            <li><strong>Zone 5 (90-100%):</strong> Neuromuscular - Maximum effort, sprint training</li>
+                        </ul>
+                        <p>
+                            Understanding these zones helps you train more effectively and achieve specific fitness goals.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Heart Rate Calculation Methods</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Fox Formula (220 - age):</strong>
+                        </p>
+                        <ul>
+                            <li>Most commonly used method</li>
+                            <li>Simple and easy to remember</li>
+                            <li>Less accurate for older adults</li>
+                            <li>Good starting point for beginners</li>
+                        </ul>
+                        <p>
+                            <strong>Tanaka Formula (208 - 0.7 × age):</strong>
+                        </p>
+                        <ul>
+                            <li>More accurate for adults over 40</li>
+                            <li>Based on research with larger sample sizes</li>
+                            <li>Better for older athletes</li>
+                            <li>Recommended by many fitness professionals</li>
+                        </ul>
+                        <p>
+                            <strong>Karvonen Formula:</strong>
+                        </p>
+                        <ul>
+                            <li>Uses resting heart rate for more accuracy</li>
+                            <li>Accounts for individual fitness level</li>
+                            <li>Most personalized method</li>
+                            <li>Requires knowing your resting heart rate</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Training Benefits by Zone</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Zone 1 - Recovery (50-60%):</strong>
+                        </p>
+                        <ul>
+                            <li>Active recovery and injury prevention</li>
+                            <li>Improves circulation and reduces soreness</li>
+                            <li>Builds aerobic base</li>
+                            <li>Can be done daily</li>
+                        </ul>
+                        <p>
+                            <strong>Zone 2 - Fat Burn (60-70%):</strong>
+                        </p>
+                        <ul>
+                            <li>Optimal for fat burning</li>
+                            <li>Builds endurance and aerobic capacity</li>
+                            <li>Sustainable for long periods</li>
+                            <li>Great for beginners</li>
+                        </ul>
+                        <p>
+                            <strong>Zone 3 - Aerobic (70-80%):</strong>
+                        </p>
+                        <ul>
+                            <li>Improves cardiovascular fitness</li>
+                            <li>Builds endurance</li>
+                            <li>Moderate intensity training</li>
+                            <li>Good for intermediate athletes</li>
+                        </ul>
+                        <p>
+                            <strong>Zone 4 - Anaerobic (80-90%):</strong>
+                        </p>
+                        <ul>
+                            <li>Improves lactate threshold</li>
+                            <li>Builds speed and power</li>
+                            <li>High-intensity interval training</li>
+                            <li>For advanced athletes</li>
+                        </ul>
+                        <p>
+                            <strong>Zone 5 - Neuromuscular (90-100%):</strong>
+                        </p>
+                        <ul>
+                            <li>Maximum effort training</li>
+                            <li>Improves speed and power</li>
+                            <li>Short duration only</li>
+                            <li>For elite athletes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">How to Use Heart Rate Zones</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>For Weight Loss:</strong> Focus on Zone 2 (fat burn) for longer durations. 
+                            This zone maximizes fat burning while being sustainable.
+                        </p>
+                        <p>
+                            <strong>For Endurance:</strong> Train primarily in Zones 2 and 3 to build aerobic capacity 
+                            and improve cardiovascular fitness.
+                        </p>
+                        <p>
+                            <strong>For Performance:</strong> Include all zones in your training, with more time 
+                            in higher zones for competitive athletes.
+                        </p>
+                        <p>
+                            <strong>For General Fitness:</strong> Use a mix of zones, spending most time in Zones 2-3 
+                            with occasional higher intensity work.
+                        </p>
+                        <p>
+                            <strong>Monitoring:</strong> Use a heart rate monitor or fitness tracker to stay in your 
+                            target zones during exercise. Most devices can alert you when you're outside your target range.
+                        </p>
+                        <p>
+                            <strong>Progression:</strong> Start with lower zones and gradually increase intensity as 
+                            your fitness improves. Always listen to your body and adjust accordingly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Target Heart Rate Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about Target Heart Rate Calculator</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>Which formula is most accurate?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>The Karvonen formula is generally most accurate as it uses your resting heart rate, making it more personalized. The Tanaka formula is more accurate than Fox for adults over 40. For best results, use the Karvonen formula if you know your resting heart rate.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How do I find my resting heart rate?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Measure your heart rate first thing in the morning before getting out of bed. Count your pulse for 60 seconds or use a fitness tracker. Take measurements for several days and average them for the most accurate result.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Should I stay in one zone during my entire workout?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Not necessarily. Many effective workouts include multiple zones. For example, warm up in Zone 1, do main work in Zone 2-3, add some high-intensity intervals in Zone 4-5, then cool down in Zone 1.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What if I can't reach the higher zones?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>That's normal, especially when starting out. Focus on building fitness in lower zones first. As your cardiovascular fitness improves, you'll be able to reach higher zones. Don't force yourself into zones that feel too intense.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Fetch and insert header
+        fetch('../../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Target Heart Rate Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const ageInput = document.getElementById('age');
+            const restingHrInput = document.getElementById('resting-hr');
+            const formulaSelect = document.getElementById('formula');
+            const unitsSelect = document.getElementById('units');
+            const calculateButton = document.getElementById('calculate-hr');
+            const resetButton = document.getElementById('reset-hr');
+            const exportButton = document.getElementById('export-hr');
+            const resultDiv = document.getElementById('hr-result');
+            const resultsContainer = document.getElementById('results-container');
+            const chartContainer = document.getElementById('chart-container');
+            
+            let hrChart = null;
+            let hrData = [];
+
+            function calculateHeartRateZones() {
+                const age = parseInt(ageInput.value) || 0;
+                const restingHr = parseInt(restingHrInput.value) || 0;
+                const formula = formulaSelect.value;
+                const units = unitsSelect.value;
+
+                if (age) {
+                    let maxHr;
+                    
+                    // Calculate maximum heart rate based on selected formula
+                    if (formula === 'fox') {
+                        maxHr = 220 - age;
+                    } else if (formula === 'tanaka') {
+                        maxHr = 208 - (0.7 * age);
+                    } else if (formula === 'karvonen' && restingHr) {
+                        maxHr = 220 - age; // Still need max HR for Karvonen
+                    } else {
+                        maxHr = 220 - age; // Default to Fox if Karvonen without resting HR
+                    }
+                    
+                    // Calculate heart rate zones
+                    const zones = calculateZones(maxHr, restingHr, formula, units);
+                    
+                    displayResults(zones, maxHr, formula, units);
+                    saveToLocalStorage(zones, maxHr, formula, units);
+                    createChart(zones, units);
+                } else {
+                    resultDiv.textContent = 'Please enter your age.';
+                    resultsContainer.innerHTML = '';
+                    chartContainer.style.display = 'none';
+                }
+            }
+
+            function calculateZones(maxHr, restingHr, formula, units) {
+                const zones = [];
+                
+                if (formula === 'karvonen' && restingHr) {
+                    // Karvonen formula: ((max HR - resting HR) × intensity%) + resting HR
+                    const hrReserve = maxHr - restingHr;
+                    
+                    zones.push({
+                        name: 'Recovery',
+                        min: Math.round((hrReserve * 0.5) + restingHr),
+                        max: Math.round((hrReserve * 0.6) + restingHr),
+                        percentage: '50-60%',
+                        description: 'Light activity, warm-up, cool-down'
+                    });
+                    
+                    zones.push({
+                        name: 'Fat Burn',
+                        min: Math.round((hrReserve * 0.6) + restingHr),
+                        max: Math.round((hrReserve * 0.7) + restingHr),
+                        percentage: '60-70%',
+                        description: 'Moderate intensity, sustainable for long periods'
+                    });
+                    
+                    zones.push({
+                        name: 'Aerobic',
+                        min: Math.round((hrReserve * 0.7) + restingHr),
+                        max: Math.round((hrReserve * 0.8) + restingHr),
+                        percentage: '70-80%',
+                        description: 'Cardio fitness, endurance building'
+                    });
+                    
+                    zones.push({
+                        name: 'Anaerobic',
+                        min: Math.round((hrReserve * 0.8) + restingHr),
+                        max: Math.round((hrReserve * 0.9) + restingHr),
+                        percentage: '80-90%',
+                        description: 'High intensity, lactate threshold training'
+                    });
+                    
+                    zones.push({
+                        name: 'Neuromuscular',
+                        min: Math.round((hrReserve * 0.9) + restingHr),
+                        max: Math.round((hrReserve * 1.0) + restingHr),
+                        percentage: '90-100%',
+                        description: 'Maximum effort, sprint training'
+                    });
+                } else {
+                    // Standard percentage-based zones
+                    zones.push({
+                        name: 'Recovery',
+                        min: Math.round(maxHr * 0.5),
+                        max: Math.round(maxHr * 0.6),
+                        percentage: '50-60%',
+                        description: 'Light activity, warm-up, cool-down'
+                    });
+                    
+                    zones.push({
+                        name: 'Fat Burn',
+                        min: Math.round(maxHr * 0.6),
+                        max: Math.round(maxHr * 0.7),
+                        percentage: '60-70%',
+                        description: 'Moderate intensity, sustainable for long periods'
+                    });
+                    
+                    zones.push({
+                        name: 'Aerobic',
+                        min: Math.round(maxHr * 0.7),
+                        max: Math.round(maxHr * 0.8),
+                        percentage: '70-80%',
+                        description: 'Cardio fitness, endurance building'
+                    });
+                    
+                    zones.push({
+                        name: 'Anaerobic',
+                        min: Math.round(maxHr * 0.8),
+                        max: Math.round(maxHr * 0.9),
+                        percentage: '80-90%',
+                        description: 'High intensity, lactate threshold training'
+                    });
+                    
+                    zones.push({
+                        name: 'Neuromuscular',
+                        min: Math.round(maxHr * 0.9),
+                        max: Math.round(maxHr * 1.0),
+                        percentage: '90-100%',
+                        description: 'Maximum effort, sprint training'
+                    });
+                }
+                
+                return zones;
+            }
+
+            function displayResults(zones, maxHr, formula, units) {
+                const unitText = units === 'bpm' ? 'BPM' : '%';
+                
+                resultsContainer.innerHTML = `
+                    <div class="max-hr-display">
+                        <div class="max-hr-value">${maxHr}</div>
+                        <div class="max-hr-label">Maximum Heart Rate (${unitText})</div>
+                    </div>
+                    
+                    <table class="zone-table">
+                        <thead>
+                            <tr>
+                                <th>Zone</th>
+                                <th>Range</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${zones.map(zone => `
+                                <tr>
+                                    <td class="zone-name">${zone.name}</td>
+                                    <td class="zone-range">${zone.min}-${zone.max} ${unitText}</td>
+                                    <td class="zone-description">${zone.description}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    
+                    <div class="formula-info">
+                        <h4>Formula Used</h4>
+                        <p><strong>${getFormulaName(formula)}:</strong> ${getFormulaDescription(formula)}</p>
+                        ${formula === 'karvonen' && restingHrInput.value ? 
+                            '<p>This calculation uses your resting heart rate for more personalized results.</p>' : 
+                            '<p>For more accurate results, consider measuring your resting heart rate and using the Karvonen formula.</p>'
+                        }
+                    </div>
+                    
+                    <div class="workout-card">
+                        <h4>Training Recommendation</h4>
+                        <p>Start with Zone 2 (Fat Burn) for 20-30 minutes, 3-4 times per week. Gradually increase duration and add higher intensity zones as your fitness improves.</p>
+                    </div>
+                `;
+
+                resultDiv.textContent = 'Heart rate zone calculation completed!';
+                chartContainer.style.display = 'block';
+            }
+
+            function getFormulaName(formula) {
+                const names = {
+                    'fox': 'Fox Formula',
+                    'tanaka': 'Tanaka Formula',
+                    'karvonen': 'Karvonen Formula'
+                };
+                return names[formula] || 'Fox Formula';
+            }
+
+            function getFormulaDescription(formula) {
+                const descriptions = {
+                    'fox': '220 - age (most commonly used)',
+                    'tanaka': '208 - (0.7 × age) (more accurate for adults over 40)',
+                    'karvonen': 'Uses resting heart rate for personalized calculation'
+                };
+                return descriptions[formula] || '220 - age';
+            }
+
+            function createChart(zones, units) {
+                if (hrChart) {
+                    hrChart.destroy();
+                }
+
+                const ctx = document.getElementById('hrChart').getContext('2d');
+                const unitText = units === 'bpm' ? 'BPM' : '%';
+                
+                hrChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: zones.map(zone => zone.name),
+                        datasets: [{
+                            label: `Heart Rate Range (${unitText})`,
+                            data: zones.map(zone => zone.max - zone.min),
+                            backgroundColor: [
+                                '#28a745',
+                                '#ffc107',
+                                '#17a2b8',
+                                '#fd7e14',
+                                '#dc3545'
+                            ],
+                            borderColor: [
+                                '#28a745',
+                                '#ffc107',
+                                '#17a2b8',
+                                '#fd7e14',
+                                '#dc3545'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Heart Rate Zone Ranges'
+                            },
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: `Range (${unitText})`
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function exportToCSV() {
+                const age = parseInt(ageInput.value) || 0;
+                if (age === 0) {
+                    alert('Please calculate heart rate zones first before exporting.');
+                    return;
+                }
+
+                let csv = 'Target Heart Rate Zones\n';
+                csv += 'Zone,Min HR,Max HR,Percentage,Description\n';
+                
+                const zoneRows = document.querySelectorAll('.zone-table tbody tr');
+                zoneRows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length === 3) {
+                        const zoneName = cells[0].textContent;
+                        const zoneRange = cells[1].textContent;
+                        const zoneDesc = cells[2].textContent;
+                        const [min, max] = zoneRange.split('-');
+                        csv += `${zoneName},${min},${max},${zoneDesc}\n`;
+                    }
+                });
+
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'heart-rate-zones.csv';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+
+            function saveToLocalStorage(zones, maxHr, formula, units) {
+                const hrState = {
+                    age: ageInput.value,
+                    restingHr: restingHrInput.value,
+                    formula: formula,
+                    units: units,
+                    maxHr: maxHr,
+                    zones: zones
+                };
+                localStorage.setItem('heartRateCalculatorState', JSON.stringify(hrState));
+            }
+
+            function loadFromLocalStorage() {
+                const savedState = localStorage.getItem('heartRateCalculatorState');
+                if (savedState) {
+                    const state = JSON.parse(savedState);
+                    ageInput.value = state.age || '';
+                    restingHrInput.value = state.restingHr || '';
+                    formulaSelect.value = state.formula || 'fox';
+                    unitsSelect.value = state.units || 'bpm';
+                }
+            }
+
+            function resetCalculator() {
+                ageInput.value = '';
+                restingHrInput.value = '';
+                formulaSelect.value = 'fox';
+                unitsSelect.value = 'bpm';
+                resultDiv.textContent = 'Your heart rate zone calculation results will appear here...';
+                resultsContainer.innerHTML = '';
+                chartContainer.style.display = 'none';
+                if (hrChart) {
+                    hrChart.destroy();
+                    hrChart = null;
+                }
+                localStorage.removeItem('heartRateCalculatorState');
+            }
+
+            calculateButton.addEventListener('click', calculateHeartRateZones);
+            resetButton.addEventListener('click', resetCalculator);
+            exportButton.addEventListener('click', exportToCSV);
+
+            // Load saved state on page load
+            loadFromLocalStorage();
+
+            // Allow Enter key to trigger calculation
+            [ageInput, restingHrInput].forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        calculateHeartRateZones();
+                    }
+                });
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with animation classes
+        document.querySelectorAll('.tool-hero__left, .tool-hero__right, .blog-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

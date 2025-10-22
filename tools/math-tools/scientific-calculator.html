@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Scientific Calculator | Advanced Calculations Made Easy | EveryTool.tech</title>
+    <meta name="description" content="Perform advanced calculations with our free online Scientific Calculator. Features trigonometric, logarithmic, and exponential functions, perfect for students and professionals.">
+    <meta name="keywords" content="scientific calculator, advanced calculator, trigonometric functions, logarithmic functions, exponential functions, math calculator, scientific notation, complex numbers">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Online Scientific Calculator | EveryTool.tech">
+    <meta property="og:description" content="Perform advanced calculations with our free online Scientific Calculator. Features trigonometric, logarithmic, and exponential functions, perfect for students and professionals.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/scientific-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js" defer></script>
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Custom styles for Scientific Calculator */
+        .calc-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .calc-display {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: right;
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .calc-btn {
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .calc-btn:hover {
+            background: #e9ecef;
+        }
+        .calc-btn.operator {
+            background: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+        .calc-btn.operator:hover {
+            background: #0056b3;
+        }
+        .calc-btn.equals {
+            background: #28a745;
+            color: #fff;
+            border-color: #28a745;
+        }
+        .calc-btn.equals:hover {
+            background: #1e7e34;
+        }
+        .calc-btn.clear {
+            background: #dc3545;
+            color: #fff;
+            border-color: #dc3545;
+        }
+        .calc-btn.clear:hover {
+            background: #c82333;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .calc-display { 
+                padding: 15px; 
+                font-size: 1.3rem; 
+                min-height: 50px; 
+            }
+            .calc-buttons { 
+                gap: 8px; 
+            }
+            .calc-btn { 
+                padding: 12px; 
+                font-size: 1rem; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calc-display { 
+                padding: 12px; 
+                font-size: 1.2rem; 
+                min-height: 45px; 
+            }
+            .calc-buttons { 
+                gap: 6px; 
+            }
+            .calc-btn { 
+                padding: 10px; 
+                font-size: 0.9rem; 
+            }
+        }
+
+        /* Scientific calculator layout */
+        .calculator-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
+            align-items: start;
+        }
+        .calculator-main {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            padding: 20px;
+        }
+        .calculator-display {
+            background: #0f172a;
+            color: #e2e8f0;
+            border-radius: 10px;
+            padding: 16px 18px;
+            min-height: 82px;
+            display: grid;
+            grid-template-rows: 1fr auto;
+            gap: 6px;
+            margin-bottom: 16px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+        }
+        #formula-display {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.95rem;
+            color: #94a3b8;
+            word-break: break-all;
+        }
+        #result-display {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 1.6rem;
+            text-align: right;
+        }
+        .calculator-buttons {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(64px, 1fr));
+            gap: 10px;
+        }
+        .calculator-buttons .calc-btn {
+            height: 58px;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            background: #ffffff;
+            font-weight: 600;
+            transition: transform .06s ease, background .2s ease, box-shadow .2s ease;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+        }
+        .calculator-buttons .calc-btn:hover { background: #f8fafc; }
+        .calculator-buttons .calc-btn:active { transform: translateY(1px); }
+        .calculator-buttons .operator { background: #1d4ed8; color: #fff; border-color: #1d4ed8; }
+        .calculator-buttons .equals { background: #16a34a; color: #fff; border-color: #16a34a; }
+        .calculator-buttons .clear { background: #dc2626; color: #fff; border-color: #dc2626; }
+        #mode-toggle { background: #f1f5f9; }
+        #mode-toggle.active { background: #0ea5e9; color: #fff; border-color: #0ea5e9; }
+
+        .calculator-history {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            padding: 16px;
+            max-height: 520px;
+            overflow: auto;
+        }
+        .calculator-history h4 { margin: 0 0 8px 0; font-weight: 700; }
+        #history-log { display: flex; flex-direction: column; gap: 8px; }
+        .history-item { border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px 12px; cursor: pointer; }
+        .history-item:hover { background: #f8fafc; }
+        .hist-formula { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace; color: #64748b; font-size: .9rem; }
+        .hist-result { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace; font-weight: 700; }
+
+        @media (max-width: 1024px) {
+            .calculator-layout { grid-template-columns: 1fr; }
+            .calculator-history { order: 2; }
+        }
+
+        /* Compact mobile layout */
+        @media (max-width: 560px) {
+            .calculator-buttons { grid-template-columns: repeat(4, minmax(64px, 1fr)); gap: 8px; }
+            .calculator-buttons .calc-btn { height: 64px; font-size: 1.05rem; }
+            .calculator-main { padding: 16px; }
+            .calculator-display { min-height: 92px; }
+        }
+    </style>
+    <!-- END: CRITICAL STYLE FOR HEADER -->
+
+</head>
+<body data-tool-name="Scientific Calculator" data-meta-description="A powerful and free online Scientific Calculator with advanced functions for trigonometry, logarithms, and more. Perfect for students and professionals.">
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Powerful Online Scientific Calculator</h1>
+                    <p class="tool-hero__description">
+                        From basic arithmetic to complex trigonometric, logarithmic, and exponential functions, our free scientific calculator is designed for students, professionals, and anyone in need of precision calculations.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-square-root-alt"></i>
+                            <span>Full Scientific Functions</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-history"></i>
+                            <span>Interactive History Log</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-brain"></i>
+                            <span>Memory & Constants</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-keyboard"></i>
+                            <span>Keyboard Support</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Start Calculating
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn the Functions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Your Digital Calculation Hub</h2>
+                    <p class="tool-display__description">
+                        Use the buttons or your keyboard for seamless input. Your calculation history is saved on the right.
+                    </p>
+                </div>
+                <!-- Scientific Calculator Custom Interface -->
+                <div class="calculator-layout">
+                    <div class="calculator-main">
+                        <div class="calculator-display">
+                            <div id="formula-display"></div>
+                            <div id="result-display">0</div>
+                        </div>
+                        <div class="calculator-buttons">
+                            <!-- Row 1: mode + trig + power -->
+                            <button id="mode-toggle" class="calc-btn function" data-value="deg">Rad</button>
+                            <button class="calc-btn function" data-value="sin(">sin</button>
+                            <button class="calc-btn function" data-value="cos(">cos</button>
+                            <button class="calc-btn function" data-value="tan(">tan</button>
+                            <button class="calc-btn function" data-action="pow">x²</button>
+
+                            <!-- Row 2: logs, parens, root -->
+                            <button class="calc-btn function" data-value="log(">log</button>
+                            <button class="calc-btn function" data-value="ln(">ln</button>
+                            <button class="calc-btn" data-value="(">(</button>
+                            <button class="calc-btn" data-value=")">)</button>
+                            <button class="calc-btn function" data-value="sqrt(">√</button>
+
+                            <!-- Row 3: scientific function row requested -->
+                            <button class="calc-btn function" data-action="exp">EXP</button>
+                            <button class="calc-btn function" data-action="fact">x!</button>
+                            <button class="calc-btn function" data-action="recip">¹/x</button>
+                            <button class="calc-btn function" data-action="pow2">x²</button>
+                            <button class="calc-btn function" data-action="pow3">x³</button>
+
+                            <!-- Row 4: constants, mod, answer, memory keys -->
+                            <button class="calc-btn" data-action="const-e">e</button>
+                            <button class="calc-btn operator" data-action="mod">mod</button>
+                            <button class="calc-btn" data-action="ans">Ans</button>
+                            <button class="calc-btn" data-action="mc">MC</button>
+                            <button class="calc-btn" data-action="mr">MR</button>
+
+                            <!-- Row 5: numbers and ops -->
+                            <button class="calc-btn" data-value="7">7</button>
+                            <button class="calc-btn" data-value="8">8</button>
+                            <button class="calc-btn" data-value="9">9</button>
+                            <button class="calc-btn" data-action="mplus">M+</button>
+                            <button class="calc-btn" data-action="mminus">M-</button>
+
+                            <button class="calc-btn" data-value="4">4</button>
+                            <button class="calc-btn" data-value="5">5</button>
+                            <button class="calc-btn" data-value="6">6</button>
+                            <button class="calc-btn operator" data-value="*">×</button>
+                            <button class="calc-btn operator" data-value="/">÷</button>
+                            
+                            <button class="calc-btn" data-value="1">1</button>
+                            <button class="calc-btn" data-value="2">2</button>
+                            <button class="calc-btn" data-value="3">3</button>
+                            <button class="calc-btn operator" data-value="+">+</button>
+                            <button class="calc-btn operator" data-value="-">−</button>
+
+                            <button class="calc-btn" data-value="0">0</button>
+                            <button class="calc-btn" data-value=".">.</button>
+                            <button class="calc-btn" data-value="pi">π</button>
+                            <button class="calc-btn clear" data-value="c">C</button>
+                            <button class="calc-btn clear" data-value="backspace">⌫</button>
+
+                            <button class="calc-btn equals" data-value="=">=</button>
+                        </div>
+                    </div>
+                    <div class="calculator-history">
+                        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+                            <h4 style="margin:0;">Calculation History</h4>
+                            <button id="clear-history" class="calc-btn clear" style="height:36px;line-height:36px;padding:0 12px;">Clear</button>
+                        </div>
+                        <div id="history-log"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Unlocking the Power of the Scientific Calculator</h2>
+                <p class="tool-blog__subtitle">
+                    A comprehensive guide to moving beyond basic arithmetic and mastering the tools of science and engineering.
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Introduction: More Than Just Numbers</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            In a world driven by data, technology, and complex systems, the ability to perform advanced calculations is not just a niche skill—it's a fundamental requirement in countless fields. While a basic calculator handles the four essential operations, the <strong>scientific calculator</strong> is a sophisticated instrument designed to tackle the language of science and engineering. It incorporates functions that model the natural world, from the arc of a thrown ball to the decay of radioactive material.
+                        </p>
+                        <p>
+                            This guide will walk you through the core functions of a modern online scientific calculator. Understanding these tools empowers you to solve complex problems, verify intricate formulas, and approach quantitative challenges with confidence. Whether you're a high school student learning trigonometry, a college student in a STEM major, or a professional engineer, mastering this tool is an investment in your analytical capabilities.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Core Functions: The Building Blocks of Scientific Calculation</h3>
+                    <div class="blog-section__content">
+                        <h4>Order of Operations (PEMDAS/BODMAS)</h4>
+                        <p>The first rule of any calculator beyond the most basic is the order of operations. A scientific calculator inherently understands this hierarchy: Parentheses/Brackets, Exponents/Orders, Multiplication and Division (from left to right), and Addition and Subtraction (from left to right). This is why using parentheses `()` is critical. For an expression like `3 + 5 * 2`, the calculator correctly computes `5 * 2` first, then adds 3 to get 13. If you wanted to add first, you would write `(3 + 5) * 2`, which correctly yields 16. Our calculator's formula display shows your expression exactly as you type it, allowing you to verify your use of parentheses is correct.</p>
+                        
+                        <h4>Trigonometric Functions (sin, cos, tan) & the Radian/Degree Toggle</h4>
+                        <p>Trigonometry is the study of triangles and angles, but its applications are vast, covering waves, oscillations, and rotations.
+                        <ul>
+                            <li><strong>sin(x)</strong>: The sine function, used in modeling waves like sound and light.</li>
+                            <li><strong>cos(x)</strong>: The cosine function, often in phase with sine, crucial for describing oscillations.</li>
+                            <li><strong>tan(x)</strong>: The tangent function, representing the slope of a line at a given angle.</li>
+                        </ul>
+                        The most vital setting for these functions is the <strong>Degrees (Deg) vs. Radians (Rad)</strong> toggle. Angles can be measured in degrees (a full circle is 360°) or radians (a full circle is 2π radians). Using the wrong mode is one of the most common errors. For example, `sin(90)` in Degree mode is `1`, but in Radian mode, it's `0.89...`. Always ensure your calculator is in the correct mode for your problem.</p>
+                        
+                        <h4>Logarithmic Functions (log, ln)</h4>
+                        <p>Logarithms are the inverse of exponents. They answer the question: "what exponent do I need to raise a base to, to get a certain number?"
+                        <ul>
+                            <li><strong>log(x)</strong>: This is the base-10 logarithm. It's used in scales that measure vast ranges, like the pH scale for acidity (chemistry) and the Richter scale for earthquake magnitude (geology).</li>
+                            <li><strong>ln(x)</strong>: This is the natural logarithm, which has a base of the mathematical constant `e` (approximately 2.718). It appears naturally in growth and decay processes, such as compound interest, population growth, and radioactive decay.</li>
+                        </ul></p>
+
+                        <h4>Exponents and Roots (xʸ, √)</h4>
+                        <p>Exponents represent repeated multiplication, and roots are their inverse.
+                        <ul>
+                            <li><strong>xʸ (Power)</strong>: Allows you to raise any number `x` to the power of any other number `y`. This is essential for scientific notation and formulas involving exponential growth.</li>
+                            <li><strong>√ (Square Root)</strong>: Finds the number which, when multiplied by itself, gives your input. It's fundamental in geometry (Pythagorean theorem) and physics.</li>
+                        </ul></p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Maximizing Efficiency with Advanced Features</h3>
+                    <div class="blog-section__content">
+                        <h4>The Power of Calculation History</h4>
+                        <p>One of the biggest advantages of an online scientific calculator is the interactive history log. How often have you performed a multi-step calculation, only to realize you made a mistake in the first step? Or needed the result of a previous calculation for your current one? The history log solves this.
+                        Every time you press "=", your full expression and its result are saved. You can then click on any part of that previous entry—either the formula or the result—to instantly bring it back into the calculator's display. This feature eliminates tedious re-typing, reduces errors, and creates a clear, auditable trail of your work, which is invaluable for checking complex problems.</p>
+                        
+                        <h4>Essential Constants: π and e</h4>
+                        <p>Some numbers are so fundamental to mathematics and science that they are given their own buttons.
+                        <ul>
+                            <li><strong>π (Pi)</strong>: Approximately 3.14159, Pi is the ratio of a circle's circumference to its diameter. It is indispensable in any calculation involving circles, spheres, cylinders, and is ubiquitous in trigonometry and wave analysis.</li>
+                            <li><strong>e (Euler's Number)</strong>: Approximately 2.71828, `e` is the base of the natural logarithm. It is the universal constant of growth, appearing in any situation where the rate of change is proportional to the current value, from finance to biology.</li>
+                        </ul></p>
+                    </div>
+                </div>
+                
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Putting It All Together: A Practical Example</h3>
+                    <div class="blog-section__content">
+                        <p>Let's calculate the distance a projectile travels (its range), ignoring air resistance. The formula is: <strong>Range = (v² * sin(2θ)) / g</strong>, where:</p>
+                        <ul>
+                            <li><strong>v</strong> is the initial velocity (e.g., 50 m/s).</li>
+                            <li><strong>θ</strong> is the launch angle (e.g., 30 degrees).</li>
+                            <li><strong>g</strong> is the acceleration due to gravity (approx. 9.8 m/s²).</li>
+                        </ul>
+                        <p>Here's how you'd input this into the calculator:</p>
+                        <ol>
+                            <li><strong>Check Mode:</strong> Ensure the calculator is in Degree (Deg) mode, because our angle is 30°.</li>
+                            <li><strong>Enter the Expression:</strong> You would type: `(50**2 * sin(2 * 30)) / 9.8`</li>
+                            <li><strong>Calculate:</strong> Pressing `=` evaluates this. `sin(60)` is calculated, multiplied by `50²` (which is 2500), and the result is divided by 9.8.</li>
+                            <li><strong>Result:</strong> The calculator would display approximately <strong>220.92 meters</strong>. This entire calculation is now saved in your history, ready to be modified if you want to test a different launch angle or velocity.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Find quick answers to common questions about our scientific calculator</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What's the difference between Degrees and Radians?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>They are two different units for measuring angles. A full circle is 360 Degrees (360°) or 2π Radians. Use Degrees for everyday geometry and many engineering problems. Use Radians for most higher-level mathematics, physics, and calculus, as they simplify many formulas. Always check which mode your problem requires!</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        My calculation shows "Error". What did I do wrong?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Most errors are "Syntax Errors." Check for these common issues:
+                        <ul>
+                            <li><strong>Mismatched Parentheses:</strong> Ensure every `(` has a corresponding `)`.</li>
+                            <li><strong>Invalid Operations:</strong> You cannot perform an operation like dividing by zero or taking the square root of a negative number.</li>
+                            <li><strong>Double Operators:</strong> An expression like `5 * + 3` is invalid. Make sure operators are separated by numbers or parentheses.</li>
+                        </ul>
+                        Our formula display helps you spot these errors easily.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I use the calculation history?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Every time you press the `=` button, your calculation is saved in the history log on the right. To re-use a past calculation, simply click on its entry in the log. Clicking the formula will bring the formula back, and clicking the result will bring the number back, ready for your next operation.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I use my keyboard with this calculator?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. Our calculator is fully keyboard-compatible. You can use the number keys, operators (+, -, *, /), the decimal point, and parentheses directly. Use 'Enter' to calculate (=), 'Backspace' to delete the last character, and 'c' or 'Escape' to clear the input.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What is the 'e' constant and the 'ln' function?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>'e' is a special mathematical constant, approximately 2.718, known as Euler's number. It's the base of the natural logarithm. The 'ln' function is the natural logarithm, which is crucial for problems involving compound interest, population growth, and radioactive decay—any situation where the rate of change is proportional to the current amount.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- CRITICAL: Universal Search Script - DO NOT REMOVE -->
+    <script src="/universal-search-deploy.js" defer></script>
+    <script src="/app-loader.js" defer></script>
+    <script src="../FAQ section/faq.js" defer></script>
+    <script>
+    (function(){
+        'use strict';
+
+        const formulaEl = document.getElementById('formula-display');
+        const resultEl = document.getElementById('result-display');
+        const historyEl = document.getElementById('history-log');
+        const clearHistoryBtn = document.getElementById('clear-history');
+        const buttons = document.querySelectorAll('.calculator-buttons .calc-btn');
+        const modeToggle = document.getElementById('mode-toggle');
+
+        let expression = '';
+        let isRadians = true; // default shown as "Rad"
+        // Visual state
+        if (modeToggle) modeToggle.classList.add('active');
+
+        // Memory & state
+        let memory = 0;
+        let lastAnswer = 0;
+
+        function updateDisplays(){
+            formulaEl.textContent = expression || '';
+        }
+
+        function append(val){
+            switch(val){
+                case 'c':
+                    expression = '';
+                    resultEl.textContent = '0';
+                    break;
+                case 'backspace':
+                    expression = expression.slice(0, -1);
+                    break;
+                case 'pi':
+                    expression += 'pi';
+                    break;
+                case '=':
+                    calculate();
+                    break;
+                default:
+                    expression += val;
+            }
+            updateDisplays();
+        }
+
+        function toRad(x){ return x * Math.PI / 180; }
+        function deg_sin(x){ return Math.sin(toRad(x)); }
+        function deg_cos(x){ return Math.cos(toRad(x)); }
+        function deg_tan(x){ return Math.tan(toRad(x)); }
+        function factorial(n){
+            if (n < 0 || !Number.isFinite(n)) return NaN;
+            if (n > 170) return Infinity; // prevent overflow
+            let k = Math.floor(n);
+            let r = 1;
+            for (let i = 2; i <= k; i++) r *= i;
+            return r;
+        }
+
+        function safeEval(raw){
+            let expr = String(raw);
+
+            // Replace constants and functions
+            expr = expr
+                .replace(/pi/g, 'Math.PI')
+                .replace(/sqrt\(/g, 'Math.sqrt(')
+                .replace(/ln\(/g, 'Math.log(')
+                .replace(/log\(/g, 'Math.log10(');
+
+            // Trig with degree toggle
+            if (isRadians) {
+                expr = expr
+                    .replace(/sin\(/g, 'Math.sin(')
+                    .replace(/cos\(/g, 'Math.cos(')
+                    .replace(/tan\(/g, 'Math.tan(');
+            } else {
+                expr = expr
+                    .replace(/sin\(/g, 'deg_sin(')
+                    .replace(/cos\(/g, 'deg_cos(')
+                    .replace(/tan\(/g, 'deg_tan(');
+            }
+
+            // Basic sanitization: allow digits, operators, parentheses, dot, Math, deg_*, memory/ans
+            if (!/^[-+*/%.()\d\s^a-zA-Z_]*$/.test(expr)) {
+                throw new Error('Invalid characters');
+            }
+
+            // Support ** already used for power
+            // Use Function for evaluation in a restricted scope
+            const fn = new Function('Math', 'deg_sin', 'deg_cos', 'deg_tan', 'memory', 'Ans', 'factorial', 'return (' + expr + ')');
+            const value = fn(Math, deg_sin, deg_cos, deg_tan, memory, lastAnswer, factorial);
+            return value;
+        }
+
+        function addToHistory(formula, result){
+            const item = document.createElement('div');
+            item.className = 'history-item';
+            item.innerHTML = '<div class="hist-formula"></div><div class="hist-result"></div>';
+            item.querySelector('.hist-formula').textContent = formula;
+            item.querySelector('.hist-result').textContent = '= ' + result;
+            item.addEventListener('click', () => { expression = formula; updateDisplays(); });
+            historyEl.prepend(item);
+            persistHistory();
+        }
+
+        function calculate(){
+            if (!expression) return;
+            try {
+                // Polyfill log10 if needed
+                if (!Math.log10) { Math.log10 = (x) => Math.log(x) / Math.LN10; }
+                const value = safeEval(expression);
+                const display = Number.isFinite(value) ? value : 'Error';
+                resultEl.textContent = typeof display === 'number' ? (Math.round(display * 1e12) / 1e12).toString() : 'Error';
+                if (typeof display === 'number') lastAnswer = display;
+                addToHistory(expression, resultEl.textContent);
+            } catch (e) {
+                resultEl.textContent = 'Error';
+            }
+        }
+
+        // Button clicks
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const action = btn.dataset.action;
+                if (action) {
+                    handleAction(action);
+                } else {
+                    const val = btn.dataset.value;
+                    append(val);
+                }
+            });
+        });
+
+        // Mode toggle
+        modeToggle.addEventListener('click', () => {
+            isRadians = !isRadians;
+            modeToggle.textContent = isRadians ? 'Rad' : 'Deg';
+            modeToggle.classList.toggle('active', isRadians);
+        });
+
+        function handleAction(action){
+            switch(action){
+                case 'exp':
+                    // Append *10** for scientific notation (x EXP y == x * 10^y)
+                    expression += '*10**';
+                    break;
+                case 'fact':
+                    // Wrap the current trailing number with factorial()
+                    expression = expression.replace(/(\d+(?:\.\d+)?)$/, 'factorial($1)');
+                    break;
+                case 'recip':
+                    expression = expression ? `1/(${expression})` : '1/(';
+                    break;
+                case 'pow2':
+                    expression += '**2';
+                    break;
+                case 'pow3':
+                    expression += '**3';
+                    break;
+                case 'mod':
+                    expression += '%';
+                    break;
+                case 'const-e':
+                    expression += 'Math.E';
+                    break;
+                case 'ans':
+                    expression += String(lastAnswer);
+                    break;
+                case 'mc':
+                    memory = 0; break;
+                case 'mr':
+                    expression += String(memory); break;
+                case 'mplus':
+                    try { memory += Number(resultEl.textContent) || 0; } catch(_) {}
+                    break;
+                case 'mminus':
+                    try { memory -= Number(resultEl.textContent) || 0; } catch(_) {}
+                    break;
+            }
+            updateDisplays();
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            const key = e.key;
+            if ((/^[0-9]$/).test(key)) { append(key); return; }
+            if (key === '.') { append('.'); return; }
+            if (key === '+') { append('+'); return; }
+            if (key === '-') { append('-'); return; }
+            if (key === '*') { append('*'); return; }
+            if (key === '/') { append('/'); return; }
+            if (key === '(' || key === ')') { append(key); return; }
+            if (key === 'Backspace') { append('backspace'); return; }
+            if (key === 'Enter' || key === '=') { append('='); return; }
+            if (key.toLowerCase() === 'c' || key === 'Escape') { append('c'); return; }
+        });
+
+        // History persistence
+        function persistHistory(){
+            const items = Array.from(historyEl.querySelectorAll('.history-item')).map(el => ({
+                f: el.querySelector('.hist-formula').textContent,
+                r: el.querySelector('.hist-result').textContent.replace(/^=\s*/, '')
+            })).slice(0, 100);
+            try { localStorage.setItem('sci_calc_history', JSON.stringify(items)); } catch(_) {}
+        }
+        function restoreHistory(){
+            try {
+                const raw = localStorage.getItem('sci_calc_history');
+                if (!raw) return;
+                const items = JSON.parse(raw);
+                items.reverse().forEach(it => addToHistory(it.f, it.r));
+            } catch(_) {}
+        }
+        if (clearHistoryBtn) {
+            clearHistoryBtn.addEventListener('click', () => {
+                historyEl.innerHTML = '';
+                try { localStorage.removeItem('sci_calc_history'); } catch(_) {}
+            });
+        }
+
+        updateDisplays();
+        restoreHistory();
+    })();
+    </script>
+
+</body>
+</html>

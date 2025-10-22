@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Deadline Calculator | Backward Scheduling & Milestones | EveryTool.tech</title>
+    <meta name="description" content="Plan assignments with backward scheduling, milestone generation, and ICS calendar export. Get organized with automatic task splitting and deadline management.">
+    <meta name="keywords" content="assignment deadline calculator, backward scheduling, milestone planning, task management, deadline organizer, academic planning">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Assignment Deadline Calculator | EveryTool.tech">
+    <meta property="og:description" content="Plan assignments with backward scheduling, milestone generation, and ICS calendar export. Get organized with automatic task splitting and deadline management.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/education-tools/assignment-deadline-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Assignment Deadline Calculator Specific Styles */
+        .assignment-calc-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .assignment-calc-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .assignment-calc-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .assignment-calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .assignment-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .assignment-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .assignment-form-group input, .assignment-form-group select, .assignment-form-group textarea { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .assignment-form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .assignment-list {
+            margin-top: 20px;
+        }
+        
+        .assignment-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .assignment-item input, .assignment-item select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .remove-assignment-btn {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 30px;
+            text-align: center;
+        }
+        
+        .add-assignment-btn {
+            margin-top: 15px;
+        }
+        
+        .schedule-results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .timeline {
+            margin-top: 20px;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-date {
+            min-width: 120px;
+            font-weight: 600;
+            color: #007bff;
+            margin-right: 20px;
+        }
+        
+        .timeline-content {
+            flex: 1;
+        }
+        
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .timeline-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        
+        .timeline-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .timeline-progress {
+            width: 100px;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-left: 15px;
+        }
+        
+        .timeline-progress-bar {
+            height: 100%;
+            background: #007bff;
+            transition: width 0.3s ease;
+        }
+        
+        .milestone-badge {
+            background: #28a745;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-right: 10px;
+        }
+        
+        .task-badge {
+            background: #6c757d;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-right: 10px;
+        }
+        
+        .urgency-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .urgency-low { background: #28a745; }
+        .urgency-medium { background: #ffc107; }
+        .urgency-high { background: #dc3545; }
+        
+        .schedule-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .summary-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .summary-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        
+        .summary-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .export-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .progress-tracker {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .progress-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .progress-checkbox {
+            margin-right: 10px;
+        }
+        
+        .holiday-settings {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .holiday-list {
+            margin-top: 10px;
+        }
+        
+        .holiday-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .assignment-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .assignment-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .assignment-item {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .timeline-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .timeline-date {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+            .timeline-progress {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+            }
+            .schedule-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .export-buttons {
+                flex-direction: column;
+            }
+            .assignment-form-group input, .assignment-form-group select, .assignment-form-group textarea { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .assignment-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .schedule-summary {
+                grid-template-columns: 1fr;
+            }
+            .assignment-form-group input, .assignment-form-group select, .assignment-form-group textarea { 
+                padding: 8px; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="Assignment Deadline Calculator" data-meta-description="Plan assignments with backward scheduling, milestone generation, and ICS calendar export. Get organized with automatic task splitting and deadline management.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Assignment Deadline Calculator: Smart Backward Scheduling</h1>
+                    <p class="tool-hero__description">
+                        Plan assignments with backward scheduling, milestone generation, and ICS calendar export. 
+                        Get organized with automatic task splitting and deadline management for academic success.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Backward Scheduling</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-flag-checkered"></i>
+                            <span>Milestone Generation</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-tasks"></i>
+                            <span>Task Splitting</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-calendar-plus"></i>
+                            <span>Calendar Export</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Plan Assignment
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Planning
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Assignment Deadline Calculator</h2>
+                    <p class="tool-display__description">
+                        Plan your assignments with intelligent backward scheduling and milestone tracking.
+                    </p>
+                </div>
+                
+                <!-- Assignment Deadline Calculator Custom Interface -->
+                <div class="assignment-calc-container">
+                    <div class="assignment-calc-section">
+                        <h4>1. Assignment Settings</h4>
+                        <div class="assignment-calc-grid">
+                            <div class="assignment-form-group">
+                                <label for="available-hours">Available Hours per Day</label>
+                                <input type="number" id="available-hours" placeholder="4" min="1" max="12" value="4">
+                            </div>
+                            <div class="assignment-form-group">
+                                <label for="padding-buffer">Padding Buffer (days)</label>
+                                <input type="number" id="padding-buffer" placeholder="2" min="0" max="7" value="2">
+                            </div>
+                            <div class="assignment-form-group">
+                                <label for="work-start-time">Work Start Time</label>
+                                <input type="time" id="work-start-time" value="09:00">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="assignment-calc-section">
+                        <h4>2. Assignments</h4>
+                        <div class="assignment-list" id="assignment-list">
+                            <!-- Assignment items will be added here -->
+                        </div>
+                        <button class="tool-display__button add-assignment-btn" onclick="addAssignment()">
+                            <i class="fas fa-plus"></i> Add Assignment
+                        </button>
+                    </div>
+
+                    <div class="holiday-settings">
+                        <h4>3. Holidays & Non-Working Days</h4>
+                        <div class="holiday-list" id="holiday-list">
+                            <!-- Holiday items will be added here -->
+                        </div>
+                        <button class="tool-display__button" onclick="addHoliday()">
+                            <i class="fas fa-plus"></i> Add Holiday
+                        </button>
+                    </div>
+
+                    <div class="assignment-calc-section">
+                        <h4>4. Generate Schedule</h4>
+                        <div class="assignment-calc-grid">
+                            <div class="assignment-form-group">
+                                <button class="tool-display__button tool-display__button--primary" onclick="generateSchedule()">
+                                    <i class="fas fa-magic"></i> Generate Schedule
+                                </button>
+                            </div>
+                            <div class="assignment-form-group">
+                                <button class="tool-display__button" onclick="saveSchedule()">
+                                    <i class="fas fa-save"></i> Save Schedule
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="schedule-results" id="schedule-results" style="display: none;">
+                        <h4>Your Assignment Schedule</h4>
+                        <div class="schedule-summary" id="schedule-summary">
+                            <!-- Summary will be added here -->
+                        </div>
+                        
+                        <div class="timeline" id="timeline">
+                            <!-- Timeline will be added here -->
+                        </div>
+                        
+                        <div class="progress-tracker" id="progress-tracker">
+                            <h5>Progress Tracker</h5>
+                            <div id="progress-list">
+                                <!-- Progress items will be added here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="export-section">
+                        <h4>5. Export & Reminders</h4>
+                        <div class="export-buttons">
+                            <button class="tool-display__button" onclick="exportICS()">
+                                <i class="fas fa-calendar-plus"></i> Export to Calendar
+                            </button>
+                            <button class="tool-display__button" onclick="enableReminders()">
+                                <i class="fas fa-bell"></i> Enable Reminders
+                            </button>
+                            <button class="tool-display__button" onclick="printSchedule()">
+                                <i class="fas fa-print"></i> Print Schedule
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Effective Assignment Planning and Deadline Management</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about backward scheduling, milestone planning, and time management strategies for academic assignments
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is Backward Scheduling?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Backward scheduling is a time management technique where you start from the deadline and work backwards 
+                            to determine when you need to begin each task. This ensures you have enough time to complete everything 
+                            without last-minute stress.
+                        </p>
+                        <p>
+                            <strong>Benefits:</strong>
+                        </p>
+                        <ul>
+                            <li>Prevents procrastination by creating clear deadlines</li>
+                            <li>Ensures adequate time for each task</li>
+                            <li>Reduces stress and anxiety</li>
+                            <li>Improves quality of work through better time allocation</li>
+                            <li>Allows for unexpected delays and revisions</li>
+                        </ul>
+                        <p>
+                            <strong>Process:</strong> Start with the final deadline, subtract buffer time, then work backwards 
+                            to create intermediate milestones and start dates.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Milestone Planning</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Break Down Large Tasks:</strong> Large assignments should be split into smaller, manageable milestones 
+                            with specific deadlines. This makes progress more visible and manageable.
+                        </p>
+                        <p>
+                            <strong>Set Intermediate Deadlines:</strong> Create checkpoints throughout the project timeline to ensure 
+                            you're on track and can make adjustments if needed.
+                        </p>
+                        <p>
+                            <strong>Task Dependencies:</strong> Identify which tasks must be completed before others can begin, 
+                            and schedule accordingly.
+                        </p>
+                        <p>
+                            <strong>Progress Tracking:</strong> Regular milestone reviews help you stay accountable and adjust 
+                            your schedule if needed.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Time Management Strategies</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Buffer Time:</strong> Always include 1-2 days of buffer time before deadlines to account for 
+                            unexpected delays, technical issues, or additional revisions.
+                        </p>
+                        <p>
+                            <strong>Realistic Time Estimates:</strong> Be honest about how long tasks actually take. 
+                            It's better to overestimate than to run out of time.
+                        </p>
+                        <p>
+                            <strong>Account for Non-Working Days:</strong> Consider weekends, holidays, and personal commitments 
+                            when planning your schedule.
+                        </p>
+                        <p>
+                            <strong>Priority-Based Scheduling:</strong> Focus on high-priority assignments first, but don't 
+                            neglect smaller tasks that can accumulate.
+                        </p>
+                        <p>
+                            <strong>Regular Reviews:</strong> Check your progress weekly and adjust your schedule as needed.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Common Planning Mistakes</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Underestimating Time:</strong> Most people underestimate how long tasks will take. 
+                            Add 25-50% more time than your initial estimate.
+                        </p>
+                        <p>
+                            <strong>No Buffer Time:</strong> Failing to account for unexpected delays can lead to missed deadlines.
+                        </p>
+                        <p>
+                            <strong>Ignoring Dependencies:</strong> Not considering which tasks must be completed first can 
+                            create bottlenecks later.
+                        </p>
+                        <p>
+                            <strong>Overcommitting:</strong> Taking on too many assignments simultaneously can lead to poor 
+                            quality work and stress.
+                        </p>
+                        <p>
+                            <strong>No Progress Tracking:</strong> Without regular check-ins, you might not realize you're 
+                            falling behind until it's too late.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Assignment Deadline Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about assignment planning and deadline management</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>How does backward scheduling work?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Backward scheduling starts from your assignment deadline and works backwards to determine when you need to start each task. It subtracts buffer time, accounts for non-working days, and creates intermediate milestones to ensure you have enough time to complete everything.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What are milestones and why are they important?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Milestones are intermediate deadlines that break large assignments into smaller, manageable tasks. They help track progress, identify potential delays early, and provide motivation through regular achievements. They're essential for complex assignments that span multiple weeks.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How much buffer time should I include?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Generally, include 1-2 days of buffer time before deadlines. For longer assignments (2+ weeks), consider 2-3 days. This accounts for unexpected delays, technical issues, additional revisions, or personal emergencies that might arise.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I export my schedule to my calendar?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes! Click "Export to Calendar" to download an ICS file that you can import into Google Calendar, Outlook, Apple Calendar, or any calendar app. This creates events for each milestone and task, helping you stay organized and receive reminders.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Assignment Deadline Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const availableHours = document.getElementById('available-hours');
+            const paddingBuffer = document.getElementById('padding-buffer');
+            const workStartTime = document.getElementById('work-start-time');
+            const assignmentList = document.getElementById('assignment-list');
+            const holidayList = document.getElementById('holiday-list');
+            const scheduleResults = document.getElementById('schedule-results');
+            const scheduleSummary = document.getElementById('schedule-summary');
+            const timeline = document.getElementById('timeline');
+            const progressList = document.getElementById('progress-list');
+            
+            let assignments = [];
+            let holidays = [];
+            let generatedSchedule = null;
+            let savedSchedules = JSON.parse(localStorage.getItem('assignmentSchedules') || '[]');
+            
+            function addAssignment() {
+                const assignmentItem = document.createElement('div');
+                assignmentItem.className = 'assignment-item';
+                assignmentItem.innerHTML = `
+                    <input type="text" placeholder="Assignment Name" class="assignment-name">
+                    <input type="datetime-local" class="due-date">
+                    <input type="number" placeholder="Hours" class="estimated-hours" min="1" max="100" value="10">
+                    <select class="priority-level">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                    <button class="remove-assignment-btn" onclick="removeAssignment(this)">×</button>
+                `;
+                assignmentList.appendChild(assignmentItem);
+            }
+            
+            function removeAssignment(button) {
+                button.parentElement.remove();
+            }
+            
+            function addHoliday() {
+                const holidayItem = document.createElement('div');
+                holidayItem.className = 'holiday-item';
+                holidayItem.innerHTML = `
+                    <input type="date" class="holiday-date">
+                    <input type="text" placeholder="Holiday Name" class="holiday-name">
+                    <button class="remove-assignment-btn" onclick="removeHoliday(this)">×</button>
+                `;
+                holidayList.appendChild(holidayItem);
+            }
+            
+            function removeHoliday(button) {
+                button.parentElement.remove();
+            }
+            
+            function generateSchedule() {
+                // Collect assignment data
+                assignments = [];
+                const assignmentItems = assignmentList.querySelectorAll('.assignment-item');
+                
+                assignmentItems.forEach(item => {
+                    const name = item.querySelector('.assignment-name').value.trim();
+                    const dueDate = item.querySelector('.due-date').value;
+                    const hours = parseFloat(item.querySelector('.estimated-hours').value) || 0;
+                    const priority = item.querySelector('.priority-level').value;
+                    
+                    if (name && dueDate && hours > 0) {
+                        assignments.push({
+                            name,
+                            dueDate: new Date(dueDate),
+                            hours,
+                            priority
+                        });
+                    }
+                });
+                
+                // Collect holiday data
+                holidays = [];
+                const holidayItems = holidayList.querySelectorAll('.holiday-item');
+                
+                holidayItems.forEach(item => {
+                    const date = item.querySelector('.holiday-date').value;
+                    const name = item.querySelector('.holiday-name').value.trim();
+                    
+                    if (date && name) {
+                        holidays.push({
+                            date: new Date(date),
+                            name
+                        });
+                    }
+                });
+                
+                if (assignments.length === 0) {
+                    alert('Please add at least one assignment with a due date and estimated hours.');
+                    return;
+                }
+                
+                const hoursPerDay = parseFloat(availableHours.value) || 4;
+                const bufferDays = parseInt(paddingBuffer.value) || 2;
+                const startTime = workStartTime.value || '09:00';
+                
+                // Calculate schedule
+                generatedSchedule = calculateAssignmentSchedule(assignments, hoursPerDay, bufferDays, startTime, holidays);
+                displaySchedule(generatedSchedule);
+            }
+            
+            function calculateAssignmentSchedule(assignments, hoursPerDay, bufferDays, startTime, holidays) {
+                const schedule = [];
+                const today = new Date();
+                
+                // Sort assignments by due date (earliest first)
+                const sortedAssignments = [...assignments].sort((a, b) => a.dueDate - b.dueDate);
+                
+                sortedAssignments.forEach(assignment => {
+                    const dueDate = new Date(assignment.dueDate);
+                    const bufferDate = new Date(dueDate);
+                    bufferDate.setDate(bufferDate.getDate() - bufferDays);
+                    
+                    // Calculate working days between today and buffer date
+                    const workingDays = calculateWorkingDays(today, bufferDate, holidays);
+                    const totalHoursNeeded = assignment.hours;
+                    const hoursPerWorkingDay = Math.min(hoursPerDay, totalHoursNeeded / Math.max(1, workingDays));
+                    
+                    // Generate milestones for assignments > 10 hours
+                    const milestones = generateMilestones(assignment, hoursPerWorkingDay, bufferDate, holidays);
+                    
+                    schedule.push({
+                        assignment: assignment.name,
+                        dueDate: dueDate,
+                        bufferDate: bufferDate,
+                        totalHours: totalHoursNeeded,
+                        hoursPerDay: hoursPerWorkingDay,
+                        workingDays: workingDays,
+                        priority: assignment.priority,
+                        milestones: milestones
+                    });
+                });
+                
+                return {
+                    assignments: schedule,
+                    totalAssignments: assignments.length,
+                    totalHours: assignments.reduce((sum, a) => sum + a.hours, 0),
+                    averageHoursPerDay: assignments.reduce((sum, a) => sum + a.hours, 0) / Math.max(1, assignments.length)
+                };
+            }
+            
+            function calculateWorkingDays(startDate, endDate, holidays) {
+                let workingDays = 0;
+                const current = new Date(startDate);
+                
+                while (current <= endDate) {
+                    const dayOfWeek = current.getDay();
+                    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+                    const isHoliday = holidays.some(holiday => 
+                        holiday.date.toDateString() === current.toDateString()
+                    );
+                    
+                    if (!isWeekend && !isHoliday) {
+                        workingDays++;
+                    }
+                    
+                    current.setDate(current.getDate() + 1);
+                }
+                
+                return workingDays;
+            }
+            
+            function generateMilestones(assignment, hoursPerDay, bufferDate, holidays) {
+                const milestones = [];
+                const totalHours = assignment.hours;
+                
+                if (totalHours <= 10) {
+                    // Single milestone for small assignments
+                    milestones.push({
+                        name: `Complete ${assignment.name}`,
+                        hours: totalHours,
+                        dueDate: bufferDate,
+                        type: 'milestone'
+                    });
+                } else {
+                    // Multiple milestones for large assignments
+                    const milestoneCount = Math.ceil(totalHours / 10);
+                    const hoursPerMilestone = totalHours / milestoneCount;
+                    
+                    let currentDate = new Date();
+                    let remainingHours = totalHours;
+                    
+                    for (let i = 0; i < milestoneCount; i++) {
+                        const milestoneHours = Math.min(hoursPerMilestone, remainingHours);
+                        const daysNeeded = Math.ceil(milestoneHours / hoursPerDay);
+                        
+                        // Find next working day
+                        while (isWeekendOrHoliday(currentDate, holidays)) {
+                            currentDate.setDate(currentDate.getDate() + 1);
+                        }
+                        
+                        const milestoneDate = new Date(currentDate);
+                        milestoneDate.setDate(milestoneDate.getDate() + daysNeeded - 1);
+                        
+                        milestones.push({
+                            name: `${assignment.name} - Part ${i + 1}`,
+                            hours: milestoneHours,
+                            dueDate: milestoneDate,
+                            type: 'milestone'
+                        });
+                        
+                        remainingHours -= milestoneHours;
+                        currentDate.setDate(currentDate.getDate() + daysNeeded);
+                    }
+                }
+                
+                return milestones;
+            }
+            
+            function isWeekendOrHoliday(date, holidays) {
+                const dayOfWeek = date.getDay();
+                const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+                const isHoliday = holidays.some(holiday => 
+                    holiday.date.toDateString() === date.toDateString()
+                );
+                return isWeekend || isHoliday;
+            }
+            
+            function displaySchedule(schedule) {
+                scheduleResults.style.display = 'block';
+                
+                // Display summary
+                scheduleSummary.innerHTML = `
+                    <div class="summary-item">
+                        <div class="summary-value">${schedule.totalAssignments}</div>
+                        <div class="summary-label">Assignments</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">${schedule.totalHours}h</div>
+                        <div class="summary-label">Total Hours</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">${schedule.assignments.reduce((sum, a) => sum + a.milestones.length, 0)}</div>
+                        <div class="summary-label">Milestones</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">${schedule.averageHoursPerDay.toFixed(1)}h</div>
+                        <div class="summary-label">Avg Hours/Day</div>
+                    </div>
+                `;
+                
+                // Display timeline
+                timeline.innerHTML = '';
+                const allMilestones = [];
+                
+                schedule.assignments.forEach(assignment => {
+                    assignment.milestones.forEach(milestone => {
+                        allMilestones.push({
+                            ...milestone,
+                            assignment: assignment.assignment,
+                            priority: assignment.priority
+                        });
+                    });
+                });
+                
+                // Sort milestones by due date
+                allMilestones.sort((a, b) => a.dueDate - b.dueDate);
+                
+                allMilestones.forEach((milestone, index) => {
+                    const urgency = getUrgencyLevel(milestone.dueDate);
+                    const progress = calculateProgress(milestone, index, allMilestones.length);
+                    
+                    const timelineItem = document.createElement('div');
+                    timelineItem.className = 'timeline-item';
+                    timelineItem.innerHTML = `
+                        <div class="timeline-date">${milestone.dueDate.toLocaleDateString()}</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">
+                                <span class="urgency-indicator urgency-${urgency}"></span>
+                                <span class="milestone-badge">Milestone</span>
+                                ${milestone.name}
+                            </div>
+                            <div class="timeline-description">${milestone.assignment} - ${milestone.hours}h estimated</div>
+                            <div class="timeline-meta">
+                                <span>Priority: ${milestone.priority}</span>
+                                <span>Hours: ${milestone.hours}</span>
+                                <span>Due: ${milestone.dueDate.toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                        <div class="timeline-progress">
+                            <div class="timeline-progress-bar" style="width: ${progress}%"></div>
+                        </div>
+                    `;
+                    timeline.appendChild(timelineItem);
+                });
+                
+                // Display progress tracker
+                progressList.innerHTML = '';
+                allMilestones.forEach(milestone => {
+                    const progressItem = document.createElement('div');
+                    progressItem.className = 'progress-item';
+                    progressItem.innerHTML = `
+                        <div>
+                            <input type="checkbox" class="progress-checkbox" onchange="updateProgress(this)">
+                            <span>${milestone.name}</span>
+                        </div>
+                        <div>${milestone.dueDate.toLocaleDateString()}</div>
+                    `;
+                    progressList.appendChild(progressItem);
+                });
+            }
+            
+            function getUrgencyLevel(dueDate) {
+                const today = new Date();
+                const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+                
+                if (daysUntilDue <= 3) return 'high';
+                if (daysUntilDue <= 7) return 'medium';
+                return 'low';
+            }
+            
+            function calculateProgress(milestone, index, total) {
+                return Math.round((index / (total - 1)) * 100);
+            }
+            
+            function updateProgress(checkbox) {
+                // Save progress to localStorage
+                const progress = JSON.parse(localStorage.getItem('assignmentProgress') || '{}');
+                const milestoneName = checkbox.parentElement.textContent.trim();
+                progress[milestoneName] = checkbox.checked;
+                localStorage.setItem('assignmentProgress', JSON.stringify(progress));
+            }
+            
+            function saveSchedule() {
+                if (!generatedSchedule) {
+                    alert('Please generate a schedule first.');
+                    return;
+                }
+                
+                const scheduleName = prompt('Enter a name for this schedule:');
+                if (!scheduleName) return;
+                
+                const scheduleToSave = {
+                    name: scheduleName,
+                    schedule: generatedSchedule,
+                    timestamp: Date.now()
+                };
+                
+                savedSchedules.unshift(scheduleToSave);
+                savedSchedules = savedSchedules.slice(0, 10); // Keep only last 10
+                localStorage.setItem('assignmentSchedules', JSON.stringify(savedSchedules));
+                
+                alert('Schedule saved successfully!');
+            }
+            
+            function exportICS() {
+                if (!generatedSchedule) {
+                    alert('Please generate a schedule first.');
+                    return;
+                }
+                
+                let icsContent = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Assignment Deadline Calculator//EN\n';
+                
+                generatedSchedule.assignments.forEach(assignment => {
+                    assignment.milestones.forEach(milestone => {
+                        const startDateTime = milestone.dueDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+                        const endDateTime = new Date(milestone.dueDate.getTime() + 60 * 60 * 1000).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+                        
+                        icsContent += `BEGIN:VEVENT\n`;
+                        icsContent += `DTSTART:${startDateTime}\n`;
+                        icsContent += `DTEND:${endDateTime}\n`;
+                        icsContent += `SUMMARY:${milestone.name}\n`;
+                        icsContent += `DESCRIPTION:${milestone.assignment} - ${milestone.hours} hours estimated\n`;
+                        icsContent += `END:VEVENT\n`;
+                    });
+                });
+                
+                icsContent += 'END:VCALENDAR';
+                
+                const blob = new Blob([icsContent], { type: 'text/calendar' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'assignment-schedule.ics';
+                link.click();
+                URL.revokeObjectURL(url);
+            }
+            
+            function enableReminders() {
+                if ('Notification' in window) {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === 'granted') {
+                            alert('Reminders enabled! You will receive notifications for your assignment deadlines.');
+                        } else {
+                            alert('Reminder notifications were not enabled.');
+                        }
+                    });
+                } else {
+                    alert('Your browser does not support notifications.');
+                }
+            }
+            
+            function printSchedule() {
+                if (!generatedSchedule) {
+                    alert('Please generate a schedule first.');
+                    return;
+                }
+                
+                window.print();
+            }
+            
+            // Make functions globally available
+            window.addAssignment = addAssignment;
+            window.removeAssignment = removeAssignment;
+            window.addHoliday = addHoliday;
+            window.removeHoliday = removeHoliday;
+            window.generateSchedule = generateSchedule;
+            window.saveSchedule = saveSchedule;
+            window.exportICS = exportICS;
+            window.enableReminders = enableReminders;
+            window.printSchedule = printSchedule;
+            window.updateProgress = updateProgress;
+            
+            // Initialize with one assignment
+            addAssignment();
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Calculator | Calculate Your GPA/CGPA | EveryTool.tech</title>
+    <meta name="description" content="Easily calculate your GPA with our free online GPA Calculator. Works for both high school and college students, and supports custom grade and credit hour inputs.">
+    <meta name="keywords" content="gpa calculator, cgpa calculator, grade point average calculator, academic performance calculator, college gpa calculator, high school gpa calculator">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Free GPA Calculator | EveryTool.tech">
+    <meta property="og:description" content="Easily calculate your GPA with our free online GPA Calculator. Works for both high school and college students, and supports custom grade and credit hour inputs.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/gpa-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    <!-- START: CRITICAL STYLE FOR HEADER -->
+    <style>
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+        /* GPA Calculator Specific Styles */
+        .gpa-tool-container { padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; background-color: #fdfdfd; }
+        .gpa-tool-tabs { display: flex; border-bottom: 2px solid #e0e0e0; margin-bottom: 20px; }
+        .gpa-tab-button { padding: 10px 20px; cursor: pointer; border: none; background: none; font-size: 1rem; font-weight: 500; color: #555; border-bottom: 2px solid transparent; transition: all 0.3s ease; }
+        .gpa-tab-button.active { color: #007bff; border-bottom-color: #007bff; }
+        .gpa-tab-content { display: none; }
+        .gpa-tab-content.active { display: block; }
+        .gpa-input-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media (min-width: 768px) { .gpa-input-grid { grid-template-columns: repeat(2, 1fr); } }
+        .gpa-form-group { display: flex; flex-direction: column; }
+        .gpa-form-group label { margin-bottom: 5px; font-weight: 500; color: #333; }
+        .gpa-form-group input, .gpa-form-group select { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+        .course-list-header, .course-row { display: grid; grid-template-columns: 3fr 2fr 2fr 1fr; gap: 10px; align-items: center; margin-bottom: 10px; }
+        .course-list-header { font-weight: 600; padding-bottom: 5px; border-bottom: 1px solid #ddd; }
+        .course-row input, .course-row select { width: 100%; padding: 8px; }
+        .remove-course-btn { background: #ff4d4d; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 1rem; line-height: 30px; text-align: center; }
+        .add-course-btn { margin-top: 15px; }
+        .gpa-result-section { margin-top: 25px; padding: 20px; background: #f0f8ff; border-radius: 8px; text-align: center; }
+        .gpa-result-title { margin: 0 0 10px; font-size: 1.2rem; color: #555; }
+        .gpa-final-score { font-size: 3rem; font-weight: 700; color: #0056b3; }
+        .gpa-gauge-container { width: 100%; background: #e9ecef; border-radius: 5px; height: 20px; margin-top: 15px; overflow: hidden; }
+        .gpa-gauge-bar { height: 100%; background: linear-gradient(90deg, #ffc107, #28a745); transition: width 0.5s ease-in-out; }
+        #gpa-summary-table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+        #gpa-summary-table th, #gpa-summary-table td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .course-list-header, .course-row { grid-template-columns: 2fr 1.2fr 1.2fr 0.8fr; gap: 8px; font-size: 0.95rem; }
+            .gpa-final-score { font-size: 2.4rem; }
+            .gpa-result-section { padding: 16px; }
+            .gpa-form-group input, .gpa-form-group select, .course-row input, .course-row select { font-size: 16px; }
+            #gpa-summary-table th, #gpa-summary-table td { padding: 8px; }
+        }
+
+        @media (max-width: 480px) {
+            .course-list-header, .course-row { grid-template-columns: 1.8fr 1fr 1fr 0.8fr; gap: 6px; font-size: 0.9rem; }
+            .gpa-final-score { font-size: 2rem; }
+            #gpa-summary-table th, #gpa-summary-table td { padding: 6px; font-size: 0.9rem; }
+        }
+    </style>
+    <!-- END: CRITICAL STYLE FOR HEADER -->
+
+</head>
+<body data-tool-name="GPA Calculator" data-meta-description="Easily calculate your GPA with our free online GPA Calculator. Works for both high school and college students, and supports custom grade and credit hour inputs.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Free GPA Calculator: Instantly Calculate Your GPA/CGPA</h1>
+                    <p class="tool-hero__description">
+                        Take control of your academic journey with our precise and easy-to-use GPA Calculator.
+                        Whether you're on a 4.0 scale in the US, a 10-point scale in India, or use percentages, our tool provides instant, accurate calculations. Plan your future with our Target GPA and conversion features.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-calculator"></i>
+                            <span>Multiple Grading Systems</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-bullseye"></i>
+                            <span>Target GPA Planning</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>GPA Scale Converter</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-save"></i>
+                            <span>Save & Track Progress</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-play"></i>
+                            Calculate Now - It's Free
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About GPA
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Your Academic Dashboard</h2>
+                    <p class="tool-display__description">
+                        Select your grading system, enter your courses and credits, and get your GPA in seconds.
+                    </p>
+                </div>
+                <!-- GPA Calculator Custom Interface -->
+                <div class="gpa-tool-container">
+                    <!-- Tabs for different calculators will go here if needed in future -->
+                    <div class="gpa-tab-content active">
+                        <div class="gpa-input-grid">
+                            <div class="gpa-form-group">
+                                <label for="grading-system">Select Your Grading System</label>
+                                <select id="grading-system" class="tool-display__select">
+                                    <option value="4.0">Standard US 4.0 Scale (A, B, C...)</option>
+                                    <option value="10.0">Indian 10-Point CGPA Scale (O, A+...)</option>
+                                    <option value="percent">Percentage System (0-100)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 20px; margin-bottom: 10px; font-weight: 600;">Your Courses</h3>
+                        <div class="course-list-header">
+                            <span>Course Name (Optional)</span>
+                            <span>Grade</span>
+                            <span>Credits / Weight</span>
+                            <span></span>
+                        </div>
+                        <div id="course-list">
+                            <!-- Course rows will be dynamically added here -->
+                        </div>
+                        <button id="add-course-btn" class="tool-display__button add-course-btn">
+                            <i class="fas fa-plus"></i> Add Course
+                        </button>
+                        <button id="calculate-gpa-btn" class="tool-display__button tool-display__button--primary" style="margin-left: 10px;">
+                            <i class="fas fa-magic"></i> Calculate GPA
+                        </button>
+                    </div>
+
+                    <div id="gpa-result-section" class="gpa-result-section" style="display: none;">
+                        <h3 id="result-title" class="gpa-result-title">Your GPA is</h3>
+                        <div id="gpa-final-score" class="gpa-final-score">0.00</div>
+                        <div class="gpa-gauge-container">
+                            <div id="gpa-gauge-bar" class="gpa-gauge-bar" style="width: 0%;"></div>
+                        </div>
+                        <div class="gpa-summary-grid">
+                            <div><strong>Total Credits:</strong> <span id="total-credits">0</span></div>
+                            <div><strong>Total Grade Points:</strong> <span id="total-points">0</span></div>
+                        </div>
+                        <table id="gpa-summary-table">
+                           <thead>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Grade</th>
+                                    <th>Credits</th>
+                                    <th>Grade Points</th>
+                                </tr>
+                           </thead>
+                           <tbody id="gpa-summary-tbody">
+                               <!-- Summary rows will be added here -->
+                           </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">The Ultimate Guide to Understanding and Calculating Your GPA</h2>
+                <p class="tool-blog__subtitle">
+                    From basic formulas to advanced strategies, master the art of GPA management to unlock your academic potential.
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is GPA and Why Does It Matter So Much?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Your Grade Point Average (GPA) is more than just a number; it's a standardized summary of your academic performance. Colleges, universities, and even future employers use it as a key metric to gauge your diligence, intellectual capacity, and consistency. A strong GPA can unlock doors to scholarships, prestigious graduate programs, internships, and competitive job offers. Understanding how it's calculated is the first step toward taking control of your academic narrative. In essence, your GPA translates the grades you've worked hard for into a single, universally understood score, making it one of the most critical assets in your academic portfolio.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">How GPA is Calculated: The Core Formula</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            At its heart, the GPA calculation is straightforward. It's a weighted average where your grades are weighted by the number of credits each course is worth. The fundamental formula is:
+                        </p>
+                        <p style="text-align: center; font-size: 1.2rem; font-family: 'Courier New', monospace; background-color: #f4f4f4; padding: 15px; border-radius: 5px;">
+                            GPA = (Total Grade Points) / (Total Credit Hours)
+                        </p>
+                        <p>
+                            To get your 'Total Grade Points', you first need to convert each letter grade into its corresponding point value (e.g., A = 4.0, B = 3.0). Then, for each course, you multiply this point value by the number of credits for that course.
+                        </p>
+                        <p>
+                            <strong>Example:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Calculus (4 credits):</strong> Grade A (4.0 points) -> 4.0 * 4 = 16 Grade Points</li>
+                            <li><strong>History (3 credits):</strong> Grade B (3.0 points) -> 3.0 * 3 = 9 Grade Points</li>
+                            <li><strong>Art (2 credits):</strong> Grade A (4.0 points) -> 4.0 * 2 = 8 Grade Points</li>
+                        </ul>
+                        <p>
+                            <strong>Calculation:</strong>
+                        </p>
+                        <ul>
+                            <li>Total Grade Points = 16 + 9 + 8 = 33</li>
+                            <li>Total Credit Hours = 4 + 3 + 2 = 9</li>
+                            <li><strong>Final GPA</strong> = 33 / 9 = <strong>3.67</strong></li>
+                        </ul>
+                        <p>
+                            Our GPA Calculator automates this entire process, eliminating manual errors and providing instant results.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Navigating Different Global Grading Systems</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            The world of academia is diverse, and so are its grading systems. A "good" score can look very different depending on where you study. Our tool is designed to handle this complexity with ease.
+                        </p>
+                        <h4>The US 4.0 Scale</h4>
+                        <p>
+                            This is the most common system in the United States. The standard scale assigns point values as follows: A=4.0, B=3.0, C=2.0, D=1.0, and F=0. Many universities use a more granular plus/minus system (e.g., A+ = 4.0 or 4.3, A = 4.0, A- = 3.7). Our calculator correctly handles these variations, allowing you to select the precise grade you received for an accurate calculation.
+                        </p>
+                        <h4>The Indian 10-Point CGPA Scale</h4>
+                        <p>
+                            In India, many universities and boards use a 10-point scale for calculating the Cumulative Grade Point Average (CGPA). Grades are often given as letters that correspond to a point value: O (Outstanding) = 10, A+ (Excellent) = 9, A (Very Good) = 8, and so on. The final CGPA is a weighted average of these grade points. This system is excellent for reflecting performance in a detailed manner within the Indian academic context. Our tool has a dedicated mode for this system, making calculations for Indian students seamless.
+                        </p>
+                        <h4>The Percentage System (0-100)</h4>
+                        <p>
+                            Many institutions globally, including some boards in India, still use a straightforward percentage system. To calculate an average, you would typically sum up your scores and divide by the number of subjects. However, when converting to a GPA scale for applications abroad, a direct mathematical conversion isn't always accurate. Universities often use their own conversion charts. Our calculator can work directly with percentages to find your average or help you convert them based on common scales.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">A Step-by-Step Guide to Using Our GPA Calculator</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            We've designed our tool to be intuitive and powerful. Here’s how to get the most out of it:
+                        </p>
+                        <ol>
+                            <li>
+                                <strong>Select Your Grading System:</strong> Start by choosing the system your school uses from the dropdown menu. This is the most crucial step as it determines the grade options available.
+                            </li>
+                            <li>
+                                <strong>Add Your Courses:</strong> Click the "Add Course" button to create a new row. The tool starts you with a few default rows for convenience.
+                            </li>
+                            <li>
+                                <strong>Enter Course Details:</strong> For each row, fill in the details. You can add a course name for your own reference. Select the grade you received from the dropdown, and enter the number of credits (or weight) for that course.
+                            </li>
+                            <li>
+                                <strong>Calculate:</strong> Once you've entered all your courses, click the "Calculate GPA" button.
+                            </li>
+                            <li>
+                                <strong>Analyze Your Results:</strong> The tool instantly displays your final GPA/CGPA. You'll also see a visual gauge, your total credits, and a detailed summary table. This table is perfect for double-checking your entries and understanding how each course contributed to your final score.
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Advanced GPA Strategies: Planning for Success</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            A GPA calculator is not just for looking back—it's for planning forward. While advanced features like a Target GPA Calculator are planned for future versions, you can still use this tool strategically.
+                        </p>
+                        <h4>What-If Scenarios</h4>
+                        <p>
+                            Wondering how your final exams will impact your GPA? Enter your current courses and the grades you have so far. Then, duplicate those courses and enter the grades you are *aiming* for on the final. This "what-if" analysis can be a powerful motivator, showing you exactly what you need to achieve your desired semester GPA.
+                        </p>
+                        <h4>Understanding Cumulative GPA</h4>
+                        <p>
+                            Your Cumulative GPA is the average of all your semesters combined. To calculate it manually, you need the total grade points and total credits from *all* previous semesters. You can add these to the totals from your current semester and then divide. Future versions of our tool will include a "Cumulative GPA Tracker" that saves your progress in your browser, making this process automatic.
+                        </p>
+                        <h4>Converting Your GPA for International Applications</h4>
+                        <p>
+                            If you're an Indian student applying to a US university, you'll need to present your 10-point CGPA in a 4.0 scale format. There is no single, official conversion formula, as each university may have its own method. However, a common estimation method is the "divide by 9.5 and multiply by 4" rule, or using scales provided by services like WES (World Education Services). A dedicated GPA converter, planned for our tool, will help provide these estimates for unofficial planning.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">The Critical Role of Credits/Weights</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            It's a common misconception that all courses impact your GPA equally. The truth lies in the credits. A 5-credit course has a much heavier impact on your GPA than a 1-credit lab or seminar.
+                        </p>
+                        <p>
+                            Think of it this way: getting an 'A' in a 5-credit science lecture is worth 20 grade points (4.0 x 5). Getting an 'A' in a 1-credit physical education class is worth only 4 grade points (4.0 x 1). That's a 5x difference in impact. This is why it's crucial to prioritize your efforts on high-credit courses. A poor grade in one of these can significantly pull down your average, while a top grade can give it a substantial boost. Our calculator's summary table clearly shows the grade points for each course, making it easy to see which classes are influencing your GPA the most.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Find quick answers to common questions about calculating your GPA</p>
+            </div>
+            <div class="faq-list">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What is the difference between GPA and CGPA?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>GPA (Grade Point Average) usually refers to the calculation for a single term or semester. CGPA (Cumulative Grade Point Average) is the average of your GPA across all semesters of your academic program. Our tool is perfect for calculating your semester GPA.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How can I calculate my GPA if my university uses a unique grading scale?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>While our tool currently supports the most common scales, we are developing a "Custom Grading Scale Creator." This future feature will allow you to define your own grades (like A+, A, A-) and assign specific point values (e.g., A+ = 4.33), making the calculator universally compatible.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is the GPA conversion from Indian CGPA to US GPA accurate?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>GPA conversion is an estimation. There is no single, universally accepted formula. Official conversions for university applications should be done through credential evaluation services like WES (World Education Services). Our upcoming converter tool will provide a reliable estimate for your personal planning and unofficial use, but always defer to the specific requirements of the institution you're applying to.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I handle Pass/Fail courses in my GPA calculation?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Typically, Pass/Fail courses are not included in the GPA calculation. A "Pass" grade earns you the credits for the course, but it doesn't have a grade point value to be averaged in. An "F" in a Pass/Fail course, however, is often treated as a regular F and is factored into your GPA. For calculation purposes, you should omit any "Pass" courses from our GPA calculator.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I save my results to track my GPA over time?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We are actively working on a "Cumulative GPA Tracker" feature. It will use your browser's local storage to save your GPA results from each semester. This will allow you to return later, add a new semester's grades, and see both your new semester GPA and your updated cumulative GPA, helping you track your academic progress over your entire degree.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+    <div id="footer-placeholder"></div>
+    <script src="../scripts/footer.js" defer></script>
+
+    <!-- CRITICAL: Universal Search Script - DO NOT REMOVE -->
+    <script src="/universal-search-deploy.js"></script>
+    
+    <!-- External scripts can be loaded at the end -->
+    <script src="../../faq.js" defer></script>
+    <script src="../../view.js" defer></script>
+    <script src="../scripts/page-loader.js" defer></script>
+    <script src="../scripts/gpa-calculator.js" defer></script>
+    <script src="../FAQ section/faq.js" defer></script>
+</body>
+</html>

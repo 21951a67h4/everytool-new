@@ -1,0 +1,696 @@
+<!--
+    Regex Tester Tool Page
+    Built using the EveryTool.tech template.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Regex Tester | EveryTool.tech</title>
+
+    <meta name="description" content="Test regular expressions instantly. Enter a regex pattern and sample text to see matches highlighted in real-time with match counts and groups.">
+
+    <meta name="keywords" content="regex tester, regular expression tester, regex validator, pattern matching">
+
+    <meta name="robots" content="index, follow">
+
+
+    <meta property="og:title" content="Regex Tester | EveryTool.tech">
+
+    <meta property="og:description" content="Test regular expressions instantly with live match highlighting and detailed results.">
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:url" content="https://everytool.tech/regex-tester">
+
+
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <style>
+        #header-placeholder {
+            min-height: 130px;
+            position: relative;
+            z-index: 2000;
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        .regex-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .regex-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            padding: 24px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .regex-card__title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .regex-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .regex-input-label {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .regex-pattern-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .regex-pattern-input {
+            flex: 1;
+            border-radius: 12px;
+            border: 1px solid #cbd5f5;
+            padding: 12px 14px;
+            background: #f8f9ff;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.95rem;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+        .regex-pattern-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.16);
+        }
+
+        .regex-flags {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .regex-flag-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.88rem;
+            color: #475569;
+            cursor: pointer;
+        }
+
+        .regex-flag-checkbox input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .regex-test-input {
+            width: 100%;
+            min-height: 180px;
+            border-radius: 14px;
+            border: 1px solid #cbd5f5;
+            padding: 16px;
+            background: #f8f9ff;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.95rem;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+            resize: vertical;
+        }
+        .regex-test-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.16);
+        }
+
+        .regex-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .regex-results {
+            background: #0f172a;
+            color: #e2e8f0;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .regex-results__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .regex-results__title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin: 0;
+        }
+
+        .regex-match-count {
+            background: #4f46e5;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .regex-output {
+            background: rgba(15, 23, 42, 0.78);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.92rem;
+            min-height: 180px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.6;
+        }
+
+        .regex-match {
+            background: #fbbf24;
+            color: #000;
+            font-weight: 600;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .regex-error {
+            border-radius: 12px;
+            padding: 16px;
+            background: #fee2e2;
+            color: #b91c1c;
+            font-size: 0.92rem;
+            display: none;
+        }
+
+        .regex-matches-list {
+            background: rgba(15, 23, 42, 0.78);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 12px;
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .regex-match-item {
+            padding: 10px 14px;
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 8px;
+            border-left: 3px solid #fbbf24;
+            font-size: 0.88rem;
+        }
+
+        .regex-match-item__index {
+            color: #94a3b8;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .regex-match-item__text {
+            color: #fbbf24;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-weight: 600;
+        }
+
+        .regex-match-item__groups {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(148, 163, 184, 0.2);
+            font-size: 0.82rem;
+            color: #cbd5e1;
+        }
+
+        .regex-no-matches {
+            color: #94a3b8;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .regex-feedback {
+            font-size: 0.88rem;
+            color: #cbd5f5;
+            min-height: 18px;
+            font-weight: 500;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body data-tool-name="Regex Tester" data-meta-description="Test regular expressions instantly with live match highlighting and detailed results.">
+
+    <div id="header-placeholder"></div>
+
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Regex Tester & Debugger</h1>
+
+                    <p class="tool-hero__description">
+                        Test and debug regular expressions in real-time. Enter your pattern and sample text to see matches highlighted instantly with detailed match information and capture groups.
+                    </p>
+
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-highlighter"></i> <span>Live Match Highlighting</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-list-ol"></i> <span>Match Count & Details</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-layer-group"></i> <span>Capture Groups</span>
+                        </div>
+                    </div>
+
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-vial"></i>
+                            Test Regex
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book-open"></i>
+                            Learn Regex
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Regex Tester</h2>
+                    <p class="tool-display__description">
+                        Enter your regex pattern and test text below. Matches will be highlighted automatically as you type.
+                    </p>
+                </div>
+
+                <div class="regex-container">
+                    <div class="regex-card" aria-labelledby="pattern-label">
+                        <h3 class="regex-card__title" id="pattern-label">Regular Expression Pattern</h3>
+
+                        <div class="regex-input-group">
+                            <label class="regex-input-label" for="regex-pattern">Pattern</label>
+                            <div class="regex-pattern-wrapper">
+                                <input type="text" id="regex-pattern" class="regex-pattern-input" placeholder="Enter regex pattern (e.g., \b\w+@\w+\.\w+\b)" value="">
+                            </div>
+                        </div>
+
+                        <div class="regex-input-group">
+                            <label class="regex-input-label">Flags</label>
+                            <div class="regex-flags">
+                                <label class="regex-flag-checkbox">
+                                    <input type="checkbox" id="flag-g" value="g" checked>
+                                    <span>g (global)</span>
+                                </label>
+                                <label class="regex-flag-checkbox">
+                                    <input type="checkbox" id="flag-i" value="i">
+                                    <span>i (case-insensitive)</span>
+                                </label>
+                                <label class="regex-flag-checkbox">
+                                    <input type="checkbox" id="flag-m" value="m">
+                                    <span>m (multiline)</span>
+                                </label>
+                                <label class="regex-flag-checkbox">
+                                    <input type="checkbox" id="flag-s" value="s">
+                                    <span>s (dotAll)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="regex-input-group">
+                            <label class="regex-input-label" for="test-text">Test Text</label>
+                            <textarea id="test-text" class="regex-test-input" placeholder="Enter your test text here..."></textarea>
+                        </div>
+
+                        <div id="regex-error" class="regex-error" role="alert"></div>
+                    </div>
+
+                    <div class="regex-results" aria-live="polite">
+                        <div class="regex-results__header">
+                            <h3 class="regex-results__title">Results</h3>
+                            <span id="match-count" class="regex-match-count">0 matches</span>
+                        </div>
+
+                        <div>
+                            <p class="regex-input-label" style="color: #cbd5e1; margin-bottom: 10px;">Highlighted Output</p>
+                            <div id="regex-output" class="regex-output" tabindex="0">
+                                <span class="regex-no-matches">Enter a pattern and test text to see results...</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="regex-input-label" style="color: #cbd5e1; margin-bottom: 10px;">Match Details</p>
+                            <div id="matches-list" class="regex-matches-list">
+                                <p class="regex-no-matches">No matches yet</p>
+                            </div>
+                        </div>
+
+                        <p id="regex-feedback" class="regex-feedback" role="status" aria-live="assertive"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Regex Pattern Guide</h2>
+                <p class="tool-blog__subtitle">Learn the essential regular expression patterns and metacharacters.</p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Common Regex Patterns</h3>
+                    <div class="blog-section__content">
+                        <ul>
+                            <li><strong>\d</strong> - Matches any digit (0-9)</li>
+                            <li><strong>\w</strong> - Matches any word character (letters, digits, underscore)</li>
+                            <li><strong>\s</strong> - Matches any whitespace character (space, tab, newline)</li>
+                            <li><strong>.</strong> - Matches any character except newline</li>
+                            <li><strong>^</strong> - Matches the start of a line</li>
+                            <li><strong>$</strong> - Matches the end of a line</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Quantifiers</h3>
+                    <div class="blog-section__content">
+                        <ul>
+                            <li><strong>*</strong> - Matches 0 or more times</li>
+                            <li><strong>+</strong> - Matches 1 or more times</li>
+                            <li><strong>?</strong> - Matches 0 or 1 time</li>
+                            <li><strong>{n}</strong> - Matches exactly n times</li>
+                            <li><strong>{n,}</strong> - Matches n or more times</li>
+                            <li><strong>{n,m}</strong> - Matches between n and m times</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Useful Examples</h3>
+                    <div class="blog-section__content">
+                        <ul>
+                            <li><strong>Email:</strong> <code>\b[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}\b</code></li>
+                            <li><strong>URL:</strong> <code>https?://[\w.-]+\.[\w]{2,}[^\s]*</code></li>
+                            <li><strong>Phone (US):</strong> <code>\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}</code></li>
+                            <li><strong>Hex Color:</strong> <code>#[0-9A-Fa-f]{6}\b</code></li>
+                            <li><strong>Date (YYYY-MM-DD):</strong> <code>\d{4}-\d{2}-\d{2}</code></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Flags Explained</h3>
+                    <div class="blog-section__content">
+                        <p><strong>g (global):</strong> Find all matches rather than stopping after the first match.</p>
+                        <p><strong>i (case-insensitive):</strong> Ignore case when matching letters (A = a).</p>
+                        <p><strong>m (multiline):</strong> ^ and $ match the start/end of lines, not just the string.</p>
+                        <p><strong>s (dotAll):</strong> Dot (.) matches newline characters as well.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Common questions about regular expressions and testing.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I escape special characters in regex?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Use a backslash (\) before special characters like . * + ? ^ $ { } [ ] ( ) | \. For example, to match a literal period, use \. instead of just .</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What's the difference between * and + quantifiers?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The * quantifier matches 0 or more occurrences (including none), while + matches 1 or more occurrences (at least one required). For example, \d* matches an empty string, but \d+ requires at least one digit.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do capture groups work?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Capture groups use parentheses to extract specific parts of a match. For example, (\d{3})-(\d{4}) captures the area code and number separately. The Match Details section shows all captured groups for each match.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Why isn't my regex matching anything?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Common issues include: forgetting to escape special characters, incorrect flag settings (try enabling 'i' for case-insensitive), or overly strict patterns. Start simple and add complexity gradually. Check if your pattern works with a known matching string first.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../FAQ section/faq.js" defer></script>
+    <script src="/universal-search-deploy.js" defer></script>
+    <script src="/app-loader.js" defer></script>
+    <script>
+        (function () {
+            var elements = {
+                patternInput: document.getElementById('regex-pattern'),
+                testText: document.getElementById('test-text'),
+                output: document.getElementById('regex-output'),
+                matchesList: document.getElementById('matches-list'),
+                matchCount: document.getElementById('match-count'),
+                error: document.getElementById('regex-error'),
+                feedback: document.getElementById('regex-feedback'),
+                flagG: document.getElementById('flag-g'),
+                flagI: document.getElementById('flag-i'),
+                flagM: document.getElementById('flag-m'),
+                flagS: document.getElementById('flag-s')
+            };
+
+            var feedbackTimeout = null;
+
+            function setFeedback(message, duration) {
+                if (duration === void 0) {
+                    duration = 2800;
+                }
+                if (feedbackTimeout !== null) {
+                    clearTimeout(feedbackTimeout);
+                    feedbackTimeout = null;
+                }
+                elements.feedback.textContent = message;
+                if (message && duration > 0) {
+                    feedbackTimeout = setTimeout(function () {
+                        elements.feedback.textContent = '';
+                        feedbackTimeout = null;
+                    }, duration);
+                }
+            }
+
+            function showError(message) {
+                elements.error.style.display = 'block';
+                elements.error.textContent = message;
+            }
+
+            function clearError() {
+                elements.error.style.display = 'none';
+                elements.error.textContent = '';
+            }
+
+            function getFlags() {
+                var flags = '';
+                if (elements.flagG.checked) flags += 'g';
+                if (elements.flagI.checked) flags += 'i';
+                if (elements.flagM.checked) flags += 'm';
+                if (elements.flagS.checked) flags += 's';
+                return flags;
+            }
+
+            function escapeHtml(text) {
+                var div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            function testRegex() {
+                clearError();
+                var pattern = elements.patternInput.value;
+                var text = elements.testText.value;
+
+                if (!pattern) {
+                    elements.output.innerHTML = '<span class="regex-no-matches">Enter a regex pattern to test...</span>';
+                    elements.matchesList.innerHTML = '<p class="regex-no-matches">No pattern entered</p>';
+                    elements.matchCount.textContent = '0 matches';
+                    return;
+                }
+
+                if (!text) {
+                    elements.output.innerHTML = '<span class="regex-no-matches">Enter test text to see matches...</span>';
+                    elements.matchesList.innerHTML = '<p class="regex-no-matches">No test text entered</p>';
+                    elements.matchCount.textContent = '0 matches';
+                    return;
+                }
+
+                try {
+                    var flags = getFlags();
+                    var regex = new RegExp(pattern, flags);
+                    var matches = [];
+                    var match;
+
+                    if (flags.indexOf('g') !== -1) {
+                        while ((match = regex.exec(text)) !== null) {
+                            matches.push({
+                                match: match[0],
+                                index: match.index,
+                                groups: match.slice(1)
+                            });
+                            if (match.index === regex.lastIndex) {
+                                regex.lastIndex++;
+                            }
+                        }
+                    } else {
+                        match = regex.exec(text);
+                        if (match) {
+                            matches.push({
+                                match: match[0],
+                                index: match.index,
+                                groups: match.slice(1)
+                            });
+                        }
+                    }
+
+                    if (matches.length === 0) {
+                        elements.output.textContent = text;
+                        elements.matchesList.innerHTML = '<p class="regex-no-matches">No matches found</p>';
+                        elements.matchCount.textContent = '0 matches';
+                        setFeedback('No matches found.', 2400);
+                        return;
+                    }
+
+                    // Highlight matches in output
+                    var highlighted = '';
+                    var lastIndex = 0;
+                    matches.forEach(function (m) {
+                        highlighted += escapeHtml(text.substring(lastIndex, m.index));
+                        highlighted += '<span class="regex-match">' + escapeHtml(m.match) + '</span>';
+                        lastIndex = m.index + m.match.length;
+                    });
+                    highlighted += escapeHtml(text.substring(lastIndex));
+                    elements.output.innerHTML = highlighted;
+
+                    // Display match details
+                    var matchListHtml = '';
+                    matches.forEach(function (m, i) {
+                        matchListHtml += '<div class="regex-match-item">';
+                        matchListHtml += '<div class="regex-match-item__index">Match ' + (i + 1) + ' (index ' + m.index + ')</div>';
+                        matchListHtml += '<div class="regex-match-item__text">' + escapeHtml(m.match) + '</div>';
+                        
+                        if (m.groups.length > 0 && m.groups.some(function(g) { return g !== undefined; })) {
+                            matchListHtml += '<div class="regex-match-item__groups"><strong>Captured groups:</strong><br>';
+                            m.groups.forEach(function (g, gi) {
+                                if (g !== undefined) {
+                                    matchListHtml += 'Group ' + (gi + 1) + ': ' + escapeHtml(g) + '<br>';
+                                }
+                            });
+                            matchListHtml += '</div>';
+                        }
+                        
+                        matchListHtml += '</div>';
+                    });
+                    elements.matchesList.innerHTML = matchListHtml;
+
+                    elements.matchCount.textContent = matches.length + ' match' + (matches.length === 1 ? '' : 'es');
+                    setFeedback(matches.length + ' match' + (matches.length === 1 ? '' : 'es') + ' found.', 2400);
+
+                } catch (err) {
+                    showError('Invalid regex pattern: ' + err.message);
+                    elements.output.innerHTML = '<span class="regex-no-matches">Fix the pattern error to see results...</span>';
+                    elements.matchesList.innerHTML = '<p class="regex-no-matches">Pattern error</p>';
+                    elements.matchCount.textContent = '0 matches';
+                    setFeedback('Pattern error. Check syntax.', 2800);
+                }
+            }
+
+            elements.patternInput.addEventListener('input', testRegex);
+            elements.testText.addEventListener('input', testRegex);
+            elements.flagG.addEventListener('change', testRegex);
+            elements.flagI.addEventListener('change', testRegex);
+            elements.flagM.addEventListener('change', testRegex);
+            elements.flagS.addEventListener('change', testRegex);
+
+            testRegex();
+        })();
+    </script>
+
+</body>
+</html>
+

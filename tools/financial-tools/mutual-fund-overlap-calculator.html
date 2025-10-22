@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutual Fund Overlap Calculator | Analyze Fund Overlap | EveryTool.tech</title>
+    <meta name="description" content="Calculate mutual fund overlap percentage and analyze common holdings between funds. Upload CSV or paste fund holdings data to identify portfolio overlap and optimize your investments.">
+    <meta name="keywords" content="mutual fund overlap calculator, fund overlap analysis, portfolio overlap calculator, mutual fund comparison, fund holdings analyzer">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Mutual Fund Overlap Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate mutual fund overlap percentage and analyze common holdings between funds. Upload CSV or paste fund holdings data to identify portfolio overlap.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/financial-tools/mutual-fund-overlap-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tool CSS -->
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <!-- Add in <head> if not present -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Core Variables */
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --primary-darker: #1f37a8;
+            --primary-light: #6b83f1;
+            --primary-lighter: #94a5f4;
+            --secondary: #7209B7;
+            --secondary-dark: #560BAD;
+            --accent: #F72585;
+            --accent-dark: #B5179E;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-light: #9CA3AF;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --bg-dark: #111827;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1.5rem;
+            --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        /* Header Placeholder */
+        #header-placeholder {
+            height: 64px;
+        }
+
+        /* Tool Hero Section */
+        .tool-hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="%234361EE" opacity="0.1"/></svg>');
+            opacity: 0.5;
+            animation: patternMove 20s linear infinite;
+        }
+
+        .tool-hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-hero__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tool-hero__left {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .tool-hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .tool-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .tool-hero__features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .tool-hero__cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tool-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-button--primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-button--primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-button--secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tool-hero__right {
+            position: relative;
+            animation: slideIn 1s ease-out;
+        }
+
+        /* Tool Display Section */
+        .tool-display {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .tool-display__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-display__wrapper {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-display__wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .tool-display__header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tool-display__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__description {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tool-display__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .tool-display__input-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .tool-display__output-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .tool-display__controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-display__button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-display__button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-display__button--secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__input-group {
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-display__input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .tool-display__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .tool-display__textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .overlap-summary {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            background: var(--bg-accent);
+        }
+
+        .overlap-summary__item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--bg-secondary);
+        }
+
+        .overlap-summary__item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .overlap-summary__label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .overlap-summary__value {
+            color: var(--text-secondary);
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .overlap-table {
+            margin-top: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+        }
+
+        .overlap-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .overlap-table th,
+        .overlap-table td {
+            padding: 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--bg-accent);
+        }
+
+        .overlap-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        .file-upload-area {
+            border: 2px dashed var(--bg-accent);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition-all);
+            cursor: pointer;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--primary);
+            background: var(--primary-lighter);
+        }
+
+        .file-upload-area.dragover {
+            border-color: var(--primary);
+            background: var(--primary-lighter);
+        }
+
+        .threshold-slider {
+            margin: 1rem 0;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--bg-accent);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: none;
+        }
+
+        .slider-value {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .input-tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--bg-accent);
+        }
+
+        .tab-button {
+            padding: 0.75rem 1rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition-all);
+        }
+
+        .tab-button.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Mobile-specific optimizations for Mutual Fund Overlap Calculator */
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                display: grid;
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .tool-display__input-group { 
+                margin-bottom: 1rem; 
+            }
+            .tool-display__input, .tool-display__textarea { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .tool-display__button { 
+                width: 100%; 
+                margin-bottom: 0.5rem; 
+            }
+            .tool-display__controls { 
+                display: flex;
+                flex-direction: column; 
+            }
+            .input-tabs {
+                flex-direction: column;
+            }
+            .tab-button {
+                width: 100%;
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-display__input { 
+                padding: 0.65rem; 
+            }
+            .tool-display__button { 
+                padding: 0.8rem; 
+                font-size: 0.95rem; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Analyze Mutual Fund Overlap</h1>
+                    <p class="tool-hero__description">
+                        Calculate overlap percentage between mutual funds and identify common holdings. 
+                        Upload CSV files or paste fund data to optimize your portfolio diversification.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Overlap Analysis</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-file-upload"></i>
+                            <span>CSV Upload</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-search"></i>
+                            <span>Holdings Comparison</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Private</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Analyze Overlap
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Mutual Fund Overlap Calculator</h2>
+                    <p class="tool-display__description">
+                        Upload CSV files or paste fund holdings data to calculate overlap percentage and analyze common holdings.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="input-tabs">
+                            <button class="tab-button active" data-tab="paste">Paste Data</button>
+                            <button class="tab-button" data-tab="upload">Upload CSV</button>
+                        </div>
+                        
+                        <div class="tab-content active" id="paste-tab">
+                            <div class="tool-display__input-group">
+                                <label class="tool-display__label">Fund A Holdings</label>
+                                <textarea class="tool-display__textarea" id="fund-a-data" placeholder="Paste Fund A holdings data here (Stock Name, Weight%)"></textarea>
+                            </div>
+                            <div class="tool-display__input-group">
+                                <label class="tool-display__label">Fund B Holdings</label>
+                                <textarea class="tool-display__textarea" id="fund-b-data" placeholder="Paste Fund B holdings data here (Stock Name, Weight%)"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="upload-tab">
+                            <div class="file-upload-area" id="file-upload-area">
+                                <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                                <p>Drag and drop CSV files here or click to upload</p>
+                                <input type="file" id="csv-file" accept=".csv" multiple style="display: none;">
+                            </div>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Threshold for Minor Holdings (%)</label>
+                            <div class="threshold-slider">
+                                <input type="range" class="slider" id="threshold-slider" min="0" max="5" step="0.1" value="1">
+                                <div class="slider-value" id="threshold-value">1.0%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-display__controls">
+                            <button class="tool-display__button" id="calculate-overlap">
+                                <i class="fas fa-calculator"></i>
+                                Calculate Overlap
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="reset-overlap">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="export-overlap">
+                                <i class="fas fa-download"></i>
+                                Export Results
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Overlap Analysis Results</h3>
+                        <div class="tool-display__result" id="overlap-result">
+                            Your overlap analysis results will appear here...
+                        </div>
+                        <div class="overlap-summary" id="overlap-summary" style="display: none;">
+                            <div class="overlap-summary__item">
+                                <span class="overlap-summary__label">Overlap Percentage:</span>
+                                <span class="overlap-summary__value" id="overlap-percentage"></span>
+                            </div>
+                            <div class="overlap-summary__item">
+                                <span class="overlap-summary__label">Common Holdings:</span>
+                                <span class="overlap-summary__value" id="common-holdings-count"></span>
+                            </div>
+                            <div class="overlap-summary__item">
+                                <span class="overlap-summary__label">Fund A Total:</span>
+                                <span class="overlap-summary__value" id="fund-a-total"></span>
+                            </div>
+                            <div class="overlap-summary__item">
+                                <span class="overlap-summary__label">Fund B Total:</span>
+                                <span class="overlap-summary__value" id="fund-b-total"></span>
+                            </div>
+                        </div>
+                        <div class="chart-container" id="chart-container" style="display: none;">
+                            <canvas id="overlapChart" width="400" height="200"></canvas>
+                        </div>
+                        <div class="overlap-table" id="overlap-table" style="display: none;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Stock Name</th>
+                                        <th>Fund A (%)</th>
+                                        <th>Fund B (%)</th>
+                                        <th>Combined (%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="overlap-body">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Mutual Fund Overlap</h2>
+                <p class="tool-blog__subtitle">
+                    Learn how to analyze fund overlap, optimize portfolio diversification, and make informed investment decisions
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is Mutual Fund Overlap?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Mutual fund overlap occurs when two or more funds in your portfolio hold the same stocks or securities. 
+                            This can lead to over-concentration in certain companies or sectors, reducing the benefits of diversification 
+                            and potentially increasing portfolio risk.
+                        </p>
+                        <p>
+                            <strong>Why Overlap Matters:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Reduced Diversification:</strong> Multiple funds holding the same stocks don't provide additional diversification</li>
+                            <li><strong>Increased Risk:</strong> Over-concentration in specific stocks or sectors amplifies risk</li>
+                            <li><strong>Redundant Exposure:</strong> You may be paying multiple fund management fees for similar exposure</li>
+                            <li><strong>Portfolio Optimization:</strong> Understanding overlap helps optimize your fund selection</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">How to Calculate Fund Overlap</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Fund overlap is calculated by comparing the holdings of two funds and determining the percentage of common investments. 
+                            Here's how it works:
+                        </p>
+                        <p>
+                            <strong>Calculation Method:</strong>
+                        </p>
+                        <ol>
+                            <li>Identify common stocks between Fund A and Fund B</li>
+                            <li>Take the minimum weight of each common stock from both funds</li>
+                            <li>Sum up all the minimum weights</li>
+                            <li>Multiply by 100 to get the overlap percentage</li>
+                        </ol>
+                        <p>
+                            <strong>Example:</strong> If Fund A has 5% in Reliance and Fund B has 3% in Reliance, the overlap contribution is 3% (minimum). 
+                            Repeat this for all common stocks to get the total overlap percentage.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Interpreting Overlap Results</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Understanding what overlap percentages mean helps in making informed decisions:
+                        </p>
+                        <ul>
+                            <li><strong>0-10%:</strong> Low overlap - Good diversification</li>
+                            <li><strong>10-25%:</strong> Moderate overlap - Monitor closely</li>
+                            <li><strong>25-50%:</strong> High overlap - Consider reducing one fund</li>
+                            <li><strong>50%+:</strong> Very high overlap - Significant redundancy</li>
+                        </ul>
+                        <p>
+                            <strong>Factors to Consider:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Fund Categories:</strong> Similar category funds naturally have higher overlap</li>
+                            <li><strong>Market Cap Focus:</strong> Large-cap funds tend to overlap more than diversified funds</li>
+                            <li><strong>Sector Funds:</strong> Sector-specific funds will have high overlap within the same sector</li>
+                            <li><strong>Investment Style:</strong> Growth vs value funds may have different overlap patterns</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Optimizing Your Portfolio</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Here are strategies to optimize your portfolio based on overlap analysis:
+                        </p>
+                        <ul>
+                            <li><strong>Diversify Across Categories:</strong> Choose funds from different categories (large-cap, mid-cap, small-cap)</li>
+                            <li><strong>Mix Investment Styles:</strong> Combine growth and value funds for better diversification</li>
+                            <li><strong>Consider Index Funds:</strong> Index funds can provide broad market exposure with lower overlap</li>
+                            <li><strong>Regular Review:</strong> Periodically analyze overlap as fund holdings change</li>
+                            <li><strong>Quality over Quantity:</strong> Focus on fewer, well-diversified funds rather than many overlapping funds</li>
+                        </ul>
+                        <p>
+                            Remember, some overlap is normal and acceptable, especially in large-cap funds. The key is to ensure your overall portfolio 
+                            remains diversified and aligned with your investment goals.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Mutual Fund Overlap Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about Mutual Fund Overlap Calculator</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>How is fund overlap calculated?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Fund overlap is calculated by finding common stocks between two funds, taking the minimum weight of each common stock, and summing them up. The result is expressed as a percentage.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What is an acceptable overlap percentage?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Generally, overlap below 25% is acceptable. 0-10% is considered low overlap (good), 10-25% is moderate, 25-50% is high overlap, and above 50% indicates significant redundancy.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I upload CSV files with fund data?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes, you can upload CSV files containing fund holdings data. The tool supports both CSV upload and manual data entry. Make sure your CSV has columns for stock names and weights.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How often should I check fund overlap?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>It's recommended to check fund overlap quarterly or whenever you add new funds to your portfolio. Fund holdings change over time, so regular monitoring helps maintain optimal diversification.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Fetch and insert header
+        fetch('../../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Mutual Fund Overlap Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const fundADataTextarea = document.getElementById('fund-a-data');
+            const fundBDataTextarea = document.getElementById('fund-b-data');
+            const csvFileInput = document.getElementById('csv-file');
+            const fileUploadArea = document.getElementById('file-upload-area');
+            const thresholdSlider = document.getElementById('threshold-slider');
+            const thresholdValue = document.getElementById('threshold-value');
+            const calculateButton = document.getElementById('calculate-overlap');
+            const resetButton = document.getElementById('reset-overlap');
+            const exportButton = document.getElementById('export-overlap');
+            const resultDiv = document.getElementById('overlap-result');
+            const summaryDiv = document.getElementById('overlap-summary');
+            const chartContainer = document.getElementById('chart-container');
+            const overlapTable = document.getElementById('overlap-table');
+            
+            const overlapPercentageSpan = document.getElementById('overlap-percentage');
+            const commonHoldingsCountSpan = document.getElementById('common-holdings-count');
+            const fundATotalSpan = document.getElementById('fund-a-total');
+            const fundBTotalSpan = document.getElementById('fund-b-total');
+            
+            let overlapChart = null;
+            let overlapData = [];
+
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabName = button.dataset.tab;
+                    
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    button.classList.add('active');
+                    document.getElementById(tabName + '-tab').classList.add('active');
+                });
+            });
+
+            // File upload functionality
+            fileUploadArea.addEventListener('click', () => csvFileInput.click());
+            fileUploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUploadArea.classList.add('dragover');
+            });
+            fileUploadArea.addEventListener('dragleave', () => {
+                fileUploadArea.classList.remove('dragover');
+            });
+            fileUploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileUploadArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                handleFileUpload(files);
+            });
+            csvFileInput.addEventListener('change', (e) => {
+                handleFileUpload(e.target.files);
+            });
+
+            function handleFileUpload(files) {
+                if (files.length === 0) return;
+                
+                const file = files[0];
+                if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
+                    alert('Please upload a CSV file.');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const csvData = e.target.result;
+                    parseCSVData(csvData);
+                };
+                reader.readAsText(file);
+            }
+
+            function parseCSVData(csvData) {
+                const lines = csvData.split('\n');
+                const fundAData = [];
+                const fundBData = [];
+                
+                // Simple CSV parsing - assumes first column is stock name, second is weight
+                lines.forEach((line, index) => {
+                    if (line.trim()) {
+                        const parts = line.split(',');
+                        if (parts.length >= 2) {
+                            const stockName = parts[0].trim();
+                            const weight = parseFloat(parts[1].trim());
+                            if (!isNaN(weight)) {
+                                if (index < lines.length / 2) {
+                                    fundAData.push({ name: stockName, weight: weight });
+                                } else {
+                                    fundBData.push({ name: stockName, weight: weight });
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                // Populate textareas
+                fundADataTextarea.value = fundAData.map(item => `${item.name}, ${item.weight}%`).join('\n');
+                fundBDataTextarea.value = fundBData.map(item => `${item.name}, ${item.weight}%`).join('\n');
+            }
+
+            // Threshold slider
+            function updateThresholdValue() {
+                const value = thresholdSlider.value;
+                thresholdValue.textContent = value + '%';
+            }
+
+            thresholdSlider.addEventListener('input', updateThresholdValue);
+
+            function parseFundData(textareaValue) {
+                const lines = textareaValue.split('\n');
+                const holdings = [];
+                
+                lines.forEach(line => {
+                    if (line.trim()) {
+                        // Try different separators
+                        const parts = line.split(/[,\t]/);
+                        if (parts.length >= 2) {
+                            const stockName = parts[0].trim();
+                            const weightStr = parts[1].trim().replace('%', '');
+                            const weight = parseFloat(weightStr);
+                            if (!isNaN(weight)) {
+                                holdings.push({ 
+                                    name: stockName.toLowerCase().trim(), 
+                                    weight: weight 
+                                });
+                            }
+                        }
+                    }
+                });
+                
+                return holdings;
+            }
+
+            function calculateOverlap() {
+                const fundAData = parseFundData(fundADataTextarea.value);
+                const fundBData = parseFundData(fundBDataTextarea.value);
+                const threshold = parseFloat(thresholdSlider.value);
+
+                if (fundAData.length === 0 || fundBData.length === 0) {
+                    resultDiv.textContent = 'Please enter fund holdings data for both funds.';
+                    summaryDiv.style.display = 'none';
+                    chartContainer.style.display = 'none';
+                    overlapTable.style.display = 'none';
+                    return;
+                }
+
+                // Find common holdings
+                const commonHoldings = [];
+                const fundAMap = new Map();
+                const fundBMap = new Map();
+
+                // Create maps for easier lookup
+                fundAData.forEach(holding => {
+                    fundAMap.set(holding.name, holding.weight);
+                });
+                fundBData.forEach(holding => {
+                    fundBMap.set(holding.name, holding.weight);
+                });
+
+                // Find overlaps
+                fundAMap.forEach((weightA, stockName) => {
+                    if (fundBMap.has(stockName)) {
+                        const weightB = fundBMap.get(stockName);
+                        const minWeight = Math.min(weightA, weightB);
+                        if (minWeight >= threshold) {
+                            commonHoldings.push({
+                                name: stockName,
+                                fundA: weightA,
+                                fundB: weightB,
+                                combined: weightA + weightB,
+                                overlap: minWeight
+                            });
+                        }
+                    }
+                });
+
+                // Calculate totals
+                const fundATotal = fundAData.reduce((sum, holding) => sum + holding.weight, 0);
+                const fundBTotal = fundBData.reduce((sum, holding) => sum + holding.weight, 0);
+                const overlapTotal = commonHoldings.reduce((sum, holding) => sum + holding.overlap, 0);
+
+                // Calculate overlap percentage
+                const overlapPercentage = Math.min(100, (overlapTotal / Math.min(fundATotal, fundBTotal)) * 100);
+
+                // Update UI
+                overlapPercentageSpan.textContent = overlapPercentage.toFixed(2) + '%';
+                commonHoldingsCountSpan.textContent = commonHoldings.length + ' stocks';
+                fundATotalSpan.textContent = fundATotal.toFixed(2) + '%';
+                fundBTotalSpan.textContent = fundBTotal.toFixed(2) + '%';
+
+                resultDiv.textContent = 'Overlap analysis completed!';
+                summaryDiv.style.display = 'block';
+                chartContainer.style.display = 'block';
+                overlapTable.style.display = 'block';
+
+                // Create chart
+                createOverlapChart(overlapPercentage, commonHoldings.length);
+
+                // Create overlap table
+                createOverlapTable(commonHoldings);
+
+                // Store data for export
+                overlapData = {
+                    fundAData,
+                    fundBData,
+                    commonHoldings,
+                    overlapPercentage,
+                    fundATotal,
+                    fundBTotal
+                };
+
+                // Save to localStorage
+                saveToLocalStorage();
+            }
+
+            function createOverlapChart(overlapPercentage, commonCount) {
+                if (overlapChart) {
+                    overlapChart.destroy();
+                }
+
+                const ctx = document.getElementById('overlapChart').getContext('2d');
+                overlapChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Overlap', 'Unique Holdings'],
+                        datasets: [{
+                            data: [overlapPercentage, 100 - overlapPercentage],
+                            backgroundColor: ['#4361EE', '#F72585'],
+                            borderColor: ['#2945c8', '#B5179E'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Fund Overlap Analysis'
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            function createOverlapTable(commonHoldings) {
+                const tbody = document.getElementById('overlap-body');
+                tbody.innerHTML = '';
+
+                // Sort by combined weight (descending)
+                commonHoldings.sort((a, b) => b.combined - a.combined);
+
+                commonHoldings.forEach(holding => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${holding.name}</td>
+                        <td>${holding.fundA.toFixed(2)}%</td>
+                        <td>${holding.fundB.toFixed(2)}%</td>
+                        <td>${holding.combined.toFixed(2)}%</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            function exportToCSV() {
+                if (!overlapData || overlapData.commonHoldings.length === 0) {
+                    alert('Please calculate overlap first before exporting.');
+                    return;
+                }
+
+                let csv = 'Mutual Fund Overlap Analysis\n\n';
+                csv += 'Common Holdings\n';
+                csv += 'Stock Name,Fund A (%),Fund B (%),Combined (%)\n';
+                
+                overlapData.commonHoldings.forEach(holding => {
+                    csv += `${holding.name},${holding.fundA.toFixed(2)},${holding.fundB.toFixed(2)},${holding.combined.toFixed(2)}\n`;
+                });
+                
+                csv += '\nSummary\n';
+                csv += `Overlap Percentage,${overlapData.overlapPercentage.toFixed(2)}%\n`;
+                csv += `Common Holdings Count,${overlapData.commonHoldings.length}\n`;
+                csv += `Fund A Total,${overlapData.fundATotal.toFixed(2)}%\n`;
+                csv += `Fund B Total,${overlapData.fundBTotal.toFixed(2)}%\n`;
+
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'fund-overlap-analysis.csv';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+
+            function saveToLocalStorage() {
+                const overlapState = {
+                    fundAData: fundADataTextarea.value,
+                    fundBData: fundBDataTextarea.value,
+                    threshold: thresholdSlider.value
+                };
+                localStorage.setItem('overlapCalculatorState', JSON.stringify(overlapState));
+            }
+
+            function loadFromLocalStorage() {
+                const savedState = localStorage.getItem('overlapCalculatorState');
+                if (savedState) {
+                    const state = JSON.parse(savedState);
+                    fundADataTextarea.value = state.fundAData || '';
+                    fundBDataTextarea.value = state.fundBData || '';
+                    thresholdSlider.value = state.threshold || '1';
+                    updateThresholdValue();
+                }
+            }
+
+            function resetCalculator() {
+                fundADataTextarea.value = '';
+                fundBDataTextarea.value = '';
+                thresholdSlider.value = '1';
+                updateThresholdValue();
+                resultDiv.textContent = 'Your overlap analysis results will appear here...';
+                summaryDiv.style.display = 'none';
+                chartContainer.style.display = 'none';
+                overlapTable.style.display = 'none';
+                if (overlapChart) {
+                    overlapChart.destroy();
+                    overlapChart = null;
+                }
+                localStorage.removeItem('overlapCalculatorState');
+            }
+
+            calculateButton.addEventListener('click', calculateOverlap);
+            resetButton.addEventListener('click', resetCalculator);
+            exportButton.addEventListener('click', exportToCSV);
+
+            // Load saved state on page load
+            loadFromLocalStorage();
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with animation classes
+        document.querySelectorAll('.tool-hero__left, .tool-hero__right, .blog-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

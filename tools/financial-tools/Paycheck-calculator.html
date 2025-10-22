@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Paycheck Calculator (India, US, UK, CA) | EveryTool.tech</title>
+    <meta name="description" content="Free international paycheck calculator to estimate your net take-home pay in India, US, UK, Canada, Australia, & Germany. Accounts for income tax, social contributions, and deductions.">
+    <meta name="keywords" content="paycheck calculator, salary calculator, international take-home pay, net pay calculator, tax calculator, India, US, UK, Canada, Australia, Germany">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Global Paycheck Calculator - Estimate Your Net Take-Home Pay Worldwide | EveryTool.tech">
+    <meta property="og:description" content="Free international paycheck calculator to estimate your net pay in India, US, UK, Canada, & more. Accounts for local taxes and deductions.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/paycheck-calculator-global">
+    <meta property="og:image" content="https://everytool.tech/assets/tool-preview.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    <style>
+        /* Custom styles for Global Paycheck Calculator */
+        .tool-display__content {
+            grid-template-columns: 3fr 2fr; /* Input on left, output on right */
+        }
+        .tool-display__input-section, .tool-display__output-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .input-group-container {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .input-group-container h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: #343a40;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 0.5rem;
+        }
+        .tool-display__input-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            align-items: flex-end;
+        }
+        .tool-display__input, .tool-display__select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
+        #region-container { display: none; } /* Hide region by default */
+
+        .tool-display__output-section {
+            background-color: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .pay-stub {
+            font-family: 'Courier New', Courier, monospace;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            background: #f8f9fa;
+        }
+        .pay-stub-header { text-align: center; margin-bottom: 1rem; }
+        .pay-stub-header h3 { margin: 0; font-size: 1.5rem; color: #0d1a2e; }
+        .pay-stub-section { margin-bottom: 1rem; }
+        .pay-stub-section h4 {
+            font-size: 1rem;
+            border-bottom: 1px dashed #adb5bd;
+            padding-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .pay-stub-row { display: flex; justify-content: space-between; margin-bottom: 0.25rem; }
+        .pay-stub-total {
+            font-weight: bold;
+            border-top: 2px solid #343a40;
+            margin-top: 1rem;
+            padding-top: 1rem;
+        }
+        .pay-stub-net-pay {
+            background: #28a745;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .pay-stub-net-pay .pay-stub-row { font-size: 1.5rem; }
+        .disclaimer { font-size: 0.8rem; color: #dc3545; margin-top: 1rem; text-align: center; font-weight: bold; background: #f8d7da; padding: 0.5rem; border-radius: 5px; }
+
+        @media (max-width: 900px) {
+            .tool-display__content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Mobile-specific optimizations for Paycheck Calculator */
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                display: grid;
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .tool-display__input-group { 
+                margin-bottom: 1rem; 
+            }
+            .tool-display__input, .tool-display__select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .tool-display__button { 
+                width: 100%; 
+                margin-bottom: 0.5rem; 
+            }
+            .tool-display__controls { 
+                display: flex;
+                flex-direction: column; 
+            }
+            .result-card { 
+                padding: 1rem; 
+            }
+            .result-card .calorie-value, .result-card .value { 
+                font-size: 1.8rem; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-display__input { 
+                padding: 0.65rem; 
+            }
+            .tool-display__button { 
+                padding: 0.8rem; 
+                font-size: 0.95rem; 
+            }
+            .result-card .calorie-value, .result-card .value { 
+                font-size: 1.6rem; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Global Paycheck Calculator: Your International Salary Guide</h1>
+                    <p class="tool-hero__description">
+                        From Delhi to Dallas, Toronto to Sydney, estimate your take-home pay anywhere. Our free Global Paycheck Calculator breaks down international taxes and deductions to reveal your true net earnings.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-globe"></i>
+                            <span>Multiple Countries</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-coins"></i>
+                            <span>Local Currencies</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>100% Private & Secure</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Tax & Deduction Estimates</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-play"></i>
+                            Calculate Your Paycheck
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Global Pay
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Estimate Your Net Pay Anywhere</h2>
+                    <p class="tool-display__description">
+                        Select your country and enter your pay details for a localized estimate of your take-home pay.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <!-- Location & Earnings -->
+                        <div class="input-group-container">
+                            <h3><i class="fas fa-map-marker-alt"></i> Location & Earnings</h3>
+                            <div class="tool-display__input-row">
+                                <div class="tool-display__input-group">
+                                    <label class="tool-display__label">Country</label>
+                                    <select id="country" class="tool-display__select">
+                                        <option value="US">United States</option>
+                                        <option value="IN" selected>India</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="GB">United Kingdom</option>
+                                        <option value="AU">Australia</option>
+                                        <option value="DE">Germany</option>
+                                    </select>
+                                </div>
+                                <div class="tool-display__input-group">
+                                    <label class="tool-display__label">Gross Pay</label>
+                                    <input type="number" id="gross-pay" class="tool-display__input" placeholder="e.g., 800000">
+                                </div>
+                                <div class="tool-display__input-group">
+                                    <label class="tool-display__label">Pay Frequency</label>
+                                    <select id="pay-frequency" class="tool-display__select">
+                                        <option value="annually">Annually</option>
+                                        <option value="monthly" selected>Monthly</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Withholding -->
+                        <div class="input-group-container">
+                            <h3><i class="fas fa-landmark"></i> Tax Withholding</h3>
+                            <div class="tool-display__input-row">
+                                <div class="tool-display__input-group">
+                                    <label id="filing-status-label" class="tool-display__label">Tax Regime</label>
+                                    <select id="filing-status" class="tool-display__select">
+                                        <!-- Options will be populated by JS -->
+                                    </select>
+                                </div>
+                                <div id="region-container" class="tool-display__input-group">
+                                    <label id="region-label" class="tool-display__label">State / Province</label>
+                                    <select id="region" class="tool-display__select">
+                                        <!-- Options will be populated by JS -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Deductions -->
+                        <div class="input-group-container">
+                            <h3><i class="fas fa-file-contract"></i> Voluntary Deductions (Per Paycheck)</h3>
+                             <div class="tool-display__input-row">
+                                <div class="tool-display__input-group">
+                                    <label id="pre-tax-label" class="tool-display__label">Voluntary PF / NPS</label>
+                                    <input type="number" id="pre-tax-deductions" class="tool-display__input" placeholder="Amount per check">
+                                </div>
+                                <div class="tool-display__input-group">
+                                    <label id="post-tax-label" class="tool-display__label">Other Post-Tax</label>
+                                    <input type="number" id="post-tax-deductions" class="tool-display__input" placeholder="Other deductions">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tool-display__controls">
+                            <button id="reset-button" class="tool-display__button tool-display__button--secondary">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <div class="pay-stub">
+                            <div class="pay-stub-header">
+                                <h3>Estimated Pay Stub</h3>
+                                <div id="pay-period-dates"></div>
+                            </div>
+
+                            <div class="pay-stub-section">
+                                <h4>Earnings</h4>
+                                <div class="pay-stub-row">
+                                    <span>Gross Pay:</span>
+                                    <span id="output-gross-pay">₹0.00</span>
+                                </div>
+                            </div>
+                            
+                            <div class="pay-stub-section">
+                                <h4>Mandatory & Voluntary Deductions</h4>
+                                <div class="pay-stub-row">
+                                    <span id="output-pre-tax-label">Provident Fund (PF):</span>
+                                    <span id="output-pre-tax-deductions">₹0.00</span>
+                                </div>
+                                <div class="pay-stub-row">
+                                    <span>Voluntary Deductions:</span>
+                                    <span id="output-voluntary-deductions">₹0.00</span>
+                                </div>
+                            </div>
+
+                            <div class="pay-stub-section">
+                                <h4>Taxes</h4>
+                                <div id="tax-row-1" class="pay-stub-row">
+                                    <span id="tax-label-1">Income Tax:</span>
+                                    <span id="output-tax-1">₹0.00</span>
+                                </div>
+                                <div id="tax-row-2" class="pay-stub-row">
+                                    <span id="tax-label-2">Professional Tax:</span>
+                                    <span id="output-tax-2">₹0.00</span>
+                                </div>
+                                 <div id="tax-row-3" class="pay-stub-row" style="display: none;">
+                                    <span id="tax-label-3"></span>
+                                    <span id="output-tax-3">₹0.00</span>
+                                </div>
+                                <div id="tax-row-4" class="pay-stub-row" style="display: none;">
+                                    <span id="tax-label-4"></span>
+                                    <span id="output-tax-4">₹0.00</span>
+                                </div>
+                                <div class="pay-stub-row pay-stub-total">
+                                    <span>Total Taxes:</span>
+                                    <span id="output-total-tax">₹0.00</span>
+                                </div>
+                            </div>
+                            
+                            <div id="post-tax-section" class="pay-stub-section">
+                                <h4>Post-Tax Deductions</h4>
+                                <div class="pay-stub-row">
+                                    <span>Other:</span>
+                                    <span id="output-post-tax-deductions">₹0.00</span>
+                                </div>
+                            </div>
+
+                            <div class="pay-stub-net-pay">
+                                <div class="pay-stub-row pay-stub-total">
+                                    <span>Net Pay (Take-Home):</span>
+                                    <span id="output-net-pay">₹0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="disclaimer">IMPORTANT: These calculations are simplified estimates for informational purposes only and should not be used for tax filing or financial planning. Tax laws are complex and vary greatly. Consult a local professional for accurate advice.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">A Global Guide to Understanding Your Paycheck</h2>
+                <p class="tool-blog__subtitle">
+                    From FICA to PAYE to EPF, we decode payroll taxes and deductions around the world and show you how our Global Paycheck Calculator can help.
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Introduction: The Universal Puzzle of Take-Home Pay</h3>
+                    <div class="blog-section__content">
+                        <p>
+                           No matter where you live, the excitement of a new salary offer is often followed by the sobering reality of the first payslip. The number that hits your bank account is almost always less than your "gross" salary, thanks to a complex web of taxes and deductions. This gap between gross and net pay is a universal phenomenon, but the rules that govern it are incredibly local. This is why a one-size-fits-all approach doesn't work, and why we built the <strong>Global Paycheck Calculator</strong>.
+                        </p>
+                        <p>
+                            This guide will serve as your passport to understanding payroll systems in several major economies. We'll explore the key concepts, compare the different approaches to taxation, and show you how to use our powerful tool to get a clearer picture of your financial situation, no matter your location.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Payroll Systems: A Comparative Look</h3>
+                    <div class="blog-section__content">
+                        <h4>India: Regimes and Contributions</h4>
+                        <p>India's payroll has unique components, with a major choice for taxpayers:</p>
+                        <ul>
+                            <li><strong>New vs. Old Tax Regime:</strong> Taxpayers can choose between two systems. The New Regime (which our calculator defaults to) has lower tax rates but disallows most deductions. The Old Regime has higher rates but allows many deductions like HRA, LTA, and Section 80C.</li>
+                            <li><strong>Employee Provident Fund (EPF):</strong> A mandatory retirement saving scheme where 12% of your 'basic' salary is contributed by you, and an equal amount by your employer.</li>
+                            <li><strong>Professional Tax (PT):</strong> A small, state-level tax on employment, typically a fixed amount like ₹200 per month.</li>
+                        </ul>
+                        
+                        <h4>United States: A Multi-Layered System</h4>
+                        <p>The US system is known for its complexity, with taxes levied at three potential levels: Federal, State, and FICA (Social Security & Medicare).</p>
+                        
+                        <h4>Canada: Federal Plus Provincial</h4>
+                        <p>Canada's system is similar to the US, with federal and provincial taxes, plus contributions to the Canada Pension Plan (CPP) and Employment Insurance (EI).</p>
+
+                        <h4>United Kingdom: The PAYE System</h4>
+                        <p>The UK uses a "Pay As You Earn" (PAYE) system with a tax-free Personal Allowance and progressive tax bands, plus National Insurance (NI) contributions.</p>
+                        
+                        <h4>Australia & Germany</h4>
+                        <p>Australia features a high tax-free threshold and a Medicare Levy. Germany is known for its robust social security system funded by significant employer and employee contributions across multiple insurance categories.</p>
+                    </div>
+                </div>
+                
+                <div class="blog-section">
+                    <h3 class="blog-section__title">How to Use the Global Paycheck Calculator Effectively</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Our tool simplifies these complex systems into a few easy steps:
+                        </p>
+                        <ol>
+                            <li>
+                                <strong>Select Your Country:</strong> This is the most important step! The tool will automatically load the correct currency, tax rules, and input fields for your location.
+                            </li>
+                            <li>
+                                <strong>Enter Gross Pay & Frequency:</strong> Provide your total earnings and how often you are paid. For India, this is your total gross salary, not just the basic component.
+                            </li>
+                            <li>
+                                <strong>Complete Withholding Information:</strong> The fields in this section will change based on your country. For India, you can select the tax regime. For the US/Canada, select your state/province.
+                            </li>
+                            <li>
+                                <strong>Input Voluntary Deductions:</strong> Add any extra contributions you make per paycheck, like to a National Pension System (NPS) in India or a 401(k) in the US. Mandatory deductions like India's EPF are calculated automatically.
+                            </li>
+                            <li>
+                                <strong>Analyze Your Estimated Pay Stub:</strong> The output is customized with the correct labels for your country. You'll see a clear breakdown of your estimated net pay.
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Conclusion: Financial Clarity Across Borders</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Whether you're an expatriate, a remote worker employed by a foreign company, or simply evaluating a job offer in another country, understanding potential take-home pay is critical. While no online tool can replace professional financial advice, our <strong>Global Paycheck Calculator</strong> provides a valuable, high-level estimate to help you compare salaries and budget more effectively.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Find answers about our Global Paycheck Calculator.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How is the Indian tax calculated?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our calculator uses a simplified model based on the **New Tax Regime** (the default for most individuals from FY 2023-24). It automatically applies the ₹50,000 standard deduction and calculates tax based on the new slabs. It also estimates mandatory Employee Provident Fund (EPF) contributions (assuming Basic Salary is 50% of Gross) and a standard Professional Tax.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How accurate is this calculator for different countries?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>This tool uses simplified tax models to provide a reliable *estimate* for informational purposes. Tax laws are extremely complex and change frequently. Our calculator is great for comparing job offers or budgeting but should NOT be used for official tax filing. Always consult a local tax professional for precise financial advice.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Why is my country not listed?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We've started with a selection of frequently requested countries. Building and maintaining accurate (even simplified) tax models for every country is a major undertaking. We plan to add more countries in the future based on user demand.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How are currency and exchange rates handled?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The calculator does not perform currency conversion. All calculations are done in the local currency of the country you select (e.g., calculations for India are in INR ₹). You should enter your gross pay in that country's local currency.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is my financial data safe?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. Your privacy is paramount. All calculations are performed within your browser. No data you enter is ever sent to, stored on, or seen by our servers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Fetch and insert header/footer
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('../../header.html').then(r => r.text()).then(h => document.getElementById('header-placeholder').innerHTML = h);
+            fetch('../../footer.html').then(r => r.text()).then(h => document.getElementById('footer-placeholder').innerHTML = h);
+        });
+
+        // Paycheck Calculator Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- GLOBAL TAX DATA (2024 - SIMPLIFIED) ---
+            const GLOBAL_TAX_DATA = {
+                'IN': {
+                    currency: { code: 'INR', symbol: '₹' },
+                    labels: {
+                        filingStatus: 'Tax Regime',
+                        preTax: 'Voluntary PF / NPS',
+                        preTaxOutput: 'Employee PF (12% of Basic)',
+                        tax1: 'Income Tax (+ 4% Cess)', tax2: 'Professional Tax', tax3: '', tax4: '',
+                    },
+                    filingStatuses: { 'new': 'New Regime (Default)', 'old': 'Old Regime (No deductions)' },
+                    hasRegions: false,
+                    payFrequencies: ['annually', 'monthly']
+                },
+                'US': {
+                    currency: { code: 'USD', symbol: '$' },
+                    labels: {
+                        filingStatus: 'Federal Filing Status',
+                        region: 'State',
+                        preTax: '401(k) / Pre-Tax',
+                        preTaxOutput: '401(k) / Pre-Tax',
+                        tax1: 'Federal Tax', tax2: 'State Tax', tax3: 'Social Security', tax4: 'Medicare',
+                    },
+                    filingStatuses: { 'single': 'Single', 'married': 'Married Filing Jointly', 'hoh': 'Head of Household' },
+                    regions: {'AL':'Alabama','AK':'Alaska','AZ':'Arizona','AR':'Arkansas','CA':'California','CO':'Colorado','CT':'Connecticut','DE':'Delaware','FL':'Florida','GA':'Georgia','HI':'Hawaii','ID':'Idaho','IL':'Illinois','IN':'Indiana','IA':'Iowa','KS':'Kansas','KY':'Kentucky','LA':'Louisiana','ME':'Maine','MD':'Maryland','MA':'Massachusetts','MI':'Michigan','MN':'Minnesota','MS':'Mississippi','MO':'Missouri','MT':'Montana','NE':'Nebraska','NV':'Nevada','NH':'New Hampshire','NJ':'New Jersey','NM':'New Mexico','NY':'New York','NC':'North Carolina','ND':'North Dakota','OH':'Ohio','OK':'Oklahoma','OR':'Oregon','PA':'Pennsylvania','RI':'Rhode Island','SC':'South Carolina','SD':'South Dakota','TN':'Tennessee','TX':'Texas','UT':'Utah','VT':'Vermont','VA':'Virginia','WA':'Washington','WV':'West Virginia','WI':'Wisconsin','WY':'Wyoming'},
+                    hasRegions: true,
+                    payFrequencies: ['annually', 'monthly', 'semi-monthly', 'bi-weekly', 'weekly']
+                },
+                'CA': {
+                    currency: { code: 'CAD', symbol: '$' },
+                    labels: {
+                        filingStatus: 'Filing Status', region: 'Province', preTax: 'RRSP / Pension', preTaxOutput: 'RRSP / Pension',
+                        tax1: 'Federal Tax', tax2: 'Provincial Tax', tax3: 'CPP', tax4: 'EI',
+                    },
+                    filingStatuses: { 'single': 'Single' },
+                    regions: {'AB':'Alberta','BC':'British Columbia','MB':'Manitoba','NB':'New Brunswick','NL':'Newfoundland and Labrador','NS':'Nova Scotia','ON':'Ontario','PE':'Prince Edward Island','QC':'Quebec','SK':'Saskatchewan'},
+                    hasRegions: true,
+                    payFrequencies: ['annually', 'monthly', 'semi-monthly', 'bi-weekly', 'weekly']
+                },
+                'GB': {
+                    currency: { code: 'GBP', symbol: '£' },
+                    labels: {
+                        filingStatus: 'Tax Code Status', preTax: 'Pension Contribution', preTaxOutput: 'Pension Contribution',
+                        tax1: 'Income Tax (PAYE)', tax2: 'National Insurance', tax3: '', tax4: '',
+                    },
+                    filingStatuses: { 'standard': 'Standard Tax Code' },
+                    hasRegions: false,
+                    payFrequencies: ['annually', 'monthly', 'weekly']
+                },
+                 'AU': {
+                    currency: { code: 'AUD', symbol: '$' },
+                    labels: {
+                        filingStatus: 'Residency Status', preTax: 'Superannuation', preTaxOutput: 'Superannuation',
+                        tax1: 'Income Tax', tax2: 'Medicare Levy', tax3: '', tax4: '',
+                    },
+                    filingStatuses: { 'resident': 'Resident for tax purposes' },
+                    hasRegions: false,
+                    payFrequencies: ['annually', 'monthly', 'bi-weekly', 'weekly']
+                },
+                'DE': {
+                    currency: { code: 'EUR', symbol: '€' },
+                    labels: {
+                        filingStatus: 'Tax Class', preTax: 'Pension / Other', preTaxOutput: 'Pension / Other',
+                        tax1: 'Income Tax', tax2: 'Solidarity Surcharge', tax3: 'Social Security', tax4: '',
+                    },
+                    filingStatuses: { 'single': 'Class I (Single)' },
+                    hasRegions: false,
+                    payFrequencies: ['annually', 'monthly']
+                }
+            };
+
+            // --- DOM Elements ---
+            const countrySelect = document.getElementById('country');
+            const regionContainer = document.getElementById('region-container');
+            const regionSelect = document.getElementById('region');
+            const filingStatusSelect = document.getElementById('filing-status');
+            const payFrequencySelect = document.getElementById('pay-frequency');
+            const allInputs = document.querySelectorAll('.tool-display__input, .tool-display__select');
+            const resetButton = document.getElementById('reset-button');
+            
+            function updateUIForCountry(countryCode) {
+                const countryData = GLOBAL_TAX_DATA[countryCode];
+                
+                // Update labels
+                document.getElementById('filing-status-label').textContent = countryData.labels.filingStatus;
+                document.getElementById('pre-tax-label').textContent = countryData.labels.preTax;
+                document.getElementById('output-pre-tax-label').textContent = countryData.labels.preTaxOutput;
+                
+                document.getElementById('tax-label-1').textContent = countryData.labels.tax1;
+                document.getElementById('tax-label-2').textContent = countryData.labels.tax2;
+                document.getElementById('tax-label-3').textContent = countryData.labels.tax3;
+                document.getElementById('tax-label-4').textContent = countryData.labels.tax4;
+
+                // Show/hide tax rows
+                document.getElementById('tax-row-1').style.display = countryData.labels.tax1 ? 'flex' : 'none';
+                document.getElementById('tax-row-2').style.display = countryData.labels.tax2 ? 'flex' : 'none';
+                document.getElementById('tax-row-3').style.display = countryData.labels.tax3 ? 'flex' : 'none';
+                document.getElementById('tax-row-4').style.display = countryData.labels.tax4 ? 'flex' : 'none';
+
+                // Populate filing status dropdown
+                filingStatusSelect.innerHTML = '';
+                for(const [key, value] of Object.entries(countryData.filingStatuses)) {
+                    filingStatusSelect.innerHTML += `<option value="${key}">${value}</option>`;
+                }
+                
+                // Populate pay frequency
+                payFrequencySelect.innerHTML = '';
+                for(const freq of countryData.payFrequencies) {
+                   const label = freq.charAt(0).toUpperCase() + freq.slice(1);
+                   payFrequencySelect.innerHTML += `<option value="${freq}">${label}</option>`;
+                }
+                payFrequencySelect.value = 'monthly';
+                if(countryCode === 'US') payFrequencySelect.value = 'bi-weekly';
+
+
+                // Handle region dropdown
+                if (countryData.hasRegions) {
+                    regionContainer.style.display = 'block';
+                    document.getElementById('region-label').textContent = countryData.labels.region;
+                    regionSelect.innerHTML = '';
+                    for(const [key, value] of Object.entries(countryData.regions)) {
+                        regionSelect.innerHTML += `<option value="${key}">${value}</option>`;
+                    }
+                } else {
+                    regionContainer.style.display = 'none';
+                }
+                
+                calculateAndDisplay();
+            }
+            
+            function calculateAndDisplay() {
+                // Get common values
+                const country = countrySelect.value;
+                const countryData = GLOBAL_TAX_DATA[country];
+                const grossPayInput = parseFloat(document.getElementById('gross-pay').value) || 0;
+                const payFrequency = payFrequencySelect.value;
+                const voluntaryDeductions = parseFloat(document.getElementById('pre-tax-deductions').value) || 0;
+                const postTaxDeductions = parseFloat(document.getElementById('post-tax-deductions').value) || 0;
+
+                const getPayPeriods = (freq) => ({'annually':1, 'monthly':12, 'semi-monthly':24, 'bi-weekly':26, 'weekly':52}[freq] || 12);
+                const payPeriods = getPayPeriods(payFrequency);
+                
+                const grossPayPerPeriod = (payFrequency === 'annually') ? grossPayInput / payPeriods : grossPayInput;
+                const annualGrossPay = grossPayPerPeriod * payPeriods;
+                
+                let results = {};
+                let mandatoryPreTaxDeductionsPerPeriod = 0;
+                
+                // --- Country Specific Calculations ---
+                if (country === 'IN') {
+                    const basicSalary = annualGrossPay * 0.50; // Simplified assumption
+                    const employeePF = Math.min(basicSalary * 0.12, 1800 * 12); // Capped at 12% of 15,000/mo basic
+                    mandatoryPreTaxDeductionsPerPeriod = employeePF / payPeriods;
+                    
+                    const regime = filingStatusSelect.value;
+                    let taxableIncome = 0;
+                    if(regime === 'new') {
+                        const standardDeduction = 50000;
+                        taxableIncome = Math.max(0, annualGrossPay - standardDeduction);
+                    } else { // Old regime simplified - no itemized deductions
+                        taxableIncome = Math.max(0, annualGrossPay - employeePF);
+                    }
+                    
+                    let incomeTax = 0;
+                    // New Regime Slabs FY 23-24
+                    const incomeAfterRebateCheck = taxableIncome;
+                    if(taxableIncome > 1500000) incomeTax += (taxableIncome - 1500000) * 0.30;
+                    if(taxableIncome > 1200000) incomeTax += (Math.min(taxableIncome, 1500000) - 1200000) * 0.20;
+                    if(taxableIncome > 900000)  incomeTax += (Math.min(taxableIncome, 1200000) - 900000) * 0.15;
+                    if(taxableIncome > 600000)  incomeTax += (Math.min(taxableIncome, 900000) - 600000) * 0.10;
+                    if(taxableIncome > 300000)  incomeTax += (Math.min(taxableIncome, 600000) - 300000) * 0.05;
+
+                    // Rebate under Sec 87A for New Regime
+                    if (regime === 'new' && incomeAfterRebateCheck <= 700000) {
+                        incomeTax = 0;
+                    }
+
+                    const cess = incomeTax * 0.04;
+                    const totalTax = incomeTax + cess;
+                    const professionalTax = annualGrossPay > 200000 ? 2400 : 0;
+                    
+                    results = { t1: totalTax / payPeriods, t2: professionalTax / payPeriods };
+
+                } else if (country === 'US') {
+                    mandatoryPreTaxDeductionsPerPeriod = 0; // It's all voluntary
+                    const annualPreTaxDeductions = voluntaryDeductions * payPeriods;
+                    const taxableIncome = Math.max(0, annualGrossPay - annualPreTaxDeductions - 14600); // simplified deduction
+                    const fedTax = taxableIncome * 0.22; // super simplified
+                    const stateTax = (taxableIncome * 0.05);
+                    const ssTax = Math.min(annualGrossPay, 168600) * 0.062;
+                    const medicareTax = annualGrossPay * 0.0145;
+                    results = { t1: fedTax/payPeriods, t2: stateTax/payPeriods, t3: ssTax/payPeriods, t4: medicareTax/payPeriods };
+                } else { // Fallback for other countries
+                     mandatoryPreTaxDeductionsPerPeriod = 0;
+                     const taxableIncome = annualGrossPay - (voluntaryDeductions * payPeriods);
+                     const tax = taxableIncome * 0.25; // Generic catch-all
+                     results = {t1: tax/payPeriods};
+                }
+
+                const totalTaxes = (results.t1||0) + (results.t2||0) + (results.t3||0) + (results.t4||0);
+                const netPay = grossPayPerPeriod - mandatoryPreTaxDeductionsPerPeriod - voluntaryDeductions - totalTaxes - postTaxDeductions;
+                
+                // Update UI
+                const format = (val) => val.toLocaleString('en-US', { style: 'currency', currency: countryData.currency.code, minimumFractionDigits: 2 });
+                document.getElementById('output-gross-pay').textContent = format(grossPayPerPeriod);
+                document.getElementById('output-pre-tax-deductions').textContent = format(mandatoryPreTaxDeductionsPerPeriod);
+                document.getElementById('output-voluntary-deductions').textContent = format(voluntaryDeductions);
+                document.getElementById('output-post-tax-deductions').textContent = format(postTaxDeductions);
+                document.getElementById('output-tax-1').textContent = format(results.t1 || 0);
+                document.getElementById('output-tax-2').textContent = format(results.t2 || 0);
+                document.getElementById('output-tax-3').textContent = format(results.t3 || 0);
+                document.getElementById('output-tax-4').textContent = format(results.t4 || 0);
+                document.getElementById('output-total-tax').textContent = format(totalTaxes);
+                document.getElementById('output-net-pay').textContent = format(Math.max(0, netPay));
+            }
+            
+            function resetForm() {
+                document.getElementById('gross-pay').value = '';
+                document.getElementById('pre-tax-deductions').value = '';
+                document.getElementById('post-tax-deductions').value = '';
+                calculateAndDisplay();
+            }
+
+            // Event Listeners
+            allInputs.forEach(input => input.addEventListener('input', calculateAndDisplay));
+            resetButton.addEventListener('click', resetForm);
+            countrySelect.addEventListener('change', () => updateUIForCountry(countrySelect.value));
+            
+            // Initial Load
+            updateUIForCountry(countrySelect.value);
+        });
+    </script>
+    <script src="/universal-search-deploy.js"></script>
+    <script src="../../faq.js" defer></script>
+    <script src="../../view.js" defer></script>
+
+    <script>
+        // =====================================================================
+        // ====== START: MAGIC BLOCK TO COPY FOR EVERY NEW PAGE ======
+        // =====================================================================
+            document.addEventListener('DOMContentLoaded', () => {
+        
+        const loadScript = (src) => {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = () => resolve(script);
+                script.onerror = () => reject(new Error(`Script load error for ${src}`));
+                document.body.appendChild(script);
+            });
+        };
+        
+        const loadHeader = () => {
+            const headerPlaceholder = document.getElementById('header-placeholder');
+            if (!headerPlaceholder) return;
+        
+            // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+            fetch('/header.html') 
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response for header.html was not ok.');
+                    return response.text();
+                })
+                .then(html => {
+                    headerPlaceholder.innerHTML = html;
+                    return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2');
+                })
+                .then(() => {
+                    // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+                    return loadScript('/header-search.js');
+                })
+                .then(() => {
+                    if (typeof initializeHeader === 'function') {
+                        initializeHeader(); 
+                    } else {
+                        throw new Error('initializeHeader function not found.');
+                    }
+                })
+                .catch(error => {
+                    console.error('CRITICAL ERROR during header loading process:', error);
+                });
+        };
+        
+        const loadFooter = () => {
+            const footerPlaceholder = document.getElementById('footer-placeholder');
+            if (footerPlaceholder) {
+                // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+                fetch('/footer.html')
+                    .then(response => response.ok ? response.text() : Promise.reject('Failed to load footer'))
+                    .then(html => { footerPlaceholder.innerHTML = html; })
+                    .catch(error => console.error('Error loading footer:', error));
+            }
+        };
+        
+        loadHeader();
+        loadFooter();
+        });
+        
+            </script>
+</body>
+</html>

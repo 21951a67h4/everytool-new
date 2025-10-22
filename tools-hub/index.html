@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Back to top button -->
     <link rel="stylesheet" href="../back-to-top.css">
-    <script src="../back-to-top.js"></script>
+    <script src="/back-to-top.js"></script>
 </head>
 <body>
 
@@ -56,13 +56,21 @@
 
             <!-- Search and Filter Section -->
             <div class="search-section">
-                <div class="search-bar-wrapper">
+                <div class="search-controls">
+                    <div class="search-bar-wrapper">
                     <i class="fa-solid fa-search search-icon"></i>
                     <input type="text" id="search-input" placeholder="Search for tools by name or description...">
                     <button id="voice-search-btn" class="mic-button" aria-label="Search by voice">
                         <i class="fa-solid fa-microphone"></i>
                     </button>
                     <button id="clear-search" class="clear-search hidden" aria-label="Clear search">×</button>
+                    </div>
+                    <button id="view-toggle-btn" class="control-button" aria-label="Toggle Grid/List">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                    </button>
+                    <button id="sort-az-btn" class="control-button" aria-label="Sort A–Z">
+                        <i class="fa-solid fa-arrow-down-a-z"></i>
+                    </button>
                 </div>
                 <div class="filter-buttons">
                     <button class="filter-button active" data-category="all">All</button>
@@ -74,19 +82,30 @@
                     <button class="filter-button" data-category="seo">SEO</button>
                     <button class="filter-button" data-category="developer">Developer</button>
                     <button class="filter-button" data-category="productivity">Productivity</button>
+                    <button class="filter-button" data-category="file-conversion">File Conversion</button>
+                    <button class="filter-button" data-category="text-tools">Text Tools</button>
+                    <button class="filter-button" data-category="image-media">Image & Media</button>
+                    <button class="filter-button" data-category="utility-data">Utility & Data</button>
                     <button class="filter-button" data-category="other">Other</button>
                 </div>
             </div>
 
             <!-- Tools Grid -->
-            <div id="tools-grid" class="tools-grid">
+            <div id="tools-grid" class="tools-grid grid-view">
                 <!-- Finance Tools -->
+                <div class="tool-card animate-fade-up" data-category="finance">
+                    <span class="tool-category">Finance</span>
+                    <div class="tool-icon"><i class="fa-solid fa-landmark"></i></div>
+                    <h3 class="tool-name">Expense Balance Calculator</h3>
+                    <p class="tool-description">Set your budget, add expenses, and track your remaining balance with live updates and a doughnut chart.</p>
+                    <a href="../tools/financial-tools/expense-balance-calculator.html" class="tool-button">Use Tool</a>
+                </div>
                 <div class="tool-card animate-fade-up" data-category="finance">
                     <span class="tool-category">Finance</span>
                     <div class="tool-icon"><i class="fa-solid fa-car"></i></div>
                     <h3 class="tool-name">Car Loan Calculator</h3>
                     <p class="tool-description">Calculate monthly car payments, total interest, and total cost with our advanced Car Loan Calculator. Perfect for buyers, dealers, and financial planners.</p>
-                    <a href="../tools/car-loan-calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/financial-tools/car-loan-calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="finance">
@@ -94,7 +113,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-chart-line"></i></div>
                     <h3 class="tool-name">Compound Interest Calculator</h3>
                     <p class="tool-description">Calculate the future value of your investment with our free Compound Interest Calculator. Visualize growth, adjust for inflation, and plan for your financial goals.</p>
-                    <a href="../tools/Compound-interest-calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/financial-tools/Compound-interest-calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="finance">
@@ -102,7 +121,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-home"></i></div>
                     <h3 class="tool-name">Mortgage Calculator</h3>
                     <p class="tool-description">Calculate your monthly mortgage payments, total interest, and amortization schedule. Plan your home purchase with confidence.</p>
-                    <a href="../tools/mortgage-calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/financial-tools/mortgage-calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="finance">
@@ -110,7 +129,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-hand-holding-usd"></i></div>
                     <h3 class="tool-name">Loan Calculator</h3>
                     <p class="tool-description">Calculate loan payments, interest rates, and total costs for personal loans, business loans, and more.</p>
-                    <a href="../tools/loan-calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/financial-tools/loan-calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="finance">
@@ -118,7 +137,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-chart-pie"></i></div>
                     <h3 class="tool-name">Inflation Calculator</h3>
                     <p class="tool-description">Calculate the changing value of money over time with our free Inflation Calculator for multiple currencies. See historical buying power and real growth.</p>
-                    <a href="../tools/Inflation-Calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/financial-tools/Inflation-Calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="finance">
@@ -126,7 +145,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-fire"></i></div>
                     <h3 class="tool-name">FIRE Age Simulator</h3>
                     <p class="tool-description">Plan your Financial Independence, Retire Early (FIRE) journey with our comprehensive simulator. Calculate savings rates and retirement timelines.</p>
-                    <a href="../tools/FIRE-Age-Simulator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/financial-tools/FIRE-Age-Simulator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="finance">
@@ -134,7 +153,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-money-bill-wave"></i></div>
                     <h3 class="tool-name">Paycheck Calculator</h3>
                     <p class="tool-description">Calculate your take-home pay after taxes, deductions, and benefits. Understand your net income and plan your budget.</p>
-                    <a href="../tools/Paycheck-calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/financial-tools/Paycheck-calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="finance">
@@ -142,7 +161,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-percentage"></i></div>
                     <h3 class="tool-name">Percentage Calculator</h3>
                     <p class="tool-description">Calculate percentages, percentage changes, and percentage differences. Essential for financial calculations and analysis.</p>
-                    <a href="../tools/percentage-calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/math-tools/percentage-calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="finance">
@@ -150,7 +169,47 @@
                     <div class="tool-icon"><i class="fa-solid fa-utensils"></i></div>
                     <h3 class="tool-name">Tip Calculator</h3>
                     <p class="tool-description">Calculate tips for restaurants, services, and more. Split bills among friends and calculate tip percentages easily.</p>
-                    <a href="../tools/Tip-calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/financial-tools/Tip-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="finance">
+                    <span class="tool-category">Finance</span>
+                    <div class="tool-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <h3 class="tool-name">SIP Calculator</h3>
+                    <p class="tool-description">Calculate SIP returns with month-by-month charts, step-up SIP calculations, and detailed schedule. Plan your investment journey.</p>
+                    <a href="../tools/financial-tools/sip-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="finance">
+                    <span class="tool-category">Finance</span>
+                    <div class="tool-icon"><i class="fa-solid fa-calculator"></i></div>
+                    <h3 class="tool-name">Tax Regime Calculator</h3>
+                    <p class="tool-description">Compare Old vs New Tax Regime for FY 2024-25. Calculate tax liability, effective tax rate, and find the best regime for your income.</p>
+                    <a href="../tools/financial-tools/tax-regime-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="finance">
+                    <span class="tool-category">Finance</span>
+                    <div class="tool-icon"><i class="fa-solid fa-shield-alt"></i></div>
+                    <h3 class="tool-name">Emergency Fund Calculator</h3>
+                    <p class="tool-description">Calculate your ideal emergency fund size based on expenses, job stability, and dependents. Get personalized recommendations and track progress.</p>
+                    <a href="../tools/financial-tools/emergency-fund-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="finance">
+                    <span class="tool-category">Finance</span>
+                    <div class="tool-icon"><i class="fa-solid fa-certificate"></i></div>
+                    <h3 class="tool-name">Gratuity Calculator</h3>
+                    <p class="tool-description">Calculate your gratuity amount with accurate calculations based on salary, service years, and organization type. Includes tax implications and formula explanation.</p>
+                    <a href="../tools/financial-tools/gratuity-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="finance">
+                    <span class="tool-category">Finance</span>
+                    <div class="tool-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                    <h3 class="tool-name">Mutual Fund Overlap Calculator</h3>
+                    <p class="tool-description">Calculate mutual fund overlap percentage and analyze common holdings between funds. Upload CSV or paste fund holdings data to optimize your portfolio.</p>
+                    <a href="../tools/financial-tools/mutual-fund-overlap-calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <!-- Health Tools -->
@@ -159,7 +218,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-heartbeat"></i></div>
                     <h3 class="tool-name">BMI Calculator</h3>
                     <p class="tool-description">Calculate your Body Mass Index (BMI) with our free, accurate calculator for adults, children, and teens. Track your history and understand your healthy weight range.</p>
-                    <a href="../tools/bmi-calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/health-tools/bmi-calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="health">
@@ -167,7 +226,47 @@
                     <div class="tool-icon"><i class="fa-solid fa-fire"></i></div>
                     <h3 class="tool-name">Calorie Calculator</h3>
                     <p class="tool-description">Estimate your daily calorie and macronutrient needs to lose, maintain, or gain weight. Our advanced calculator personalizes your targets based on your goals and lifestyle.</p>
-                    <a href="../tools/calorie-calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/health-tools/calorie-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="health">
+                    <span class="tool-category">Health</span>
+                    <div class="tool-icon"><i class="fa-solid fa-tint"></i></div>
+                    <h3 class="tool-name">Water Intake Calculator</h3>
+                    <p class="tool-description">Calculate your daily water intake needs based on weight, activity level, climate, and health conditions. Get personalized hydration schedule with reminders.</p>
+                    <a href="../tools/health-tools/water-intake-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="health">
+                    <span class="tool-category">Health</span>
+                    <div class="tool-icon"><i class="fa-solid fa-balance-scale"></i></div>
+                    <h3 class="tool-name">Body Fat Calculator</h3>
+                    <p class="tool-description">Calculate your body fat percentage using multiple methods: US Navy, skinfold measurements, and BMI-based estimates. Track your progress and get personalized recommendations.</p>
+                    <a href="../tools/health-tools/body-fat-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="health">
+                    <span class="tool-category">Health</span>
+                    <div class="tool-icon"><i class="fa-solid fa-dumbbell"></i></div>
+                    <h3 class="tool-name">Protein Calculator</h3>
+                    <p class="tool-description">Calculate your daily protein requirements based on weight, body fat percentage, activity level, and fitness goals. Get personalized protein distribution and meal planning tips.</p>
+                    <a href="../tools/health-tools/protein-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="health">
+                    <span class="tool-category">Health</span>
+                    <div class="tool-icon"><i class="fa-solid fa-leaf"></i></div>
+                    <h3 class="tool-name">Carbs Calculator</h3>
+                    <p class="tool-description">Calculate your daily carbohydrate needs based on TDEE, activity level, and macro split preferences. Get personalized carb targets for keto, low-carb, or balanced diets.</p>
+                    <a href="../tools/health-tools/carbs-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="health">
+                    <span class="tool-category">Health</span>
+                    <div class="tool-icon"><i class="fa-solid fa-heartbeat"></i></div>
+                    <h3 class="tool-name">Target Heart Rate Calculator</h3>
+                    <p class="tool-description">Calculate your target heart rate zones for optimal exercise training. Get personalized ranges for fat burning, cardio, and peak performance using multiple formulas.</p>
+                    <a href="../tools/health-tools/target-heart-rate-calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <!-- Math Tools -->
@@ -176,7 +275,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-calculator"></i></div>
                     <h3 class="tool-name">Scientific Calculator</h3>
                     <p class="tool-description">Advanced scientific calculator with trigonometric functions, logarithms, exponentials, and more mathematical operations.</p>
-                    <a href="../tools/scientific-calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/math-tools/scientific-calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="math">
@@ -184,7 +283,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-divide"></i></div>
                     <h3 class="tool-name">Fraction Calculator</h3>
                     <p class="tool-description">Add, subtract, multiply, and divide fractions. Convert between fractions and decimals with ease.</p>
-                    <a href="../tools/Fraction calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/math-tools/Fraction calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="math">
@@ -192,7 +291,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-chart-line"></i></div>
                     <h3 class="tool-name">Graphing Calculator</h3>
                     <p class="tool-description">Plot functions, equations, and data points with our interactive graphing calculator. Perfect for students and professionals.</p>
-                    <a href="../tools/Graphing calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/math-tools/Graphing calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="math">
@@ -200,7 +299,47 @@
                     <div class="tool-icon"><i class="fa-solid fa-integral"></i></div>
                     <h3 class="tool-name">Integral Calculator</h3>
                     <p class="tool-description">Calculate definite and indefinite integrals with step-by-step solutions. Essential for calculus students and engineers.</p>
-                    <a href="../tools/Integral-calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/math-tools/Integral-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="math">
+                    <span class="tool-category">Math</span>
+                    <div class="tool-icon"><i class="fa-solid fa-function"></i></div>
+                    <h3 class="tool-name">Derivative Calculator</h3>
+                    <p class="tool-description">Calculate derivatives symbolically with step-by-step solutions. Supports polynomials, trigonometric, exponential, and logarithmic functions.</p>
+                    <a href="../tools/math-tools/derivative-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="math">
+                    <span class="tool-category">Math</span>
+                    <div class="tool-icon"><i class="fa-solid fa-th"></i></div>
+                    <h3 class="tool-name">Matrix Calculator</h3>
+                    <p class="tool-description">Perform matrix operations including determinant, inverse, eigenvalues, and more. Visualize 2D transformations and export results.</p>
+                    <a href="../tools/math-tools/matrix-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="math">
+                    <span class="tool-category">Math</span>
+                    <div class="tool-icon"><i class="fa-solid fa-parabola"></i></div>
+                    <h3 class="tool-name">Quadratic Equation Solver</h3>
+                    <p class="tool-description">Solve quadratic equations with step-by-step solutions. Find roots, vertex form, discriminant, and visualize the parabola.</p>
+                    <a href="../tools/math-tools/quadratic-solver.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="math">
+                    <span class="tool-category">Math</span>
+                    <div class="tool-icon"><i class="fa-solid fa-chart-bar"></i></div>
+                    <h3 class="tool-name">Statistics Calculator</h3>
+                    <p class="tool-description">Calculate descriptive statistics, create histograms and boxplots, find z-scores and percentiles. Analyze your data comprehensively.</p>
+                    <a href="../tools/math-tools/statistics-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="math">
+                    <span class="tool-category">Math</span>
+                    <div class="tool-icon"><i class="fa-solid fa-exchange-alt"></i></div>
+                    <h3 class="tool-name">Unit Converter</h3>
+                    <p class="tool-description">Convert between different units of length, weight, temperature, volume, area, speed, time, energy, pressure, and data.</p>
+                    <a href="../tools/math-tools/unit-converter.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <!-- Education Tools -->
@@ -209,7 +348,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-graduation-cap"></i></div>
                     <h3 class="tool-name">Final Grade Calculator</h3>
                     <p class="tool-description">Calculate the grade you need on your final exam to achieve your desired overall course grade. Plan your study strategy effectively.</p>
-                    <a href="../tools/final-grade-calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/education-tools/final-grade-calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="education">
@@ -217,7 +356,47 @@
                     <div class="tool-icon"><i class="fa-solid fa-star"></i></div>
                     <h3 class="tool-name">GPA Calculator</h3>
                     <p class="tool-description">Calculate your Grade Point Average (GPA) for high school, college, or university. Track your academic performance and progress.</p>
-                    <a href="../tools/GPA Calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/education-tools/GPA Calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="education">
+                    <span class="tool-category">Education</span>
+                    <div class="tool-icon"><i class="fa-solid fa-percentage"></i></div>
+                    <h3 class="tool-name">CGPA to Percentage Converter</h3>
+                    <p class="tool-description">Convert CGPA to percentage for Anna University, JNTU, VTU, CBSE, ICSE and other boards. Compare multiple conversion schemes.</p>
+                    <a href="../tools/education-tools/cgpa-percentage-converter.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="education">
+                    <span class="tool-category">Education</span>
+                    <div class="tool-icon"><i class="fa-solid fa-clock"></i></div>
+                    <h3 class="tool-name">Reading Time Calculator</h3>
+                    <p class="tool-description">Calculate reading time for any text with multi-language support. Get estimates based on WPM, difficulty level, and reading mode.</p>
+                    <a href="../tools/education-tools/reading-time-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="education">
+                    <span class="tool-category">Education</span>
+                    <div class="tool-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <h3 class="tool-name">GPA Weighted Calculator</h3>
+                    <p class="tool-description">Calculate weighted GPA with term tracking, scenario planning, and honors indicators. Import CSV data and track academic progress.</p>
+                    <a href="../tools/education-tools/gpa-weighted-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="education">
+                    <span class="tool-category">Education</span>
+                    <div class="tool-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                    <h3 class="tool-name">Study Time Calculator</h3>
+                    <p class="tool-description">Create personalized study schedules with Pomodoro integration, algorithmic time distribution, and ICS calendar export.</p>
+                    <a href="../tools/education-tools/study-time-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="education">
+                    <span class="tool-category">Education</span>
+                    <div class="tool-icon"><i class="fa-solid fa-flag-checkered"></i></div>
+                    <h3 class="tool-name">Assignment Deadline Calculator</h3>
+                    <p class="tool-description">Plan assignments with backward scheduling, milestone generation, and ICS calendar export. Get organized with automatic task splitting.</p>
+                    <a href="../tools/education-tools/assignment-deadline-calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <!-- Date & Time Tools -->
@@ -226,7 +405,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-birthday-cake"></i></div>
                     <h3 class="tool-name">Age Calculator</h3>
                     <p class="tool-description">Calculate your exact age in years, months, and days. Find out fun facts, your age on other planets, and see a countdown to your next birthday.</p>
-                    <a href="../tools/age-calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/datetime-tools/age-calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="date-time">
@@ -234,7 +413,47 @@
                     <div class="tool-icon"><i class="fa-solid fa-clock"></i></div>
                     <h3 class="tool-name">Time Calculator</h3>
                     <p class="tool-description">Add, subtract, and calculate time differences. Convert between different time units and formats.</p>
-                    <a href="../tools/Time calculator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/datetime-tools/Time calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="date-time">
+                    <span class="tool-category">Date & Time</span>
+                    <div class="tool-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                    <h3 class="tool-name">Date Duration Calculator</h3>
+                    <p class="tool-description">Calculate precise duration between two dates with multiple unit conversions. Get humanized output, add/subtract dates, and find recurrent dates.</p>
+                    <a href="../tools/datetime-tools/date-duration-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="date-time">
+                    <span class="tool-category">Date & Time</span>
+                    <div class="tool-icon"><i class="fa-solid fa-briefcase"></i></div>
+                    <h3 class="tool-name">Business Days Calculator</h3>
+                    <p class="tool-description">Calculate business days between dates excluding weekends and holidays. Support for multiple countries, custom weekend patterns, and half-day calculations.</p>
+                    <a href="../tools/datetime-tools/business-days-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="date-time">
+                    <span class="tool-category">Date & Time</span>
+                    <div class="tool-icon"><i class="fa-solid fa-globe"></i></div>
+                    <h3 class="tool-name">World Time Zone Converter</h3>
+                    <p class="tool-description">Convert time between cities and timezones with DST awareness. Get team overlap hours, world clock grid, and share meeting links.</p>
+                    <a href="../tools/datetime-tools/world-timezone-converter.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="date-time">
+                    <span class="tool-category">Date & Time</span>
+                    <div class="tool-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+                    <h3 class="tool-name">Countdown Timer</h3>
+                    <p class="tool-description">Create multiple countdown timers with sound alerts, desktop notifications, and large-screen mode. Perfect for presentations, cooking, and productivity.</p>
+                    <a href="../tools/datetime-tools/countdown-timer.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="date-time">
+                    <span class="tool-category">Date & Time</span>
+                    <div class="tool-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    <h3 class="tool-name">Work Hours Calculator</h3>
+                    <p class="tool-description">Calculate work hours, overtime, and wage estimates with break time, rounding rules, and holiday pay. Export timesheets and generate printable reports.</p>
+                    <a href="../tools/datetime-tools/work-hours-calculator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <!-- Productivity Tools -->
@@ -243,7 +462,47 @@
                     <div class="tool-icon"><i class="fa-solid fa-words"></i></div>
                     <h3 class="tool-name">Word Counter</h3>
                     <p class="tool-description">Count words, characters, sentences, and paragraphs in your text. Essential for writers, students, and content creators.</p>
-                    <a href="../tools/words-count.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/productivity-tools/words-count.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="productivity">
+                    <span class="tool-category">Productivity</span>
+                    <div class="tool-icon"><i class="fa-solid fa-clock"></i></div>
+                    <h3 class="tool-name">Pomodoro Timer</h3>
+                    <p class="tool-description">Boost productivity with the Pomodoro Technique. Work/break timer with notifications, stats dashboard, keyboard controls, and session tracking.</p>
+                    <a href="../tools/productivity-tools/pomodoro-timer.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="productivity">
+                    <span class="tool-category">Productivity</span>
+                    <div class="tool-icon"><i class="fa-solid fa-book-open"></i></div>
+                    <h3 class="tool-name">Reading Speed Test</h3>
+                    <p class="tool-description">Test your reading speed and comprehension. Calculate WPM, take comprehension quizzes, and get personalized reading recommendations.</p>
+                    <a href="../tools/productivity-tools/reading-speed-test.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="productivity">
+                    <span class="tool-category">Productivity</span>
+                    <div class="tool-icon"><i class="fa-solid fa-calculator"></i></div>
+                    <h3 class="tool-name">Meeting Cost Calculator</h3>
+                    <p class="tool-description">Calculate the true cost of meetings with attendee hourly rates, duration, and recurrence. Get cost breakdowns, ROI analysis, and productivity insights.</p>
+                    <a href="../tools/productivity-tools/meeting-cost-calculator.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="productivity">
+                    <span class="tool-category">Productivity</span>
+                    <div class="tool-icon"><i class="fa-solid fa-th"></i></div>
+                    <h3 class="tool-name">Task Priority Matrix</h3>
+                    <p class="tool-description">Organize tasks using the Eisenhower Matrix. Prioritize by urgency and importance with drag-and-drop functionality, filters, and productivity insights.</p>
+                    <a href="../tools/productivity-tools/task-priority-matrix.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="productivity">
+                    <span class="tool-category">Productivity</span>
+                    <div class="tool-icon"><i class="fa-solid fa-shield-alt"></i></div>
+                    <h3 class="tool-name">Focus Mode Timer</h3>
+                    <p class="tool-description">Boost focus with distraction-free timer sessions. Block distracting websites, play ambient sounds, track productivity stats, and maintain deep work sessions.</p>
+                    <a href="../tools/productivity-tools/focus-mode-timer.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <!-- SEO Tools -->
@@ -252,7 +511,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-key"></i></div>
                     <h3 class="tool-name">Meta Tag Generator</h3>
                     <p class="tool-description">Generate SEO meta tags for your pages in seconds. Improve your website's visibility and click-through rates.</p>
-                    <a href="../tools/meta-tag-generator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/seo-tools/meta-tag-generator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="seo">
@@ -260,7 +519,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-share-nodes"></i></div>
                     <h3 class="tool-name">Open Graph & Twitter Card Generator</h3>
                     <p class="tool-description">Create Open Graph and Twitter Card meta tags for rich social sharing previews. Boost your content's engagement on social media.</p>
-                    <a href="../tools/open-graph-twitter-card-generator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/seo-tools/open-graph-twitter-card-generator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="seo">
@@ -268,7 +527,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-robot"></i></div>
                     <h3 class="tool-name">Robots.txt Generator</h3>
                     <p class="tool-description">Generate a robots.txt file for your website in seconds. Control how search engines crawl your site.</p>
-                    <a href="../tools/robots-txt-generator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/seo-tools/robots-txt-generator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="seo">
@@ -276,7 +535,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-sitemap"></i></div>
                     <h3 class="tool-name">XML Sitemap Generator (Manual Entry)</h3>
                     <p class="tool-description">Generate a valid XML sitemap by manually entering your URLs. Perfect for custom or static sites.</p>
-                    <a href="../tools/xml-sitemap-generator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/seo-tools/xml-sitemap-generator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="seo">
@@ -284,7 +543,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-code"></i></div>
                     <h3 class="tool-name">Schema Markup Generator</h3>
                     <p class="tool-description">Create structured data (JSON-LD) for your website to enhance search results with rich snippets.</p>
-                    <a href="../tools/schema-markup-generator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/seo-tools/schema-markup-generator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="seo">
@@ -292,7 +551,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-percent"></i></div>
                     <h3 class="tool-name">Keyword Density Analyzer</h3>
                     <p class="tool-description">Analyze your content for keyword density and optimize for better SEO performance.</p>
-                    <a href="../tools/keyword-density-analyzer.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/seo-tools/keyword-density-analyzer.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="seo">
@@ -300,7 +559,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-ruler-horizontal"></i></div>
                     <h3 class="tool-name">Title & Description Length Checker</h3>
                     <p class="tool-description">Check the length of your page titles and meta descriptions to ensure they are SEO-friendly.</p>
-                    <a href="../tools/title-description-length-checker.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/seo-tools/title-description-length-checker.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="seo">
@@ -308,7 +567,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-desktop"></i></div>
                     <h3 class="tool-name">SERP Preview Tool</h3>
                     <p class="tool-description">Preview how your page will appear in Google search results. Optimize titles and descriptions for maximum impact.</p>
-                    <a href="../tools/serp-preview-tool.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/seo-tools/serp-preview-tool.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="seo">
@@ -316,7 +575,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-heading"></i></div>
                     <h3 class="tool-name">Header Tags Analyzer</h3>
                     <p class="tool-description">Analyze your HTML header tags (H1-H6) for structure, hierarchy, and SEO best practices.</p>
-                    <a href="../tools/header-tags-analyzer.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/seo-tools/header-tags-analyzer.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <!-- Developer Tools -->
@@ -325,7 +584,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-code"></i></div>
                     <h3 class="tool-name">JSON Formatter & Validator</h3>
                     <p class="tool-description">Format, validate, and beautify your JSON data for easy reading and debugging.</p>
-                    <a href="../tools/json-formatter-validator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/developer-tools/json-formatter-validator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="developer">
@@ -333,7 +592,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-code"></i></div>
                     <h3 class="tool-name">Base64 Encoder/Decoder</h3>
                     <p class="tool-description">Encode and decode Base64 strings for your web applications.</p>
-                    <a href="../tools/base64-encoder-decoder.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/developer-tools/base64-encoder-decoder.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="developer">
@@ -341,7 +600,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-eye-dropper"></i></div>
                     <h3 class="tool-name">Color Picker & Hex/RGB Converter</h3>
                     <p class="tool-description">Pick colors visually and convert between HEX, RGB, and HSL formats instantly.</p>
-                    <a href="../tools/color-picker-converter.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/developer-tools/color-picker-converter.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="developer">
@@ -349,7 +608,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-fingerprint"></i></div>
                     <h3 class="tool-name">UUID Generator</h3>
                     <p class="tool-description">Generate random UUIDs for use in databases, APIs, and development.</p>
-                    <a href="../tools/uuid-generator.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/developer-tools/uuid-generator.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="developer">
@@ -357,7 +616,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-asterisk"></i></div>
                     <h3 class="tool-name">Regex Tester</h3>
                     <p class="tool-description">Test and debug regular expressions with instant match highlighting.</p>
-                    <a href="../tools/regex-tester.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/developer-tools/regex-tester.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="developer">
@@ -365,7 +624,7 @@
                     <div class="tool-icon"><i class="fa-solid fa-code-compare"></i></div>
                     <h3 class="tool-name">Text Diff Checker</h3>
                     <p class="tool-description">Compare two blocks of text and highlight the differences side by side.</p>
-                    <a href="../tools/text-diff-checker.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/developer-tools/text-diff-checker.html" class="tool-button">Use Tool</a>
                 </div>
 
                 <div class="tool-card animate-fade-up" data-category="developer">
@@ -373,102 +632,98 @@
                     <div class="tool-icon"><i class="fa-solid fa-link"></i></div>
                     <h3 class="tool-name">URL Parser & Encoder/Decoder</h3>
                     <p class="tool-description">Parse, encode, and decode URLs for web development and debugging.</p>
-                    <a href="../tools/url-parser-encoder-decoder.html" class="tool-button">Use Tool</a>
+                    <a href="../tools/developer-tools/url-parser-encoder.html" class="tool-button">Use Tool</a>
                 </div>
 
-                <div class="tool-card animate-fade-up" data-category="developer">
-                    <span class="tool-category">Developer</span>
-                    <div class="tool-icon"><i class="fa-brands fa-markdown"></i></div>
-                    <h3 class="tool-name">Markdown to HTML Converter</h3>
-                    <p class="tool-description">Convert Markdown text to clean, ready-to-use HTML instantly.</p>
-                    <a href="../tools/markdown-to-html-converter.html" class="tool-button">Use Tool</a>
+                <!-- Text Tools -->
+                <div class="tool-card animate-fade-up" data-category="text-tools">
+                    <span class="tool-category">Text Tools</span>
+                    <div class="tool-icon"><i class="fa-solid fa-font"></i></div>
+                    <h3 class="tool-name">Text Case Converter</h3>
+                    <p class="tool-description">Convert text to upper, lower, title, sentence, snake, kebab, and more cases instantly.</p>
+                    <a href="../tools/text-tools/text-case-converter.html" class="tool-button">Use Tool</a>
                 </div>
 
-                <div class="tool-card animate-fade-up" data-category="developer">
-                    <span class="tool-category">Developer</span>
-                    <div class="tool-icon"><i class="fa-solid fa-compress"></i></div>
-                    <h3 class="tool-name">Minify/Beautify Tool (JS/CSS/HTML)</h3>
-                    <p class="tool-description">Minify or beautify your JavaScript, CSS, or HTML code for optimization or readability.</p>
-                    <a href="../tools/minify-beautify-tool.html" class="tool-button">Use Tool</a>
+                <div class="tool-card animate-fade-up" data-category="text-tools">
+                    <span class="tool-category">Text Tools</span>
+                    <div class="tool-icon"><i class="fa-solid fa-sort"></i></div>
+                    <h3 class="tool-name">Remove Duplicates / Sort</h3>
+                    <p class="tool-description">Deduplicate lines, sort ascending/descending, trim whitespace, and clean your lists.</p>
+                    <a href="../tools/text-tools/remove-duplicates-sort.html" class="tool-button">Use Tool</a>
                 </div>
 
-                <div class="tool-card animate-fade-up" data-category="developer">
-                    <span class="tool-category">Developer</span>
-                    <div class="tool-icon"><i class="fa-regular fa-clock"></i></div>
-                    <h3 class="tool-name">Timestamp Converter</h3>
-                    <p class="tool-description">Convert Unix timestamps to human-readable dates and vice versa.</p>
-                    <a href="../tools/timestamp-converter.html" class="tool-button">Use Tool</a>
+                <div class="tool-card animate-fade-up" data-category="text-tools">
+                    <span class="tool-category">Text Tools</span>
+                    <div class="tool-icon"><i class="fa-solid fa-slash"></i></div>
+                    <h3 class="tool-name">Regex Find & Replace</h3>
+                    <p class="tool-description">Search and replace using regular expressions with live match highlighting and flags.</p>
+                    <a href="../tools/text-tools/regex-find-replace.html" class="tool-button">Use Tool</a>
                 </div>
+
+                <div class="tool-card animate-fade-up" data-category="text-tools">
+                    <span class="tool-category">Text Tools</span>
+                    <div class="tool-icon"><i class="fa-solid fa-code"></i></div>
+                    <h3 class="tool-name">JSON ⇄ CSV Converter</h3>
+                    <p class="tool-description">Convert between JSON and CSV with options for headers, flattening, and formatting.</p>
+                    <a href="../tools/text-tools/json-csv-converter.html" class="tool-button">Use Tool</a>
+                </div>
+
+                <div class="tool-card animate-fade-up" data-category="text-tools">
+                    <span class="tool-category">Text Tools</span>
+                    <div class="tool-icon"><i class="fa-solid fa-code-compare"></i></div>
+                    <h3 class="tool-name">Text Diff Checker</h3>
+                    <p class="tool-description">Compare two texts side by side and highlight differences with added/removed markers.</p>
+                    <a href="../tools/text-tools/text-diff-checker.html" class="tool-button">Use Tool</a>
+                </div>
+
                 <!-- Other Tools -->
-                <div class="tool-card animate-fade-up" data-category="other">
-                    <span class="tool-category">Other</span>
-                    <div class="tool-icon"><i class="fa-solid fa-smile"></i></div>
-                    <h3 class="tool-name">Interactive Emotion Wheel</h3>
-                    <p class="tool-description">Explore and identify emotions with our interactive emotion wheel. Great for emotional intelligence and self-awareness.</p>
-                    <a href="../tools/Interactive-emotion-wheel.html" class="tool-button">Use Tool</a>
+                <!-- File Conversion Tools (New) -->
+                <div class="tool-card animate-fade-up" data-category="file-conversion">
+                    <span class="tool-category">File Conversion</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-word"></i></div>
+                    <h3 class="tool-name">DOCX to PDF Converter</h3>
+                    <p class="tool-description">Convert DOCX to PDF with optional watermark, batch queue, preview, and ZIP download.</p>
+                    <a href="../tools/file-conversion-tools/docx-to-pdf.html" class="tool-button">Use Tool</a>
                 </div>
+                <div class="tool-card animate-fade-up" data-category="file-conversion">
+                    <span class="tool-category">File Conversion</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-excel"></i></div>
+                    <h3 class="tool-name">Excel to CSV Converter</h3>
+                    <p class="tool-description">Convert XLS/XLSX to CSV with sheet picker, delimiter options, preview, and settings.</p>
+                    <a href="../tools/file-conversion-tools/excel-to-csv.html" class="tool-button">Use Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="file-conversion">
+                    <span class="tool-category">File Conversion</span>
+                    <div class="tool-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                    <h3 class="tool-name">PDF Splitter & Merger</h3>
+                    <p class="tool-description">Split or merge PDFs with page thumbnails and drag-and-drop reordering.</p>
+                    <a href="../tools/file-conversion-tools/pdf-split-merge.html" class="tool-button">Use Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="file-conversion">
+                    <span class="tool-category">File Conversion</span>
+                    <div class="tool-icon"><i class="fa-solid fa-music"></i></div>
+                    <h3 class="tool-name">Audio Format Converter</h3>
+                    <p class="tool-description">Convert MP3/WAV/OGG with bitrate, trim, volume boost, batch conversion, and ZIP.</p>
+                    <a href="../tools/file-conversion-tools/audio-converter.html" class="tool-button">Use Tool</a>
+                </div>
+                <div class="tool-card animate-fade-up" data-category="file-conversion">
+                    <span class="tool-category">File Conversion</span>
+                    <div class="tool-icon"><i class="fa-solid fa-image"></i></div>
+                    <h3 class="tool-name">Image Converter (SVG/PNG/JPG/WebP)</h3>
+                    <p class="tool-description">Convert between SVG, PNG, JPG, and WebP with size, background, and quality controls.</p>
+                    <a href="../tools/file-conversion-tools/svg-to-png-jpg.html" class="tool-button">Use Tool</a>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="tools-container" id="load-more-container">
+                <button id="load-more-btn" class="control-button" aria-controls="tools-grid" aria-label="Load more tools">Load more</button>
             </div>
         </div>
     </main>
 
-    <!-- FAQ Section -->
-    <section class="tools-faq">
-        <div class="container">
-            <div class="tools-faq-header">
-                <h2 class="tools-faq-title">Frequently Asked Questions</h2>
-                <p class="tools-faq-subtitle">
-                    Find answers to common questions about our tools and platform.
-                </p>
-            </div>
-            <div class="tools-faq-list">
-                <div class="tools-faq-item">
-                    <div class="tools-faq-question" tabindex="0">
-                        <h3>What is EveryTool.Tech?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="tools-faq-answer">
-                        <p>
-                            EveryTool.Tech is a free online platform that offers a wide range of tools to help with daily tasks, from finance and health calculators to developer utilities and more. Our goal is to provide simple, reliable, and accessible tools for everyone.
-                        </p>
-                    </div>
-                </div>
-                 <div class="tools-faq-item">
-                    <div class="tools-faq-question" tabindex="0">
-                        <h3>Are all the tools on this website free to use?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="tools-faq-answer">
-                        <p>
-                            Yes, absolutely! All tools available on EveryTool.Tech are completely free to use. There are no hidden charges, subscription fees, or usage limits.
-                        </p>
-                    </div>
-                </div>
-                 <div class="tools-faq-item">
-                    <div class="tools-faq-question" tabindex="0">
-                        <h3>Do I need to create an account to use the tools?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="tools-faq-answer">
-                        <p>
-                           No, you do not need to create an account. All our tools are accessible to everyone without requiring any registration or sign-up. Just visit the page and start using them right away.
-                        </p>
-                    </div>
-                </div>
-
-                 <div class="tools-faq-item">
-                    <div class="tools-faq-question" tabindex="0">
-                        <h3>How do you ensure the accuracy of the calculators?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="tools-faq-answer">
-                        <p>
-                            We take accuracy very seriously. Our financial and health calculators are built based on standard, publicly available formulas and are thoroughly tested. However, they should be used for estimation and informational purposes only and not as a substitute for professional advice.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- ARIA Live Region for Updates -->
+    <div id="aria-updates" aria-live="polite" class="visually-hidden"></div>
 
     <!-- Footer -->
     <footer id="footer-placeholder"></footer>
@@ -486,6 +741,7 @@
     <script src="../view.js"></script>
     <script src="../FAQ section/faq.js"></script>
     <script src="script.js"></script>
+    <script src="/app-loader.js" defer></script>
 
     <script>
         
@@ -546,147 +802,10 @@ const loadFooter = () => {
 };
 
 // =====================================================================
-// ====== START: ROBUST TOOLS & CATEGORIES COUNTING SYSTEM ======
-// =====================================================================
-
-// Function to count and update stats with robust error handling
-const updateStats = () => {
-    try {
-        // Get all tool cards from the page
-        const toolCards = document.querySelectorAll('.tool-card');
-        const toolsCount = toolCards.length;
-        
-        // Get all filter buttons (excluding "All" button)
-        const filterButtons = document.querySelectorAll('.filter-button[data-category]:not([data-category="all"])');
-        const categoriesCount = filterButtons.length;
-        
-        // Get the display elements
-        const toolsCountElement = document.getElementById('tools-count');
-        const categoriesCountElement = document.getElementById('categories-count');
-        
-        // Update tools count
-        if (toolsCountElement) {
-            toolsCountElement.textContent = toolsCount;
-            console.log(`✅ Tools count updated: ${toolsCount}`);
-        } else {
-            console.warn('⚠️ Tools count element not found');
-        }
-        
-        // Update categories count
-        if (categoriesCountElement) {
-            categoriesCountElement.textContent = categoriesCount;
-            console.log(`✅ Categories count updated: ${categoriesCount}`);
-        } else {
-            console.warn('⚠️ Categories count element not found');
-        }
-        
-        // Log detailed information for debugging
-        console.log(`📊 Final Stats: ${toolsCount} tools, ${categoriesCount} categories`);
-        console.log(`🔍 Tool cards found: ${toolCards.length}`);
-        console.log(`🔍 Filter buttons found: ${filterButtons.length}`);
-        
-        // Validate the counts make sense
-        if (toolsCount === 0) {
-            console.warn('⚠️ No tool cards found - check HTML structure');
-        }
-        if (categoriesCount === 0) {
-            console.warn('⚠️ No filter buttons found - check HTML structure');
-        }
-        
-        return { toolsCount, categoriesCount };
-        
-    } catch (error) {
-        console.error('❌ Error updating stats:', error);
-        return { toolsCount: 0, categoriesCount: 0 };
-    }
-};
-
-// Function to ensure stats are updated after everything is loaded
-const ensureStatsUpdated = () => {
-    // Try to update stats immediately
-    let result = updateStats();
-    
-    // If no tools found, wait a bit and try again
-    if (result.toolsCount === 0) {
-        setTimeout(() => {
-            console.log('🔄 Retrying stats update...');
-            updateStats();
-        }, 200);
-    }
-};
-
-// =====================================================================
-// ====== START: FILTER BUTTON FUNCTIONALITY ======
-// =====================================================================
-
-// Function to setup filter button functionality
-const setupFilterSystem = () => {
-    const filterButtons = document.querySelectorAll('.filter-button');
-    const toolCards = document.querySelectorAll('.tool-card');
-    
-    if (filterButtons.length === 0) {
-        console.warn('⚠️ No filter buttons found');
-        return;
-    }
-    
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Remove active class from all buttons
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Add active class to clicked button
-            button.classList.add('active');
-            
-            // Get the selected category
-            const selectedCategory = button.getAttribute('data-category');
-            
-            // Filter tool cards
-            toolCards.forEach(card => {
-                if (selectedCategory === 'all' || card.getAttribute('data-category') === selectedCategory) {
-                    card.style.display = 'block';
-                    card.classList.add('animate-fade-up');
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-            
-            // Update stats based on filtered view
-            if (selectedCategory === 'all') {
-                updateStats();
-            } else {
-                const filteredTools = document.querySelectorAll(`.tool-card[data-category="${selectedCategory}"]`);
-                const toolsCountElement = document.getElementById('tools-count');
-                if (toolsCountElement) {
-                    toolsCountElement.textContent = filteredTools.length;
-                }
-            }
-            
-            console.log(`🔍 Filtered to category: ${selectedCategory}`);
-        });
-    });
-    
-    console.log(`✅ Filter system setup complete with ${filterButtons.length} buttons`);
-};
-
-// =====================================================================
 // ====== INITIALIZATION ======
 // =====================================================================
 
-// Load header and footer
-loadHeader();
-loadFooter();
-
-// Setup filter system
-document.addEventListener('DOMContentLoaded', () => {
-    setupFilterSystem();
-});
-
-// Update stats with multiple fallback methods
-document.addEventListener('DOMContentLoaded', ensureStatsUpdated);
-window.addEventListener('load', ensureStatsUpdated);
-
-// Final stats update after a short delay to ensure everything is rendered
-setTimeout(ensureStatsUpdated, 300);
+// Header/footer now handled by app-loader.js
 
 console.log('🚀 Tools Hub initialization complete');
 });

@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Weighted Calculator | Advanced GPA Calculation with Scenarios | EveryTool.tech</title>
+    <meta name="description" content="Calculate weighted GPA with term tracking, scenario planning, and honors indicators. Import CSV data, export results, and track your academic progress across multiple terms.">
+    <meta name="keywords" content="gpa weighted calculator, term gpa, cumulative gpa, scenario planning, honors gpa, academic tracking, grade calculator">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="GPA Weighted Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate weighted GPA with term tracking, scenario planning, and honors indicators. Import CSV data, export results, and track your academic progress across multiple terms.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/education-tools/gpa-weighted-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* GPA Weighted Calculator Specific Styles */
+        .gpa-weighted-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .gpa-weighted-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .gpa-weighted-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .gpa-weighted-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .gpa-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .gpa-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .gpa-form-group input, .gpa-form-group select { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .term-tabs {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        
+        .term-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #555;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .term-tab.active {
+            color: #007bff;
+            border-bottom-color: #007bff;
+        }
+        
+        .term-content {
+            display: none;
+        }
+        
+        .term-content.active {
+            display: block;
+        }
+        
+        .course-list-header, .course-row { 
+            display: grid; 
+            grid-template-columns: 3fr 2fr 2fr 1fr; 
+            gap: 10px; 
+            align-items: center; 
+            margin-bottom: 10px; 
+        }
+        
+        .course-list-header { 
+            font-weight: 600; 
+            padding-bottom: 5px; 
+            border-bottom: 1px solid #ddd; 
+        }
+        
+        .course-row input, .course-row select { 
+            width: 100%; 
+            padding: 8px; 
+        }
+        
+        .remove-course-btn { 
+            background: #ff4d4d; 
+            color: white; 
+            border: none; 
+            border-radius: 50%; 
+            width: 30px; 
+            height: 30px; 
+            cursor: pointer; 
+            font-size: 1rem; 
+            line-height: 30px; 
+            text-align: center; 
+        }
+        
+        .add-course-btn { 
+            margin-top: 15px; 
+        }
+        
+        .gpa-results-section {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f0f8ff;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .gpa-results-title {
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+            color: #555;
+        }
+        
+        .gpa-final-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #0056b3;
+        }
+        
+        .honors-indicator {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .honors-indicator.deans-list {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .honors-indicator.magna-cum-laude {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .honors-indicator.summa-cum-laude {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .scenario-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .scenario-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .scenario-results {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .chart-container {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .csv-import-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        .file-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .file-input-button {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .file-input-button:hover {
+            background: #218838;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .gpa-weighted-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .gpa-weighted-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .course-list-header, .course-row { 
+                grid-template-columns: 2fr 1.2fr 1.2fr 0.8fr; 
+                gap: 8px; 
+                font-size: 0.95rem; 
+            }
+            .gpa-final-score { 
+                font-size: 2.4rem; 
+            }
+            .gpa-results-section { 
+                padding: 16px; 
+            }
+            .gpa-form-group input, .gpa-form-group select, .course-row input, .course-row select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .term-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+            .scenario-controls {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gpa-weighted-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .course-list-header, .course-row { 
+                grid-template-columns: 1.8fr 1fr 1fr 0.8fr; 
+                gap: 6px; 
+                font-size: 0.9rem; 
+            }
+            .gpa-final-score { 
+                font-size: 2rem; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="GPA Weighted Calculator" data-meta-description="Calculate weighted GPA with term tracking, scenario planning, and honors indicators. Import CSV data, export results, and track your academic progress across multiple terms.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">GPA Weighted Calculator: Advanced Academic Tracking</h1>
+                    <p class="tool-hero__description">
+                        Calculate weighted GPA with term tracking, scenario planning, and honors indicators. 
+                        Import CSV data, export results, and track your academic progress across multiple terms with detailed analytics.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Term Tracking</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Scenario Planning</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-trophy"></i>
+                            <span>Honors Indicators</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-file-csv"></i>
+                            <span>CSV Import/Export</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate GPA
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About GPA
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">GPA Weighted Calculator</h2>
+                    <p class="tool-display__description">
+                        Track your GPA across multiple terms with advanced features and scenario planning.
+                    </p>
+                </div>
+                
+                <!-- GPA Weighted Calculator Custom Interface -->
+                <div class="gpa-weighted-container">
+                    <div class="gpa-weighted-section">
+                        <h4>1. Grading System & Scale</h4>
+                        <div class="gpa-weighted-grid">
+                            <div class="gpa-form-group">
+                                <label for="grading-system">Grading System</label>
+                                <select id="grading-system">
+                                    <option value="4.0">4.0 Scale (A, B, C, D, F)</option>
+                                    <option value="10.0">10.0 Scale (O, A+, A, B+, B, C, D, E, F)</option>
+                                    <option value="percentage">Percentage (0-100)</option>
+                                </select>
+                            </div>
+                            <div class="gpa-form-group">
+                                <label for="honors-threshold">Honors Threshold</label>
+                                <select id="honors-threshold">
+                                    <option value="3.5">3.5+ (Dean's List)</option>
+                                    <option value="3.7">3.7+ (Magna Cum Laude)</option>
+                                    <option value="3.9">3.9+ (Summa Cum Laude)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gpa-weighted-section">
+                        <h4>2. Term Management</h4>
+                        <div class="term-tabs" id="term-tabs">
+                            <div class="term-tab active" data-term="term1">Term 1</div>
+                        </div>
+                        
+                        <div class="term-content active" id="term1">
+                            <h5>Term 1 Courses</h5>
+                            <div class="course-list-header">
+                                <span>Course Name</span>
+                                <span>Grade</span>
+                                <span>Credits</span>
+                                <span></span>
+                            </div>
+                            <div class="course-list" id="term1-courses">
+                                <!-- Course rows will be added here -->
+                            </div>
+                            <button class="tool-display__button add-course-btn" onclick="addCourse('term1')">
+                                <i class="fas fa-plus"></i> Add Course
+                            </button>
+                        </div>
+                        
+                        <div class="gpa-weighted-grid" style="margin-top: 20px;">
+                            <div class="gpa-form-group">
+                                <button class="tool-display__button" onclick="addTerm()">
+                                    <i class="fas fa-plus"></i>
+                                    Add New Term
+                                </button>
+                            </div>
+                            <div class="gpa-form-group">
+                                <button class="tool-display__button" onclick="calculateGPA()">
+                                    <i class="fas fa-calculator"></i>
+                                    Calculate GPA
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="csv-import-section">
+                        <h4>3. Import/Export Data</h4>
+                        <div class="gpa-weighted-grid">
+                            <div class="gpa-form-group">
+                                <label>Import CSV File</label>
+                                <div class="file-input-wrapper">
+                                    <input type="file" class="file-input" id="csv-file" accept=".csv" onchange="importCSV(event)">
+                                    <button class="file-input-button">
+                                        <i class="fas fa-upload"></i> Choose CSV File
+                                    </button>
+                                </div>
+                                <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                                    Format: Course Name, Grade, Credits, Term
+                                </p>
+                            </div>
+                            <div class="gpa-form-group">
+                                <label>Export Data</label>
+                                <button class="tool-display__button" onclick="exportCSV()">
+                                    <i class="fas fa-download"></i>
+                                    Export CSV
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scenario-section">
+                        <h4>4. Scenario Planning</h4>
+                        <div class="scenario-controls">
+                            <div class="gpa-form-group">
+                                <label for="scenario-grade">What-if Grade</label>
+                                <select id="scenario-grade">
+                                    <option value="A">A (4.0)</option>
+                                    <option value="B">B (3.0)</option>
+                                    <option value="C">C (2.0)</option>
+                                    <option value="D">D (1.0)</option>
+                                    <option value="F">F (0.0)</option>
+                                </select>
+                            </div>
+                            <div class="gpa-form-group">
+                                <label for="scenario-credits">Credits</label>
+                                <input type="number" id="scenario-credits" placeholder="3" min="1" max="6" value="3">
+                            </div>
+                            <div class="gpa-form-group">
+                                <button class="tool-display__button" onclick="calculateScenario()">
+                                    <i class="fas fa-question-circle"></i>
+                                    Calculate Scenario
+                                </button>
+                            </div>
+                        </div>
+                        <div class="scenario-results" id="scenario-results" style="display: none;">
+                            <!-- Scenario results will appear here -->
+                        </div>
+                    </div>
+
+                    <div class="gpa-results-section" id="gpa-results-section" style="display: none;">
+                        <h3 class="gpa-results-title">GPA Results</h3>
+                        <div class="gpa-final-score" id="gpa-final-score">0.00</div>
+                        <div class="honors-indicator" id="honors-indicator" style="display: none;"></div>
+                        
+                        <div class="chart-container">
+                            <canvas id="gpa-chart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Weighted GPA and Academic Tracking</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about weighted GPA calculation, term tracking, and how to use scenario planning for academic success
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is Weighted GPA?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Weighted GPA takes into account the credit hours of each course, giving more weight to courses 
+                            with higher credit values. This provides a more accurate representation of your academic performance.
+                        </p>
+                        <p>
+                            <strong>Formula:</strong> Weighted GPA = Σ(Grade Points × Credit Hours) / Σ(Credit Hours)
+                        </p>
+                        <p>
+                            <strong>Example:</strong> If you have an A (4.0) in a 3-credit course and a B (3.0) in a 4-credit course:
+                            Weighted GPA = (4.0 × 3 + 3.0 × 4) / (3 + 4) = 24 / 7 = 3.43
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Term vs Cumulative GPA</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Term GPA:</strong> Calculated for a specific semester or term, showing your performance in that period.
+                        </p>
+                        <p>
+                            <strong>Cumulative GPA:</strong> Overall GPA across all terms, providing a complete academic picture.
+                        </p>
+                        <p>
+                            <strong>Tracking Both:</strong> Monitoring both helps identify trends, improvement areas, and academic consistency.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Scenario Planning Benefits</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Goal Setting:</strong> Determine what grades you need to achieve your target GPA.
+                        </p>
+                        <p>
+                            <strong>Risk Assessment:</strong> Understand the impact of different grade outcomes on your overall GPA.
+                        </p>
+                        <p>
+                            <strong>Academic Planning:</strong> Make informed decisions about course loads and academic strategies.
+                        </p>
+                        <p>
+                            <strong>Motivation:</strong> See concrete targets for maintaining or improving your academic standing.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Honors and Recognition</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Dean's List:</strong> Typically requires a GPA of 3.5 or higher for a term.
+                        </p>
+                        <p>
+                            <strong>Magna Cum Laude:</strong> Usually requires a cumulative GPA of 3.7 or higher.
+                        </p>
+                        <p>
+                            <strong>Summa Cum Laude:</strong> Typically requires a cumulative GPA of 3.9 or higher.
+                        </p>
+                        <p>
+                            These thresholds may vary by institution, so check your school's specific requirements.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">GPA Weighted Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about weighted GPA calculation</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>What's the difference between weighted and unweighted GPA?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Weighted GPA considers credit hours, giving more weight to courses with higher credits. Unweighted GPA treats all courses equally regardless of credit hours. Weighted GPA provides a more accurate representation of academic performance.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How does scenario planning work?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Scenario planning lets you test "what-if" situations by adding hypothetical courses with specific grades and credits. This helps you understand what grades you need to achieve your target GPA or honors recognition.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I import my existing grade data?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes! You can import CSV files with your course data. The format should be: Course Name, Grade, Credits, Term. You can also export your data for backup or sharing purposes.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How accurate are the honors indicators?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Our honors indicators use common thresholds (3.5+ for Dean's List, 3.7+ for Magna Cum Laude, 3.9+ for Summa Cum Laude). However, specific requirements vary by institution, so always verify with your school's academic policies.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // GPA Weighted Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const gradingSystem = document.getElementById('grading-system');
+            const honorsThreshold = document.getElementById('honors-threshold');
+            const termTabs = document.getElementById('term-tabs');
+            const gpaResultsSection = document.getElementById('gpa-results-section');
+            const gpaFinalScore = document.getElementById('gpa-final-score');
+            const honorsIndicator = document.getElementById('honors-indicator');
+            const scenarioGrade = document.getElementById('scenario-grade');
+            const scenarioCredits = document.getElementById('scenario-credits');
+            const scenarioResults = document.getElementById('scenario-results');
+            
+            let currentTerm = 1;
+            let terms = { 1: { courses: [], name: 'Term 1' } };
+            let gpaChart = null;
+            
+            // Grade point mappings
+            const gradePoints = {
+                '4.0': { 'A': 4.0, 'B': 3.0, 'C': 2.0, 'D': 1.0, 'F': 0.0 },
+                '10.0': { 'O': 10.0, 'A+': 9.0, 'A': 8.0, 'B+': 7.0, 'B': 6.0, 'C': 5.0, 'D': 4.0, 'E': 3.0, 'F': 0.0 },
+                'percentage': { 'A': 4.0, 'B': 3.0, 'C': 2.0, 'D': 1.0, 'F': 0.0 }
+            };
+            
+            function addTerm() {
+                currentTerm++;
+                const termId = `term${currentTerm}`;
+                terms[currentTerm] = { courses: [], name: `Term ${currentTerm}` };
+                
+                // Add tab
+                const tab = document.createElement('div');
+                tab.className = 'term-tab';
+                tab.textContent = `Term ${currentTerm}`;
+                tab.dataset.term = termId;
+                tab.onclick = () => switchTerm(currentTerm);
+                termTabs.appendChild(tab);
+                
+                // Add content
+                const content = document.createElement('div');
+                content.className = 'term-content';
+                content.id = termId;
+                content.innerHTML = `
+                    <h5>Term ${currentTerm} Courses</h5>
+                    <div class="course-list-header">
+                        <span>Course Name</span>
+                        <span>Grade</span>
+                        <span>Credits</span>
+                        <span></span>
+                    </div>
+                    <div class="course-list" id="${termId}-courses">
+                    </div>
+                    <button class="tool-display__button add-course-btn" onclick="addCourse('${termId}')">
+                        <i class="fas fa-plus"></i> Add Course
+                    </button>
+                `;
+                
+                document.querySelector('.gpa-weighted-section:nth-child(2)').appendChild(content);
+            }
+            
+            function switchTerm(termNumber) {
+                // Update active tab
+                document.querySelectorAll('.term-tab').forEach(tab => tab.classList.remove('active'));
+                document.querySelector(`[data-term="term${termNumber}"]`).classList.add('active');
+                
+                // Update active content
+                document.querySelectorAll('.term-content').forEach(content => content.classList.remove('active'));
+                document.getElementById(`term${termNumber}`).classList.add('active');
+                
+                currentTerm = termNumber;
+            }
+            
+            function addCourse(termId) {
+                const courseList = document.getElementById(`${termId}-courses`);
+                const courseRow = document.createElement('div');
+                courseRow.className = 'course-row';
+                courseRow.innerHTML = `
+                    <input type="text" placeholder="Course Name" class="course-name">
+                    <select class="course-grade">
+                        ${getGradeOptions()}
+                    </select>
+                    <input type="number" placeholder="Credits" class="course-credits" min="1" max="6" value="3">
+                    <button class="remove-course-btn" onclick="removeCourse(this)">×</button>
+                `;
+                courseList.appendChild(courseRow);
+            }
+            
+            function removeCourse(button) {
+                button.parentElement.remove();
+            }
+            
+            function getGradeOptions() {
+                const system = gradingSystem.value;
+                const options = gradePoints[system];
+                return Object.keys(options).map(grade => 
+                    `<option value="${grade}">${grade} (${options[grade]})</option>`
+                ).join('');
+            }
+            
+            function calculateGPA() {
+                let totalPoints = 0;
+                let totalCredits = 0;
+                const termGPAs = [];
+                
+                // Calculate GPA for each term
+                Object.keys(terms).forEach(termNumber => {
+                    const termId = `term${termNumber}`;
+                    const courseList = document.getElementById(`${termId}-courses`);
+                    const courses = courseList.querySelectorAll('.course-row');
+                    
+                    let termPoints = 0;
+                    let termCredits = 0;
+                    
+                    courses.forEach(course => {
+                        const name = course.querySelector('.course-name').value.trim();
+                        const grade = course.querySelector('.course-grade').value;
+                        const credits = parseFloat(course.querySelector('.course-credits').value) || 0;
+                        
+                        if (name && grade && credits > 0) {
+                            const points = gradePoints[gradingSystem.value][grade];
+                            termPoints += points * credits;
+                            termCredits += credits;
+                            totalPoints += points * credits;
+                            totalCredits += credits;
+                        }
+                    });
+                    
+                    if (termCredits > 0) {
+                        const termGPA = termPoints / termCredits;
+                        termGPAs.push({ term: termNumber, gpa: termGPA, credits: termCredits });
+                    }
+                });
+                
+                if (totalCredits > 0) {
+                    const cumulativeGPA = totalPoints / totalCredits;
+                    displayResults(cumulativeGPA, termGPAs);
+                } else {
+                    gpaResultsSection.style.display = 'none';
+                }
+            }
+            
+            function displayResults(cumulativeGPA, termGPAs) {
+                gpaResultsSection.style.display = 'block';
+                gpaFinalScore.textContent = cumulativeGPA.toFixed(2);
+                
+                // Check honors
+                const threshold = parseFloat(honorsThreshold.value);
+                honorsIndicator.style.display = 'none';
+                
+                if (cumulativeGPA >= 3.9) {
+                    honorsIndicator.className = 'honors-indicator summa-cum-laude';
+                    honorsIndicator.textContent = 'Summa Cum Laude (3.9+)';
+                    honorsIndicator.style.display = 'block';
+                } else if (cumulativeGPA >= 3.7) {
+                    honorsIndicator.className = 'honors-indicator magna-cum-laude';
+                    honorsIndicator.textContent = 'Magna Cum Laude (3.7+)';
+                    honorsIndicator.style.display = 'block';
+                } else if (cumulativeGPA >= 3.5) {
+                    honorsIndicator.className = 'honors-indicator deans-list';
+                    honorsIndicator.textContent = 'Dean\'s List (3.5+)';
+                    honorsIndicator.style.display = 'block';
+                }
+                
+                // Create chart
+                createChart(termGPAs, cumulativeGPA);
+            }
+            
+            function createChart(termGPAs, cumulativeGPA) {
+                if (gpaChart) {
+                    gpaChart.destroy();
+                }
+                
+                const ctx = document.getElementById('gpa-chart').getContext('2d');
+                
+                const labels = termGPAs.map(term => `Term ${term.term}`);
+                const data = termGPAs.map(term => term.gpa);
+                
+                // Add cumulative GPA as a line
+                const cumulativeData = new Array(data.length).fill(cumulativeGPA);
+                
+                gpaChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Term GPA',
+                            data: data,
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }, {
+                            label: 'Cumulative GPA',
+                            data: cumulativeData,
+                            type: 'line',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            fill: false,
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'GPA Trends by Term'
+                            },
+                            legend: {
+                                display: true
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 4.0,
+                                title: {
+                                    display: true,
+                                    text: 'GPA'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Term'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            function calculateScenario() {
+                const grade = scenarioGrade.value;
+                const credits = parseFloat(scenarioCredits.value) || 0;
+                
+                if (credits <= 0) {
+                    alert('Please enter valid credits for scenario calculation.');
+                    return;
+                }
+                
+                // Calculate current GPA
+                let totalPoints = 0;
+                let totalCredits = 0;
+                
+                Object.keys(terms).forEach(termNumber => {
+                    const termId = `term${termNumber}`;
+                    const courseList = document.getElementById(`${termId}-courses`);
+                    const courses = courseList.querySelectorAll('.course-row');
+                    
+                    courses.forEach(course => {
+                        const name = course.querySelector('.course-name').value.trim();
+                        const courseGrade = course.querySelector('.course-grade').value;
+                        const courseCredits = parseFloat(course.querySelector('.course-credits').value) || 0;
+                        
+                        if (name && courseGrade && courseCredits > 0) {
+                            const points = gradePoints[gradingSystem.value][courseGrade];
+                            totalPoints += points * courseCredits;
+                            totalCredits += courseCredits;
+                        }
+                    });
+                });
+                
+                if (totalCredits === 0) {
+                    alert('Please add some courses first to calculate scenario.');
+                    return;
+                }
+                
+                // Add scenario course
+                const scenarioPoints = gradePoints[gradingSystem.value][grade];
+                const newTotalPoints = totalPoints + (scenarioPoints * credits);
+                const newTotalCredits = totalCredits + credits;
+                const scenarioGPA = newTotalPoints / newTotalCredits;
+                
+                const currentGPA = totalPoints / totalCredits;
+                const gpaChange = scenarioGPA - currentGPA;
+                
+                scenarioResults.innerHTML = `
+                    <h5>Scenario Results</h5>
+                    <p><strong>Current GPA:</strong> ${currentGPA.toFixed(2)}</p>
+                    <p><strong>Scenario GPA:</strong> ${scenarioGPA.toFixed(2)}</p>
+                    <p><strong>GPA Change:</strong> ${gpaChange >= 0 ? '+' : ''}${gpaChange.toFixed(2)}</p>
+                    <p><strong>Impact:</strong> ${gpaChange > 0 ? 'Improvement' : gpaChange < 0 ? 'Decrease' : 'No Change'}</p>
+                `;
+                scenarioResults.style.display = 'block';
+            }
+            
+            function importCSV(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const csv = e.target.result;
+                    const lines = csv.split('\n');
+                    
+                    // Clear existing data
+                    Object.keys(terms).forEach(termNumber => {
+                        const termId = `term${termNumber}`;
+                        const courseList = document.getElementById(`${termId}-courses`);
+                        courseList.innerHTML = '';
+                    });
+                    
+                    // Parse CSV
+                    lines.forEach((line, index) => {
+                        if (index === 0) return; // Skip header
+                        
+                        const [name, grade, credits, term] = line.split(',').map(item => item.trim());
+                        if (name && grade && credits && term) {
+                            const termNumber = parseInt(term.replace('Term ', '')) || 1;
+                            if (!terms[termNumber]) {
+                                addTerm();
+                            }
+                            
+                            const termId = `term${termNumber}`;
+                            const courseList = document.getElementById(`${termId}-courses`);
+                            const courseRow = document.createElement('div');
+                            courseRow.className = 'course-row';
+                            courseRow.innerHTML = `
+                                <input type="text" value="${name}" class="course-name">
+                                <select class="course-grade">
+                                    ${getGradeOptions()}
+                                </select>
+                                <input type="number" value="${credits}" class="course-credits" min="1" max="6">
+                                <button class="remove-course-btn" onclick="removeCourse(this)">×</button>
+                            `;
+                            courseRow.querySelector('.course-grade').value = grade;
+                            courseList.appendChild(courseRow);
+                        }
+                    });
+                };
+                reader.readAsText(file);
+            }
+            
+            function exportCSV() {
+                let csv = 'Course Name,Grade,Credits,Term\n';
+                
+                Object.keys(terms).forEach(termNumber => {
+                    const termId = `term${termNumber}`;
+                    const courseList = document.getElementById(`${termId}-courses`);
+                    const courses = courseList.querySelectorAll('.course-row');
+                    
+                    courses.forEach(course => {
+                        const name = course.querySelector('.course-name').value.trim();
+                        const grade = course.querySelector('.course-grade').value;
+                        const credits = course.querySelector('.course-credits').value;
+                        
+                        if (name && grade && credits) {
+                            csv += `${name},${grade},${credits},Term ${termNumber}\n`;
+                        }
+                    });
+                });
+                
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'gpa-data.csv';
+                link.click();
+                URL.revokeObjectURL(url);
+            }
+            
+            // Event listeners
+            gradingSystem.addEventListener('change', function() {
+                // Update grade options in all course rows
+                document.querySelectorAll('.course-grade').forEach(select => {
+                    select.innerHTML = getGradeOptions();
+                });
+            });
+            
+            // Make functions globally available
+            window.addCourse = addCourse;
+            window.removeCourse = removeCourse;
+            window.addTerm = addTerm;
+            window.switchTerm = switchTerm;
+            window.calculateGPA = calculateGPA;
+            window.calculateScenario = calculateScenario;
+            window.importCSV = importCSV;
+            window.exportCSV = exportCSV;
+            
+            // Initialize with one course
+            addCourse('term1');
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Time Calculator | Create Study Schedule with Pomodoro | EveryTool.tech</title>
+    <meta name="description" content="Create personalized study schedules with Pomodoro integration, algorithmic time distribution, and ICS calendar export. Perfect for students planning their study time effectively.">
+    <meta name="keywords" content="study time calculator, study schedule, pomodoro timer, study planner, academic planning, time management">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Study Time Calculator | EveryTool.tech">
+    <meta property="og:description" content="Create personalized study schedules with Pomodoro integration, algorithmic time distribution, and ICS calendar export. Perfect for students planning their study time effectively.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/education-tools/study-time-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Study Time Calculator Specific Styles */
+        .study-calc-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .study-calc-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .study-calc-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .study-calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .study-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .study-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .study-form-group input, .study-form-group select { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .subject-list {
+            margin-top: 20px;
+        }
+        
+        .subject-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .subject-item input, .subject-item select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .remove-subject-btn {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 30px;
+            text-align: center;
+        }
+        
+        .add-subject-btn {
+            margin-top: 15px;
+        }
+        
+        .schedule-results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .schedule-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .summary-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .summary-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        
+        .summary-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .timetable {
+            margin-top: 20px;
+        }
+        
+        .day-schedule {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .day-header {
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .session-list {
+            background: white;
+        }
+        
+        .session-item {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr 1fr;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+        
+        .session-item:last-child {
+            border-bottom: none;
+        }
+        
+        .session-time {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .session-subject {
+            color: #007bff;
+            font-weight: 500;
+        }
+        
+        .session-duration {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .session-type {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        .session-type.study {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .session-type.break {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .pomodoro-settings {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .pomodoro-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .export-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .progress-tracker {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .progress-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .progress-checkbox {
+            margin-right: 10px;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .study-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .study-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .subject-item {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .session-item {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                text-align: center;
+            }
+            .schedule-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .pomodoro-controls {
+                grid-template-columns: 1fr;
+            }
+            .export-buttons {
+                flex-direction: column;
+            }
+            .study-form-group input, .study-form-group select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .study-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .schedule-summary {
+                grid-template-columns: 1fr;
+            }
+            .study-form-group input, .study-form-group select { 
+                padding: 8px; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="Study Time Calculator" data-meta-description="Create personalized study schedules with Pomodoro integration, algorithmic time distribution, and ICS calendar export. Perfect for students planning their study time effectively.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Study Time Calculator: Smart Study Scheduling</h1>
+                    <p class="tool-hero__description">
+                        Create personalized study schedules with Pomodoro integration, algorithmic time distribution, 
+                        and ICS calendar export. Perfect for students planning their study time effectively.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-clock"></i>
+                            <span>Pomodoro Integration</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-brain"></i>
+                            <span>Smart Algorithm</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-calendar"></i>
+                            <span>Calendar Export</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-bell"></i>
+                            <span>Reminders</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Create Schedule
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Study Planning
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Study Time Calculator</h2>
+                    <p class="tool-display__description">
+                        Plan your study schedule with intelligent time distribution and Pomodoro breaks.
+                    </p>
+                </div>
+                
+                <!-- Study Time Calculator Custom Interface -->
+                <div class="study-calc-container">
+                    <div class="study-calc-section">
+                        <h4>1. Study Settings</h4>
+                        <div class="study-calc-grid">
+                            <div class="study-form-group">
+                                <label for="available-hours">Available Hours per Day</label>
+                                <input type="number" id="available-hours" placeholder="6" min="1" max="16" value="6">
+                            </div>
+                            <div class="study-form-group">
+                                <label for="buffer-days">Buffer Days (%)</label>
+                                <input type="number" id="buffer-days" placeholder="10" min="0" max="50" value="10">
+                            </div>
+                            <div class="study-form-group">
+                                <label for="study-start-time">Study Start Time</label>
+                                <input type="time" id="study-start-time" value="09:00">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="study-calc-section">
+                        <h4>2. Subjects & Priorities</h4>
+                        <div class="subject-list" id="subject-list">
+                            <!-- Subject items will be added here -->
+                        </div>
+                        <button class="tool-display__button add-subject-btn" onclick="addSubject()">
+                            <i class="fas fa-plus"></i> Add Subject
+                        </button>
+                    </div>
+
+                    <div class="pomodoro-settings">
+                        <h4>3. Pomodoro Settings</h4>
+                        <div class="pomodoro-controls">
+                            <div class="study-form-group">
+                                <label for="work-duration">Work Duration (min)</label>
+                                <input type="number" id="work-duration" placeholder="25" min="15" max="60" value="25">
+                            </div>
+                            <div class="study-form-group">
+                                <label for="break-duration">Break Duration (min)</label>
+                                <input type="number" id="break-duration" placeholder="5" min="5" max="30" value="5">
+                            </div>
+                            <div class="study-form-group">
+                                <label for="long-break">Long Break (min)</label>
+                                <input type="number" id="long-break" placeholder="15" min="10" max="60" value="15">
+                            </div>
+                            <div class="study-form-group">
+                                <label for="sessions-before-long-break">Sessions Before Long Break</label>
+                                <input type="number" id="sessions-before-long-break" placeholder="4" min="2" max="8" value="4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="study-calc-section">
+                        <h4>4. Generate Schedule</h4>
+                        <div class="study-calc-grid">
+                            <div class="study-form-group">
+                                <button class="tool-display__button tool-display__button--primary" onclick="generateSchedule()">
+                                    <i class="fas fa-magic"></i> Generate Schedule
+                                </button>
+                            </div>
+                            <div class="study-form-group">
+                                <button class="tool-display__button" onclick="saveSchedule()">
+                                    <i class="fas fa-save"></i> Save Schedule
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="schedule-results" id="schedule-results" style="display: none;">
+                        <h4>Your Study Schedule</h4>
+                        <div class="schedule-summary" id="schedule-summary">
+                            <!-- Summary will be added here -->
+                        </div>
+                        
+                        <div class="timetable" id="timetable">
+                            <!-- Timetable will be added here -->
+                        </div>
+                        
+                        <div class="progress-tracker" id="progress-tracker">
+                            <h5>Progress Tracker</h5>
+                            <div id="progress-list">
+                                <!-- Progress items will be added here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="export-section">
+                        <h4>5. Export & Reminders</h4>
+                        <div class="export-buttons">
+                            <button class="tool-display__button" onclick="exportICS()">
+                                <i class="fas fa-calendar-plus"></i> Export to Calendar
+                            </button>
+                            <button class="tool-display__button" onclick="enableReminders()">
+                                <i class="fas fa-bell"></i> Enable Reminders
+                            </button>
+                            <button class="tool-display__button" onclick="printSchedule()">
+                                <i class="fas fa-print"></i> Print Schedule
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Effective Study Planning and Time Management</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about study scheduling, Pomodoro technique, and time management strategies for academic success
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">The Pomodoro Technique</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            The Pomodoro Technique is a time management method that uses timed intervals to improve focus and productivity. 
+                            It involves working for 25 minutes followed by a 5-minute break, with longer breaks after every 4 sessions.
+                        </p>
+                        <p>
+                            <strong>Benefits:</strong>
+                        </p>
+                        <ul>
+                            <li>Improved focus and concentration</li>
+                            <li>Reduced mental fatigue</li>
+                            <li>Better time awareness</li>
+                            <li>Increased motivation and productivity</li>
+                            <li>Prevents burnout</li>
+                        </ul>
+                        <p>
+                            <strong>How it works:</strong> Set a timer for 25 minutes, work on a single task, take a 5-minute break, 
+                            repeat. After 4 pomodoros, take a longer 15-30 minute break.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Smart Study Scheduling</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Priority-Based Distribution:</strong> Allocate more time to subjects that are more difficult or have closer deadlines.
+                        </p>
+                        <p>
+                            <strong>Buffer Time:</strong> Always include buffer days (10-20% of total time) to account for unexpected delays or additional review needs.
+                        </p>
+                        <p>
+                            <strong>Difficulty Weighting:</strong> Hard subjects require 1.5-2x more time than easy subjects for the same amount of material.
+                        </p>
+                        <p>
+                            <strong>Spaced Repetition:</strong> Distribute study sessions over time rather than cramming, which improves long-term retention.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Time Management Strategies</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Time Blocking:</strong> Schedule specific time blocks for different subjects and stick to them.
+                        </p>
+                        <p>
+                            <strong>Eliminate Distractions:</strong> Turn off notifications, find a quiet study space, and use website blockers if needed.
+                        </p>
+                        <p>
+                            <strong>Regular Breaks:</strong> Take breaks every 45-60 minutes to maintain focus and prevent mental fatigue.
+                        </p>
+                        <p>
+                            <strong>Review and Adjust:</strong> Regularly review your schedule and adjust based on your progress and changing priorities.
+                        </p>
+                        <p>
+                            <strong>Set Realistic Goals:</strong> Don't overcommit - it's better to study effectively for fewer hours than to study poorly for many hours.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Study Environment Optimization</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Consistent Location:</strong> Study in the same place to build a routine and mental association with learning.
+                        </p>
+                        <p>
+                            <strong>Proper Lighting:</strong> Ensure adequate lighting to reduce eye strain and maintain alertness.
+                        </p>
+                        <p>
+                            <strong>Comfortable Seating:</strong> Use a comfortable chair and desk setup to avoid physical discomfort during long study sessions.
+                        </p>
+                        <p>
+                            <strong>Minimal Clutter:</strong> Keep your study space organized and free from distractions.
+                        </p>
+                        <p>
+                            <strong>Background Music:</strong> Some people find instrumental music or white noise helpful for concentration.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Study Time Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about study scheduling and time management</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>How does the algorithm distribute study time?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>The algorithm considers days until deadline, difficulty level, priority weights, and available hours per day. It distributes time proportionally, giving more time to harder subjects and those with closer deadlines, while including buffer days for flexibility.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I customize the Pomodoro settings?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes! You can adjust work duration (15-60 minutes), break duration (5-30 minutes), long break duration (10-60 minutes), and how many sessions before a long break (2-8 sessions). The default is 25/5/15 with breaks every 4 sessions.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How do I export my schedule to my calendar?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Click "Export to Calendar" to download an ICS file that you can import into Google Calendar, Outlook, Apple Calendar, or any calendar app that supports ICS format. This will create events for each study session.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What are buffer days and why are they important?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Buffer days are extra time (typically 10-20% of total study time) set aside for unexpected delays, additional review, or catching up if you fall behind. They provide flexibility and reduce stress by ensuring you have contingency time.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Study Time Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const availableHours = document.getElementById('available-hours');
+            const bufferDays = document.getElementById('buffer-days');
+            const studyStartTime = document.getElementById('study-start-time');
+            const workDuration = document.getElementById('work-duration');
+            const breakDuration = document.getElementById('break-duration');
+            const longBreak = document.getElementById('long-break');
+            const sessionsBeforeLongBreak = document.getElementById('sessions-before-long-break');
+            const subjectList = document.getElementById('subject-list');
+            const scheduleResults = document.getElementById('schedule-results');
+            const scheduleSummary = document.getElementById('schedule-summary');
+            const timetable = document.getElementById('timetable');
+            const progressList = document.getElementById('progress-list');
+            
+            let subjects = [];
+            let generatedSchedule = null;
+            let savedSchedules = JSON.parse(localStorage.getItem('studySchedules') || '[]');
+            
+            function addSubject() {
+                const subjectItem = document.createElement('div');
+                subjectItem.className = 'subject-item';
+                subjectItem.innerHTML = `
+                    <input type="text" placeholder="Subject Name" class="subject-name">
+                    <input type="date" class="target-date">
+                    <select class="difficulty-level">
+                        <option value="easy">Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                    <select class="priority-level">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                    <button class="remove-subject-btn" onclick="removeSubject(this)">×</button>
+                `;
+                subjectList.appendChild(subjectItem);
+            }
+            
+            function removeSubject(button) {
+                button.parentElement.remove();
+            }
+            
+            function generateSchedule() {
+                // Collect subject data
+                subjects = [];
+                const subjectItems = subjectList.querySelectorAll('.subject-item');
+                
+                subjectItems.forEach(item => {
+                    const name = item.querySelector('.subject-name').value.trim();
+                    const targetDate = item.querySelector('.target-date').value;
+                    const difficulty = item.querySelector('.difficulty-level').value;
+                    const priority = item.querySelector('.priority-level').value;
+                    
+                    if (name && targetDate) {
+                        subjects.push({
+                            name,
+                            targetDate: new Date(targetDate),
+                            difficulty,
+                            priority
+                        });
+                    }
+                });
+                
+                if (subjects.length === 0) {
+                    alert('Please add at least one subject with a target date.');
+                    return;
+                }
+                
+                const hoursPerDay = parseFloat(availableHours.value) || 6;
+                const bufferPercent = parseFloat(bufferDays.value) || 10;
+                const startTime = studyStartTime.value || '09:00';
+                
+                // Calculate schedule
+                generatedSchedule = calculateStudySchedule(subjects, hoursPerDay, bufferPercent, startTime);
+                displaySchedule(generatedSchedule);
+            }
+            
+            function calculateStudySchedule(subjects, hoursPerDay, bufferPercent, startTime) {
+                const today = new Date();
+                const schedule = {};
+                
+                // Calculate total study time needed for each subject
+                const subjectStudyTime = subjects.map(subject => {
+                    const daysUntilDeadline = Math.ceil((subject.targetDate - today) / (1000 * 60 * 60 * 24));
+                    const totalDays = Math.max(1, daysUntilDeadline);
+                    const bufferDays = Math.ceil(totalDays * bufferPercent / 100);
+                    const availableDays = Math.max(1, totalDays - bufferDays);
+                    
+                    // Calculate hours needed based on difficulty and priority
+                    let baseHours = totalDays * 2; // Base 2 hours per day
+                    if (subject.difficulty === 'hard') baseHours *= 1.5;
+                    if (subject.difficulty === 'easy') baseHours *= 0.7;
+                    if (subject.priority === 'high') baseHours *= 1.3;
+                    if (subject.priority === 'low') baseHours *= 0.8;
+                    
+                    const hoursPerDayForSubject = Math.min(hoursPerDay, baseHours / availableDays);
+                    
+                    return {
+                        ...subject,
+                        totalHours: baseHours,
+                        hoursPerDay: hoursPerDayForSubject,
+                        availableDays,
+                        totalDays
+                    };
+                });
+                
+                // Generate day-by-day schedule
+                let currentDate = new Date(today);
+                let sessionCount = 0;
+                
+                while (currentDate <= Math.max(...subjects.map(s => s.targetDate))) {
+                    const dateStr = currentDate.toISOString().split('T')[0];
+                    schedule[dateStr] = [];
+                    
+                    let dayHoursUsed = 0;
+                    const maxDayHours = hoursPerDay;
+                    
+                    // Distribute subjects for this day
+                    subjectStudyTime.forEach(subject => {
+                        if (dayHoursUsed >= maxDayHours) return;
+                        if (currentDate > subject.targetDate) return;
+                        
+                        const hoursForSubject = Math.min(
+                            subject.hoursPerDay,
+                            maxDayHours - dayHoursUsed
+                        );
+                        
+                        if (hoursForSubject > 0) {
+                            const sessions = generatePomodoroSessions(
+                                hoursForSubject,
+                                parseFloat(workDuration.value) || 25,
+                                parseFloat(breakDuration.value) || 5,
+                                parseFloat(longBreak.value) || 15,
+                                parseInt(sessionsBeforeLongBreak.value) || 4,
+                                startTime,
+                                dayHoursUsed
+                            );
+                            
+                            schedule[dateStr].push({
+                                subject: subject.name,
+                                sessions: sessions,
+                                totalHours: hoursForSubject
+                            });
+                            
+                            dayHoursUsed += hoursForSubject;
+                        }
+                    });
+                    
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+                
+                return {
+                    subjects: subjectStudyTime,
+                    schedule,
+                    totalDays: Object.keys(schedule).length,
+                    totalHours: subjectStudyTime.reduce((sum, s) => sum + s.totalHours, 0)
+                };
+            }
+            
+            function generatePomodoroSessions(totalHours, workDuration, breakDuration, longBreakDuration, sessionsBeforeLongBreak, startTime, dayOffset) {
+                const sessions = [];
+                const workMinutes = workDuration;
+                const breakMinutes = breakDuration;
+                const longBreakMinutes = longBreakDuration;
+                
+                let currentTime = addMinutesToTime(startTime, dayOffset * 60);
+                let sessionCount = 0;
+                let remainingMinutes = totalHours * 60;
+                
+                while (remainingMinutes > 0) {
+                    const sessionMinutes = Math.min(workMinutes, remainingMinutes);
+                    
+                    sessions.push({
+                        type: 'study',
+                        duration: sessionMinutes,
+                        startTime: currentTime,
+                        endTime: addMinutesToTime(currentTime, sessionMinutes)
+                    });
+                    
+                    remainingMinutes -= sessionMinutes;
+                    currentTime = addMinutesToTime(currentTime, sessionMinutes);
+                    sessionCount++;
+                    
+                    if (remainingMinutes <= 0) break;
+                    
+                    // Add break
+                    const breakMinutesToAdd = sessionCount % sessionsBeforeLongBreak === 0 ? longBreakMinutes : breakMinutes;
+                    sessions.push({
+                        type: 'break',
+                        duration: breakMinutesToAdd,
+                        startTime: currentTime,
+                        endTime: addMinutesToTime(currentTime, breakMinutesToAdd)
+                    });
+                    
+                    currentTime = addMinutesToTime(currentTime, breakMinutesToAdd);
+                }
+                
+                return sessions;
+            }
+            
+            function addMinutesToTime(timeStr, minutes) {
+                const [hours, mins] = timeStr.split(':').map(Number);
+                const totalMinutes = hours * 60 + mins + minutes;
+                const newHours = Math.floor(totalMinutes / 60);
+                const newMins = totalMinutes % 60;
+                return `${newHours.toString().padStart(2, '0')}:${newMins.toString().padStart(2, '0')}`;
+            }
+            
+            function displaySchedule(schedule) {
+                scheduleResults.style.display = 'block';
+                
+                // Display summary
+                scheduleSummary.innerHTML = `
+                    <div class="summary-item">
+                        <div class="summary-value">${schedule.totalDays}</div>
+                        <div class="summary-label">Study Days</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">${schedule.totalHours.toFixed(1)}h</div>
+                        <div class="summary-label">Total Hours</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">${schedule.subjects.length}</div>
+                        <div class="summary-label">Subjects</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">${(schedule.totalHours / schedule.totalDays).toFixed(1)}h</div>
+                        <div class="summary-label">Avg Hours/Day</div>
+                    </div>
+                `;
+                
+                // Display timetable
+                timetable.innerHTML = '';
+                Object.keys(schedule.schedule).forEach(dateStr => {
+                    const daySchedule = schedule.schedule[dateStr];
+                    if (daySchedule.length === 0) return;
+                    
+                    const date = new Date(dateStr);
+                    const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+                    const dateFormatted = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'day-schedule';
+                    dayElement.innerHTML = `
+                        <div class="day-header">${dayName}, ${dateFormatted}</div>
+                        <div class="session-list">
+                            ${daySchedule.map(subjectSchedule => `
+                                ${subjectSchedule.sessions.map(session => `
+                                    <div class="session-item">
+                                        <div class="session-time">${session.startTime} - ${session.endTime}</div>
+                                        <div class="session-subject">${subjectSchedule.subject}</div>
+                                        <div class="session-duration">${session.duration} min</div>
+                                        <div class="session-type ${session.type}">${session.type}</div>
+                                    </div>
+                                `).join('')}
+                            `).join('')}
+                        </div>
+                    `;
+                    timetable.appendChild(dayElement);
+                });
+                
+                // Display progress tracker
+                progressList.innerHTML = '';
+                schedule.subjects.forEach(subject => {
+                    const progressItem = document.createElement('div');
+                    progressItem.className = 'progress-item';
+                    progressItem.innerHTML = `
+                        <div>
+                            <input type="checkbox" class="progress-checkbox" onchange="updateProgress(this)">
+                            <span>${subject.name} - ${subject.totalHours.toFixed(1)}h</span>
+                        </div>
+                        <div>${subject.targetDate.toLocaleDateString()}</div>
+                    `;
+                    progressList.appendChild(progressItem);
+                });
+            }
+            
+            function updateProgress(checkbox) {
+                // Save progress to localStorage
+                const progress = JSON.parse(localStorage.getItem('studyProgress') || '{}');
+                const subjectName = checkbox.parentElement.textContent.split(' - ')[0].trim();
+                progress[subjectName] = checkbox.checked;
+                localStorage.setItem('studyProgress', JSON.stringify(progress));
+            }
+            
+            function saveSchedule() {
+                if (!generatedSchedule) {
+                    alert('Please generate a schedule first.');
+                    return;
+                }
+                
+                const scheduleName = prompt('Enter a name for this schedule:');
+                if (!scheduleName) return;
+                
+                const scheduleToSave = {
+                    name: scheduleName,
+                    schedule: generatedSchedule,
+                    timestamp: Date.now()
+                };
+                
+                savedSchedules.unshift(scheduleToSave);
+                savedSchedules = savedSchedules.slice(0, 10); // Keep only last 10
+                localStorage.setItem('studySchedules', JSON.stringify(savedSchedules));
+                
+                alert('Schedule saved successfully!');
+            }
+            
+            function exportICS() {
+                if (!generatedSchedule) {
+                    alert('Please generate a schedule first.');
+                    return;
+                }
+                
+                let icsContent = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Study Time Calculator//EN\n';
+                
+                Object.keys(generatedSchedule.schedule).forEach(dateStr => {
+                    const daySchedule = generatedSchedule.schedule[dateStr];
+                    daySchedule.forEach(subjectSchedule => {
+                        subjectSchedule.sessions.forEach(session => {
+                            const startDateTime = `${dateStr.replace(/-/g, '')}T${session.startTime.replace(':', '')}00`;
+                            const endDateTime = `${dateStr.replace(/-/g, '')}T${session.endTime.replace(':', '')}00`;
+                            
+                            icsContent += `BEGIN:VEVENT\n`;
+                            icsContent += `DTSTART:${startDateTime}\n`;
+                            icsContent += `DTEND:${endDateTime}\n`;
+                            icsContent += `SUMMARY:${subjectSchedule.subject} - ${session.type}\n`;
+                            icsContent += `DESCRIPTION:Study session for ${subjectSchedule.subject}\n`;
+                            icsContent += `END:VEVENT\n`;
+                        });
+                    });
+                });
+                
+                icsContent += 'END:VCALENDAR';
+                
+                const blob = new Blob([icsContent], { type: 'text/calendar' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'study-schedule.ics';
+                link.click();
+                URL.revokeObjectURL(url);
+            }
+            
+            function enableReminders() {
+                if ('Notification' in window) {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === 'granted') {
+                            alert('Reminders enabled! You will receive notifications for your study sessions.');
+                        } else {
+                            alert('Reminder notifications were not enabled.');
+                        }
+                    });
+                } else {
+                    alert('Your browser does not support notifications.');
+                }
+            }
+            
+            function printSchedule() {
+                if (!generatedSchedule) {
+                    alert('Please generate a schedule first.');
+                    return;
+                }
+                
+                window.print();
+            }
+            
+            // Make functions globally available
+            window.addSubject = addSubject;
+            window.removeSubject = removeSubject;
+            window.generateSchedule = generateSchedule;
+            window.saveSchedule = saveSchedule;
+            window.exportICS = exportICS;
+            window.enableReminders = enableReminders;
+            window.printSchedule = printSchedule;
+            window.updateProgress = updateProgress;
+            
+            // Initialize with one subject
+            addSubject();
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

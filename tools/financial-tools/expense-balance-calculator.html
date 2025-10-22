@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Expense Balance Calculator | EveryTool.tech</title>
+
+    <meta name="description" content="Track your budget, add expenses, see live remaining balance, and visualize spending with a doughnut chart. Supports multiple currencies and keyboard shortcuts.">
+    <meta name="keywords" content="expense tracker, budget calculator, balance, currency, chart, accessibility">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="Expense Balance Calculator | EveryTool.tech">
+    <meta property="og:description" content="Add expenses, watch live totals and remaining balance, and visualize spending with a doughnut chart.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/expense-balance-calculator">
+
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+
+    <style>
+        /* Ensure header space while it loads */
+        #header-placeholder { min-height: 130px; position: relative; z-index: 2000; }
+        @media (max-width: 768px) { #header-placeholder { min-height: 64px; } }
+
+        .expense-grid {
+            display: grid;
+            grid-template-columns: 160px 1fr 40px;
+            gap: 10px;
+            align-items: center;
+        }
+        .expense-row { display: contents; }
+        .expense-input { width: 100%; padding: 0.6rem 0.75rem; border: 2px solid var(--bg-accent); border-radius: var(--radius-md); font-size: 1rem; }
+        .expense-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-lighter); }
+        .remove-btn { background: #ef4444; color: #fff; border: none; border-radius: var(--radius-md); cursor: pointer; padding: 0.55rem; }
+        .remove-btn:hover { background: #dc2626; transform: translateY(-1px); }
+        /* Controls: use grid for stable alignment */
+        .controls-bar { display: grid; grid-template-columns: minmax(180px,220px) minmax(260px, 1fr) auto auto 1fr; gap: 16px; align-items: end; }
+        .controls-bar > * { align-self: end; }
+        /* Make form controls and buttons align consistently */
+        .controls-bar .tool-display__button { align-self: end; }
+        #kbd-hint { align-self: end; margin-bottom: 4px; }
+        .stat-badges { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .badge { padding: 0.5rem 0.75rem; border-radius: var(--radius-md); background: var(--bg-accent); font-weight: 600; }
+        .badge--ok { color: #065f46; background: #ecfdf5; border: 1px solid #a7f3d0; }
+        .badge--warn { color: #991b1b; background: #fef2f2; border: 1px solid #fecaca; }
+        .visually-hidden { position: absolute !important; height: 1px; width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px); white-space: nowrap; }
+        .chart-wrap { width: 100%; max-width: 560px; margin: 0 auto; }
+        .helper { color: var(--text-secondary); font-size: 0.8rem; }
+        /* Normalize select appearance/height across browsers */
+        select.tool-display__input { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: none; line-height: 1.2; }
+        /* Button placement below the grid */
+        #expense-grid { margin-bottom: 12px; }
+        #add-row-bottom { margin-top: 4px; justify-self: start; }
+
+        @media (max-width: 1024px) {
+            .controls-bar { grid-template-columns: 1fr 1fr auto auto; }
+        }
+
+        @media (max-width: 768px) {
+            .controls-bar { grid-template-columns: 1fr; }
+            #kbd-hint { margin-top: -6px; }
+        }
+
+        @media (max-width: 640px) {
+            .expense-grid { grid-template-columns: 1fr; }
+            .expense-row { display: grid; grid-template-columns: 1fr; gap: 10px; }
+            /* Make Add Another button full-width on small screens */
+            #add-row-bottom { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+
+<body data-tool-name="Expense Balance Calculator" data-meta-description="Budget your total, add expenses, and see remaining balance with a live chart.">
+
+    <div id="header-placeholder"></div>
+
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Expense Balance Calculator</h1>
+                    <p class="tool-hero__description">Set your budget, add expenses, and track your remaining balance with live updates and a doughnut chart. Accessible, responsive, and supports multiple currencies.</p>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary"><i class="fas fa-play"></i> Start Tracking</a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary"><i class="fas fa-book"></i> Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Budget & Expenses</h2>
+                    <p class="tool-display__description">Choose a currency, set your total amount, and add expenses. Press Ctrl+X to quickly add a row and focus the name field.</p>
+                </div>
+
+                <div class="tool-display__content">
+                    <div class="controls-bar" aria-label="Budget controls">
+                        <div class="tool-display__input-group" style="min-width:160px">
+                            <label for="currency" class="tool-display__label">Currency</label>
+                            <select id="currency" class="tool-display__input" aria-label="Currency selector">
+                                <option value="USD" selected>USD — $</option>
+                                <option value="EUR">EUR — €</option>
+                                <option value="GBP">GBP — £</option>
+                                <option value="INR">INR — ₹</option>
+                                <option value="JPY">JPY — ¥</option>
+                                <option value="AUD">AUD — A$</option>
+                                <option value="CAD">CAD — C$</option>
+                            </select>
+                        </div>
+
+                        <div class="tool-display__input-group" style="min-width:220px">
+                            <label for="total-amount" class="tool-display__label">Total Amount</label>
+                            <input id="total-amount" class="tool-display__input" type="number" step="0.01" min="0" placeholder="Sets your budget." aria-label="Total budget amount">
+                        </div>
+                    </div>
+
+                    <div class="stat-badges" role="group" aria-label="Budget status">
+                        <span id="total-expenses-badge" class="badge" aria-live="polite">Total Expenses: 0</span>
+                        <span id="remaining-badge" class="badge badge--ok" aria-live="assertive">Remaining: 0</span>
+                    </div>
+
+                    <div class="tool-display__input-group">
+                        <label class="tool-display__label">Expenses</label>
+                        <div id="expense-grid" class="expense-grid" role="table" aria-label="Expense rows table">
+                            <!-- Header (visually hidden for screen-readers context) -->
+                            <span class="visually-hidden" role="columnheader">Amount</span>
+                            <span class="visually-hidden" role="columnheader">Name</span>
+                            <span class="visually-hidden" role="columnheader">Remove</span>
+                        </div>
+                        <button id="add-row-bottom" class="tool-display__button" aria-label="Add another expense"><i class="fas fa-plus"></i> Add Expense</button>
+                        <button id="reset" class="tool-display__button tool-display__button--secondary" aria-label="Reset all"><i class="fas fa-rotate-left"></i> Reset</button>
+                        <span id="kbd-hint" class="helper">Shortcut: Ctrl+X to add a row</span>
+                    </div>
+
+                    <div class="tool-display__output-section">
+                        <div class="chart-wrap">
+                            <canvas id="expense-chart" aria-label="Expense distribution chart" role="img"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div aria-live="polite" class="visually-hidden" id="live-region"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">How to Use the Expense Balance Calculator</h2>
+                <p class="tool-blog__subtitle">Add your total budget, then list expenses. The remaining balance and chart update instantly. Use the currency selector to format values.</p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Features</h3>
+                    <div class="blog-section__content">
+                        <ul>
+                            <li><strong>Multiple currencies</strong> via Intl.NumberFormat.</li>
+                            <li><strong>Live totals</strong> as you type.</li>
+                            <li><strong>Overspend warning</strong> when remaining is negative.</li>
+                            <li><strong>Keyboard shortcut</strong>: Ctrl+X adds a new row and focuses the name.</li>
+                            <li><strong>Doughnut chart</strong> shows distribution by expense name.</li>
+                            <li><strong>Accessible</strong> inputs and ARIA live announcements.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Why Track Your Expenses?</h3>
+                    <div class="blog-section__content">
+                        <p>Most people don’t overspend because they lack discipline—they overspend because they lack visibility. When you can see your budget, your planned expenses, and your remaining balance in one place, decisions become easier. The Expense Balance Calculator is designed to give you that clarity in seconds. Whether you’re managing a monthly household budget, a vacation fund, or a short-term project, a quick log of your outflows reveals patterns, highlights excess, and helps you prioritize what truly matters.</p>
+                        <p>Unlike a full bookkeeping system, this calculator focuses on speed and feedback. You enter a total amount, add line items as you spend or plan to spend, and watch your remaining balance update instantly. The accompanying chart breaks down your spending by category name so you can see where most of your money goes at a glance. That combination—immediacy plus visual context—turns a simple list into an actionable plan.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">How the Calculator Works</h3>
+                    <div class="blog-section__content">
+                        <p>The workflow is intentionally minimal: choose a currency, set your <em>Total Amount</em> (your budget), then add expenses. Every row contains an amount and a name, such as “Rent,” “Groceries,” or “Subscriptions.” The calculator sums your expenses and subtracts them from your total to produce your <strong>Remaining</strong> budget. If you dip below zero, a warning badge appears so you can adjust immediately.</p>
+                        <p>Behind the scenes, the tool formats numbers using the internationalization API, ensuring the display matches your selected currency. The chart updates live as you type, allocating a slice to each named expense. If you remove or rename a row, the chart follows suit. The goal is to keep mental overhead low and feedback high, so you can experiment freely and find a plan that fits.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Step‑by‑Step: Build Your First Budget</h3>
+                    <div class="blog-section__content">
+                        <ol>
+                            <li>Pick the <strong>currency</strong> you’d like to use. You can switch at any time.</li>
+                            <li>Enter your <strong>Total Amount</strong>—for example, your monthly take‑home pay or the size of a specific budget (e.g., a $1,500 trip).</li>
+                            <li>Click <strong>Add Expense</strong> (or press <strong>Ctrl+X</strong>) and log your first item. Start with fixed costs such as rent, insurance, or loan payments.</li>
+                            <li>Add variable categories—groceries, dining, fuel, entertainment. If you don’t know exact numbers yet, add estimates; you can refine them over time.</li>
+                            <li>Watch the <strong>Remaining</strong> badge as you enter items. If it turns negative, trim lower‑priority categories until you’re back in the green.</li>
+                            <li>Use the chart to spot heavy spenders. A single category taking half the donut is a prompt to renegotiate, replace, or reduce.</li>
+                            <li>Revisit the list weekly. Small tweaks compound into big improvements over a month or two.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Practical Budgeting Strategies</h3>
+                    <div class="blog-section__content">
+                        <p><strong>1. Give Every Dollar a Job.</strong> After entering your budget, assign each dollar to a purpose—even if that purpose is “buffer.” Unassigned money tends to disappear into impulse purchases. The calculator’s Remaining badge makes it obvious when cash is idle; allocate it to savings or a future category.</p>
+                        <p><strong>2. Separate Needs from Wants.</strong> Mark necessary items first (housing, utilities, groceries) and only then add flexible categories. If Remaining is tight, scale back wants before touching needs.</p>
+                        <p><strong>3. Budget for Non‑Monthly Costs.</strong> Yearly expenses like car registration or software renewals can wreck a month if you forget them. Add a category called “Annuals” and divide the yearly sum by 12. Treat that as a monthly expense so you’re always prepared.</p>
+                        <p><strong>4. Track in Real Time.</strong> Add expenses as you go, not just at month end. The faster you see the effect, the quicker you course‑correct.</p>
+                        <p><strong>5. Iterate, Don’t Judge.</strong> Budgets are living documents. Use this tool to explore scenarios—"What if I cancel this subscription?" or "What if groceries are $50 less?" Curiosity beats guilt every time.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Reading the Doughnut Chart</h3>
+                    <div class="blog-section__content">
+                        <p>The chart is a quick audit of where your money is headed. Larger slices indicate outsized categories that may deserve scrutiny. Rename your lines with meaningful labels—specific names like “Streaming Bundles” or “Work Lunches” make patterns clearer than a generic “Miscellaneous.” If two or three slices dominate the chart, you’ve found your leverage points: small changes there can unlock the most remaining budget.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Privacy, Portability, and Accessibility</h3>
+                    <div class="blog-section__content">
+                        <p>All calculations happen in your browser; nothing is uploaded when you use this page. You can refresh, reset, and start over without creating an account. The interface supports keyboard navigation, ARIA live regions for critical feedback, and clear focus states for inputs and buttons. If accessibility is part of your workflow, the calculator is built to help, not hinder.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Pro Tips</h3>
+                    <div class="blog-section__content">
+                        <ul>
+                            <li>Use <strong>Ctrl+X</strong> to add a new line fast and keep your hands on the keyboard.</li>
+                            <li>Group similar items under one label first, then split them once you learn your typical amounts.</li>
+                            <li>Give categories <em>verbs</em> when possible—“Save for Trip,” “Build Emergency Fund”—to reinforce intent.</li>
+                            <li>End each session by checking the Remaining badge and deciding one next action (reduce, remove, or re‑assign).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Find quick answers to common questions about our Expense Balance Calculator</p>
+            </div>
+            <div class="faq-list">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I use the Expense Balance Calculator?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>It's easy! Enter your total amount, select your currency, and add expenses. The tool will instantly show you the total expenses and the remaining balance. The results update in real-time as you type.</p>
+                    </div>
+                </div>
+                <!-- FAQ Item 2 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I save or export my budget and expenses?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Currently, the calculator does not support saving or exporting data directly. For privacy, all calculations happen in your browser and are not stored. You can take a screenshot or copy your data manually if you wish to save it elsewhere.</p>
+                    </div>
+                </div>
+                <!-- FAQ Item 3 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is my data private and secure when using this tool?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! All calculations and data entry happen locally in your browser. Nothing is uploaded or stored on any server, ensuring your privacy and security.</p>
+                    </div>
+                </div>
+                <!-- FAQ Item 4 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What do I do if my remaining balance is negative?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>If your remaining balance turns negative, it means your expenses exceed your total amount. Review your expense categories and adjust or remove lower-priority items until your balance is back in the positive.</p>
+                    </div>
+                </div>
+                <!-- FAQ Item 5 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I use this calculator for currencies other than USD?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! You can select from a variety of currencies using the currency dropdown. The calculator will format all amounts according to your chosen currency.</p>
+                    </div>
+                </div>
+                <!-- FAQ Item 6 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I add, edit, or remove expense categories?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To add a new expense, click the "Add Expense" button or press <strong>Ctrl+X</strong>. To edit, simply change the name or amount in the list. To remove an expense, click the trash icon next to the item you want to delete.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- FAQ and utility scripts -->
+    <script src="../FAQ section/faq.js" defer></script>
+    <script>
+      // Load universal header/footer only on http(s) to avoid CORS in file:// previews
+      (function(){
+        if (location.protocol === 'http:' || location.protocol === 'https:') {
+          var s = document.createElement('script');
+          s.src = '../universal-search-deploy.js';
+          s.defer = true;
+          document.currentScript.parentNode.insertBefore(s, document.currentScript.nextSibling);
+        }
+      })();
+    </script>
+    <!-- Chart.js for doughnut chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <script>
+    (function() {
+        const currencyEl = document.getElementById('currency');
+        const totalAmountEl = document.getElementById('total-amount');
+        const expenseGrid = document.getElementById('expense-grid');
+        const addRowButtons = [document.getElementById('add-row'), document.getElementById('add-row-bottom')];
+        const resetBtn = document.getElementById('reset');
+        const totalExpensesBadge = document.getElementById('total-expenses-badge');
+        const remainingBadge = document.getElementById('remaining-badge');
+        const liveRegion = document.getElementById('live-region');
+
+        let formatter = new Intl.NumberFormat(undefined, { style: 'currency', currency: currencyEl.value, maximumFractionDigits: 2 });
+
+        function setCurrencyFormatter(code) {
+            try {
+                formatter = new Intl.NumberFormat(undefined, { style: 'currency', currency: code, maximumFractionDigits: 2 });
+            } catch (e) {
+                formatter = new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 2 });
+            }
+        }
+
+        function parseAmount(value) {
+            const n = parseFloat(value);
+            return Number.isFinite(n) ? n : 0;
+        }
+
+        function announce(message) {
+            liveRegion.textContent = message;
+        }
+
+        function createRow(amount = '', name = '') {
+            const row = document.createElement('div');
+            row.className = 'expense-row';
+            row.setAttribute('role', 'row');
+
+            const amountInput = document.createElement('input');
+            amountInput.type = 'number';
+            amountInput.inputMode = 'decimal';
+            amountInput.step = '0.01';
+            amountInput.min = '0';
+            amountInput.placeholder = '0.00';
+            amountInput.className = 'expense-input';
+            amountInput.setAttribute('aria-label', 'Expense amount');
+            amountInput.value = amount;
+
+            const nameInput = document.createElement('input');
+            nameInput.type = 'text';
+            nameInput.placeholder = 'Expense name (e.g., Groceries)';
+            nameInput.className = 'expense-input';
+            nameInput.setAttribute('aria-label', 'Expense name');
+            nameInput.value = name;
+
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'remove-btn';
+            removeBtn.setAttribute('aria-label', 'Remove this expense');
+            removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+
+            removeBtn.addEventListener('click', () => {
+                row.remove();
+                updateTotals();
+                updateChart();
+                announce('Expense removed.');
+            });
+
+            amountInput.addEventListener('input', () => { updateTotals(); updateChart(); });
+            nameInput.addEventListener('input', () => { updateTotals(); updateChart(); });
+
+            row.appendChild(amountInput);
+            row.appendChild(nameInput);
+            row.appendChild(removeBtn);
+
+            expenseGrid.appendChild(row);
+            return { row, amountInput, nameInput };
+        }
+
+        function getRowsData() {
+            const rows = Array.from(expenseGrid.querySelectorAll('.expense-row'));
+            return rows.map(row => {
+                const inputs = row.querySelectorAll('input');
+                return { amount: parseAmount(inputs[0]?.value || '0'), name: (inputs[1]?.value || '').trim() || 'Unnamed' };
+            });
+        }
+
+        function sumExpenses() {
+            return getRowsData().reduce((sum, r) => sum + (r.amount || 0), 0);
+        }
+
+        function updateBadges(totalExpenses, remaining) {
+            totalExpensesBadge.textContent = `Total Expenses: ${formatter.format(totalExpenses)}`;
+            remainingBadge.textContent = `Remaining: ${formatter.format(remaining)}`;
+            if (remaining < 0) {
+                remainingBadge.classList.remove('badge--ok');
+                remainingBadge.classList.add('badge--warn');
+                announce('Warning: You have overspent your budget.');
+            } else {
+                remainingBadge.classList.remove('badge--warn');
+                remainingBadge.classList.add('badge--ok');
+            }
+        }
+
+        function updateTotals() {
+            const totalBudget = parseAmount(totalAmountEl.value);
+            const total = sumExpenses();
+            const remaining = totalBudget - total;
+            updateBadges(total, remaining);
+        }
+
+        // Chart.js setup
+        const chartCtx = document.getElementById('expense-chart').getContext('2d');
+        const chart = new Chart(chartCtx, {
+            type: 'doughnut',
+            data: { labels: [], datasets: [{ data: [], backgroundColor: [], borderWidth: 1 }] },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${formatter.format(ctx.parsed)}` } },
+                    title: { display: false }
+                },
+                animation: { duration: 200 }
+            }
+        });
+
+        function randomColor(idx) {
+            const palette = [
+                '#4361EE','#7209B7','#F72585','#3A86FF','#FF006E','#8338EC','#FB5607','#FFBE0B',
+                '#06D6A0','#118AB2','#EF476F','#FFD166'
+            ];
+            return palette[idx % palette.length];
+        }
+
+        function updateChart() {
+            const data = getRowsData().filter(r => r.amount > 0);
+            chart.data.labels = data.map(d => d.name);
+            chart.data.datasets[0].data = data.map(d => d.amount);
+            chart.data.datasets[0].backgroundColor = data.map((_, i) => randomColor(i));
+            chart.update();
+        }
+
+        // Event wiring
+        currencyEl.addEventListener('change', () => {
+            setCurrencyFormatter(currencyEl.value);
+            updateTotals();
+            updateChart();
+            announce('Currency changed to ' + currencyEl.value + '.');
+        });
+
+        totalAmountEl.addEventListener('input', () => { updateTotals(); });
+
+        addRowButtons.forEach(btn => btn.addEventListener('click', () => {
+            const { nameInput } = createRow('', '');
+            nameInput.focus();
+            updateTotals();
+            updateChart();
+            announce('Expense row added.');
+        }));
+
+        resetBtn.addEventListener('click', () => {
+            totalAmountEl.value = '';
+            Array.from(expenseGrid.querySelectorAll('.expense-row')).forEach(r => r.remove());
+            createRow();
+            updateTotals();
+            updateChart();
+            announce('All inputs cleared.');
+        });
+
+        // Keyboard shortcut: Ctrl+X adds a row and focuses name
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'x' || e.key === 'X')) {
+                e.preventDefault();
+                const { nameInput } = createRow('', '');
+                nameInput.focus();
+                updateTotals();
+                updateChart();
+                announce('Expense row added with keyboard.');
+            }
+        });
+
+        // Initialize with one blank row
+        createRow();
+        updateTotals();
+        updateChart();
+    })();
+    </script>
+
+</body>
+</html>
+
+

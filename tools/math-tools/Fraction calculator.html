@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraction Calculator | Add, Subtract, Multiply & Divide Fractions | EveryTool.tech</title>
+    <meta name="description" content="Effortlessly add, subtract, multiply, and divide fractions with our free online calculator. Supports proper, improper, and mixed numbers, providing a fully simplified result and a detailed breakdown of every step.">
+    <meta name="keywords" content="fraction calculator, add fractions, subtract fractions, multiply fractions, divide fractions, simplify fractions, mixed number calculator">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Fraction Calculator | EveryTool.tech">
+    <meta property="og:description" content="Effortlessly add, subtract, multiply, and divide fractions with our free online calculator. Supports proper, improper, and mixed numbers, providing a fully simplified result and a detailed breakdown of every step.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/fraction-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    <!-- START: CRITICAL STYLE FOR HEADER -->
+    <style>
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+        /* Fraction Calculator Specific Styles */
+        .fraction-calc-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .fraction-input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .fraction-input-group input {
+            width: 60px;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.2rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .fraction-part {
+            display: inline-block;
+            text-align: center;
+        }
+        .fraction-part .numerator {
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+        }
+        .fraction-part .denominator {
+            padding-top: 5px;
+        }
+        .operation-selector select {
+            padding: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #fraction-result-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+        }
+        .result-display {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .result-display h4 {
+            margin: 0 0 10px;
+            color: #555;
+        }
+        .result-mixed-number {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        .result-alternatives {
+            margin-top: 10px;
+            color: #666;
+        }
+        #step-by-step-solution {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            white-space: pre-wrap;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.6;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .fraction-calc-container { gap: 15px; }
+            .fraction-input-group input { font-size: 16px; padding: 8px; width: 56px; }
+            .operation-selector select { font-size: 1.2rem; padding: 10px; }
+            .result-mixed-number { font-size: 2.2rem; }
+            #fraction-result-section { padding: 15px; }
+        }
+
+        @media (max-width: 480px) {
+            .fraction-input-group { gap: 8px; }
+            .fraction-input-group input { width: 50px; padding: 6px; }
+            .operation-selector select { font-size: 1.1rem; padding: 8px; }
+            .result-mixed-number { font-size: 2rem; }
+        }
+    </style>
+    <!-- END: CRITICAL STYLE FOR HEADER -->
+
+</head>
+<body data-tool-name="Fraction Calculator" data-meta-description="A free online calculator for all your fraction operations. Easily add, subtract, multiply, divide, and simplify fractions with step-by-step results.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Fraction Calculator with Step-by-Step Solutions</h1>
+                    <p class="tool-hero__description">
+                        Effortlessly add, subtract, multiply, and divide fractions with our free online calculator. Supports proper, improper, and mixed numbers, providing a fully simplified result and a detailed breakdown of every step.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-list-ol"></i>
+                            <span>Step-by-Step Solutions</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas-calculator"></i>
+                            <span>Mixed Number Support</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-compress-arrows-alt"></i>
+                            <span>Automatic Simplification</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Decimal Conversion</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Fractions Now
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Fractions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">The Fraction Problem Solver</h2>
+                    <p class="tool-display__description">
+                        Enter your fractions, choose an operation, and get your answer.
+                    </p>
+                </div>
+                <!-- Fraction Calculator Custom Interface -->
+                <div class="fraction-calc-container">
+                    <!-- Fraction 1 -->
+                    <div class="fraction-input-group" id="fraction1">
+                        <input type="number" class="whole" placeholder="W" aria-label="Fraction 1 Whole Number">
+                        <div class="fraction-part">
+                            <input type="number" class="numerator" placeholder="N" aria-label="Fraction 1 Numerator">
+                            <div class="denominator">
+                                <input type="number" class="denominator" placeholder="D" aria-label="Fraction 1 Denominator">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Operation -->
+                    <div class="operation-selector">
+                        <select id="operation" aria-label="Mathematical Operation">
+                            <option value="add">+</option>
+                            <option value="subtract">−</option>
+                            <option value="multiply">×</option>
+                            <option value="divide">÷</option>
+                        </select>
+                    </div>
+                    <!-- Fraction 2 -->
+                    <div class="fraction-input-group" id="fraction2">
+                        <input type="number" class="whole" placeholder="W" aria-label="Fraction 2 Whole Number">
+                        <div class="fraction-part">
+                            <input type="number" class="numerator" placeholder="N" aria-label="Fraction 2 Numerator">
+                            <div class="denominator">
+                                <input type="number" class="denominator" placeholder="D" aria-label="Fraction 2 Denominator">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="tool-display__controls" style="margin-top: 20px;">
+                    <button id="calculate-btn" class="tool-display__button">
+                        <i class="fas fa-equals"></i>
+                        Calculate
+                    </button>
+                    <button id="reset-btn" class="tool-display__button tool-display__button--secondary">
+                        <i class="fas fa-redo"></i>
+                        Reset
+                    </button>
+                </div>
+                <div id="fraction-result-section" style="display: none;">
+                    <div class="result-display">
+                        <h4>Simplified Result:</h4>
+                        <div id="result-mixed-number" class="result-mixed-number"></div>
+                        <div id="result-alternatives" class="result-alternatives"></div>
+                    </div>
+                    <h4>Step-by-Step Solution:</h4>
+                    <pre id="step-by-step-solution"></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Mastering Fractions: A Comprehensive Guide</h2>
+                <p class="tool-blog__subtitle">
+                    From the basics to complex calculations, understand the "why" and "how" behind fraction arithmetic.
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Introduction: Why Fractions Still Matter</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            In our digital world of decimals and percentages, it's easy to think of fractions as a relic of primary school math. Yet, they are everywhere. From a recipe that calls for ¾ cup of flour to a mechanic using a 5/8 inch wrench, or a financial report showing a stock gained ½ a point, fractions provide a precise way to represent parts of a whole. Understanding how to work with them is a fundamental life skill. A <strong>fraction calculator</strong> is an invaluable tool, not just for getting quick answers, but for learning the logical processes behind the calculations.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">The Anatomy of a Fraction</h3>
+                    <div class="blog-section__content">
+                        <p>Before calculating, let's review the players:</p>
+                        <ul>
+                            <li><strong>Numerator:</strong> The top number. It tells you how many parts you have.</li>
+                            <li><strong>Denominator:</strong> The bottom number. It tells you how many parts the whole is divided into.</li>
+                            <li><strong>Proper Fraction:</strong> The numerator is smaller than the denominator (e.g., 2/3). It's less than one whole.</li>
+                            <li><strong>Improper Fraction:</strong> The numerator is larger than or equal to the denominator (e.g., 5/3). It's one whole or more.</li>
+                            <li><strong>Mixed Number:</strong> A combination of a whole number and a proper fraction (e.g., 1 ⅔). It's a more intuitive way to write an improper fraction. Our calculator handles all these types seamlessly.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Addition and Subtraction: The Quest for Common Ground</h3>
+                    <div class="blog-section__content">
+                        <p>You can't add or subtract fractions unless they're talking about the same-sized pieces. This is the core concept of the <strong>Lowest Common Denominator (LCD)</strong>. You can't add "halves" to "thirds" directly, just like you can't add apples and oranges. You must first convert them to a common unit, "sixths" in this case.</p>
+                        <p><strong>Example: 1/2 + 1/3</strong></p>
+                        <ol>
+                            <li><strong>Find the LCD:</strong> The smallest number that both 2 and 3 divide into is 6.</li>
+                            <li><strong>Convert the Fractions:</strong>
+                                <ul>
+                                    <li>To turn 1/2 into sixths, you multiply the denominator by 3, so you must also multiply the numerator by 3: 1/2 becomes 3/6.</li>
+                                    <li>To turn 1/3 into sixths, you multiply the denominator by 2, so you must also multiply the numerator by 2: 1/3 becomes 2/6.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Add the Numerators:</strong> Now that the denominators are the same, you just add the numerators: 3/6 + 2/6 = 5/6.</li>
+                        </ol>
+                        <p>Subtraction follows the exact same process. Our fraction calculator automates the tedious step of finding the LCD and provides a step-by-step breakdown of this conversion.</p>
+                    </div>
+                </div>
+                
+                 <div class="blog-section">
+                    <h3 class="blog-section__title">Multiplication: The Easiest Operation</h3>
+                    <div class="blog-section__content">
+                        <p>Multiplying fractions is refreshingly straightforward. There's no need for common denominators. You simply multiply the numerators together and the denominators together.</p>
+                         <p><strong>Example: 2/3 × 3/4</strong></p>
+                        <ul>
+                           <li>Multiply numerators: 2 × 3 = 6</li>
+                           <li>Multiply denominators: 3 × 4 = 12</li>
+                           <li>Result: 6/12</li>
+                        </ul>
+                        <p>The final, crucial step is to simplify the result. 6/12 can be reduced to 1/2. A good fraction calculator will always give you the answer in its simplest form.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Division: Keep, Change, Flip!</h3>
+                    <div class="blog-section__content">
+                        <p>Dividing by a fraction is the same as multiplying by its reciprocal. This leads to the famous mnemonic: "Keep, Change, Flip."</p>
+                        <p><strong>Example: 1/2 ÷ 1/4</strong></p>
+                        <ol>
+                            <li><strong>Keep:</strong> Keep the first fraction the same: 1/2.</li>
+                            <li><strong>Change:</strong> Change the division sign to multiplication: ×.</li>
+                            <li><strong>Flip:</strong> Flip the second fraction to find its reciprocal: 1/4 becomes 4/1.</li>
+                            <li><strong>Solve:</strong> Now you have a simple multiplication problem: 1/2 × 4/1 = 4/2.</li>
+                        </ol>
+                        <p>Finally, simplify the result. 4/2 simplifies to the whole number 2. The step-by-step solution in our calculator makes this process transparent and easy to follow.</p>
+                    </div>
+                </div>
+                
+                 <div class="blog-section">
+                    <h3 class="blog-section__title">Simplifying Fractions: Finding the Greatest Common Divisor</h3>
+                    <div class="blog-section__content">
+                        <p>A fraction is in its simplest form when the numerator and denominator have no common factors other than 1. To simplify a fraction like 12/18, you need to find the <strong>Greatest Common Divisor (GCD)</strong>—the largest number that divides evenly into both numbers.</p>
+                        <ul>
+                            <li>The divisors of 12 are 1, 2, 3, 4, 6, 12.</li>
+                            <li>The divisors of 18 are 1, 2, 3, 6, 9, 18.</li>
+                            <li>The greatest common divisor is 6.</li>
+                        </ul>
+                        <p>You then divide both the numerator and the denominator by the GCD:</p>
+                        <ul>
+                            <li>12 ÷ 6 = 2</li>
+                            <li>18 ÷ 6 = 3</li>
+                            <li>So, 12/18 simplifies to 2/3.</li>
+                        </ul>
+                         <p>This is often the most challenging step to do manually, especially with large numbers. Our fraction calculator uses an efficient algorithm (like the Euclidean algorithm) to find the GCD instantly and guarantee your result is always fully simplified.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Find quick answers to common questions about our fraction calculator</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I enter a mixed number like 3 ½?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our calculator has three input boxes for each fraction. You would enter `3` in the first (whole number) box, `1` in the top (numerator) box, and `2` in the bottom (denominator) box. If you're entering a simple fraction like ½, just leave the whole number box empty.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What does it mean to "simplify" a fraction?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Simplifying (or reducing) a fraction means to express it in its most compact form. This is done by dividing both the numerator and the denominator by their Greatest Common Divisor (GCD). For example, 2/4 is simplified to 1/2 because the GCD of 2 and 4 is 2. Our calculator does this automatically.</p>
+                    </div>
+                </div>
+                
+                 <div class="faq-item">
+                    <div class="faq-question">
+                        Why do I need a "common denominator" to add or subtract?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can only add or subtract things that are of the same type. A common denominator ensures that all the fractional "pieces" you are working with are the same size. For example, you can't add 1/2 and 1/3 directly, but by converting them to 3/6 and 2/6, you are now adding pieces of the same size ("sixths").</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can this calculator handle improper fractions?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. To enter an improper fraction like 5/3, simply leave the whole number box empty, enter `5` in the numerator box, and `3` in the denominator box. The calculator works perfectly with proper, improper, and mixed fractions.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Why is the step-by-step solution useful?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The step-by-step solution is an excellent learning tool. Instead of just giving you the final answer, it shows you *how* that answer was reached. It breaks down complex processes like finding a common denominator or simplifying the result, helping you to understand the concepts so you can solve problems on your own.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+    <div id="footer-placeholder"></div>
+    <script src="../scripts/footer.js" defer></script>
+
+    <!-- CRITICAL: Universal Search Script - DO NOT REMOVE -->
+    <script src="/universal-search-deploy.js"></script>
+    
+    <!-- External scripts can be loaded at the end -->
+    <script src="../../faq.js" defer></script>
+    <script src="../../view.js" defer></script>
+    <script src="../scripts/page-loader.js" defer></script>
+    <script src="../scripts/fraction-calculator.js" defer></script>
+    <script src="../FAQ section/faq.js" defer></script>
+</body>
+</html>

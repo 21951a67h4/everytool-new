@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games Hub - Play Free Online Games | EveryTool.tech</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+</head>
+<body>
+
+    <!-- Dynamic Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Hero Section with Animated Background -->
+    <section class="hero">
+        <div class="hero__particles"></div>
+        <div class="hero__content">
+            <div class="hero__badge">
+                <i class="fas fa-gamepad"></i>
+                <span>100% Free Games</span>
+            </div>
+            <h1 class="hero__title">
+                Let's Play Some
+                <span class="hero__title--gradient">Amazing Games</span>
+            </h1>
+            <p class="hero__subtitle">
+                No downloads. No sign-ups. Just pure gaming fun in your browser.
+            </p>
+            <div class="hero__stats">
+                <div class="hero__stat">
+                    <div class="hero__stat-number" id="total-games">9</div>
+                    <div class="hero__stat-label">Games Available</div>
+                </div>
+                <div class="hero__stat">
+                        <div class="hero__stat-number" id="categories-count">3</div>
+                    <div class="hero__stat-label">Categories</div>
+                </div>
+                <div class="hero__stat">
+                    <div class="hero__stat-number">100%</div>
+                    <div class="hero__stat-label">Free Forever</div>
+                </div>
+            </div>
+            <div class="hero__actions">
+                <a href="#games-section" class="hero__cta">
+                    <span>Start Playing</span>
+                    <i class="fas fa-arrow-down"></i>
+                </a>
+                <button id="theme-toggle" class="hero__toggle" aria-pressed="false" aria-label="Toggle dark theme">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark Theme</span>
+                </button>
+            </div>
+        </div>
+        <div class="hero__scroll-indicator">
+            <div class="hero__scroll-mouse"></div>
+        </div>
+    </section>
+
+    <!-- Main Games Section -->
+    <main id="games-section" class="games-main">
+        <!-- Filter Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar__header">
+                <i class="fas fa-filter"></i>
+                <h2>Categories</h2>
+            </div>
+            
+            <div class="sidebar__search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search games...">
+                <button id="clear-search" class="sidebar__clear hidden">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar__nav">
+                <button class="sidebar__category active" data-category="all">
+                    <i class="fas fa-th"></i>
+                    <span>All Games</span>
+                    <span class="sidebar__count" id="count-all">9</span>
+                </button>
+                <button class="sidebar__category" data-category="puzzle">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <span>Puzzle</span>
+                    <span class="sidebar__count" id="count-puzzle">5</span>
+                </button>
+                <button class="sidebar__category" data-category="strategy">
+                    <i class="fas fa-chess"></i>
+                    <span>Strategy</span>
+                    <span class="sidebar__count" id="count-strategy">2</span>
+                </button>
+                <button class="sidebar__category" data-category="arcade">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Arcade</span>
+                    <span class="sidebar__count" id="count-arcade">2</span>
+                </button>
+            </nav>
+
+            <div class="sidebar__footer">
+                <div class="sidebar__tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <p>Pro tip: Use keyboard arrows to navigate games!</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Games Grid -->
+        <div class="games-content">
+            <div class="games-header">
+                <h2 class="games-header__title" id="category-title">All Games</h2>
+                <div class="games-header__actions">
+                    <button class="view-toggle active" data-view="grid" title="Grid View">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-toggle" data-view="list" title="List View">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="games-grid" class="games-grid">
+                <!-- Strategy Games -->
+                <article class="game-card" data-category="strategy">
+                    <div class="game-card__image">
+                        <div class="game-card__icon strategy-gradient">
+                            <i class="fas fa-chess"></i>
+                        </div>
+                    </div>
+                    <div class="game-card__content">
+                        <span class="game-card__category">Strategy</span>
+                        <h3 class="game-card__title">Chess</h3>
+                        <p class="game-card__description">Master the classic game of strategy. Play against friends or challenge the computer!</p>
+                        <div class="game-card__meta">
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                            <span><i class="fas fa-users"></i> 2.5k players</span>
+                        </div>
+                    </div>
+                    <a href="Chess/index.html" class="game-card__play">
+                        <i class="fas fa-play"></i>
+                        <span>Play Now</span>
+                    </a>
+                </article>
+
+                <!-- Puzzle Games -->
+                <article class="game-card" data-category="puzzle">
+                    <div class="game-card__image">
+                        <div class="game-card__icon puzzle-gradient">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                    </div>
+                    <div class="game-card__content">
+                        <span class="game-card__category">Puzzle</span>
+                        <h3 class="game-card__title">Sudoku</h3>
+                        <p class="game-card__description">Challenge your mind with the classic number puzzle. Multiple difficulty levels available!</p>
+                        <div class="game-card__meta">
+                            <span><i class="fas fa-star"></i> 4.6</span>
+                            <span><i class="fas fa-users"></i> 1.8k players</span>
+                        </div>
+                    </div>
+                    <a href="Sudoku/index.html" class="game-card__play">
+                        <i class="fas fa-play"></i>
+                        <span>Play Now</span>
+                    </a>
+                </article>
+
+                <article class="game-card" data-category="puzzle">
+                    <div class="game-card__image">
+                        <div class="game-card__icon puzzle-gradient">
+                            <i class="fas fa-th"></i>
+                        </div>
+                    </div>
+                    <div class="game-card__content">
+                        <span class="game-card__category">Puzzle</span>
+                        <h3 class="game-card__title">2048</h3>
+                        <p class="game-card__description">Slide tiles to combine numbers and reach 2048. Addictive and strategic puzzle game!</p>
+                        <div class="game-card__meta">
+                            <span><i class="fas fa-star"></i> 4.7</span>
+                            <span><i class="fas fa-users"></i> 3.2k players</span>
+                        </div>
+                    </div>
+                    <a href="2048/index.html" class="game-card__play">
+                        <i class="fas fa-play"></i>
+                        <span>Play Now</span>
+                    </a>
+                </article>
+
+                <article class="game-card" data-category="puzzle">
+                    <div class="game-card__image">
+                        <div class="game-card__icon puzzle-gradient">
+                            <i class="fas fa-bomb"></i>
+                        </div>
+                    </div>
+                    <div class="game-card__content">
+                        <span class="game-card__category">Puzzle</span>
+                        <h3 class="game-card__title">Minesweeper</h3>
+                        <p class="game-card__description">Classic puzzle game! Find all mines without detonating them. Multiple difficulty levels!</p>
+                        <div class="game-card__meta">
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                            <span><i class="fas fa-users"></i> 2.1k players</span>
+                        </div>
+                    </div>
+                    <a href="Minesweeper/index.html" class="game-card__play">
+                        <i class="fas fa-play"></i>
+                        <span>Play Now</span>
+                    </a>
+                </article>
+
+                <article class="game-card" data-category="puzzle">
+                    <div class="game-card__image">
+                        <div class="game-card__icon puzzle-gradient">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                    <div class="game-card__content">
+                        <span class="game-card__category">Puzzle</span>
+                        <h3 class="game-card__title">Tic-Tac-Toe</h3>
+                        <p class="game-card__description">Classic two-player game! Get three in a row to win. Perfect for quick matches!</p>
+                        <div class="game-card__meta">
+                            <span><i class="fas fa-star"></i> 4.9</span>
+                            <span><i class="fas fa-users"></i> 4.2k players</span>
+                        </div>
+                    </div>
+                    <a href="Tic-Tac-Toe/index.html" class="game-card__play">
+                        <i class="fas fa-play"></i>
+                        <span>Play Now</span>
+                    </a>
+                </article>
+
+                <article class="game-card" data-category="arcade">
+                    <div class="game-card__image">
+                        <div class="game-card__icon arcade-gradient">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                    </div>
+                    <div class="game-card__content">
+                        <span class="game-card__category">Arcade</span>
+                        <h3 class="game-card__title">Snake</h3>
+                        <p class="game-card__description">Classic arcade game! Eat food, grow longer, and avoid hitting yourself. Multiple speeds!</p>
+                        <div class="game-card__meta">
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                            <span><i class="fas fa-users"></i> 5.1k players</span>
+                        </div>
+                    </div>
+                    <a href="Snake/index.html" class="game-card__play">
+                        <i class="fas fa-play"></i>
+                        <span>Play Now</span>
+                    </a>
+                </article>
+
+                <article class="game-card" data-category="strategy">
+                    <div class="game-card__image">
+                        <div class="game-card__icon strategy-gradient">
+                            <i class="fas fa-circle"></i>
+                        </div>
+                    </div>
+                    <div class="game-card__content">
+                        <span class="game-card__category">Strategy</span>
+                        <h3 class="game-card__title">Connect Four</h3>
+                        <p class="game-card__description">Classic strategy game! Get four in a row to win. Drop your pieces strategically!</p>
+                        <div class="game-card__meta">
+                            <span><i class="fas fa-star"></i> 4.7</span>
+                            <span><i class="fas fa-users"></i> 3.8k players</span>
+                        </div>
+                    </div>
+                    <a href="Connect-Four/index.html" class="game-card__play">
+                        <i class="fas fa-play"></i>
+                        <span>Play Now</span>
+                    </a>
+                </article>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state hidden">
+                <i class="fas fa-search"></i>
+                <h3>No games found</h3>
+                <p>Try adjusting your search or filter to find what you're looking for.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer-placeholder"></footer>
+
+    <!-- External Scripts -->
+    <script src="script.js"></script>
+    <script src="/app-loader.js" defer></script>
+
+    <script>
+// Load header and footer
+// Header/footer handled by app-loader.js
+
+// Theme toggle with persistence
+document.addEventListener('DOMContentLoaded', () => {
+    const root = document.documentElement;
+    const btn = document.getElementById('theme-toggle');
+    const saved = localStorage.getItem('et-theme');
+    if (saved === 'dark') {
+        root.setAttribute('data-theme', 'dark');
+        if (btn) {
+            btn.setAttribute('aria-pressed', 'true');
+            btn.innerHTML = '<i class="fas fa-sun"></i><span>Light Theme</span>';
+        }
+    }
+
+    if (btn) {
+        btn.addEventListener('click', () => {
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                root.removeAttribute('data-theme');
+                localStorage.setItem('et-theme', 'light');
+                btn.setAttribute('aria-pressed', 'false');
+                btn.innerHTML = '<i class="fas fa-moon"></i><span>Dark Theme</span>';
+            } else {
+                root.setAttribute('data-theme', 'dark');
+                localStorage.setItem('et-theme', 'dark');
+                btn.setAttribute('aria-pressed', 'true');
+                btn.innerHTML = '<i class="fas fa-sun"></i><span>Light Theme</span>';
+            }
+        });
+    }
+});
+    </script>
+</body>
+</html>

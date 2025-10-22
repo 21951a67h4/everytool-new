@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Priority Matrix | Eisenhower Matrix for Productivity | EveryTool.tech</title>
+    <meta name="description" content="Organize tasks using the Eisenhower Matrix. Prioritize by urgency and importance with drag-and-drop functionality, filters, and productivity insights for better task management.">
+    <meta name="keywords" content="task priority matrix, eisenhower matrix, task management, productivity, urgent important, task prioritization">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Task Priority Matrix | EveryTool.tech">
+    <meta property="og:description" content="Organize tasks using the Eisenhower Matrix. Prioritize by urgency and importance with drag-and-drop functionality, filters, and productivity insights for better task management.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/productivity-tools/task-priority-matrix">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Task Priority Matrix Specific Styles */
+        .matrix-calc-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .matrix-calc-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .matrix-calc-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .matrix-calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .matrix-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .matrix-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .matrix-form-group input, .matrix-form-group select, .matrix-form-group textarea { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .eisenhower-matrix {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+            min-height: 400px;
+        }
+        
+        .quadrant {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 180px;
+            position: relative;
+        }
+        
+        .quadrant.urgent-important {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            border-color: #ff6b6b;
+        }
+        
+        .quadrant.urgent-not-important {
+            background: linear-gradient(135deg, #feca57 0%, #ff9ff3 100%);
+            color: #333;
+            border-color: #feca57;
+        }
+        
+        .quadrant.not-urgent-important {
+            background: linear-gradient(135deg, #48dbfb 0%, #0abde3 100%);
+            color: white;
+            border-color: #48dbfb;
+        }
+        
+        .quadrant.not-urgent-not-important {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+            border-color: #a8edea;
+        }
+        
+        .quadrant-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-align: center;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .quadrant.not-urgent-not-important .quadrant-title,
+        .quadrant.urgent-not-important .quadrant-title {
+            border-bottom-color: rgba(0,0,0,0.2);
+        }
+        
+        .task-item {
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            cursor: move;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .task-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .task-item.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+        
+        .task-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .task-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 6px;
+        }
+        
+        .task-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .task-priority {
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .priority-high {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .priority-medium {
+            background: #feca57;
+            color: #333;
+        }
+        
+        .priority-low {
+            background: #a8edea;
+            color: #333;
+        }
+        
+        .task-actions {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .task-item:hover .task-actions {
+            opacity: 1;
+        }
+        
+        .task-action-btn {
+            background: none;
+            border: none;
+            padding: 4px;
+            margin-left: 2px;
+            cursor: pointer;
+            border-radius: 3px;
+            color: #666;
+        }
+        
+        .task-action-btn:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .task-action-btn.delete:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .add-task-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px dashed rgba(255,255,255,0.5);
+            color: inherit;
+            padding: 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .add-task-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.7);
+        }
+        
+        .quadrant.not-urgent-not-important .add-task-btn,
+        .quadrant.urgent-not-important .add-task-btn {
+            background: rgba(0,0,0,0.1);
+            border-color: rgba(0,0,0,0.3);
+            color: #333;
+        }
+        
+        .quadrant.not-urgent-not-important .add-task-btn:hover,
+        .quadrant.urgent-not-important .add-task-btn:hover {
+            background: rgba(0,0,0,0.2);
+            border-color: rgba(0,0,0,0.5);
+        }
+        
+        .task-form {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .form-row input,
+        .form-row select {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #1e7e34;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .stats-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .insights-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .insight-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .export-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .matrix-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .matrix-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .eisenhower-matrix {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 1fr);
+                gap: 10px;
+            }
+            .quadrant {
+                min-height: 150px;
+            }
+            .form-row {
+                flex-direction: column;
+            }
+            .form-actions {
+                flex-direction: column;
+            }
+            .export-buttons {
+                flex-direction: column;
+            }
+            .matrix-form-group input, .matrix-form-group select, .matrix-form-group textarea { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .matrix-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .quadrant {
+                min-height: 120px;
+                padding: 10px;
+            }
+            .task-item {
+                padding: 8px;
+            }
+            .matrix-form-group input, .matrix-form-group select, .matrix-form-group textarea { 
+                padding: 8px; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="Task Priority Matrix" data-meta-description="Organize tasks using the Eisenhower Matrix. Prioritize by urgency and importance with drag-and-drop functionality, filters, and productivity insights for better task management.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Task Priority Matrix: Eisenhower Method for Productivity</h1>
+                    <p class="tool-hero__description">
+                        Organize tasks using the Eisenhower Matrix. Prioritize by urgency and importance with drag-and-drop functionality, 
+                        filters, and productivity insights for better task management.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-th"></i>
+                            <span>Eisenhower Matrix</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-hand-rock"></i>
+                            <span>Drag & Drop</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-filter"></i>
+                            <span>Smart Filters</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Productivity Insights</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-plus"></i>
+                            Start Organizing Tasks
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Eisenhower Matrix
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-hero__title">Task Priority Matrix</h2>
+                    <p class="tool-display__description">
+                        Use the Eisenhower Matrix to organize your tasks by urgency and importance for better productivity.
+                    </p>
+                </div>
+                
+                <!-- Task Priority Matrix Custom Interface -->
+                <div class="matrix-calc-container">
+                    <div class="matrix-calc-section">
+                        <h4>1. Add New Task</h4>
+                        <div class="task-form" id="task-form">
+                            <div class="form-row">
+                                <input type="text" id="task-title" placeholder="Task title" required>
+                                <select id="task-priority">
+                                    <option value="high">High Priority</option>
+                                    <option value="medium" selected>Medium Priority</option>
+                                    <option value="low">Low Priority</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <input type="text" id="task-description" placeholder="Task description">
+                                <input type="date" id="task-due-date">
+                            </div>
+                            <div class="form-row">
+                                <select id="task-category">
+                                    <option value="work">Work</option>
+                                    <option value="personal">Personal</option>
+                                    <option value="health">Health</option>
+                                    <option value="learning">Learning</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <input type="number" id="task-estimated-hours" placeholder="Est. hours" min="0" step="0.5">
+                            </div>
+                            <div class="form-actions">
+                                <button class="btn btn-primary" onclick="addTask()">
+                                    <i class="fas fa-plus"></i> Add Task
+                                </button>
+                                <button class="btn btn-secondary" onclick="clearForm()">
+                                    <i class="fas fa-times"></i> Clear
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="matrix-calc-section">
+                        <h4>2. Eisenhower Matrix</h4>
+                        <div class="eisenhower-matrix" id="eisenhower-matrix">
+                            <!-- Quadrant 1: Urgent & Important -->
+                            <div class="quadrant urgent-important" data-quadrant="urgent-important">
+                                <div class="quadrant-title">Urgent & Important</div>
+                                <div class="quadrant-tasks" id="urgent-important-tasks">
+                                    <!-- Tasks will be added here -->
+                                </div>
+                                <div class="add-task-btn" onclick="showAddTaskModal('urgent-important')">
+                                    <i class="fas fa-plus"></i> Add Task
+                                </div>
+                            </div>
+                            
+                            <!-- Quadrant 2: Not Urgent & Important -->
+                            <div class="quadrant not-urgent-important" data-quadrant="not-urgent-important">
+                                <div class="quadrant-title">Not Urgent & Important</div>
+                                <div class="quadrant-tasks" id="not-urgent-important-tasks">
+                                    <!-- Tasks will be added here -->
+                                </div>
+                                <div class="add-task-btn" onclick="showAddTaskModal('not-urgent-important')">
+                                    <i class="fas fa-plus"></i> Add Task
+                                </div>
+                            </div>
+                            
+                            <!-- Quadrant 3: Urgent & Not Important -->
+                            <div class="quadrant urgent-not-important" data-quadrant="urgent-not-important">
+                                <div class="quadrant-title">Urgent & Not Important</div>
+                                <div class="quadrant-tasks" id="urgent-not-important-tasks">
+                                    <!-- Tasks will be added here -->
+                                </div>
+                                <div class="add-task-btn" onclick="showAddTaskModal('urgent-not-important')">
+                                    <i class="fas fa-plus"></i> Add Task
+                                </div>
+                            </div>
+                            
+                            <!-- Quadrant 4: Not Urgent & Not Important -->
+                            <div class="quadrant not-urgent-not-important" data-quadrant="not-urgent-not-important">
+                                <div class="quadrant-title">Not Urgent & Not Important</div>
+                                <div class="quadrant-tasks" id="not-urgent-not-important-tasks">
+                                    <!-- Tasks will be added here -->
+                                </div>
+                                <div class="add-task-btn" onclick="showAddTaskModal('not-urgent-not-important')">
+                                    <i class="fas fa-plus"></i> Add Task
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-section" id="stats-section">
+                        <h4>3. Task Statistics</h4>
+                        <div class="stats-grid" id="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="total-tasks">0</div>
+                                <div class="stat-label">Total Tasks</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="urgent-important-count">0</div>
+                                <div class="stat-label">Urgent & Important</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="not-urgent-important-count">0</div>
+                                <div class="stat-label">Not Urgent & Important</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="urgent-not-important-count">0</div>
+                                <div class="stat-label">Urgent & Not Important</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="not-urgent-not-important-count">0</div>
+                                <div class="stat-label">Not Urgent & Not Important</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="total-hours">0h</div>
+                                <div class="stat-label">Total Hours</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="insights-section" id="insights-section">
+                        <h4>4. Productivity Insights</h4>
+                        <div id="insights-list">
+                            <!-- Insights will be added here -->
+                        </div>
+                    </div>
+
+                    <div class="export-section">
+                        <h4>5. Export & Share</h4>
+                        <div class="export-buttons">
+                            <button class="tool-display__button" onclick="exportToJSON()">
+                                <i class="fas fa-file-code"></i> Export JSON
+                            </button>
+                            <button class="tool-display__button" onclick="exportToCSV()">
+                                <i class="fas fa-file-csv"></i> Export CSV
+                            </button>
+                            <button class="tool-display__button" onclick="printMatrix()">
+                                <i class="fas fa-print"></i> Print Matrix
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Master the Eisenhower Matrix</h2>
+                <p class="tool-blog__subtitle">
+                    Learn how to use the Eisenhower Matrix to prioritize tasks and improve productivity
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is the Eisenhower Matrix?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            The Eisenhower Matrix, also known as the Urgent-Important Matrix, is a time management tool 
+                            that helps you prioritize tasks based on their urgency and importance. It was popularized by 
+                            President Dwight D. Eisenhower and later by Stephen Covey.
+                        </p>
+                        <p>
+                            <strong>The Four Quadrants:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Quadrant 1 (Urgent & Important):</strong> Do these tasks immediately</li>
+                            <li><strong>Quadrant 2 (Not Urgent & Important):</strong> Schedule these tasks</li>
+                            <li><strong>Quadrant 3 (Urgent & Not Important):</strong> Delegate these tasks</li>
+                            <li><strong>Quadrant 4 (Not Urgent & Not Important):</strong> Eliminate these tasks</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">How to Use Each Quadrant</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Quadrant 1 - Urgent & Important:</strong>
+                        </p>
+                        <ul>
+                            <li>Crises and emergencies</li>
+                            <li>Deadline-driven projects</li>
+                            <li>Problems that need immediate attention</li>
+                            <li>Focus: Minimize time spent here</li>
+                        </ul>
+                        <p>
+                            <strong>Quadrant 2 - Not Urgent & Important:</strong>
+                        </p>
+                        <ul>
+                            <li>Prevention and planning</li>
+                            <li>Relationship building</li>
+                            <li>Learning and development</li>
+                            <li>Focus: Spend most time here</li>
+                        </ul>
+                        <p>
+                            <strong>Quadrant 3 - Urgent & Not Important:</strong>
+                        </p>
+                        <ul>
+                            <li>Interruptions and distractions</li>
+                            <li>Some emails and calls</li>
+                            <li>Meetings without clear purpose</li>
+                            <li>Focus: Delegate or minimize</li>
+                        </ul>
+                        <p>
+                            <strong>Quadrant 4 - Not Urgent & Not Important:</strong>
+                        </p>
+                        <ul>
+                            <li>Time wasters</li>
+                            <li>Excessive social media</li>
+                            <li>Trivial activities</li>
+                            <li>Focus: Eliminate completely</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Tips for Success</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Start with Quadrant 2:</strong> Focus on important but not urgent tasks to prevent them from becoming urgent.
+                        </p>
+                        <p>
+                            <strong>Limit Quadrant 1:</strong> Most urgent tasks can be prevented with better planning and preparation.
+                        </p>
+                        <p>
+                            <strong>Delegate Quadrant 3:</strong> Learn to say no and delegate tasks that don't require your direct attention.
+                        </p>
+                        <p>
+                            <strong>Eliminate Quadrant 4:</strong> Remove time-wasting activities from your schedule entirely.
+                        </p>
+                        <p>
+                            <strong>Review Regularly:</strong> Update your matrix weekly to ensure tasks are in the right quadrants.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Task Priority Matrix FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about the Eisenhower Matrix</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>How do I determine if a task is urgent or important?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Urgent tasks have immediate deadlines or consequences. Important tasks contribute to your long-term goals and values. Ask: "What happens if I don't do this?" (urgency) and "Does this align with my goals?" (importance).</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What if most of my tasks are in Quadrant 1?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>If you're spending too much time in Quadrant 1, focus on Quadrant 2 activities like planning and prevention. Most urgent tasks can be avoided with better preparation and proactive work.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How often should I update my matrix?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Review and update your matrix weekly. Tasks can move between quadrants as deadlines approach or priorities change. Regular review helps maintain focus on what's truly important.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I have tasks in multiple quadrants?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>No, each task should be in only one quadrant. If a task seems to fit multiple quadrants, break it down into smaller, more specific tasks that can be clearly categorized.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Task Priority Matrix Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            let tasks = [];
+            let taskIdCounter = 1;
+            
+            // Load saved tasks
+            loadTasks();
+            
+            // Initialize drag and drop
+            initializeDragAndDrop();
+            
+            // Update statistics
+            updateStatistics();
+            
+            function addTaskToMatrix(task) {
+                const quadrant = determineQuadrant(task);
+                const quadrantElement = document.getElementById(`${quadrant}-tasks`);
+                
+                const taskElement = createTaskElement(task);
+                quadrantElement.appendChild(taskElement);
+                
+                updateStatistics();
+            }
+            
+            function determineQuadrant(task) {
+                // Simple logic - can be enhanced with more sophisticated rules
+                if (task.priority === 'high' && task.dueDate && isDueSoon(task.dueDate)) {
+                    return 'urgent-important';
+                } else if (task.priority === 'high' && (!task.dueDate || !isDueSoon(task.dueDate))) {
+                    return 'not-urgent-important';
+                } else if (task.priority === 'low' && task.dueDate && isDueSoon(task.dueDate)) {
+                    return 'urgent-not-important';
+                } else {
+                    return 'not-urgent-not-important';
+                }
+            }
+            
+            function isDueSoon(dueDate) {
+                const today = new Date();
+                const due = new Date(dueDate);
+                const diffTime = due - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                return diffDays <= 3;
+            }
+            
+            function createTaskElement(task) {
+                const taskElement = document.createElement('div');
+                taskElement.className = 'task-item';
+                taskElement.draggable = true;
+                taskElement.dataset.taskId = task.id;
+                
+                taskElement.innerHTML = `
+                    <div class="task-title">${task.title}</div>
+                    <div class="task-description">${task.description || ''}</div>
+                    <div class="task-meta">
+                        <span class="task-priority priority-${task.priority}">${task.priority.toUpperCase()}</span>
+                        <span>${task.category}</span>
+                        ${task.dueDate ? `<span>Due: ${new Date(task.dueDate).toLocaleDateString()}</span>` : ''}
+                        ${task.estimatedHours ? `<span>${task.estimatedHours}h</span>` : ''}
+                    </div>
+                    <div class="task-actions">
+                        <button class="task-action-btn" onclick="editTask(${task.id})" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="task-action-btn delete" onclick="deleteTask(${task.id})" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                return taskElement;
+            }
+            
+            function initializeDragAndDrop() {
+                const matrix = document.getElementById('eisenhower-matrix');
+                
+                matrix.addEventListener('dragstart', function(e) {
+                    if (e.target.classList.contains('task-item')) {
+                        e.target.classList.add('dragging');
+                        e.dataTransfer.setData('text/plain', e.target.dataset.taskId);
+                    }
+                });
+                
+                matrix.addEventListener('dragend', function(e) {
+                    if (e.target.classList.contains('task-item')) {
+                        e.target.classList.remove('dragging');
+                    }
+                });
+                
+                matrix.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                });
+                
+                matrix.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    const taskId = e.dataTransfer.getData('text/plain');
+                    const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
+                    const targetQuadrant = e.target.closest('.quadrant');
+                    
+                    if (targetQuadrant && taskElement) {
+                        const quadrantTasks = targetQuadrant.querySelector('.quadrant-tasks');
+                        quadrantTasks.appendChild(taskElement);
+                        
+                        // Update task quadrant in data
+                        const task = tasks.find(t => t.id == taskId);
+                        if (task) {
+                            task.quadrant = targetQuadrant.dataset.quadrant;
+                            saveTasks();
+                            updateStatistics();
+                        }
+                    }
+                });
+            }
+            
+            window.addTask = function() {
+                const title = document.getElementById('task-title').value.trim();
+                const description = document.getElementById('task-description').value.trim();
+                const priority = document.getElementById('task-priority').value;
+                const dueDate = document.getElementById('task-due-date').value;
+                const category = document.getElementById('task-category').value;
+                const estimatedHours = parseFloat(document.getElementById('task-estimated-hours').value) || 0;
+                
+                if (!title) {
+                    alert('Please enter a task title.');
+                    return;
+                }
+                
+                const task = {
+                    id: taskIdCounter++,
+                    title,
+                    description,
+                    priority,
+                    dueDate,
+                    category,
+                    estimatedHours,
+                    createdAt: new Date().toISOString()
+                };
+                
+                tasks.push(task);
+                addTaskToMatrix(task);
+                clearForm();
+                saveTasks();
+            };
+            
+            window.clearForm = function() {
+                document.getElementById('task-title').value = '';
+                document.getElementById('task-description').value = '';
+                document.getElementById('task-priority').value = 'medium';
+                document.getElementById('task-due-date').value = '';
+                document.getElementById('task-category').value = 'work';
+                document.getElementById('task-estimated-hours').value = '';
+            };
+            
+            window.showAddTaskModal = function(quadrant) {
+                // Pre-fill form based on quadrant
+                if (quadrant === 'urgent-important') {
+                    document.getElementById('task-priority').value = 'high';
+                } else if (quadrant === 'not-urgent-important') {
+                    document.getElementById('task-priority').value = 'high';
+                } else if (quadrant === 'urgent-not-important') {
+                    document.getElementById('task-priority').value = 'low';
+                } else {
+                    document.getElementById('task-priority').value = 'low';
+                }
+                
+                // Scroll to form
+                document.getElementById('task-form').scrollIntoView({ behavior: 'smooth' });
+            };
+            
+            window.editTask = function(taskId) {
+                const task = tasks.find(t => t.id == taskId);
+                if (task) {
+                    document.getElementById('task-title').value = task.title;
+                    document.getElementById('task-description').value = task.description || '';
+                    document.getElementById('task-priority').value = task.priority;
+                    document.getElementById('task-due-date').value = task.dueDate || '';
+                    document.getElementById('task-category').value = task.category;
+                    document.getElementById('task-estimated-hours').value = task.estimatedHours || '';
+                    
+                    // Remove task from matrix
+                    deleteTask(taskId);
+                    
+                    // Scroll to form
+                    document.getElementById('task-form').scrollIntoView({ behavior: 'smooth' });
+                }
+            };
+            
+            window.deleteTask = function(taskId) {
+                if (confirm('Are you sure you want to delete this task?')) {
+                    tasks = tasks.filter(t => t.id != taskId);
+                    const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
+                    if (taskElement) {
+                        taskElement.remove();
+                    }
+                    saveTasks();
+                    updateStatistics();
+                }
+            };
+            
+            function updateStatistics() {
+                const totalTasks = tasks.length;
+                const urgentImportant = tasks.filter(t => t.quadrant === 'urgent-important').length;
+                const notUrgentImportant = tasks.filter(t => t.quadrant === 'not-urgent-important').length;
+                const urgentNotImportant = tasks.filter(t => t.quadrant === 'urgent-not-important').length;
+                const notUrgentNotImportant = tasks.filter(t => t.quadrant === 'not-urgent-not-important').length;
+                const totalHours = tasks.reduce((sum, t) => sum + (t.estimatedHours || 0), 0);
+                
+                document.getElementById('total-tasks').textContent = totalTasks;
+                document.getElementById('urgent-important-count').textContent = urgentImportant;
+                document.getElementById('not-urgent-important-count').textContent = notUrgentImportant;
+                document.getElementById('urgent-not-important-count').textContent = urgentNotImportant;
+                document.getElementById('not-urgent-not-important-count').textContent = notUrgentNotImportant;
+                document.getElementById('total-hours').textContent = `${totalHours}h`;
+                
+                generateInsights();
+            }
+            
+            function generateInsights() {
+                const insightsContainer = document.getElementById('insights-list');
+                const insights = [];
+                
+                const urgentImportant = tasks.filter(t => t.quadrant === 'urgent-important').length;
+                const notUrgentImportant = tasks.filter(t => t.quadrant === 'not-urgent-important').length;
+                const urgentNotImportant = tasks.filter(t => t.quadrant === 'urgent-not-important').length;
+                const notUrgentNotImportant = tasks.filter(t => t.quadrant === 'not-urgent-not-important').length;
+                
+                if (urgentImportant > notUrgentImportant) {
+                    insights.push({
+                        title: "Focus on Prevention",
+                        description: "You have more urgent tasks than important ones. Focus on Quadrant 2 activities to prevent tasks from becoming urgent."
+                    });
+                }
+                
+                if (urgentNotImportant > 0) {
+                    insights.push({
+                        title: "Delegate More",
+                        description: "Consider delegating urgent but not important tasks to free up time for important work."
+                    });
+                }
+                
+                if (notUrgentNotImportant > 0) {
+                    insights.push({
+                        title: "Eliminate Time Wasters",
+                        description: "Remove tasks that are neither urgent nor important to focus on what matters most."
+                    });
+                }
+                
+                insights.push({
+                    title: "Regular Review",
+                    description: "Review your matrix weekly to ensure tasks are in the right quadrants and priorities are current."
+                });
+                
+                insightsContainer.innerHTML = insights.map(insight => `
+                    <div class="insight-item">
+                        <strong>${insight.title}:</strong> ${insight.description}
+                    </div>
+                `).join('');
+            }
+            
+            function saveTasks() {
+                localStorage.setItem('eisenhowerTasks', JSON.stringify(tasks));
+            }
+            
+            function loadTasks() {
+                const saved = localStorage.getItem('eisenhowerTasks');
+                if (saved) {
+                    try {
+                        tasks = JSON.parse(saved);
+                        taskIdCounter = Math.max(...tasks.map(t => t.id), 0) + 1;
+                        
+                        // Clear existing tasks
+                        document.querySelectorAll('.quadrant-tasks').forEach(q => q.innerHTML = '');
+                        
+                        // Add tasks to matrix
+                        tasks.forEach(task => {
+                            addTaskToMatrix(task);
+                        });
+                    } catch (e) {
+                        console.error('Error loading tasks:', e);
+                    }
+                }
+            }
+            
+            window.exportToJSON = function() {
+                const data = {
+                    tasks: tasks,
+                    exportedAt: new Date().toISOString(),
+                    version: '1.0'
+                };
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'eisenhower-matrix-tasks.json';
+                link.click();
+                URL.revokeObjectURL(url);
+            };
+            
+            window.exportToCSV = function() {
+                const csv = 'ID,Title,Description,Priority,Category,Due Date,Estimated Hours,Quadrant,Created At\n' + 
+                    tasks.map(task => 
+                        `${task.id},"${task.title}","${task.description || ''}",${task.priority},${task.category},${task.dueDate || ''},${task.estimatedHours || 0},${task.quadrant || ''},${task.createdAt}`
+                    ).join('\n');
+                
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'eisenhower-matrix-tasks.csv';
+                link.click();
+                URL.revokeObjectURL(url);
+            };
+            
+            window.printMatrix = function() {
+                window.print();
+            };
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

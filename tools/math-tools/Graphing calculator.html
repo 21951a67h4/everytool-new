@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Graphing Calculator | Plot Functions & Equations | EveryTool.tech</title>
+    <meta name="description" content="Instantly plot functions, equations, and data with our free online Graphing Calculator. A powerful and easy-to-use tool for students, teachers, and professionals.">
+    <meta name="keywords" content="graphing calculator, plot functions, plot equations, plot data, plot graphs, plot graphs online, plot graphs for free, plot graphs for students, plot graphs for teachers, plot graphs for professionals">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Online Graphing Calculator | EveryTool.tech">
+    <meta property="og:description" content="Instantly plot functions, equations, and data with our free online Graphing Calculator. A powerful and easy-to-use tool for students, teachers, and professionals.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/graphing-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/function-plot/1.22.7/function-plot.js"></script>
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    <!-- START: CRITICAL STYLE FOR HEADER -->
+    <style>
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+        /* Graphing Calculator Specific Styles */
+        .graph-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+            min-height: 550px;
+        }
+        .graph-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        .function-input-group {
+            margin-bottom: 10px;
+        }
+        .function-input-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .function-input-item input {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+        .function-color-box {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #graph-container {
+            width: 100%;
+            height: 550px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            position: relative;
+        }
+        .graph-window-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .graph-window-controls label {
+            font-size: 0.9em;
+            margin-bottom: 4px;
+            display: block;
+        }
+        .graph-window-controls input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+        .key-points-section h4 {
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+        #key-points-list {
+            font-size: 0.9em;
+            max-height: 150px;
+            overflow-y: auto;
+            background: #fff;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 992px) {
+            .graph-layout {
+                grid-template-columns: 1fr;
+            }
+            .graph-controls {
+                order: 2;
+            }
+            #graph-container {
+                order: 1;
+                height: 420px;
+            }
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .function-input-item input, .graph-window-controls input { font-size: 16px; }
+            #graph-container { height: 360px; }
+        }
+
+        @media (max-width: 480px) {
+            #graph-container { height: 300px; }
+            .graph-window-controls { grid-template-columns: 1fr; }
+        }
+    </style>
+    <!-- END: CRITICAL STYLE FOR HEADER -->
+
+</head>
+<body data-tool-name="Graphing Calculator" data-meta-description="Instantly plot functions, equations, and data with our free online Graphing Calculator. A powerful and easy-to-use tool for students, teachers, and professionals.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Interactive Graphing Calculator: Visualize Functions Instantly</h1>
+                    <p class="tool-hero__description">
+                        Bring mathematics to life with our free, powerful graphing calculator. Plot multiple functions, explore their properties on an interactive coordinate plane, and gain a deeper understanding of algebra, trigonometry, and calculus.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-wave-square"></i>
+                            <span>Plot Multiple Functions</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-search-plus"></i>
+                            <span>Interactive Pan & Zoom</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Key Point Analysis</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-mouse-pointer"></i>
+                            <span>Trace Coordinates</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-chart-line"></i>
+                            Start Graphing Now
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn to Plot
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Your Visual Mathematics Lab</h2>
+                    <p class="tool-display__description">
+                        Enter your functions, set the view window, and watch your equations come to life.
+                    </p>
+                </div>
+                <!-- Graphing Calculator Custom Interface -->
+                <div class="graph-layout">
+                    <div class="graph-controls">
+                        <h4>Functions</h4>
+                        <div id="function-input-list">
+                            <!-- Function inputs will be dynamically added here -->
+                        </div>
+                        <button id="add-function-btn" class="tool-button tool-button--secondary" style="width: 100%;"><i class="fas fa-plus"></i> Add Function</button>
+                        
+                        <div class="graph-window-controls">
+                            <div>
+                                <label for="x-min">X-Min</label>
+                                <input type="number" id="x-min" value="-10">
+                            </div>
+                            <div>
+                                <label for="x-max">X-Max</label>
+                                <input type="number" id="x-max" value="10">
+                            </div>
+                            <div>
+                                <label for="y-min">Y-Min</label>
+                                <input type="number" id="y-min" value="-10">
+                            </div>
+                            <div>
+                                <label for="y-max">Y-Max</label>
+                                <input type="number" id="y-max" value="10">
+                            </div>
+                        </div>
+                        <button id="plot-btn" class="tool-button tool-button--primary" style="width: 100%;"><i class="fas fa-chart-line"></i> Plot</button>
+                        <button id="reset-view-btn" class="tool-button tool-button--secondary" style="width: 100%;"><i class="fas fa-sync-alt"></i> Reset View</button>
+                        
+                        <div class="key-points-section">
+                            <h4>Key Points</h4>
+                            <div id="key-points-list">Enter a function to see its key points.</div>
+                        </div>
+                    </div>
+                    <div id="graph-container"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Mastering Visual Mathematics: The Ultimate Guide to the Graphing Calculator</h2>
+                <p class="tool-blog__subtitle">
+                    Transform abstract equations into tangible shapes and unlock a deeper understanding of mathematics with this essential guide.
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Introduction: Why Visualizing Math Changes Everything</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            For many, mathematics can feel like an abstract collection of rules and symbols. An equation like `y = x² - 4` is just a statement until you see it. But when you plot it on a graph, it transforms into a graceful, symmetrical parabola. You can see its lowest point, where it crosses the axes, and how it stretches towards infinity. This is the power of a <strong>graphing calculator</strong>: it bridges the gap between the abstract and the concrete, turning algebraic expressions into geometric objects with properties you can see and explore.
+                        </p>
+                        <p>
+                            Whether you're a student struggling to understand the behavior of functions, a teacher looking for a dynamic way to demonstrate concepts, or a professional needing to model data, a graphing calculator is an indispensable tool. It fosters intuition, makes complex relationships clear, and turns problem-solving into an interactive process of discovery.
+                        </p>
+                    </div>
+                </div>
+                <div class="blog-section">
+                    <h3 class="blog-section__title">The Basics: Plotting Your First Function</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            At its core, a graphing calculator operates on a simple premise: for a given function `y = f(x)`, it takes a series of x-values, calculates the corresponding y-values, and plots these (x, y) coordinate pairs on a Cartesian plane. Let's plot `y = x^2`.
+                        </p>
+                        <ol>
+                            <li><strong>Enter the Function:</strong> In the function input field, you would type `x^2`. The `^` symbol is universally used to denote an exponent.</li>
+                            <li><strong>Set the Window:</strong> The "window" defines the visible part of the infinite coordinate plane. A standard window often ranges from -10 to 10 on both the x-axis and y-axis. This is a good starting point for most basic functions.</li>
+                            <li><strong>Plot:</strong> Clicking the "Plot" button brings your function to life. The calculator draws a smooth curve connecting all the calculated points, revealing the distinct U-shape of a parabola.</li>
+                        </ol>
+                        <p>
+                            With our calculator, you can pan by clicking and dragging the graph, and zoom using your mouse wheel. This interactivity allows you to explore different regions of the function with ease.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Decoding the Graph: Understanding Key Points</h3>
+                    <div class="blog-section__content">
+                        <p>A graph is rich with information. A good graphing calculator doesn't just draw the picture; it helps you analyze it by identifying key points:</p>
+                        <ul>
+                            <li>
+                                <strong>Roots (or x-intercepts):</strong> These are the points where the graph crosses the horizontal x-axis. At these points, `y=0`. Finding roots is equivalent to solving the equation `f(x) = 0`. For our example `y = x² - 4`, the calculator would identify roots at x = -2 and x = 2.
+                            </li>
+                            <li>
+                                <strong>Y-intercept:</strong> This is the point where the graph crosses the vertical y-axis. It occurs where `x=0`. For `y = x² - 4`, the y-intercept is at y = -4.
+                            </li>
+                            <li>
+                                <strong>Intersection Points:</strong> When you plot two or more functions, the points where they cross are the intersection points. At these points, the functions are equal. Plotting `y = x² - 4` and `y = x - 2` would reveal intersection points where `x² - 4 = x - 2`. Visually, you can immediately see the solutions to this system of equations.
+                            </li>
+                             <li>
+                                <strong>Local Maxima and Minima:</strong> These are the "peaks" and "valleys" of the function. For our parabola `y = x² - 4`, there is a local minimum at its vertex (0, -4). These points are critical in optimization problems.
+                            </li>
+                        </ul>
+                        <p>Our tool automatically calculates and lists these points, saving you from complex manual calculations.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Exploring Different Function Families</h3>
+                    <div class="blog-section__content">
+                        <p>A graphing calculator truly shines when you explore the diverse families of mathematical functions:</p>
+                        <ul>
+                            <li><strong>Trigonometric Functions:</strong> Plot `sin(x)` or `cos(x)` to see their iconic wave-like patterns. Zooming in or out reveals their periodic nature. Plotting them together shows their phase shift.</li>
+                            <li><strong>Exponential Functions:</strong> An equation like `e^x` (entered as `exp(x)`) demonstrates rapid growth, a fundamental concept in finance and biology.</li>
+                            <li><strong>Logarithmic Functions:</strong> The graph of `log(x)` shows the opposite behavior: rapid initial growth that dramatically slows down.</li>
+                            <li><strong>Rational Functions:</strong> Functions like `1/x` produce hyperbolas and reveal concepts like asymptotes—lines that the graph approaches but never touches.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Advanced Frontiers: Parametric, Polar, and Calculus</h3>
+                    <div class="blog-section__content">
+                        <p>While `y=f(x)` is the most common form, advanced mathematics uses other coordinate systems and concepts that a powerful graphing calculator can handle.</p>
+                        <h4>Parametric and Polar Plotting</h4>
+                        <p>Some shapes are difficult to describe as a function of y in terms of x. A circle, for instance, fails the "vertical line test." This is where other plotting modes become invaluable:
+                        <ul>
+                            <li><strong>Parametric Equations:</strong> A curve is defined by two separate equations, `x(t)` and `y(t)`, in terms of a third variable, `t` (often representing time). For example, `x(t) = cos(t)` and `y(t) = sin(t)` elegantly draws a circle as `t` goes from 0 to 2π. This is essential for modeling motion and projectile paths.</li>
+                            <li><strong>Polar Coordinates:</strong> Points are defined by a distance from the origin (`r`) and an angle (`θ`). Equations like `r = 1 - cos(θ)` create beautiful, intricate shapes like cardioids (heart shapes) that are nearly impossible to describe in standard coordinates.</li>
+                        </ul>
+                        </p>
+                        <h4>Visualizing Calculus</h4>
+                        <p>For calculus students, a graphing calculator is a game-changer:
+                        <ul>
+                           <li><strong>Plotting the Derivative:</strong> The derivative, `f'(x)`, represents the slope of the original function `f(x)` at any point. Plotting a function and its derivative together provides profound insight. Where the original function has a peak or valley (a slope of zero), the derivative's graph will cross the x-axis.</li>
+                           <li><strong>Visualizing the Integral:</strong> A definite integral calculates the area under a curve between two points. A graphing tool that can shade this area and compute its value makes an abstract concept tangible and intuitive.</li>
+                        </ul>
+                        </p>
+                        <p>Future versions of our tool will aim to incorporate these powerful advanced features to further support students and professionals in STEM fields.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Find quick answers to common questions about our graphing calculator</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I plot multiple functions at once?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Simply click the "Add Function" button. A new input field will appear, allowing you to enter a second, third, or more functions. Each function will be plotted on the same graph with a different color for easy identification.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        My function isn't appearing on the graph. What's wrong?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>There are two likely reasons. First, check your syntax. Ensure your function is written correctly (e.g., `x^2`, not `x2`). Second, check your graph window (X-Min, X-Max, etc.). The function might be plotted correctly but is outside your current view. Try clicking the "Reset View" button to return to the default -10 to 10 window.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What syntax should I use for common operations?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our calculator uses standard mathematical syntax:
+                        <ul>
+                            <li><strong>Exponents:</strong> Use the caret symbol `^`. For example, `x^3`.</li>
+                            <li><strong>Multiplication:</strong> Use the asterisk `*`. For example, `3*x`.</li>
+                            <li><strong>Square Root:</strong> Use `sqrt()`. For example, `sqrt(x)`.</li>
+                            <li><strong>Trigonometry:</strong> Use `sin()`, `cos()`, `tan()`. For example, `sin(x)`.</li>
+                            <li><strong>Constants:</strong> Use `pi` for π and `e` for Euler's number.</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How can I find the exact coordinates on a curve?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our graph is interactive. Simply hover your mouse over the plotted function. A "trace" point will follow your cursor along the curve, and the (x, y) coordinates of that point will be displayed in real-time, allowing you to explore the function's values precisely.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I plot a circle like x² + y² = 9?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>This is an implicit equation and cannot be plotted directly in a standard `y=f(x)` calculator. However, you can plot it by solving for y, which results in two separate functions: the top half and the bottom half. Enter `sqrt(9 - x^2)` as your first function and `-sqrt(9 - x^2)` as your second function to draw the complete circle.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+    <div id="footer-placeholder"></div>
+    <script src="../scripts/footer.js" defer></script>
+
+    <!-- CRITICAL: Universal Search Script - DO NOT REMOVE -->
+    <script src="/universal-search-deploy.js"></script>
+    
+    <!-- External scripts can be loaded at the end -->
+    <script src="../../faq.js" defer></script>
+    <script src="../../view.js" defer></script>
+    <script src="../scripts/page-loader.js" defer></script>
+    <script src="../scripts/graphing-calculator.js" defer></script>
+    <script src="../FAQ section/faq.js" defer></script>
+    <script src="../view.js" defer></script>
+
+</body>
+</html>

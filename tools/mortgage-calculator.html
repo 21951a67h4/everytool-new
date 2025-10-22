@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="../FAQ section/faq.css">
     <link rel="stylesheet" href="tool.css">
     <link rel="stylesheet" href="../back-to-top.css">
-    <script src="../back-to-top.js"></script>
+    <script src="/back-to-top.js"></script>
     <style>
         /* Mobile optimization - ensure header has space while loading */
         #header-placeholder {
@@ -637,7 +637,7 @@
         });
     </script>
 
-    <script src="../universal-search-deploy.js"></script>
+    <script src="/universal-search-deploy.js"></script>
     <script src="../../faq.js" defer></script>
     <script src="../../view.js" defer></script>
 
@@ -719,7 +719,7 @@
         if (!headerPlaceholder) return;
     
         // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
-        fetch('/header.html') 
+        fetch('/header.html')
             .then(response => {
                 if (!response.ok) throw new Error('Network response for header.html was not ok.');
                 return response.text();
@@ -741,6 +741,10 @@
             })
             .catch(error => {
                 console.error('CRITICAL ERROR during header loading process:', error);
+                // Optionally, display an error message in the header placeholder
+                if (headerPlaceholder) {
+                    headerPlaceholder.innerHTML = '<div style="color: red; background: #fff3f3; padding: 1em;">Sorry, the site header could not be loaded.</div>';
+                }
             });
     };
     
@@ -758,7 +762,4 @@
     loadHeader();
     loadFooter();
     });
-    
-        </script>
-</body>
-</html>
+    </script>

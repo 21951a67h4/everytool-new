@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Mode Timer | Distraction-Free Productivity Timer | EveryTool.tech</title>
+    <meta name="description" content="Boost focus with distraction-free timer sessions. Block distracting websites, play ambient sounds, track productivity stats, and maintain deep work sessions for maximum efficiency.">
+    <meta name="keywords" content="focus mode timer, distraction blocker, productivity timer, deep work, ambient sounds, focus sessions">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Focus Mode Timer | EveryTool.tech">
+    <meta property="og:description" content="Boost focus with distraction-free timer sessions. Block distracting websites, play ambient sounds, track productivity stats, and maintain deep work sessions for maximum efficiency.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/productivity-tools/focus-mode-timer">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Focus Mode Timer Specific Styles */
+        .focus-calc-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .focus-calc-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .focus-calc-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .focus-calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .focus-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .focus-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .focus-form-group input, .focus-form-group select { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .timer-display {
+            text-align: center;
+            margin: 30px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .timer-display.active {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        }
+        
+        .timer-display.break {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+        
+        .timer-time {
+            font-size: 4rem;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .timer-status {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .timer-progress {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .timer-progress-bar {
+            height: 100%;
+            background: rgba(255,255,255,0.8);
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .timer-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 100px;
+        }
+        
+        .timer-btn.start {
+            background: #28a745;
+            color: white;
+        }
+        
+        .timer-btn.pause {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .timer-btn.stop {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .timer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .timer-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .session-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        
+        .session-count {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .next-phase {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .distraction-blocker {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .blocked-sites {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .site-tag {
+            background: #dc3545;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .site-tag .remove {
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .ambient-sounds {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .sound-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .sound-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .sound-item:hover {
+            background: #f0f8ff;
+            border-color: #007bff;
+        }
+        
+        .sound-item.active {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        
+        .sound-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        
+        .sound-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .sound-controls {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .volume-slider {
+            width: 100px;
+        }
+        
+        .breathing-guide {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+            text-align: center;
+        }
+        
+        .breathing-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: transform 4s ease-in-out;
+        }
+        
+        .breathing-circle.inhale {
+            transform: scale(1.3);
+        }
+        
+        .breathing-circle.exhale {
+            transform: scale(0.8);
+        }
+        
+        .stats-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .session-history {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .history-phase {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .history-time {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .export-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #d4edda;
+            border-radius: 8px;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .focus-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .focus-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .timer-time {
+                font-size: 3rem;
+            }
+            .timer-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            .timer-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+            .sound-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .export-buttons {
+                flex-direction: column;
+            }
+            .focus-form-group input, .focus-form-group select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .focus-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .timer-time {
+                font-size: 2.5rem;
+            }
+            .sound-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .focus-form-group input, .focus-form-group select { 
+                padding: 8px; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="Focus Mode Timer" data-meta-description="Boost focus with distraction-free timer sessions. Block distracting websites, play ambient sounds, track productivity stats, and maintain deep work sessions for maximum efficiency.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Focus Mode Timer: Distraction-Free Productivity</h1>
+                    <p class="tool-hero__description">
+                        Boost focus with distraction-free timer sessions. Block distracting websites, play ambient sounds, 
+                        track productivity stats, and maintain deep work sessions for maximum efficiency.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Distraction Blocker</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-volume-up"></i>
+                            <span>Ambient Sounds</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lungs"></i>
+                            <span>Breathing Guide</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Productivity Stats</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-play"></i>
+                            Start Focus Session
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Deep Work
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Focus Mode Timer</h2>
+                    <p class="tool-display__description">
+                        Create distraction-free work sessions with ambient sounds, breathing exercises, and productivity tracking.
+                    </p>
+                </div>
+                
+                <!-- Focus Mode Timer Custom Interface -->
+                <div class="focus-calc-container">
+                    <div class="focus-calc-section">
+                        <h4>1. Session Settings</h4>
+                        <div class="focus-calc-grid">
+                            <div class="focus-form-group">
+                                <label for="session-duration">Focus Duration (minutes)</label>
+                                <input type="number" id="session-duration" value="25" min="5" max="120">
+                            </div>
+                            
+                            <div class="focus-form-group">
+                                <label for="break-duration">Break Duration (minutes)</label>
+                                <input type="number" id="break-duration" value="5" min="1" max="30">
+                            </div>
+                            
+                            <div class="focus-form-group">
+                                <label for="long-break-duration">Long Break (minutes)</label>
+                                <input type="number" id="long-break-duration" value="15" min="5" max="60">
+                            </div>
+                            
+                            <div class="focus-form-group">
+                                <label for="cycles-per-session">Cycles per Session</label>
+                                <input type="number" id="cycles-per-session" value="4" min="1" max="10">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="focus-calc-section">
+                        <h4>2. Focus Timer</h4>
+                        <div class="timer-display" id="timer-display">
+                            <div class="timer-time" id="timer-time">25:00</div>
+                            <div class="timer-status" id="timer-status">Ready to Focus</div>
+                            <div class="timer-progress">
+                                <div class="timer-progress-bar" id="timer-progress-bar"></div>
+                            </div>
+                            <div class="session-info">
+                                <div class="session-count" id="session-count">Session 1 of 4</div>
+                                <div class="next-phase" id="next-phase">Next: Short Break</div>
+                            </div>
+                            <div class="timer-controls">
+                                <button class="timer-btn start" id="start-btn" onclick="startFocusSession()">
+                                    <i class="fas fa-play"></i> Start Focus
+                                </button>
+                                <button class="timer-btn pause" id="pause-btn" onclick="pauseFocusSession()" disabled>
+                                    <i class="fas fa-pause"></i> Pause
+                                </button>
+                                <button class="timer-btn stop" id="stop-btn" onclick="stopFocusSession()" disabled>
+                                    <i class="fas fa-stop"></i> Stop
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="distraction-blocker">
+                        <h4>3. Distraction Blocker</h4>
+                        <p>Block distracting websites during focus sessions (informational only - requires browser extension for actual blocking)</p>
+                        <div class="focus-calc-grid">
+                            <div class="focus-form-group">
+                                <label for="blocked-site">Add Website to Block</label>
+                                <input type="text" id="blocked-site" placeholder="e.g., facebook.com, twitter.com">
+                            </div>
+                            <div class="focus-form-group">
+                                <label>&nbsp;</label>
+                                <button class="timer-btn start" onclick="addBlockedSite()">
+                                    <i class="fas fa-plus"></i> Add Site
+                                </button>
+                            </div>
+                        </div>
+                        <div class="blocked-sites" id="blocked-sites">
+                            <!-- Blocked sites will be added here -->
+                        </div>
+                    </div>
+
+                    <div class="ambient-sounds">
+                        <h4>4. Ambient Sounds</h4>
+                        <div class="sound-grid" id="sound-grid">
+                            <div class="sound-item" data-sound="rain" onclick="toggleSound('rain')">
+                                <div class="sound-icon">🌧️</div>
+                                <div class="sound-name">Rain</div>
+                            </div>
+                            <div class="sound-item" data-sound="forest" onclick="toggleSound('forest')">
+                                <div class="sound-icon">🌲</div>
+                                <div class="sound-name">Forest</div>
+                            </div>
+                            <div class="sound-item" data-sound="ocean" onclick="toggleSound('ocean')">
+                                <div class="sound-icon">🌊</div>
+                                <div class="sound-name">Ocean</div>
+                            </div>
+                            <div class="sound-item" data-sound="coffee" onclick="toggleSound('coffee')">
+                                <div class="sound-icon">☕</div>
+                                <div class="sound-name">Coffee Shop</div>
+                            </div>
+                            <div class="sound-item" data-sound="white-noise" onclick="toggleSound('white-noise')">
+                                <div class="sound-icon">📻</div>
+                                <div class="sound-name">White Noise</div>
+                            </div>
+                            <div class="sound-item" data-sound="piano" onclick="toggleSound('piano')">
+                                <div class="sound-icon">🎹</div>
+                                <div class="sound-name">Piano</div>
+                            </div>
+                        </div>
+                        <div class="sound-controls">
+                            <div class="volume-control">
+                                <i class="fas fa-volume-down"></i>
+                                <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="50">
+                                <i class="fas fa-volume-up"></i>
+                            </div>
+                            <button class="timer-btn stop" onclick="stopAllSounds()">
+                                <i class="fas fa-stop"></i> Stop All
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="breathing-guide">
+                        <h4>5. Breathing Exercise</h4>
+                        <p>Take a moment to center yourself with this breathing exercise</p>
+                        <div class="breathing-circle" id="breathing-circle">
+                            <span id="breathing-text">Breathe</span>
+                        </div>
+                        <div class="timer-controls">
+                            <button class="timer-btn start" onclick="startBreathingExercise()">
+                                <i class="fas fa-play"></i> Start Breathing
+                            </button>
+                            <button class="timer-btn stop" onclick="stopBreathingExercise()">
+                                <i class="fas fa-stop"></i> Stop
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="stats-section" id="stats-section">
+                        <h4>6. Focus Statistics</h4>
+                        <div class="stats-grid" id="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="total-sessions">0</div>
+                                <div class="stat-label">Total Sessions</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="total-focus-time">0h</div>
+                                <div class="stat-label">Focus Time</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="current-streak">0</div>
+                                <div class="stat-label">Current Streak</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="best-streak">0</div>
+                                <div class="stat-label">Best Streak</div>
+                            </div>
+                        </div>
+                        
+                        <div class="session-history" id="session-history">
+                            <h5>Recent Sessions</h5>
+                            <div id="history-list">
+                                <!-- History will be added here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="export-section">
+                        <h4>7. Export & Settings</h4>
+                        <div class="export-buttons">
+                            <button class="tool-display__button" onclick="exportHistory()">
+                                <i class="fas fa-download"></i> Export History
+                            </button>
+                            <button class="tool-display__button" onclick="resetStats()">
+                                <i class="fas fa-redo"></i> Reset Stats
+                            </button>
+                            <button class="tool-display__button" onclick="requestNotificationPermission()">
+                                <i class="fas fa-bell"></i> Enable Notifications
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Master Deep Work & Focus</h2>
+                <p class="tool-blog__subtitle">
+                    Learn techniques to eliminate distractions and achieve deep focus for maximum productivity
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is Deep Work?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Deep work is the ability to focus without distraction on a cognitively demanding task. 
+                            It's a skill that allows you to quickly master complicated information and produce better results in less time.
+                        </p>
+                        <p>
+                            <strong>Benefits of Deep Work:</strong>
+                        </p>
+                        <ul>
+                            <li>Faster learning and skill development</li>
+                            <li>Higher quality output and creativity</li>
+                            <li>Reduced stress and mental fatigue</li>
+                            <li>Increased job satisfaction and fulfillment</li>
+                            <li>Better work-life balance</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Creating a Focus-Friendly Environment</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Eliminate Digital Distractions:</strong>
+                        </p>
+                        <ul>
+                            <li>Block distracting websites and apps</li>
+                            <li>Turn off notifications during focus sessions</li>
+                            <li>Use full-screen mode for work applications</li>
+                            <li>Keep your phone in another room</li>
+                        </ul>
+                        <p>
+                            <strong>Optimize Your Physical Space:</strong>
+                        </p>
+                        <ul>
+                            <li>Create a dedicated workspace</li>
+                            <li>Ensure good lighting and ventilation</li>
+                            <li>Minimize clutter and distractions</li>
+                            <li>Use ambient sounds to mask background noise</li>
+                        </ul>
+                        <p>
+                            <strong>Prepare Your Mind:</strong>
+                        </p>
+                        <ul>
+                            <li>Practice breathing exercises before starting</li>
+                            <li>Set clear intentions for your session</li>
+                            <li>Eliminate mental clutter with planning</li>
+                            <li>Start with easier tasks to build momentum</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Focus Techniques & Strategies</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>The Pomodoro Technique:</strong> Work in focused 25-minute sessions with 5-minute breaks. 
+                            This helps maintain concentration while preventing burnout.
+                        </p>
+                        <p>
+                            <strong>Time Blocking:</strong> Schedule specific blocks of time for different types of work. 
+                            This creates structure and reduces decision fatigue.
+                        </p>
+                        <p>
+                            <strong>Single-Tasking:</strong> Focus on one task at a time instead of multitasking. 
+                            This improves quality and reduces mental fatigue.
+                        </p>
+                        <p>
+                            <strong>Progressive Overload:</strong> Gradually increase your focus session duration to build 
+                            your concentration muscle over time.
+                        </p>
+                        <p>
+                            <strong>Recovery Time:</strong> Take regular breaks to recharge your mental energy and 
+                            maintain consistent performance throughout the day.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Focus Mode Timer FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about focus and deep work</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>How long should my focus sessions be?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Start with 25-minute sessions and gradually increase to 45-90 minutes as your focus improves. The key is finding your optimal duration where you can maintain deep concentration without mental fatigue.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What are the best ambient sounds for focus?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Natural sounds like rain, ocean waves, or forest sounds work well for most people. White noise and instrumental music can also be effective. Experiment to find what works best for your concentration.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How can I block distracting websites?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Use browser extensions like StayFocusd, Cold Turkey, or Freedom to block distracting websites. You can also use your router's parental controls or modify your hosts file for system-wide blocking.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What should I do during breaks?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Use breaks to rest your mind and body. Stand up, stretch, take a short walk, or do breathing exercises. Avoid checking social media or emails as these can be mentally taxing. The goal is to recharge for the next focus session.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Focus Mode Timer Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sessionDuration = document.getElementById('session-duration');
+            const breakDuration = document.getElementById('break-duration');
+            const longBreakDuration = document.getElementById('long-break-duration');
+            const cyclesPerSession = document.getElementById('cycles-per-session');
+            const timerDisplay = document.getElementById('timer-display');
+            const timerTime = document.getElementById('timer-time');
+            const timerStatus = document.getElementById('timer-status');
+            const timerProgressBar = document.getElementById('timer-progress-bar');
+            const sessionCount = document.getElementById('session-count');
+            const nextPhase = document.getElementById('next-phase');
+            const startBtn = document.getElementById('start-btn');
+            const pauseBtn = document.getElementById('pause-btn');
+            const stopBtn = document.getElementById('stop-btn');
+            const blockedSites = document.getElementById('blocked-sites');
+            const volumeSlider = document.getElementById('volume-slider');
+            const breathingCircle = document.getElementById('breathing-circle');
+            const breathingText = document.getElementById('breathing-text');
+            
+            let timer = null;
+            let currentTime = 0;
+            let totalTime = 0;
+            let isRunning = false;
+            let isPaused = false;
+            let currentPhase = 'focus'; // focus, break, long-break
+            let currentSession = 1;
+            let totalSessions = 0;
+            let currentStreak = 0;
+            let bestStreak = 0;
+            let sessionHistory = [];
+            let notificationPermission = false;
+            let blockedSitesList = [];
+            let activeSounds = {};
+            let breathingInterval = null;
+            let breathingPhase = 'inhale';
+            
+            // Load saved data
+            loadSavedData();
+            
+            // Event listeners
+            [sessionDuration, breakDuration, longBreakDuration, cyclesPerSession].forEach(element => {
+                element.addEventListener('change', updateSettings);
+            });
+            
+            volumeSlider.addEventListener('input', updateVolume);
+            
+            // Keyboard controls
+            document.addEventListener('keydown', function(e) {
+                if (e.code === 'Space') {
+                    e.preventDefault();
+                    if (isRunning) {
+                        pauseFocusSession();
+                    } else {
+                        startFocusSession();
+                    }
+                } else if (e.code === 'Escape') {
+                    stopFocusSession();
+                }
+            });
+            
+            function updateSettings() {
+                if (!isRunning) {
+                    resetTimer();
+                }
+            }
+            
+            function resetTimer() {
+                currentPhase = 'focus';
+                currentSession = 1;
+                currentTime = parseInt(sessionDuration.value) * 60;
+                totalTime = currentTime;
+                updateDisplay();
+                updatePhaseDisplay();
+            }
+            
+            window.startFocusSession = function() {
+                if (!isRunning) {
+                    isRunning = true;
+                    isPaused = false;
+                    startBtn.disabled = true;
+                    pauseBtn.disabled = false;
+                    stopBtn.disabled = false;
+                    
+                    timerDisplay.classList.add('active');
+                    
+                    timer = setInterval(() => {
+                        currentTime--;
+                        updateDisplay();
+                        
+                        if (currentTime <= 0) {
+                            completePhase();
+                        }
+                    }, 1000);
+                }
+            };
+            
+            window.pauseFocusSession = function() {
+                if (isRunning) {
+                    isRunning = false;
+                    isPaused = true;
+                    clearInterval(timer);
+                    startBtn.disabled = false;
+                    pauseBtn.disabled = true;
+                    timerDisplay.classList.remove('active');
+                }
+            };
+            
+            window.stopFocusSession = function() {
+                isRunning = false;
+                isPaused = false;
+                clearInterval(timer);
+                resetTimer();
+                startBtn.disabled = false;
+                pauseBtn.disabled = true;
+                stopBtn.disabled = true;
+                timerDisplay.classList.remove('active');
+            };
+            
+            function completePhase() {
+                clearInterval(timer);
+                isRunning = false;
+                
+                // Log session
+                const sessionData = {
+                    phase: currentPhase,
+                    duration: totalTime,
+                    completed: true,
+                    timestamp: new Date().toISOString()
+                };
+                sessionHistory.unshift(sessionData);
+                
+                // Show notification
+                if (notificationPermission) {
+                    showNotification();
+                }
+                
+                // Move to next phase
+                if (currentPhase === 'focus') {
+                    currentSession++;
+                    if (currentSession > parseInt(cyclesPerSession.value)) {
+                        // Session complete
+                        currentPhase = 'long-break';
+                        currentSession = 1;
+                        currentStreak++;
+                        if (currentStreak > bestStreak) {
+                            bestStreak = currentStreak;
+                        }
+                    } else {
+                        currentPhase = 'break';
+                    }
+                } else {
+                    currentPhase = 'focus';
+                }
+                
+                // Set new timer
+                if (currentPhase === 'focus') {
+                    currentTime = parseInt(sessionDuration.value) * 60;
+                } else if (currentPhase === 'break') {
+                    currentTime = parseInt(breakDuration.value) * 60;
+                } else if (currentPhase === 'long-break') {
+                    currentTime = parseInt(longBreakDuration.value) * 60;
+                }
+                
+                totalTime = currentTime;
+                updateDisplay();
+                updatePhaseDisplay();
+                updateStats();
+                updateHistory();
+                saveData();
+                
+                // Auto-start next phase
+                setTimeout(() => {
+                    startFocusSession();
+                }, 2000);
+            }
+            
+            function updateDisplay() {
+                const minutes = Math.floor(currentTime / 60);
+                const seconds = currentTime % 60;
+                timerTime.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                const progress = ((totalTime - currentTime) / totalTime) * 100;
+                timerProgressBar.style.width = `${progress}%`;
+                
+                // Update timer display class
+                timerDisplay.className = `timer-display ${currentPhase}`;
+            }
+            
+            function updatePhaseDisplay() {
+                const phaseNames = {
+                    'focus': 'Focus Session',
+                    'break': 'Short Break',
+                    'long-break': 'Long Break'
+                };
+                
+                timerStatus.textContent = phaseNames[currentPhase];
+                sessionCount.textContent = `Session ${currentSession} of ${cyclesPerSession.value}`;
+                
+                if (currentPhase === 'focus') {
+                    nextPhase.textContent = 'Next: Short Break';
+                } else if (currentPhase === 'break') {
+                    nextPhase.textContent = 'Next: Focus Session';
+                } else {
+                    nextPhase.textContent = 'Next: Focus Session';
+                }
+            }
+            
+            function updateStats() {
+                totalSessions = sessionHistory.filter(s => s.phase === 'focus').length;
+                
+                const totalFocusMinutes = sessionHistory
+                    .filter(s => s.phase === 'focus')
+                    .reduce((sum, s) => sum + s.duration, 0) / 60;
+                
+                document.getElementById('total-sessions').textContent = totalSessions;
+                document.getElementById('total-focus-time').textContent = `${Math.round(totalFocusMinutes / 60)}h`;
+                document.getElementById('current-streak').textContent = currentStreak;
+                document.getElementById('best-streak').textContent = bestStreak;
+            }
+            
+            function updateHistory() {
+                const recentSessions = sessionHistory.slice(0, 10);
+                const historyList = document.getElementById('history-list');
+                historyList.innerHTML = recentSessions.map(session => {
+                    const phaseNames = {
+                        'focus': 'Focus',
+                        'break': 'Break',
+                        'long-break': 'Long Break'
+                    };
+                    
+                    const duration = Math.round(session.duration / 60);
+                    const time = new Date(session.timestamp).toLocaleTimeString();
+                    
+                    return `
+                        <div class="history-item">
+                            <div class="history-phase">${phaseNames[session.phase]}</div>
+                            <div class="history-time">${duration}min - ${time}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            function showNotification() {
+                const phaseNames = {
+                    'focus': 'Focus session complete!',
+                    'break': 'Break time!',
+                    'long-break': 'Long break time!'
+                };
+                
+                new Notification(phaseNames[currentPhase], {
+                    body: 'Time for a break or to start focusing!',
+                    icon: '/assets/favicon.png'
+                });
+            }
+            
+            window.addBlockedSite = function() {
+                const siteInput = document.getElementById('blocked-site');
+                const site = siteInput.value.trim().toLowerCase();
+                
+                if (site && !blockedSitesList.includes(site)) {
+                    blockedSitesList.push(site);
+                    updateBlockedSitesDisplay();
+                    siteInput.value = '';
+                    saveData();
+                }
+            };
+            
+            function updateBlockedSitesDisplay() {
+                blockedSites.innerHTML = blockedSitesList.map(site => `
+                    <div class="site-tag">
+                        ${site}
+                        <span class="remove" onclick="removeBlockedSite('${site}')">×</span>
+                    </div>
+                `).join('');
+            }
+            
+            window.removeBlockedSite = function(site) {
+                blockedSitesList = blockedSitesList.filter(s => s !== site);
+                updateBlockedSitesDisplay();
+                saveData();
+            };
+            
+            window.toggleSound = function(soundName) {
+                const soundItem = document.querySelector(`[data-sound="${soundName}"]`);
+                
+                if (activeSounds[soundName]) {
+                    // Stop sound
+                    stopSound(soundName);
+                    soundItem.classList.remove('active');
+                } else {
+                    // Start sound
+                    startSound(soundName);
+                    soundItem.classList.add('active');
+                }
+            };
+            
+            function startSound(soundName) {
+                // In a real implementation, you would play actual audio files
+                // For this demo, we'll simulate sound activation
+                activeSounds[soundName] = {
+                    name: soundName,
+                    volume: parseInt(volumeSlider.value) / 100,
+                    startTime: Date.now()
+                };
+                
+                console.log(`Started ${soundName} sound at volume ${activeSounds[soundName].volume}`);
+            }
+            
+            function stopSound(soundName) {
+                if (activeSounds[soundName]) {
+                    delete activeSounds[soundName];
+                    console.log(`Stopped ${soundName} sound`);
+                }
+            }
+            
+            window.stopAllSounds = function() {
+                Object.keys(activeSounds).forEach(soundName => {
+                    stopSound(soundName);
+                    const soundItem = document.querySelector(`[data-sound="${soundName}"]`);
+                    soundItem.classList.remove('active');
+                });
+            };
+            
+            function updateVolume() {
+                const volume = parseInt(volumeSlider.value) / 100;
+                Object.keys(activeSounds).forEach(soundName => {
+                    activeSounds[soundName].volume = volume;
+                });
+            }
+            
+            window.startBreathingExercise = function() {
+                if (breathingInterval) return;
+                
+                breathingInterval = setInterval(() => {
+                    if (breathingPhase === 'inhale') {
+                        breathingCircle.classList.add('inhale');
+                        breathingCircle.classList.remove('exhale');
+                        breathingText.textContent = 'Inhale';
+                        breathingPhase = 'exhale';
+                    } else {
+                        breathingCircle.classList.add('exhale');
+                        breathingCircle.classList.remove('inhale');
+                        breathingText.textContent = 'Exhale';
+                        breathingPhase = 'inhale';
+                    }
+                }, 4000); // 4 seconds per phase
+            };
+            
+            window.stopBreathingExercise = function() {
+                if (breathingInterval) {
+                    clearInterval(breathingInterval);
+                    breathingInterval = null;
+                    breathingCircle.classList.remove('inhale', 'exhale');
+                    breathingText.textContent = 'Breathe';
+                    breathingPhase = 'inhale';
+                }
+            };
+            
+            window.requestNotificationPermission = function() {
+                if ('Notification' in window) {
+                    Notification.requestPermission().then(permission => {
+                        notificationPermission = permission === 'granted';
+                        if (notificationPermission) {
+                            alert('Notifications enabled! You will receive alerts when sessions complete.');
+                        } else {
+                            alert('Notifications not enabled. You can still use the timer without notifications.');
+                        }
+                    });
+                } else {
+                    alert('Your browser does not support notifications.');
+                }
+            };
+            
+            window.exportHistory = function() {
+                const csv = 'Phase,Duration (minutes),Completed,Timestamp\n' + 
+                    sessionHistory.map(session => 
+                        `${session.phase},${Math.round(session.duration / 60)},${session.completed},${session.timestamp}`
+                    ).join('\n');
+                
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'focus-session-history.csv';
+                link.click();
+                URL.revokeObjectURL(url);
+            };
+            
+            window.resetStats = function() {
+                if (confirm('Are you sure you want to reset all statistics? This cannot be undone.')) {
+                    sessionHistory = [];
+                    currentStreak = 0;
+                    bestStreak = 0;
+                    updateStats();
+                    updateHistory();
+                    saveData();
+                    alert('Statistics reset successfully!');
+                }
+            };
+            
+            function saveData() {
+                const data = {
+                    sessionHistory,
+                    currentStreak,
+                    bestStreak,
+                    blockedSitesList,
+                    settings: {
+                        sessionDuration: sessionDuration.value,
+                        breakDuration: breakDuration.value,
+                        longBreakDuration: longBreakDuration.value,
+                        cyclesPerSession: cyclesPerSession.value
+                    }
+                };
+                localStorage.setItem('focusModeData', JSON.stringify(data));
+            }
+            
+            function loadSavedData() {
+                const saved = localStorage.getItem('focusModeData');
+                if (saved) {
+                    try {
+                        const data = JSON.parse(saved);
+                        sessionHistory = data.sessionHistory || [];
+                        currentStreak = data.currentStreak || 0;
+                        bestStreak = data.bestStreak || 0;
+                        blockedSitesList = data.blockedSitesList || [];
+                        
+                        if (data.settings) {
+                            sessionDuration.value = data.settings.sessionDuration || 25;
+                            breakDuration.value = data.settings.breakDuration || 5;
+                            longBreakDuration.value = data.settings.longBreakDuration || 15;
+                            cyclesPerSession.value = data.settings.cyclesPerSession || 4;
+                        }
+                        
+                        updateStats();
+                        updateHistory();
+                        updateBlockedSitesDisplay();
+                    } catch (e) {
+                        console.error('Error loading saved data:', e);
+                    }
+                }
+            }
+            
+            // Initialize
+            resetTimer();
+            updateStats();
+            updateHistory();
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

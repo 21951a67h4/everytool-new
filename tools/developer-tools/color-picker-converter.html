@@ -1,0 +1,644 @@
+<!--
+    Color Picker & Hex/RGB Converter Tool Page
+    Built using the EveryTool.tech template.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Color Picker & Hex/RGB Converter | EveryTool.tech</title>
+
+    <meta name="description" content="Pick colors visually and convert between HEX, RGB, and HSL formats instantly. Perfect for designers and developers.">
+
+    <meta name="keywords" content="color picker, hex to rgb, rgb to hex, color converter, hsl converter">
+
+    <meta name="robots" content="index, follow">
+
+
+    <meta property="og:title" content="Color Picker & Hex/RGB Converter | EveryTool.tech">
+
+    <meta property="og:description" content="Select colors and convert between HEX, RGB, and HSL formats instantly in your browser.">
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:url" content="https://everytool.tech/color-picker-converter">
+
+
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    <style>
+        #header-placeholder {
+            min-height: 130px;
+            position: relative;
+            z-index: 2000;
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        .color-grid {
+            display: grid;
+            gap: 24px;
+        }
+        @media (min-width: 992px) {
+            .color-grid {
+                grid-template-columns: 1fr 1fr;
+                align-items: start;
+            }
+        }
+
+        .color-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            padding: 24px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .color-card__title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .color-picker-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .color-picker-display {
+            width: 100%;
+            max-width: 280px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 3px solid #e5e7eb;
+            cursor: pointer;
+            transition: border-color 0.2s ease, transform 0.15s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        .color-picker-display:hover {
+            border-color: #4f46e5;
+            transform: scale(1.02);
+        }
+
+        .color-picker-native {
+            opacity: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .color-format-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .color-format-label {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .color-format-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .color-format-input {
+            flex: 1;
+            border-radius: 12px;
+            border: 1px solid #cbd5f5;
+            padding: 12px 14px;
+            background: #f8f9ff;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.95rem;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+        .color-format-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.16);
+        }
+
+        .color-copy-btn {
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: none;
+            background: #4f46e5;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .color-copy-btn:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+        .color-copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .color-presets {
+            width: 100%;
+        }
+
+        .color-presets__title {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 10px;
+        }
+
+        .color-presets__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+            gap: 10px;
+        }
+
+        .color-preset-btn {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+            cursor: pointer;
+            transition: border-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+        .color-preset-btn:hover {
+            border-color: #4f46e5;
+            transform: scale(1.08);
+        }
+
+        .color-feedback {
+            font-size: 0.88rem;
+            color: #10b981;
+            min-height: 18px;
+            font-weight: 500;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body data-tool-name="Color Picker & Hex/RGB Converter" data-meta-description="Pick colors visually and convert between HEX, RGB, and HSL formats instantly.">
+
+    <div id="header-placeholder"></div>
+
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Color Picker & Converter</h1>
+
+                    <p class="tool-hero__description">
+                        Choose colors visually and instantly convert between HEX, RGB, and HSL formats. Perfect for designers, developers, and anyone working with colors.
+                    </p>
+
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-palette"></i> <span>Visual Color Picker</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-exchange-alt"></i> <span>Multi-Format Conversion</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-copy"></i> <span>Quick Copy Codes</span>
+                        </div>
+                    </div>
+
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-eye-dropper"></i>
+                            Pick a Color
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-info-circle"></i>
+                            Learn About Colors
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Color Picker & Format Converter</h2>
+                    <p class="tool-display__description">
+                        Click the color circle to open the picker, or manually enter values in any format. All conversions happen instantly.
+                    </p>
+                </div>
+
+                <div class="color-grid">
+                    <div class="color-card" aria-labelledby="picker-label">
+                        <h3 class="color-card__title" id="picker-label">Color Picker</h3>
+                        <p class="color-picker-description">Click the color circle to open the picker.</p>
+                        <div class="color-picker-wrapper">
+                            <div id="color-display" class="color-picker-display" role="button" tabindex="0" aria-label="Open color picker"></div>
+                            <input type="color" id="color-picker-native" class="color-picker-native" value="#4f46e5">
+                        </div>
+
+                        <div class="color-presets">
+                            <p class="color-presets__title">Quick Presets</p>
+                            <div class="color-presets__grid">
+                                <button class="color-preset-btn" style="background: #ef4444;" data-color="#ef4444" aria-label="Red"></button>
+                                <button class="color-preset-btn" style="background: #f97316;" data-color="#f97316" aria-label="Orange"></button>
+                                <button class="color-preset-btn" style="background: #f59e0b;" data-color="#f59e0b" aria-label="Amber"></button>
+                                <button class="color-preset-btn" style="background: #eab308;" data-color="#eab308" aria-label="Yellow"></button>
+                                <button class="color-preset-btn" style="background: #84cc16;" data-color="#84cc16" aria-label="Lime"></button>
+                                <button class="color-preset-btn" style="background: #22c55e;" data-color="#22c55e" aria-label="Green"></button>
+                                <button class="color-preset-btn" style="background: #10b981;" data-color="#10b981" aria-label="Emerald"></button>
+                                <button class="color-preset-btn" style="background: #14b8a6;" data-color="#14b8a6" aria-label="Teal"></button>
+                                <button class="color-preset-btn" style="background: #06b6d4;" data-color="#06b6d4" aria-label="Cyan"></button>
+                                <button class="color-preset-btn" style="background: #0ea5e9;" data-color="#0ea5e9" aria-label="Sky"></button>
+                                <button class="color-preset-btn" style="background: #3b82f6;" data-color="#3b82f6" aria-label="Blue"></button>
+                                <button class="color-preset-btn" style="background: #6366f1;" data-color="#6366f1" aria-label="Indigo"></button>
+                                <button class="color-preset-btn" style="background: #8b5cf6;" data-color="#8b5cf6" aria-label="Violet"></button>
+                                <button class="color-preset-btn" style="background: #a855f7;" data-color="#a855f7" aria-label="Purple"></button>
+                                <button class="color-preset-btn" style="background: #d946ef;" data-color="#d946ef" aria-label="Fuchsia"></button>
+                                <button class="color-preset-btn" style="background: #ec4899;" data-color="#ec4899" aria-label="Pink"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="color-card" aria-labelledby="formats-label">
+                        <h3 class="color-card__title" id="formats-label">Color Formats</h3>
+
+                        <div class="color-format-group">
+                            <label class="color-format-label" for="hex-input">
+                                <i class="fas fa-hashtag"></i>
+                                HEX
+                            </label>
+                            <div class="color-format-input-group">
+                                <input type="text" id="hex-input" class="color-format-input" placeholder="#4f46e5" value="#4f46e5">
+                                <button class="color-copy-btn" data-copy="hex" aria-label="Copy HEX">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="color-format-group">
+                            <label class="color-format-label" for="rgb-input">
+                                <i class="fas fa-cube"></i>
+                                RGB
+                            </label>
+                            <div class="color-format-input-group">
+                                <input type="text" id="rgb-input" class="color-format-input" placeholder="rgb(79, 70, 229)" readonly>
+                                <button class="color-copy-btn" data-copy="rgb" aria-label="Copy RGB">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="color-format-group">
+                            <label class="color-format-label" for="hsl-input">
+                                <i class="fas fa-adjust"></i>
+                                HSL
+                            </label>
+                            <div class="color-format-input-group">
+                                <input type="text" id="hsl-input" class="color-format-input" placeholder="hsl(243, 78%, 59%)" readonly>
+                                <button class="color-copy-btn" data-copy="hsl" aria-label="Copy HSL">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <p id="color-feedback" class="color-feedback" role="status" aria-live="polite"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Color Formats</h2>
+                <p class="tool-blog__subtitle">Learn when to use HEX, RGB, or HSL in your design and development projects.</p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">HEX Color Format</h3>
+                    <div class="blog-section__content">
+                        <p>HEX (hexadecimal) colors use a 6-digit code prefixed with #. The format is #RRGGBB where each pair represents red, green, and blue values from 00 to FF. HEX is the most common format in web design due to its compact representation and universal browser support.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">RGB Color Format</h3>
+                    <div class="blog-section__content">
+                        <p>RGB (Red, Green, Blue) uses decimal values from 0 to 255 for each color channel. The format is rgb(red, green, blue). RGB is intuitive and widely used in CSS. It also supports alpha transparency with rgba(r, g, b, alpha) where alpha ranges from 0 (transparent) to 1 (opaque).</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">HSL Color Format</h3>
+                    <div class="blog-section__content">
+                        <p>HSL (Hue, Saturation, Lightness) represents colors in a more human-friendly way. Hue is a degree on the color wheel (0-360), saturation is a percentage (0% gray to 100% full color), and lightness is also a percentage (0% black to 100% white). HSL makes it easier to create color variations and maintain consistent palettes.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Which Format Should You Use?</h3>
+                    <div class="blog-section__content">
+                        <ul>
+                            <li><strong>HEX:</strong> Best for static colors in stylesheets and design specs.</li>
+                            <li><strong>RGB:</strong> Ideal when you need transparency (rgba) or programmatic color manipulation.</li>
+                            <li><strong>HSL:</strong> Perfect for creating color themes, gradients, and maintaining visual harmony.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Common questions about color formats and conversion.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Are HEX and RGB the same?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, they represent the same color information but in different formats. HEX uses hexadecimal notation (#RRGGBB) while RGB uses decimal values (0-255). Both define the same red, green, and blue components.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I add transparency to colors?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Use rgba() or hsla() formats to add an alpha channel. For example, rgba(79, 70, 229, 0.5) creates a 50% transparent indigo. HEX also supports 8-digit format (#RRGGBBAA) though browser support varies.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Why use HSL over HEX or RGB?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>HSL is more intuitive for creating color variations. You can easily adjust lightness for hover states or change saturation for muted tones without recalculating RGB values. It's especially useful for design systems and theming.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is this tool accurate for design work?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, the conversions use standard algorithms and match CSS specifications. However, different displays may render colors differently due to color profiles and calibration. For precise print work, use professional color management tools.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../FAQ section/faq.js" defer></script>
+    <script src="/universal-search-deploy.js" defer></script>
+    <script>
+        (function () {
+            var elements = {
+                display: document.getElementById('color-display'),
+                picker: document.getElementById('color-picker-native'),
+                hexInput: document.getElementById('hex-input'),
+                rgbInput: document.getElementById('rgb-input'),
+                hslInput: document.getElementById('hsl-input'),
+                feedback: document.getElementById('color-feedback'),
+                presetButtons: document.querySelectorAll('.color-preset-btn'),
+                copyButtons: document.querySelectorAll('.color-copy-btn')
+            };
+
+            var feedbackTimeout = null;
+
+            function setFeedback(message, duration) {
+                if (duration === void 0) {
+                    duration = 2800;
+                }
+                if (feedbackTimeout !== null) {
+                    clearTimeout(feedbackTimeout);
+                    feedbackTimeout = null;
+                }
+                elements.feedback.textContent = message;
+                if (message && duration > 0) {
+                    feedbackTimeout = setTimeout(function () {
+                        elements.feedback.textContent = '';
+                        feedbackTimeout = null;
+                    }, duration);
+                }
+            }
+
+            function hexToRgb(hex) {
+                var sanitized = hex.replace('#', '');
+                if (sanitized.length === 3) {
+                    sanitized = sanitized.split('').map(function (c) {
+                        return c + c;
+                    }).join('');
+                }
+                var num = parseInt(sanitized, 16);
+                return {
+                    r: (num >> 16) & 255,
+                    g: (num >> 8) & 255,
+                    b: num & 255
+                };
+            }
+
+            function rgbToHsl(r, g, b) {
+                r /= 255;
+                g /= 255;
+                b /= 255;
+                var max = Math.max(r, g, b);
+                var min = Math.min(r, g, b);
+                var h = 0;
+                var s = 0;
+                var l = (max + min) / 2;
+
+                if (max !== min) {
+                    var d = max - min;
+                    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                    switch (max) {
+                        case r:
+                            h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+                            break;
+                        case g:
+                            h = ((b - r) / d + 2) / 6;
+                            break;
+                        case b:
+                            h = ((r - g) / d + 4) / 6;
+                            break;
+                    }
+                }
+
+                return {
+                    h: Math.round(h * 360),
+                    s: Math.round(s * 100),
+                    l: Math.round(l * 100)
+                };
+            }
+
+            function updateColorFromHex(hex) {
+                if (!/^#[0-9A-Fa-f]{3,6}$/.test(hex)) {
+                    return;
+                }
+
+                elements.picker.value = hex;
+                elements.display.style.backgroundColor = hex;
+
+                var rgb = hexToRgb(hex);
+                elements.rgbInput.value = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
+
+                var hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+                elements.hslInput.value = 'hsl(' + hsl.h + ', ' + hsl.s + '%, ' + hsl.l + '%)';
+            }
+
+            elements.picker.addEventListener('input', function () {
+                var hex = elements.picker.value;
+                elements.hexInput.value = hex;
+                updateColorFromHex(hex);
+            });
+
+            elements.display.addEventListener('click', function () {
+                elements.picker.click();
+            });
+
+            elements.display.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    elements.picker.click();
+                }
+            });
+
+            elements.hexInput.addEventListener('input', function () {
+                var value = elements.hexInput.value.trim();
+                if (value && !value.startsWith('#')) {
+                    value = '#' + value;
+                    elements.hexInput.value = value;
+                }
+                updateColorFromHex(value);
+            });
+
+            elements.presetButtons.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var color = btn.getAttribute('data-color');
+                    elements.hexInput.value = color;
+                    updateColorFromHex(color);
+                    setFeedback('Preset color applied.', 2200);
+                });
+            });
+
+            elements.copyButtons.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var format = btn.getAttribute('data-copy');
+                    var text = '';
+                    var label = '';
+
+                    switch (format) {
+                        case 'hex':
+                            text = elements.hexInput.value;
+                            label = 'HEX';
+                            break;
+                        case 'rgb':
+                            text = elements.rgbInput.value;
+                            label = 'RGB';
+                            break;
+                        case 'hsl':
+                            text = elements.hslInput.value;
+                            label = 'HSL';
+                            break;
+                    }
+
+                    if (!text) {
+                        setFeedback('No color to copy.', 2200);
+                        return;
+                    }
+
+                    function onSuccess() {
+                        setFeedback(label + ' copied to clipboard.', 2400);
+                    }
+                    function onFailure() {
+                        setFeedback('Copy failed. Select text manually.', 3000);
+                    }
+
+                    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+                        navigator.clipboard.writeText(text).then(onSuccess, onFailure);
+                    } else {
+                        var temp = document.createElement('textarea');
+                        temp.value = text;
+                        temp.setAttribute('readonly', '');
+                        temp.style.position = 'fixed';
+                        temp.style.top = '0';
+                        temp.style.left = '0';
+                        temp.style.opacity = '0';
+                        document.body.appendChild(temp);
+                        temp.focus();
+                        temp.select();
+                        try {
+                            if (document.execCommand('copy')) {
+                                onSuccess();
+                            } else {
+                                onFailure();
+                            }
+                        } catch (err) {
+                            onFailure();
+                        }
+                        document.body.removeChild(temp);
+                    }
+                });
+            });
+
+            updateColorFromHex('#4f46e5');
+        })();
+    </script>
+
+</body>
+</html>
+

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Difference Checker (Diff Tool) | EveryTool.tech</title>
+    <meta name="description" content="Side-by-side diff with line/word mode, color highlights, ignore whitespace/case, export unified diff, merge output, print-friendly report.">
+    <link rel="icon" type="image/svg+xml" href="../../assets/SVG/favicon.svg">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root{--added:#dcfce7;--removed:#fee2e2;--changed:#fef9c3;--primary:#4361EE}
+        body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#111827}
+        #header-placeholder{min-height:130px}
+        .container{max-width:1200px;margin:0 auto;padding:1rem}
+        .grid{display:grid;grid-template-columns:1fr;gap:1rem}
+        @media(min-width:1100px){.grid{grid-template-columns:1fr 1fr}}
+        .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:1rem;box-shadow:0 4px 10px rgba(0,0,0,.04)}
+        textarea{width:100%;min-height:280px;border:1px solid #e5e7eb;border-radius:12px;padding:.8rem;font-family:ui-monospace,Consolas,monospace}
+        .row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+        .btn{background:var(--primary);color:#fff;border:none;border-radius:10px;padding:.6rem .9rem;cursor:pointer}
+        .btn.ghost{background:transparent;border:1px solid #e5e7eb;color:#111827}
+        .diff{font-family:ui-monospace,Consolas,monospace;border:1px solid #e5e7eb;border-radius:10px;overflow:auto;max-height:420px}
+        .diff-line{display:flex;gap:.75rem;padding:.2rem .5rem;border-bottom:1px solid #f3f4f6}
+        .ln{width:3ch;text-align:right;color:#6b7280}
+        .add{background:var(--added)}
+        .del{background:var(--removed)}
+        .chg{background:var(--changed)}
+        .controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.5rem}
+        .badge{background:#eef2ff;border:1px solid #c7d2fe;border-radius:999px;padding:2px 8px}
+        .print-area{display:none}
+        @media print { .no-print{display:none} .print-area{display:block} }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <main class="container">
+        <h1>Text Difference Checker</h1>
+        <p>Compare two texts side-by-side. Toggle line or word mode, ignore whitespace or case, export unified diff, or merge results.</p>
+
+        <div class="grid no-print">
+            <section class="card">
+                <div class="row">
+                    <strong>Left (A)</strong>
+                    <button class="btn ghost" id="paste-a">Paste</button>
+                    <label class="btn ghost" for="file-a">Upload</label>
+                    <input id="file-a" type="file" accept=".txt,.md,.csv,.json" style="display:none">
+                </div>
+                <textarea id="text-a" placeholder="Original text..."></textarea>
+            </section>
+            <section class="card">
+                <div class="row">
+                    <strong>Right (B)</strong>
+                    <button class="btn ghost" id="paste-b">Paste</button>
+                    <label class="btn ghost" for="file-b">Upload</label>
+                    <input id="file-b" type="file" accept=".txt,.md,.csv,.json" style="display:none">
+                </div>
+                <textarea id="text-b" placeholder="Modified text..."></textarea>
+            </section>
+        </div>
+
+        <section class="card no-print">
+            <div class="controls">
+                <div><input type="radio" name="mode" id="mode-line" checked> <label for="mode-line">Line-based</label></div>
+                <div><input type="radio" name="mode" id="mode-word"> <label for="mode-word">Word-based</label></div>
+                <div><input type="checkbox" id="ignore-space"> <label for="ignore-space">Ignore whitespace</label></div>
+                <div><input type="checkbox" id="ignore-case"> <label for="ignore-case">Ignore case</label></div>
+                <div><button class="btn" id="run">Run Diff</button></div>
+                <div><button class="btn ghost" id="export-unified">Export Unified Diff</button></div>
+                <div><button class="btn ghost" id="merge-accept-a">Accept A→B</button></div>
+                <div><button class="btn ghost" id="merge-accept-b">Accept B→A</button></div>
+                <div><button class="btn ghost" id="print">Print Report</button></div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="row"><strong>Results</strong><span class="badge" id="stats">—</span></div>
+            <div id="diff" class="diff"></div>
+        </section>
+        <section class="print-area">
+            <h2>Text Difference Report</h2>
+            <div id="print-diff"></div>
+        </section>
+    </main>
+    <div id="footer-placeholder"></div>
+
+    <script src="/app-loader.js" defer></script>
+    <script>
+    (function(){
+        const A = document.getElementById('text-a');
+        const B = document.getElementById('text-b');
+        const diffEl = document.getElementById('diff');
+        const statsEl = document.getElementById('stats');
+        const printDiff = document.getElementById('print-diff');
+
+        const splitWords = (s)=> s.split(/(\s+)/);
+        const normalize = (s, opts)=>{
+            if (opts.ignoreSpace) s = s.replace(/\s+/g, ' ');
+            if (opts.ignoreCase) s = s.toLowerCase();
+            return s;
+        };
+        function lcs(a, b){
+            const n=a.length, m=b.length; const dp=Array.from({length:n+1},()=>Array(m+1).fill(0));
+            for(let i=1;i<=n;i++) for(let j=1;j<=m;j++) dp[i][j]=a[i-1]===b[j-1]? dp[i-1][j-1]+1 : Math.max(dp[i-1][j], dp[i][j-1]);
+            const seq=[]; let i=n, j=m; while(i>0 && j>0){ if(a[i-1]===b[j-1]){ seq.unshift(a[i-1]); i--; j--; } else if(dp[i-1][j]>=dp[i][j-1]) i--; else j--; }
+            return seq;
+        }
+        function diffArrays(a, b){
+            const common = lcs(a, b);
+            const res=[]; let i=0, j=0, k=0;
+            while(i<a.length || j<b.length){
+                if (k<common.length && a[i]===common[k] && b[j]===common[k]){ res.push({type:'equal', value:a[i]}); i++; j++; k++; continue; }
+                if (i<a.length && (!common[k] || a[i]!==common[k])){ res.push({type:'del', value:a[i++]}); continue; }
+                if (j<b.length && (!common[k] || b[j]!==common[k])){ res.push({type:'add', value:b[j++]}); continue; }
+            }
+            return res;
+        }
+        function buildUnified(aText, bText){
+            const a = aText.split(/\r?\n/); const b = bText.split(/\r?\n/);
+            const hunks = []; let i=0, j=0;
+            while(i<a.length || j<b.length){
+                if (a[i]===b[j]){ i++; j++; continue; }
+                const startA=i+1, startB=j+1; const lines=[];
+                while(i<a.length && j<b.length && a[i]!==b[j]){ lines.push('- '+a[i++]); lines.push('+ '+b[j++]); }
+                while(i<a.length && (j>=b.length)){ lines.push('- '+a[i++]); }
+                while(j<b.length && (i>=a.length)){ lines.push('+ '+b[j++]); }
+                const endA=i, endB=j; hunks.push({startA, lenA:Math.max(1,endA-startA+1), startB, lenB:Math.max(1,endB-startB+1), lines});
+            }
+            const header = '--- a\n+++ b\n';
+            const body = hunks.map(h=>`@@ -${h.startA},${h.lenA} +${h.startB},${h.lenB} @@\n${h.lines.join('\n')}`).join('\n');
+            return header + body + (body? '\n' : '');
+        }
+        function render(){
+            const opts={ ignoreSpace: document.getElementById('ignore-space').checked, ignoreCase: document.getElementById('ignore-case').checked };
+            const modeWord = document.getElementById('mode-word').checked;
+            const aLines = A.value.split(/\r?\n/);
+            const bLines = B.value.split(/\r?\n/);
+            let added=0, removed=0, changed=0;
+            diffEl.innerHTML=''; printDiff.innerHTML='';
+            const max = Math.max(aLines.length, bLines.length);
+            for(let idx=0; idx<max; idx++){
+                const aLineRaw = aLines[idx] ?? ''; const bLineRaw = bLines[idx] ?? '';
+                const aLine = normalize(aLineRaw, opts); const bLine = normalize(bLineRaw, opts);
+                if (aLine === bLine){
+                    const row=document.createElement('div'); row.className='diff-line';
+                    row.innerHTML = `<span class="ln">${idx+1}</span><pre>${aLineRaw.replace(/</g,'&lt;')}</pre>`;
+                    diffEl.appendChild(row); continue;
+                }
+                if (!modeWord){
+                    const row=document.createElement('div'); row.className='diff-line chg'; changed++;
+                    row.innerHTML = `<span class="ln">${idx+1}</span><pre>- ${aLineRaw.replace(/</g,'&lt;')}</pre><pre>+ ${bLineRaw.replace(/</g,'&lt;')}</pre>`;
+                    diffEl.appendChild(row);
+                } else {
+                    const aW = splitWords(aLineRaw); const bW = splitWords(bLineRaw);
+                    const ops = diffArrays(aW, bW);
+                    const preA = document.createElement('pre'); const preB = document.createElement('pre');
+                    ops.forEach(op=>{
+                        if (op.type==='equal'){ preA.append(op.value); preB.append(op.value); }
+                        if (op.type==='del'){ const s=document.createElement('span'); s.className='del'; s.textContent=op.value; preA.appendChild(s); removed++; }
+                        if (op.type==='add'){ const s=document.createElement('span'); s.className='add'; s.textContent=op.value; preB.appendChild(s); added++; }
+                    });
+                    const row=document.createElement('div'); row.className='diff-line';
+                    const ln=document.createElement('span'); ln.className='ln'; ln.textContent=String(idx+1);
+                    row.append(ln, preA, preB); diffEl.appendChild(row);
+                }
+            }
+            statsEl.textContent = `${added} added, ${removed} removed, ${changed} changed`;
+            printDiff.textContent = buildUnified(A.value, B.value);
+        }
+
+        document.getElementById('run').addEventListener('click', render);
+        document.getElementById('export-unified').addEventListener('click', ()=>{
+            const blob = new Blob([document.getElementById('print-diff').textContent], {type:'text/plain'});
+            const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='changes.diff'; a.click(); URL.revokeObjectURL(a.href);
+        });
+        document.getElementById('merge-accept-a').addEventListener('click', ()=>{ B.value = A.value; render(); });
+        document.getElementById('merge-accept-b').addEventListener('click', ()=>{ A.value = B.value; render(); });
+        document.getElementById('print').addEventListener('click', ()=>{ window.print(); });
+        document.getElementById('paste-a').addEventListener('click', async ()=>{ try{ const t=await navigator.clipboard.readText(); if(t){ A.value=t; } }catch(e){} });
+        document.getElementById('paste-b').addEventListener('click', async ()=>{ try{ const t=await navigator.clipboard.readText(); if(t){ B.value=t; } }catch(e){} });
+        document.getElementById('file-a').addEventListener('change', async (e)=>{ const f=e.target.files[0]; if(!f) return; A.value=await f.text(); e.target.value=''; });
+        document.getElementById('file-b').addEventListener('change', async (e)=>{ const f=e.target.files[0]; if(!f) return; B.value=await f.text(); e.target.value=''; });
+        render();
+    })();
+    </script>
+    <script src="/back-to-top.js"></script>
+</body>
+</html>
+
+

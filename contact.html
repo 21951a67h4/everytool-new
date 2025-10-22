@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Back to top button -->
     <link rel="stylesheet" href="back-to-top.css">
-    <script src="back-to-top.js"></script>
+    <script src="/back-to-top.js"></script>
     <style>
         :root {
             /* Your provided main website color theme */
@@ -549,34 +549,8 @@
             };
 
             // Main loading sequence
-            Promise.all([
-                loadComponent('header.html', 'header-placeholder'), // Direct path for Root Files
-                loadComponent('footer.html', 'footer-placeholder')   // Direct path for Root Files
-            ])
-            .then(() => {
-                console.log("Header and Footer fetched. Now loading header-search.js.");
-                // Give DOM a moment to settle after innerHTML.
-                return new Promise(resolve => setTimeout(resolve, 100)) 
-                    .then(() => Promise.all([
-                        loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2'),
-                        loadScript('header-search.js') // Direct path for Root Files
-                    ]));
-            })
-            .then(() => {
-                console.log("All main scripts loaded. Initializing contact page specific features.");
-                // Initialize Header Search if the function exists
-                if (typeof initializeHeader === 'function') {
-                    initializeHeader(); 
-                    console.log('initializeHeader function called for global search.');
-                } else {
-                    console.warn('initializeHeader function not found in header-search.js. Global search might not work.');
-                }
-                // Initialize contact form specific JS
-                setupContactForm();
-            })
-            .catch(error => {
-                console.error('CRITICAL ERROR during page loading process:', error);
-            });
+            // Header/footer now loaded by app-loader.js
+            setupContactForm();
         });
 
         // --- Contact Form Specific JavaScript ---
@@ -708,6 +682,7 @@
             }
         }
     </script>
+    <script src="/app-loader.js" defer></script>
 </body>
 </html>
 </html>

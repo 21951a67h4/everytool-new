@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Format Converter (MP3/WAV/OGG) | EveryTool.tech</title>
+    <meta name="description" content="Convert audio between MP3, WAV, and OGG in your browser. Choose bitrate, trim start/end, boost volume, batch convert, preview, and download or ZIP.">
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <style>
+        #header-placeholder { min-height: 130px; position: relative; z-index: 2000; }
+        @media (max-width: 768px){ #header-placeholder{ min-height: 64px; } }
+        .queue { margin-top: 1rem; display: grid; gap: .5rem; }
+        .queue-item { display:flex; align-items:center; justify-content: space-between; background:#fff; border:1px solid var(--bg-accent); border-radius: var(--radius-md); padding:.5rem .75rem; }
+        audio { width:100%; margin-top:.5rem; }
+        /* UI normalization overrides */
+        .tool-display__button { min-height: 40px; padding: 0.5rem 1rem; font-size: 0.95rem; }
+        .tool-display__file-label { padding: 0.75rem; }
+        .tool-display__wrapper { padding: 1.5rem; }
+        .tool-display__controls { gap: 0.5rem; }
+        .queue .tool-display__button.tool-display__button--secondary { padding: 0.4rem 0.8rem; }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Audio Format Converter</h1>
+                    <p class="tool-hero__description">Batch convert audio to MP3, WAV, or OGG with bitrate, trimming, and volume boost — locally in your browser.</p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature"><i class="fas fa-music"></i><span>MP3/WAV/OGG</span></div>
+                        <div class="tool-feature"><i class="fas fa-sliders-h"></i><span>Bitrate & Trim</span></div>
+                        <div class="tool-feature"><i class="fas fa-volume-up"></i><span>Volume Boost</span></div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary"><i class="fas fa-play"></i> Use Tool Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Convert Audio</h2>
+                    <p class="tool-display__description">Files are processed with WebAssembly in your browser. For large files, conversion may take time.</p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__file-upload">
+                            <input id="fileInput" type="file" class="tool-display__file-input" accept="audio/*" multiple>
+                            <label for="fileInput" class="tool-display__file-label"><i class="fas fa-cloud-upload-alt"></i><span>Choose or drop audio files</span></label>
+                        </div>
+                        <div class="tool-display__controls">
+                            <div class="tool-display__input-group" style="min-width:160px;">
+                                <label for="format" class="tool-display__label">Output Format</label>
+                                <select id="format" class="tool-display__input">
+                                    <option value="mp3">MP3</option>
+                                    <option value="wav">WAV</option>
+                                    <option value="ogg">OGG</option>
+                                </select>
+                            </div>
+                            <div class="tool-display__input-group" style="min-width:160px;">
+                                <label for="bitrate" class="tool-display__label">Bitrate/Quality</label>
+                                <select id="bitrate" class="tool-display__input">
+                                    <option value="128k">128k</option>
+                                    <option value="192k">192k</option>
+                                    <option value="256k">256k</option>
+                                    <option value="320k">320k</option>
+                                </select>
+                            </div>
+                            <div class="tool-display__input-group" style="min-width:120px;">
+                                <label for="trimStart" class="tool-display__label">Trim Start (s)</label>
+                                <input id="trimStart" type="number" min="0" step="0.1" class="tool-display__input" value="0">
+                            </div>
+                            <div class="tool-display__input-group" style="min-width:120px;">
+                                <label for="trimEnd" class="tool-display__label">Trim End (s)</label>
+                                <input id="trimEnd" type="number" min="0" step="0.1" class="tool-display__input" value="0">
+                            </div>
+                            <div class="tool-display__input-group" style="min-width:160px;">
+                                <label for="volume" class="tool-display__label">Volume Boost (dB)</label>
+                                <input id="volume" type="number" step="0.5" class="tool-display__input" value="0">
+                            </div>
+                            <button id="convertAllBtn" class="tool-display__button"><i class="fas fa-sync"></i> Convert All</button>
+                            <button id="downloadZipBtn" class="tool-display__button tool-display__button--secondary"><i class="fas fa-file-archive"></i> Download ZIP</button>
+                        </div>
+                        <div class="queue" id="queue"></div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <div id="preview"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/ffmpeg.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>
+    const q=(s,d=document)=>d.querySelector(s); const qa=(s,d=document)=>Array.from(d.querySelectorAll(s));
+    const fileInput=q('#fileInput'); const queueEl=q('#queue'); const convertAllBtn=q('#convertAllBtn'); const downloadZipBtn=q('#downloadZipBtn');
+    const formatSel=q('#format'); const bitrateSel=q('#bitrate'); const trimStart=q('#trimStart'); const trimEnd=q('#trimEnd'); const volume=q('#volume');
+    const queue=[]; // {file,name,status,outBlob}
+    let ffmpeg; let ffmpegReady=false;
+
+    async function ensureFF(){
+        if(ffmpegReady) return;
+        // prefer new API if available
+        if (FFmpeg && typeof FFmpeg.createFFmpeg === 'function') {
+            ffmpeg = FFmpeg.createFFmpeg({ log: false });
+            await ffmpeg.load();
+            ffmpeg.exec = async (args)=> ffmpeg.run(...args);
+            ffmpeg.writeFile = async (name, data)=> ffmpeg.FS('writeFile', name, new Uint8Array(data));
+            ffmpeg.readFile = async (name)=> ffmpeg.FS('readFile', name);
+        } else {
+            ffmpeg = new FFmpeg.FFmpeg();
+            await ffmpeg.load();
+        }
+        ffmpegReady=true;
+    }
+    function addToQueue(files){ [...files].forEach(f=> queue.push({file:f,name:f.name,status:'Ready',outBlob:null})); renderQueue(); }
+    function renderQueue(){ queueEl.innerHTML=''; queue.forEach((it,idx)=>{ const row=document.createElement('div'); row.className='queue-item'; row.innerHTML=`<div style="display:flex;align-items:center;gap:.5rem;"><i class=\"fas fa-music\" style=\"color:var(--primary)\"></i><span>${it.name}</span></div><div style=\"display:flex;gap:.5rem;\"><span class=\"help\">${it.status}</span><button data-idx=${idx} data-act=\"convert\" class=\"tool-display__button--secondary\">Convert</button><button data-idx=${idx} data-act=\"download\" class=\"tool-display__button--secondary\" ${it.outBlob?'':'disabled'}>Download</button></div>`; queueEl.appendChild(row); }); }
+    async function transcode(item){
+        await ensureFF();
+        item.status='Converting...'; renderQueue();
+        const inName='in_'+Math.random().toString(36).slice(2)+item.name.substring(item.name.lastIndexOf('.')); const outName='out.'+formatSel.value;
+        await ffmpeg.writeFile(inName, await item.file.arrayBuffer());
+        const args=['-i', inName];
+        const start=parseFloat(trimStart.value)||0; const end=parseFloat(trimEnd.value)||0; if(start>0) args.push('-ss', String(start)); if(end>0) args.push('-to', String(end));
+        const vol=parseFloat(volume.value)||0; if(vol!==0) args.push('-filter:a', `volume=${vol}dB`);
+        if(formatSel.value==='mp3'){ args.push('-b:a', bitrateSel.value); }
+        if(formatSel.value==='ogg'){ args.push('-c:a','libvorbis','-q:a','5'); }
+        args.push(outName);
+        await ffmpeg.exec(args);
+        const data = await ffmpeg.readFile(outName);
+        item.outBlob = new Blob([data.buffer], { type: `audio/${formatSel.value==='mp3'?'mpeg':formatSel.value}` });
+        item.status='Done'; renderQueue();
+    }
+    async function convertAll(){ for(const it of queue){ if(!it.outBlob) await transcode(it); } }
+    async function downloadZip(){ const zip=new JSZip(); for(const it of queue){ if(!it.outBlob) await transcode(it); zip.file(it.name.replace(/\.[^.]+$/,'.'+formatSel.value), it.outBlob); } const content=await zip.generateAsync({type:'blob'}); const a=document.createElement('a'); a.href=URL.createObjectURL(content); a.download='audio-converted.zip'; a.click(); URL.revokeObjectURL(a.href); }
+
+    fileInput.addEventListener('change', e=> addToQueue(e.target.files));
+    queueEl.addEventListener('click', async e=>{ const btn=e.target.closest('button'); if(!btn) return; const idx=+btn.dataset.idx; const act=btn.dataset.act; const it=queue[idx]; if(!it) return; if(act==='convert') await transcode(it); if(act==='download'&&it.outBlob){ const a=document.createElement('a'); a.href=URL.createObjectURL(it.outBlob); a.download=it.name.replace(/\.[^.]+$/,'.'+formatSel.value); a.click(); URL.revokeObjectURL(a.href);} });
+    convertAllBtn.addEventListener('click', convertAll);
+    downloadZipBtn.addEventListener('click', downloadZip);
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const loadScript = (src) => new Promise((resolve, reject) => { const s=document.createElement('script'); s.src=src; s.onload=()=>resolve(s); s.onerror=()=>reject(new Error('load '+src)); document.body.appendChild(s); });
+        const loadHeader = () => { const el=document.getElementById('header-placeholder'); if(!el) return; fetch('/header.html').then(r=>r.ok?r.text():Promise.reject('header')).then(html=>{ el.innerHTML=html; return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2'); }).then(()=>loadScript('/header-search.js')).then(()=>{ if(typeof initializeHeader==='function') initializeHeader(); }).catch(console.error); };
+        const loadFooter = () => { const el=document.getElementById('footer-placeholder'); if(!el) return; fetch('/footer.html').then(r=>r.ok?r.text():Promise.reject('footer')).then(html=>{ el.innerHTML=html; }).catch(console.error); };
+        loadHeader(); loadFooter();
+    });
+    </script>
+    <script src="/app-loader.js" defer></script>
+</body>
+</html>
+
+

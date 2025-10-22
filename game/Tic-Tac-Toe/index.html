@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe - Classic Two Player Game | EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Play Tic-Tac-Toe - the classic two-player game. Get three in a row to win!">
+</head>
+<body>
+    <!-- Game Controls -->
+    <div class="game-controls">
+        <button id="back-btn" class="back-btn" aria-label="Go back">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="switch-track">
+                <span class="switch-thumb">
+                    <i class="fas fa-moon theme-icon moon-icon"></i>
+                    <i class="fas fa-sun theme-icon sun-icon"></i>
+                </span>
+            </span>
+        </label>
+    </div>
+
+    <main class="game-container" role="main">
+        <div class="game-header">
+            <h1 class="game-title">Tic-Tac-Toe</h1>
+            <p class="game-subtitle">Get three in a row to win!</p>
+        </div>
+
+        <div class="game-mode-selector">
+            <div class="mode-options">
+                <button id="two-player-mode" class="mode-btn active">
+                    <i class="fas fa-users"></i>
+                    Two Players
+                </button>
+                <button id="vs-computer-mode" class="mode-btn">
+                    <i class="fas fa-robot"></i>
+                    vs Computer
+                </button>
+            </div>
+        </div>
+
+        <div class="game-settings" id="game-settings">
+            <div class="player-names">
+                <div class="player-input">
+                    <label for="player-x-name">Player X Name:</label>
+                    <input type="text" id="player-x-name" value="Player X" maxlength="15">
+                </div>
+                <div class="player-input">
+                    <label for="player-o-name">Player O Name:</label>
+                    <input type="text" id="player-o-name" value="Player O" maxlength="15">
+                </div>
+            </div>
+            <div class="difficulty-selector" id="difficulty-selector" style="display: none;">
+                <label for="difficulty">Computer Difficulty:</label>
+                <select id="difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="game-stats">
+            <div class="stat">
+                <span class="stat-label" id="player-x-label">Player X</span>
+                <span id="score-x" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Current Turn</span>
+                <span id="current-player" class="stat-value">X</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label" id="player-o-label">Player O</span>
+                <span id="score-o" class="stat-value">0</span>
+            </div>
+        </div>
+
+        <div class="game-board-container">
+            <div id="game-board" class="game-board" role="grid" aria-label="3 by 3 Tic-Tac-Toe game board">
+                <!-- Cells will be dynamically generated -->
+            </div>
+        </div>
+
+        <div class="game-controls-panel">
+            <button id="new-game" class="btn primary">
+                <i class="fas fa-plus"></i>
+                New Game
+            </button>
+            <button id="reset-scores" class="btn secondary">
+                <i class="fas fa-redo"></i>
+                Reset Scores
+            </button>
+        </div>
+
+        <div class="game-status">
+            <div id="game-message" class="game-message">Player X's turn</div>
+        </div>
+
+        <div class="game-instructions">
+            <p><strong>How to play:</strong></p>
+            <ul>
+                <li><strong>Two players</strong> take turns placing X and O</li>
+                <li><strong>Goal:</strong> Get three of your symbols in a row (horizontal, vertical, or diagonal)</li>
+                <li><strong>Click</strong> on any empty cell to place your symbol</li>
+                <li><strong>Winner</strong> gets a point, ties don't count</li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- Win Modal -->
+    <div id="win-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="win-title" style="display: none;">
+        <div class="modal-content">
+            <h2 id="win-title">Congratulations!</h2>
+            <div class="modal-body">
+                <p id="win-message">Player X wins!</p>
+                <div class="final-stats">
+                    <div class="final-stat">
+                        <span class="label">Winner:</span>
+                        <span id="winner-name" class="value">X</span>
+                    </div>
+                    <div class="final-stat">
+                        <span class="label">Score:</span>
+                        <span id="winner-score" class="value">1</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="play-again" class="btn primary">Play Again</button>
+                <button id="close-modal" class="btn secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tie Modal -->
+    <div id="tie-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="tie-title" style="display: none;">
+        <div class="modal-content">
+            <h2 id="tie-title">It's a Tie!</h2>
+            <div class="modal-body">
+                <p>No one wins this round. Try again!</p>
+                <div class="final-stats">
+                    <div class="final-stat">
+                        <span class="label">Player X:</span>
+                        <span id="tie-score-x" class="value">0</span>
+                    </div>
+                    <div class="final-stat">
+                        <span class="label">Player O:</span>
+                        <span id="tie-score-o" class="value">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="play-again-tie" class="btn primary">Play Again</button>
+                <button id="close-tie-modal" class="btn secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="game-footer">
+        <p><span id="copyright-year"></span> EveryTool.tech</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

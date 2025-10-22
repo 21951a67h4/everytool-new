@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake - Classic Arcade Game | EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Play Snake - the classic arcade game. Eat food, grow longer, and avoid hitting yourself!">
+</head>
+<body>
+    <!-- Game Controls -->
+    <div class="game-controls">
+        <button id="back-btn" class="back-btn" aria-label="Go back">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="switch-track">
+                <span class="switch-thumb">
+                    <i class="fas fa-moon theme-icon moon-icon"></i>
+                    <i class="fas fa-sun theme-icon sun-icon"></i>
+                </span>
+            </span>
+        </label>
+    </div>
+
+    <main class="game-container" role="main">
+        <div class="game-header">
+            <h1 class="game-title">Snake</h1>
+            <p class="game-subtitle">Eat food, grow longer, and avoid hitting yourself!</p>
+        </div>
+
+        <div class="game-stats">
+            <div class="stat">
+                <span class="stat-label">Score</span>
+                <span id="score" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">High Score</span>
+                <span id="high-score" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Length</span>
+                <span id="length" class="stat-value">1</span>
+            </div>
+        </div>
+
+        <div class="game-settings">
+            <div class="difficulty-selector">
+                <label for="difficulty">Speed:</label>
+                <select id="difficulty">
+                    <option value="slow">Slow</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="fast">Fast</option>
+                    <option value="insane">Insane</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="game-board-container">
+            <div id="game-board" class="game-board" role="grid" aria-label="Snake game board">
+                <!-- Game board will be dynamically generated -->
+            </div>
+            <div id="game-over" class="game-over hidden">
+                <div class="game-over-content">
+                    <h2>Game Over!</h2>
+                    <p>Your Score: <span id="final-score">0</span></p>
+                    <p>Length Reached: <span id="final-length">1</span></p>
+                    <div class="game-over-actions">
+                        <button id="restart-btn" class="btn primary">
+                            <i class="fas fa-redo"></i>
+                            Play Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-controls-panel">
+            <button id="start-btn" class="btn primary">
+                <i class="fas fa-play"></i>
+                Start Game
+            </button>
+            <button id="pause-btn" class="btn secondary" disabled>
+                <i class="fas fa-pause"></i>
+                Pause
+            </button>
+            <button id="reset-btn" class="btn secondary">
+                <i class="fas fa-stop"></i>
+                Reset
+            </button>
+        </div>
+
+        <div class="game-status">
+            <div id="game-message" class="game-message">Press Start to begin!</div>
+        </div>
+
+        <div class="game-instructions">
+            <p><strong>How to play:</strong></p>
+            <ul>
+                <li><strong>Arrow Keys</strong> or <strong>WASD</strong> to move the snake</li>
+                <li><strong>Eat food</strong> (red squares) to grow longer and increase score</li>
+                <li><strong>Avoid walls</strong> and your own tail</li>
+                <li><strong>Spacebar</strong> to pause/resume the game</li>
+                <li><strong>Higher speed</strong> = more points per food!</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer class="game-footer">
+        <p><span id="copyright-year"></span> EveryTool.tech</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIP Calculator | Calculate SIP Returns & Growth | EveryTool.tech</title>
+    <meta name="description" content="Calculate SIP returns with our advanced SIP Calculator. Get month-by-month growth charts, step-up SIP calculations, inflation-adjusted returns, and detailed schedule. Try it now!">
+    <meta name="keywords" content="sip calculator, systematic investment plan calculator, sip returns calculator, mutual fund sip calculator, sip growth calculator">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="SIP Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate SIP returns with our advanced SIP Calculator. Get month-by-month growth charts, step-up SIP calculations, and detailed schedule.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/financial-tools/sip-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tool CSS -->
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <!-- Add in <head> if not present -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Core Variables */
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --primary-darker: #1f37a8;
+            --primary-light: #6b83f1;
+            --primary-lighter: #94a5f4;
+            --secondary: #7209B7;
+            --secondary-dark: #560BAD;
+            --accent: #F72585;
+            --accent-dark: #B5179E;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-light: #9CA3AF;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --bg-dark: #111827;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1.5rem;
+            --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        /* Header Placeholder */
+        #header-placeholder {
+            height: 64px;
+        }
+
+        /* Tool Hero Section */
+        .tool-hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="%234361EE" opacity="0.1"/></svg>');
+            opacity: 0.5;
+            animation: patternMove 20s linear infinite;
+        }
+
+        .tool-hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-hero__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tool-hero__left {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .tool-hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .tool-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .tool-hero__features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .tool-hero__cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tool-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-button--primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-button--primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-button--secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tool-hero__right {
+            position: relative;
+            animation: slideIn 1s ease-out;
+        }
+
+        /* Tool Display Section */
+        .tool-display {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .tool-display__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-display__wrapper {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-display__wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .tool-display__header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tool-display__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__description {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tool-display__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .tool-display__input-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .tool-display__output-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .tool-display__controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-display__button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-display__button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-display__button--secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__input-group {
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-display__input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .tool-display__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+            background: white;
+        }
+
+        .tool-display__select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .sip-summary {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            background: var(--bg-accent);
+        }
+
+        .sip-summary__item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--bg-secondary);
+        }
+
+        .sip-summary__item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .sip-summary__label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .sip-summary__value {
+            color: var(--text-secondary);
+        }
+
+        .preset-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .preset-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-sm);
+            background: white;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition-all);
+            font-size: 0.875rem;
+        }
+
+        .preset-button:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .schedule-table {
+            margin-top: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+        }
+
+        .schedule-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .schedule-table th,
+        .schedule-table td {
+            padding: 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--bg-accent);
+        }
+
+        .schedule-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Mobile-specific optimizations for SIP Calculator */
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                display: grid;
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .tool-display__input-group { 
+                margin-bottom: 1rem; 
+            }
+            .tool-display__input, .tool-display__select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .tool-display__button { 
+                width: 100%; 
+                margin-bottom: 0.5rem; 
+            }
+            .tool-display__controls { 
+                display: flex;
+                flex-direction: column; 
+            }
+            .preset-buttons {
+                flex-direction: column;
+            }
+            .preset-button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-display__input { 
+                padding: 0.65rem; 
+            }
+            .tool-display__button { 
+                padding: 0.8rem; 
+                font-size: 0.95rem; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Calculate Your SIP Returns Instantly</h1>
+                    <p class="tool-hero__description">
+                        Plan your Systematic Investment Plan (SIP) with our advanced calculator. 
+                        Get detailed projections, step-up SIP calculations, and visualize your wealth growth.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Growth Visualization</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-calculator"></i>
+                            <span>Step-up SIP</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-download"></i>
+                            <span>Export Schedule</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Private</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate SIP
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">SIP Calculator</h2>
+                    <p class="tool-display__description">
+                        Enter your SIP details to calculate returns, visualize growth, and plan your investment journey.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Monthly Investment (₹)</label>
+                            <input type="number" class="tool-display__input" id="monthly-investment" placeholder="Enter monthly SIP amount">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Expected Annual Return (%)</label>
+                            <input type="number" class="tool-display__input" id="annual-return" placeholder="Enter expected CAGR" step="0.1">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Investment Duration</label>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <input type="number" class="tool-display__input" id="duration-years" placeholder="Years" style="flex: 1;">
+                                <input type="number" class="tool-display__input" id="duration-months" placeholder="Months" style="flex: 1;">
+                            </div>
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Step-up % per Year (Optional)</label>
+                            <input type="number" class="tool-display__input" id="step-up-percent" placeholder="Enter step-up percentage" step="0.1">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Inflation Rate % (Optional)</label>
+                            <input type="number" class="tool-display__input" id="inflation-rate" placeholder="Enter inflation rate" step="0.1">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Compounding Frequency</label>
+                            <select class="tool-display__select" id="compounding-frequency">
+                                <option value="monthly">Monthly</option>
+                                <option value="daily">Daily</option>
+                            </select>
+                        </div>
+                        <div class="preset-buttons">
+                            <button class="preset-button" data-preset="beginner">Beginner (₹5K, 12%, 10Y)</button>
+                            <button class="preset-button" data-preset="stepup">Step-up 10% (₹10K, 15%, 15Y)</button>
+                            <button class="preset-button" data-preset="aggressive">Aggressive (₹25K, 18%, 20Y)</button>
+                        </div>
+                        <div class="tool-display__controls">
+                            <button class="tool-display__button" id="calculate-sip">
+                                <i class="fas fa-calculator"></i>
+                                Calculate SIP
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="reset-sip">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="export-csv">
+                                <i class="fas fa-download"></i>
+                                Export CSV
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Your SIP Results</h3>
+                        <div class="tool-display__result" id="sip-result">
+                            Your SIP calculation results will appear here...
+                        </div>
+                        <div class="sip-summary" id="sip-summary" style="display: none;">
+                            <div class="sip-summary__item">
+                                <span class="sip-summary__label">Final Value:</span>
+                                <span class="sip-summary__value" id="final-value"></span>
+                            </div>
+                            <div class="sip-summary__item">
+                                <span class="sip-summary__label">Total Invested:</span>
+                                <span class="sip-summary__value" id="total-invested"></span>
+                            </div>
+                            <div class="sip-summary__item">
+                                <span class="sip-summary__label">Total Returns:</span>
+                                <span class="sip-summary__value" id="total-returns"></span>
+                            </div>
+                            <div class="sip-summary__item">
+                                <span class="sip-summary__label">Inflation-Adjusted Value:</span>
+                                <span class="sip-summary__value" id="inflation-adjusted"></span>
+                            </div>
+                        </div>
+                        <div class="chart-container" id="chart-container" style="display: none;">
+                            <canvas id="sipChart" width="400" height="200"></canvas>
+                        </div>
+                        <div class="schedule-table" id="schedule-table" style="display: none;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Month</th>
+                                        <th>Investment</th>
+                                        <th>Interest</th>
+                                        <th>Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="schedule-body">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding SIP and Systematic Investment Planning</h2>
+                <p class="tool-blog__subtitle">
+                    A comprehensive guide to Systematic Investment Plans (SIP) and building wealth through disciplined investing
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is SIP and How Does It Work?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Systematic Investment Plan (SIP) is an investment strategy where you invest a fixed amount regularly 
+                            (monthly, quarterly, etc.) in mutual funds or other investment instruments. SIP helps you build 
+                            wealth over time through the power of compounding and rupee cost averaging.
+                        </p>
+                        <p>
+                            The key benefits of SIP include:
+                        </p>
+                        <ul>
+                            <li><strong>Disciplined Investing:</strong> Regular investments help build financial discipline</li>
+                            <li><strong>Rupee Cost Averaging:</strong> You buy more units when prices are low and fewer when prices are high</li>
+                            <li><strong>Power of Compounding:</strong> Your returns generate more returns over time</li>
+                            <li><strong>Flexibility:</strong> You can start with small amounts and increase over time</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Step-up SIP: Accelerating Your Wealth Building</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Step-up SIP allows you to increase your monthly investment amount by a fixed percentage every year. 
+                            This is particularly useful when your income grows over time, allowing you to invest more and 
+                            accelerate your wealth building.
+                        </p>
+                        <p>
+                            For example, if you start with ₹10,000 per month and increase it by 10% every year:
+                        </p>
+                        <ul>
+                            <li>Year 1: ₹10,000 per month</li>
+                            <li>Year 2: ₹11,000 per month</li>
+                            <li>Year 3: ₹12,100 per month</li>
+                            <li>And so on...</li>
+                        </ul>
+                        <p>
+                            This approach can significantly boost your final corpus compared to a fixed SIP amount.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Factors Affecting SIP Returns</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Several factors influence your SIP returns:
+                        </p>
+                        <ul>
+                            <li><strong>Investment Amount:</strong> Higher monthly investments lead to larger corpus</li>
+                            <li><strong>Investment Duration:</strong> Longer investment periods benefit from compounding</li>
+                            <li><strong>Expected Returns:</strong> Higher expected returns (with higher risk) can lead to larger corpus</li>
+                            <li><strong>Step-up Percentage:</strong> Regular increases in investment amount accelerate growth</li>
+                            <li><strong>Inflation:</strong> Real returns are affected by inflation rates</li>
+                        </ul>
+                        <p>
+                            It's important to set realistic return expectations and consider inflation while planning your SIP investments.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Best Practices for SIP Investing</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Here are some proven strategies for successful SIP investing:
+                        </p>
+                        <ul>
+                            <li>Start early to benefit from compounding</li>
+                            <li>Choose SIP amounts that you can sustain long-term</li>
+                            <li>Consider step-up SIP as your income grows</li>
+                            <li>Diversify across different fund categories</li>
+                            <li>Review and rebalance your portfolio periodically</li>
+                            <li>Don't stop SIP during market downturns</li>
+                            <li>Use SIP calculators to plan your investments</li>
+                        </ul>
+                        <p>
+                            Remember that SIP is a long-term investment strategy. Stay disciplined and patient to achieve your financial goals.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">SIP Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about SIP Calculator</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>What is SIP?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>SIP stands for Systematic Investment Plan. It's a method of investing a fixed amount regularly in mutual funds or other investment instruments to build wealth over time.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How is SIP return calculated?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>SIP returns are calculated using compound interest formula. Each monthly investment grows at the expected annual return rate, and the returns compound over the investment period.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What is step-up SIP?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Step-up SIP allows you to increase your monthly investment amount by a fixed percentage every year. This helps accelerate wealth building as your income grows.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Should I consider inflation in SIP planning?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes, considering inflation is important as it affects the real purchasing power of your returns. Our calculator shows both nominal and inflation-adjusted returns.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Fetch and insert header
+        fetch('../../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // SIP Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const monthlyInvestmentInput = document.getElementById('monthly-investment');
+            const annualReturnInput = document.getElementById('annual-return');
+            const durationYearsInput = document.getElementById('duration-years');
+            const durationMonthsInput = document.getElementById('duration-months');
+            const stepUpPercentInput = document.getElementById('step-up-percent');
+            const inflationRateInput = document.getElementById('inflation-rate');
+            const compoundingFrequencySelect = document.getElementById('compounding-frequency');
+            const calculateButton = document.getElementById('calculate-sip');
+            const resetButton = document.getElementById('reset-sip');
+            const exportButton = document.getElementById('export-csv');
+            const resultDiv = document.getElementById('sip-result');
+            const summaryDiv = document.getElementById('sip-summary');
+            const chartContainer = document.getElementById('chart-container');
+            const scheduleTable = document.getElementById('schedule-table');
+            
+            const finalValueSpan = document.getElementById('final-value');
+            const totalInvestedSpan = document.getElementById('total-invested');
+            const totalReturnsSpan = document.getElementById('total-returns');
+            const inflationAdjustedSpan = document.getElementById('inflation-adjusted');
+            
+            let sipChart = null;
+            let sipData = [];
+
+            // Preset buttons
+            const presetButtons = document.querySelectorAll('.preset-button');
+            presetButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const preset = button.dataset.preset;
+                    applyPreset(preset);
+                });
+            });
+
+            function applyPreset(preset) {
+                switch(preset) {
+                    case 'beginner':
+                        monthlyInvestmentInput.value = '5000';
+                        annualReturnInput.value = '12';
+                        durationYearsInput.value = '10';
+                        durationMonthsInput.value = '0';
+                        stepUpPercentInput.value = '0';
+                        inflationRateInput.value = '6';
+                        break;
+                    case 'stepup':
+                        monthlyInvestmentInput.value = '10000';
+                        annualReturnInput.value = '15';
+                        durationYearsInput.value = '15';
+                        durationMonthsInput.value = '0';
+                        stepUpPercentInput.value = '10';
+                        inflationRateInput.value = '6';
+                        break;
+                    case 'aggressive':
+                        monthlyInvestmentInput.value = '25000';
+                        annualReturnInput.value = '18';
+                        durationYearsInput.value = '20';
+                        durationMonthsInput.value = '0';
+                        stepUpPercentInput.value = '15';
+                        inflationRateInput.value = '6';
+                        break;
+                }
+            }
+
+            function calculateSIP() {
+                const monthlyInvestment = parseFloat(monthlyInvestmentInput.value) || 0;
+                const annualReturn = parseFloat(annualReturnInput.value) || 0;
+                const years = parseFloat(durationYearsInput.value) || 0;
+                const months = parseFloat(durationMonthsInput.value) || 0;
+                const stepUpPercent = parseFloat(stepUpPercentInput.value) || 0;
+                const inflationRate = parseFloat(inflationRateInput.value) || 0;
+                const compoundingFrequency = compoundingFrequencySelect.value;
+
+                if (monthlyInvestment && annualReturn && (years || months)) {
+                    const totalMonths = years * 12 + months;
+                    const monthlyRate = annualReturn / 100 / 12;
+                    const monthlyInflationRate = inflationRate / 100 / 12;
+                    
+                    let totalInvested = 0;
+                    let currentBalance = 0;
+                    let currentInvestment = monthlyInvestment;
+                    sipData = [];
+
+                    for (let month = 1; month <= totalMonths; month++) {
+                        // Apply step-up every 12 months
+                        if (month > 1 && month % 12 === 1 && stepUpPercent > 0) {
+                            currentInvestment = monthlyInvestment * Math.pow(1 + stepUpPercent/100, Math.floor((month-1)/12));
+                        }
+
+                        // Add monthly investment
+                        totalInvested += currentInvestment;
+                        currentBalance += currentInvestment;
+
+                        // Apply returns
+                        if (compoundingFrequency === 'daily') {
+                            const dailyRate = monthlyRate / 30;
+                            currentBalance *= Math.pow(1 + dailyRate, 30);
+                        } else {
+                            currentBalance *= (1 + monthlyRate);
+                        }
+
+                        sipData.push({
+                            month: month,
+                            investment: currentInvestment,
+                            totalInvested: totalInvested,
+                            balance: currentBalance,
+                            returns: currentBalance - totalInvested
+                        });
+                    }
+
+                    const finalValue = currentBalance;
+                    const totalReturns = finalValue - totalInvested;
+                    const inflationAdjustedValue = finalValue / Math.pow(1 + inflationRate/100, years + months/12);
+
+                    // Format numbers with commas and 2 decimal places
+                    const formatNumber = (num) => {
+                        return '₹' + num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    };
+
+                    finalValueSpan.textContent = formatNumber(finalValue);
+                    totalInvestedSpan.textContent = formatNumber(totalInvested);
+                    totalReturnsSpan.textContent = formatNumber(totalReturns);
+                    inflationAdjustedSpan.textContent = formatNumber(inflationAdjustedValue);
+
+                    resultDiv.textContent = 'Your SIP calculation is complete!';
+                    summaryDiv.style.display = 'block';
+                    chartContainer.style.display = 'block';
+                    scheduleTable.style.display = 'block';
+
+                    // Create chart
+                    createChart();
+                    
+                    // Create schedule table
+                    createScheduleTable();
+
+                    // Save to localStorage
+                    saveToLocalStorage();
+                } else {
+                    resultDiv.textContent = 'Please enter valid SIP details.';
+                    summaryDiv.style.display = 'none';
+                    chartContainer.style.display = 'none';
+                    scheduleTable.style.display = 'none';
+                }
+            }
+
+            function createChart() {
+                if (sipChart) {
+                    sipChart.destroy();
+                }
+
+                const ctx = document.getElementById('sipChart').getContext('2d');
+                sipChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: sipData.map(d => `Month ${d.month}`),
+                        datasets: [{
+                            label: 'Total Invested',
+                            data: sipData.map(d => d.totalInvested),
+                            borderColor: '#4361EE',
+                            backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                            fill: false
+                        }, {
+                            label: 'Portfolio Value',
+                            data: sipData.map(d => d.balance),
+                            borderColor: '#F72585',
+                            backgroundColor: 'rgba(247, 37, 133, 0.1)',
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'SIP Growth Over Time'
+                            },
+                            legend: {
+                                display: true
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return '₹' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function createScheduleTable() {
+                const tbody = document.getElementById('schedule-body');
+                tbody.innerHTML = '';
+
+                // Show first 12 months, last 12 months, and every 12th month in between
+                const monthsToShow = new Set();
+                
+                // First 12 months
+                for (let i = 1; i <= Math.min(12, sipData.length); i++) {
+                    monthsToShow.add(i);
+                }
+                
+                // Every 12th month
+                for (let i = 12; i <= sipData.length; i += 12) {
+                    monthsToShow.add(i);
+                }
+                
+                // Last 12 months
+                for (let i = Math.max(1, sipData.length - 11); i <= sipData.length; i++) {
+                    monthsToShow.add(i);
+                }
+
+                const sortedMonths = Array.from(monthsToShow).sort((a, b) => a - b);
+                
+                sortedMonths.forEach(month => {
+                    const data = sipData[month - 1];
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${month}</td>
+                        <td>₹${data.investment.toFixed(2)}</td>
+                        <td>₹${data.returns.toFixed(2)}</td>
+                        <td>₹${data.balance.toFixed(2)}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            function exportToCSV() {
+                if (sipData.length === 0) {
+                    alert('Please calculate SIP first before exporting.');
+                    return;
+                }
+
+                let csv = 'Month,Investment,Total Invested,Returns,Portfolio Value\n';
+                sipData.forEach(data => {
+                    csv += `${data.month},${data.investment},${data.totalInvested},${data.returns},${data.balance}\n`;
+                });
+
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'sip-schedule.csv';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+
+            function saveToLocalStorage() {
+                const sipState = {
+                    monthlyInvestment: monthlyInvestmentInput.value,
+                    annualReturn: annualReturnInput.value,
+                    durationYears: durationYearsInput.value,
+                    durationMonths: durationMonthsInput.value,
+                    stepUpPercent: stepUpPercentInput.value,
+                    inflationRate: inflationRateInput.value,
+                    compoundingFrequency: compoundingFrequencySelect.value
+                };
+                localStorage.setItem('sipCalculatorState', JSON.stringify(sipState));
+            }
+
+            function loadFromLocalStorage() {
+                const savedState = localStorage.getItem('sipCalculatorState');
+                if (savedState) {
+                    const state = JSON.parse(savedState);
+                    monthlyInvestmentInput.value = state.monthlyInvestment || '';
+                    annualReturnInput.value = state.annualReturn || '';
+                    durationYearsInput.value = state.durationYears || '';
+                    durationMonthsInput.value = state.durationMonths || '';
+                    stepUpPercentInput.value = state.stepUpPercent || '';
+                    inflationRateInput.value = state.inflationRate || '';
+                    compoundingFrequencySelect.value = state.compoundingFrequency || 'monthly';
+                }
+            }
+
+            function resetCalculator() {
+                monthlyInvestmentInput.value = '';
+                annualReturnInput.value = '';
+                durationYearsInput.value = '';
+                durationMonthsInput.value = '';
+                stepUpPercentInput.value = '';
+                inflationRateInput.value = '';
+                compoundingFrequencySelect.value = 'monthly';
+                resultDiv.textContent = 'Your SIP calculation results will appear here...';
+                summaryDiv.style.display = 'none';
+                chartContainer.style.display = 'none';
+                scheduleTable.style.display = 'none';
+                if (sipChart) {
+                    sipChart.destroy();
+                    sipChart = null;
+                }
+                localStorage.removeItem('sipCalculatorState');
+            }
+
+            calculateButton.addEventListener('click', calculateSIP);
+            resetButton.addEventListener('click', resetCalculator);
+            exportButton.addEventListener('click', exportToCSV);
+
+            // Load saved state on page load
+            loadFromLocalStorage();
+
+            // Allow Enter key to trigger calculation
+            [monthlyInvestmentInput, annualReturnInput, durationYearsInput, durationMonthsInput].forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        calculateSIP();
+                    }
+                });
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with animation classes
+        document.querySelectorAll('.tool-hero__left, .tool-hero__right, .blog-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

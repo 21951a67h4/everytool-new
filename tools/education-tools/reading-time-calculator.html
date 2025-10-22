@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Time Calculator | Estimate Reading Time for Any Text | EveryTool.tech</title>
+    <meta name="description" content="Calculate reading time for any text with multi-language support. Get accurate estimates based on WPM, difficulty level, and reading mode. Perfect for students and content creators.">
+    <meta name="keywords" content="reading time calculator, words per minute, reading speed, text analysis, reading time estimator, wpm calculator">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Reading Time Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate reading time for any text with multi-language support. Get accurate estimates based on WPM, difficulty level, and reading mode. Perfect for students and content creators.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/education-tools/reading-time-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Reading Time Calculator Specific Styles */
+        .reading-calc-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .reading-calc-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .reading-calc-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .reading-calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .reading-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .reading-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .reading-form-group input, .reading-form-group select, .reading-form-group textarea { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .reading-form-group textarea {
+            min-height: 200px;
+            resize: vertical;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .text-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .reading-modes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .mode-card {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .mode-card:hover {
+            border-color: #007bff;
+            background: #f8f9ff;
+        }
+        
+        .mode-card.active {
+            border-color: #007bff;
+            background: #e3f2fd;
+        }
+        
+        .mode-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+        
+        .mode-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .mode-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .reading-results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .time-display {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #28a745;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .breakdown-table th,
+        .breakdown-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .breakdown-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .break-suggestions {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .break-suggestions h4 {
+            margin-bottom: 10px;
+            color: #856404;
+        }
+        
+        .break-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .break-list li {
+            padding: 5px 0;
+            color: #856404;
+        }
+        
+        .break-list li:before {
+            content: "☕ ";
+            margin-right: 8px;
+        }
+        
+        .language-info {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e3f2fd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #1565c0;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .reading-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .reading-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .text-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .reading-modes {
+                grid-template-columns: 1fr;
+            }
+            .reading-form-group input, .reading-form-group select, .reading-form-group textarea { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .time-display {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .reading-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .text-stats {
+                grid-template-columns: 1fr;
+            }
+            .time-display {
+                font-size: 1.8rem;
+            }
+            .reading-form-group input, .reading-form-group select, .reading-form-group textarea { 
+                padding: 8px; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="Reading Time Calculator" data-meta-description="Calculate reading time for any text with multi-language support. Get accurate estimates based on WPM, difficulty level, and reading mode. Perfect for students and content creators.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Reading Time Calculator: Estimate Reading Time for Any Text</h1>
+                    <p class="tool-hero__description">
+                        Calculate accurate reading time for any text with multi-language support. Get estimates based on WPM, 
+                        difficulty level, and reading mode. Perfect for students, content creators, and anyone planning their reading.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-globe"></i>
+                            <span>Multi-Language Support</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-cog"></i>
+                            <span>Customizable Settings</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Detailed Analysis</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-clock"></i>
+                            <span>Break Suggestions</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Reading Time
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Reading Speed
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Reading Time Calculator</h2>
+                    <p class="tool-display__description">
+                        Paste your text or enter word count to get accurate reading time estimates.
+                    </p>
+                </div>
+                
+                <!-- Reading Time Calculator Custom Interface -->
+                <div class="reading-calc-container">
+                    <div class="reading-calc-section">
+                        <h4>1. Enter Your Text</h4>
+                        <div class="reading-form-group">
+                            <label for="text-input">Paste your text here</label>
+                            <textarea id="text-input" placeholder="Paste your text here to analyze reading time..."></textarea>
+                        </div>
+                        
+                        <div class="text-stats" id="text-stats" style="display: none;">
+                            <div class="stat-item">
+                                <div class="stat-value" id="word-count">0</div>
+                                <div class="stat-label">Words</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="char-count">0</div>
+                                <div class="stat-label">Characters</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="sentence-count">0</div>
+                                <div class="stat-label">Sentences</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="paragraph-count">0</div>
+                                <div class="stat-label">Paragraphs</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reading-calc-section">
+                        <h4>2. Reading Settings</h4>
+                        <div class="reading-calc-grid">
+                            <div class="reading-form-group">
+                                <label for="language-select">Language</label>
+                                <select id="language-select">
+                                    <option value="english">English (238 WPM)</option>
+                                    <option value="spanish">Spanish (218 WPM)</option>
+                                    <option value="french">French (195 WPM)</option>
+                                    <option value="german">German (179 WPM)</option>
+                                    <option value="chinese">Chinese (158 CPM)</option>
+                                    <option value="japanese">Japanese (193 CPM)</option>
+                                    <option value="arabic">Arabic (181 WPM)</option>
+                                    <option value="hindi">Hindi (200 WPM)</option>
+                                </select>
+                                <div class="language-info" id="language-info">
+                                    Average reading speed: 238 words per minute
+                                </div>
+                            </div>
+                            
+                            <div class="reading-form-group">
+                                <label for="wpm-input">Custom WPM (optional)</label>
+                                <input type="number" id="wpm-input" placeholder="Leave empty for language default" min="50" max="500">
+                            </div>
+                            
+                            <div class="reading-form-group">
+                                <label for="difficulty-select">Difficulty Level</label>
+                                <select id="difficulty-select">
+                                    <option value="easy">Easy (1.2x faster)</option>
+                                    <option value="medium" selected>Medium (normal speed)</option>
+                                    <option value="hard">Hard (0.7x slower)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reading-calc-section">
+                        <h4>3. Reading Mode</h4>
+                        <div class="reading-modes">
+                            <div class="mode-card active" data-mode="normal">
+                                <div class="mode-icon"><i class="fas fa-book-open"></i></div>
+                                <div class="mode-title">Normal Reading</div>
+                                <div class="mode-description">Standard reading pace</div>
+                            </div>
+                            <div class="mode-card" data-mode="skim">
+                                <div class="mode-icon"><i class="fas fa-eye"></i></div>
+                                <div class="mode-title">Skim Reading</div>
+                                <div class="mode-description">1.5x faster, overview</div>
+                            </div>
+                            <div class="mode-card" data-mode="deep">
+                                <div class="mode-icon"><i class="fas fa-search"></i></div>
+                                <div class="mode-title">Deep Reading</div>
+                                <div class="mode-description">0.8x slower, detailed</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reading-results" id="reading-results" style="display: none;">
+                        <h4>Reading Time Estimate</h4>
+                        <div class="time-display" id="time-display">0 min</div>
+                        
+                        <table class="breakdown-table" id="breakdown-table">
+                            <thead>
+                                <tr>
+                                    <th>Mode</th>
+                                    <th>Time</th>
+                                    <th>Speed</th>
+                                </tr>
+                            </thead>
+                            <tbody id="breakdown-tbody">
+                                <!-- Breakdown rows will be added here -->
+                            </tbody>
+                        </table>
+                        
+                        <div class="break-suggestions" id="break-suggestions">
+                            <h4>Break Suggestions</h4>
+                            <ul class="break-list" id="break-list">
+                                <!-- Break suggestions will be added here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Reading Speed and Time Estimation</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about reading speeds, factors that affect reading time, and how to improve your reading efficiency
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is Reading Speed?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Reading speed is typically measured in words per minute (WPM) and varies significantly between individuals 
+                            and languages. It's influenced by factors like familiarity with the language, text complexity, and reading purpose.
+                        </p>
+                        <p>
+                            <strong>Average Reading Speeds:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>English:</strong> 200-250 WPM (average: 238 WPM)</li>
+                            <li><strong>Spanish:</strong> 220-270 WPM (average: 218 WPM)</li>
+                            <li><strong>French:</strong> 195-245 WPM (average: 195 WPM)</li>
+                            <li><strong>German:</strong> 180-230 WPM (average: 179 WPM)</li>
+                            <li><strong>Chinese:</strong> 150-200 characters per minute</li>
+                            <li><strong>Japanese:</strong> 140-190 characters per minute</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Factors Affecting Reading Time</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Text Complexity:</strong> Technical or academic texts require slower reading for comprehension.
+                        </p>
+                        <p>
+                            <strong>Reading Purpose:</strong> Skimming for overview vs. deep reading for understanding.
+                        </p>
+                        <p>
+                            <strong>Language Familiarity:</strong> Native speakers read faster than second language learners.
+                        </p>
+                        <p>
+                            <strong>Text Structure:</strong> Headings, bullet points, and short paragraphs improve readability.
+                        </p>
+                        <p>
+                            <strong>Individual Factors:</strong> Age, education level, and reading experience all play a role.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Reading Modes Explained</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Normal Reading:</strong> Standard pace for general comprehension and enjoyment.
+                        </p>
+                        <p>
+                            <strong>Skim Reading:</strong> 1.5x faster pace for getting an overview or finding specific information.
+                        </p>
+                        <p>
+                            <strong>Deep Reading:</strong> 0.8x slower pace for detailed analysis, critical thinking, and retention.
+                        </p>
+                        <p>
+                            Choose the appropriate mode based on your reading goals and the importance of the content.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Tips for Better Reading Efficiency</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Practice Regularly:</strong> Consistent reading improves both speed and comprehension.
+                        </p>
+                        <p>
+                            <strong>Eliminate Distractions:</strong> Find a quiet environment for focused reading.
+                        </p>
+                        <p>
+                            <strong>Use Reading Techniques:</strong> Preview headings, scan for key points, then read thoroughly.
+                        </p>
+                        <p>
+                            <strong>Take Breaks:</strong> Rest every 45-60 minutes to maintain focus and prevent fatigue.
+                        </p>
+                        <p>
+                            <strong>Expand Vocabulary:</strong> Learning new words reduces reading pauses and improves flow.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Reading Time Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about reading time calculation</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>How accurate are the reading time estimates?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Our estimates are based on average reading speeds for different languages and reading modes. Individual reading speeds may vary, but the estimates provide a good starting point for planning your reading time.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Why do different languages have different reading speeds?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Different languages have varying character densities, writing systems, and complexity. For example, Chinese and Japanese use characters instead of letters, which affects reading speed. Our calculator accounts for these differences.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Should I use skim or deep reading mode?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Use skim mode for getting an overview or finding specific information. Use deep reading mode for detailed analysis, studying, or when you need to retain information. Normal mode works for most general reading.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I customize the reading speed?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes! You can enter your own words per minute (WPM) in the custom field. This is especially useful if you know your personal reading speed or want to test different scenarios.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Reading Time Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const textInput = document.getElementById('text-input');
+            const languageSelect = document.getElementById('language-select');
+            const wpmInput = document.getElementById('wpm-input');
+            const difficultySelect = document.getElementById('difficulty-select');
+            const modeCards = document.querySelectorAll('.mode-card');
+            const textStats = document.getElementById('text-stats');
+            const readingResults = document.getElementById('reading-results');
+            const timeDisplay = document.getElementById('time-display');
+            const breakdownTbody = document.getElementById('breakdown-tbody');
+            const breakList = document.getElementById('break-list');
+            const languageInfo = document.getElementById('language-info');
+            
+            // Language-specific WPM rates
+            const languageRates = {
+                'english': { wpm: 238, range: '200-250', type: 'WPM' },
+                'spanish': { wpm: 218, range: '220-270', type: 'WPM' },
+                'french': { wpm: 195, range: '195-245', type: 'WPM' },
+                'german': { wpm: 179, range: '180-230', type: 'WPM' },
+                'chinese': { wpm: 158, range: '150-200', type: 'CPM' },
+                'japanese': { wpm: 193, range: '140-190', type: 'CPM' },
+                'arabic': { wpm: 181, range: '170-220', type: 'WPM' },
+                'hindi': { wpm: 200, range: '180-230', type: 'WPM' }
+            };
+            
+            // Difficulty multipliers
+            const difficultyMultipliers = {
+                'easy': 1.2,
+                'medium': 1.0,
+                'hard': 0.7
+            };
+            
+            // Reading mode multipliers
+            const modeMultipliers = {
+                'normal': 1.0,
+                'skim': 1.5,
+                'deep': 0.8
+            };
+            
+            let currentMode = 'normal';
+            
+            function analyzeText(text) {
+                if (!text.trim()) {
+                    textStats.style.display = 'none';
+                    readingResults.style.display = 'none';
+                    return;
+                }
+                
+                const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+                const characters = text.length;
+                const sentences = text.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0);
+                const paragraphs = text.split(/\n\s*\n/).filter(paragraph => paragraph.trim().length > 0);
+                
+                document.getElementById('word-count').textContent = words.length;
+                document.getElementById('char-count').textContent = characters;
+                document.getElementById('sentence-count').textContent = sentences.length;
+                document.getElementById('paragraph-count').textContent = paragraphs.length;
+                
+                textStats.style.display = 'grid';
+                calculateReadingTime(words.length);
+            }
+            
+            function calculateReadingTime(wordCount) {
+                if (wordCount === 0) {
+                    readingResults.style.display = 'none';
+                    return;
+                }
+                
+                const language = languageSelect.value;
+                const customWpm = parseInt(wpmInput.value);
+                const difficulty = difficultySelect.value;
+                
+                // Use custom WPM if provided, otherwise use language default
+                const baseWpm = customWpm || languageRates[language].wpm;
+                const difficultyMultiplier = difficultyMultipliers[difficulty];
+                const modeMultiplier = modeMultipliers[currentMode];
+                
+                // Calculate effective WPM
+                const effectiveWpm = baseWpm * difficultyMultiplier * modeMultiplier;
+                
+                // Calculate reading time in minutes
+                const readingTimeMinutes = wordCount / effectiveWpm;
+                
+                // Calculate times for all modes
+                const allModes = [
+                    { name: 'Normal Reading', multiplier: 1.0 },
+                    { name: 'Skim Reading', multiplier: 1.5 },
+                    { name: 'Deep Reading', multiplier: 0.8 }
+                ];
+                
+                const breakdown = allModes.map(mode => {
+                    const modeWpm = baseWpm * difficultyMultiplier * mode.multiplier;
+                    const modeTime = wordCount / modeWpm;
+                    return {
+                        name: mode.name,
+                        time: modeTime,
+                        wpm: Math.round(modeWpm)
+                    };
+                });
+                
+                displayResults(readingTimeMinutes, breakdown);
+            }
+            
+            function displayResults(readingTimeMinutes, breakdown) {
+                readingResults.style.display = 'block';
+                
+                // Format time display
+                const hours = Math.floor(readingTimeMinutes / 60);
+                const minutes = Math.round(readingTimeMinutes % 60);
+                
+                let timeText = '';
+                if (hours > 0) {
+                    timeText = `${hours}h ${minutes}m`;
+                } else {
+                    timeText = `${minutes}m`;
+                }
+                
+                timeDisplay.textContent = timeText;
+                
+                // Display breakdown table
+                breakdownTbody.innerHTML = breakdown.map(mode => {
+                    const modeHours = Math.floor(mode.time / 60);
+                    const modeMinutes = Math.round(mode.time % 60);
+                    let modeTimeText = '';
+                    
+                    if (modeHours > 0) {
+                        modeTimeText = `${modeHours}h ${modeMinutes}m`;
+                    } else {
+                        modeTimeText = `${modeMinutes}m`;
+                    }
+                    
+                    return `
+                        <tr>
+                            <td>${mode.name}</td>
+                            <td>${modeTimeText}</td>
+                            <td>${mode.wpm} WPM</td>
+                        </tr>
+                    `;
+                }).join('');
+                
+                // Generate break suggestions
+                generateBreakSuggestions(readingTimeMinutes);
+            }
+            
+            function generateBreakSuggestions(readingTimeMinutes) {
+                const suggestions = [];
+                
+                if (readingTimeMinutes > 60) {
+                    suggestions.push('Take a 10-minute break after 45 minutes of reading');
+                }
+                
+                if (readingTimeMinutes > 120) {
+                    suggestions.push('Take a 15-minute break after 90 minutes of reading');
+                }
+                
+                if (readingTimeMinutes > 180) {
+                    suggestions.push('Take a 20-minute break after 2 hours of reading');
+                }
+                
+                if (readingTimeMinutes > 300) {
+                    suggestions.push('Consider splitting this into multiple reading sessions');
+                }
+                
+                if (suggestions.length === 0) {
+                    suggestions.push('No breaks needed for this reading duration');
+                }
+                
+                breakList.innerHTML = suggestions.map(suggestion => `<li>${suggestion}</li>`).join('');
+            }
+            
+            function updateLanguageInfo() {
+                const language = languageSelect.value;
+                const rate = languageRates[language];
+                languageInfo.textContent = `Average reading speed: ${rate.wpm} ${rate.type} (${rate.range})`;
+            }
+            
+            // Event listeners
+            textInput.addEventListener('input', function() {
+                analyzeText(this.value);
+            });
+            
+            languageSelect.addEventListener('change', function() {
+                updateLanguageInfo();
+                if (textInput.value.trim()) {
+                    const wordCount = textInput.value.trim().split(/\s+/).length;
+                    calculateReadingTime(wordCount);
+                }
+            });
+            
+            wpmInput.addEventListener('input', function() {
+                if (textInput.value.trim()) {
+                    const wordCount = textInput.value.trim().split(/\s+/).length;
+                    calculateReadingTime(wordCount);
+                }
+            });
+            
+            difficultySelect.addEventListener('change', function() {
+                if (textInput.value.trim()) {
+                    const wordCount = textInput.value.trim().split(/\s+/).length;
+                    calculateReadingTime(wordCount);
+                }
+            });
+            
+            modeCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    modeCards.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    currentMode = this.dataset.mode;
+                    
+                    if (textInput.value.trim()) {
+                        const wordCount = textInput.value.trim().split(/\s+/).length;
+                        calculateReadingTime(wordCount);
+                    }
+                });
+            });
+            
+            // Initialize
+            updateLanguageInfo();
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOCX to PDF Converter | EveryTool.tech</title>
+    <meta name="description" content="Free online DOCX to PDF converter. Drag & drop or paste .docx files, add optional watermark, batch convert, preview, print, and download PDFs — all in your browser.">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="DOCX to PDF Converter | EveryTool.tech">
+    <meta property="og:description" content="Convert DOCX to PDF instantly in your browser. Batch convert with watermark, preview, print, and download.">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <style>
+        #header-placeholder { min-height: 130px; position: relative; z-index: 2000; }
+        @media (max-width: 768px){ #header-placeholder{ min-height: 64px; } }
+        .dropzone { border: 2px dashed var(--primary-light); background: var(--bg-accent); border-radius: var(--radius-md); padding: 1rem; text-align:center; color: var(--text-secondary); }
+        .queue { margin-top: 1rem; display: grid; gap: .5rem; }
+        .queue-item { display:flex; align-items:center; justify-content: space-between; background:#fff; border:1px solid var(--bg-accent); border-radius: var(--radius-md); padding:.5rem .75rem; }
+        .preview-frame { width:100%; min-height: 300px; background:#fff; border:1px solid var(--bg-accent); border-radius: var(--radius-md); overflow:auto; padding: 1rem; }
+        .controls-row { display:flex; gap:.75rem; flex-wrap: wrap; align-items: center; }
+        .switch { display:inline-flex; align-items:center; gap:.5rem; }
+        .dark body { background: var(--bg-dark); color: #e5e7eb; }
+        .help { color: var(--text-light); font-size: .9rem; }
+        /* UI normalization overrides */
+        .tool-display__button { min-height: 40px; padding: 0.5rem 1rem; font-size: 0.95rem; }
+        .tool-display__file-label { padding: 0.75rem; }
+        .tool-display__wrapper { padding: 1.5rem; }
+        .tool-display__controls, .controls-row { gap: 0.5rem; }
+        .queue .tool-display__button.tool-display__button--secondary { padding: 0.4rem 0.8rem; }
+        .tool-display__output-section, .tool-display__input-section { max-width: 100%; }
+        .preview-frame { max-height: 420px; }
+    </style>
+</head>
+<body data-tool-name="DOCX to PDF Converter" data-meta-description="Convert DOCX to PDF in your browser with optional watermark and batch support.">
+    <div id="header-placeholder"></div>
+
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">DOCX to PDF Converter</h1>
+                    <p class="tool-hero__description">Drag & drop or paste .docx files. Add an optional watermark, then batch convert to high-quality PDFs — securely in your browser.</p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature"><i class="fas fa-file-word"></i> <span>Drag/Drop or Paste DOCX</span></div>
+                        <div class="tool-feature"><i class="fas fa-layer-group"></i> <span>Multi-page & Batch</span></div>
+                        <div class="tool-feature"><i class="fas fa-water"></i> <span>Watermark Toggle</span></div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary"><i class="fas fa-play"></i> Use Tool Now</a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary"><i class="fas fa-book"></i> Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Convert DOCX to PDF</h2>
+                    <p class="tool-display__description">Drop files below, tweak settings, preview, then download, copy, or print.</p>
+                </div>
+
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__file-upload">
+                            <input id="fileInput" type="file" class="tool-display__file-input" accept=".docx" multiple>
+                            <label for="fileInput" class="tool-display__file-label dropzone" id="dropzone">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Drag & drop DOCX here, click to choose, or paste (Ctrl+V)</span>
+                            </label>
+                        </div>
+
+                        <div class="controls-row" style="margin-top:1rem;">
+                            <div class="tool-display__input-group" style="min-width:220px;">
+                                <label class="tool-display__label" for="watermarkText">Watermark</label>
+                                <input id="watermarkText" class="tool-display__input" type="text" value="everytool.tech">
+                            </div>
+                            <div class="tool-display__input-group switch">
+                                <input type="checkbox" id="watermarkToggle" checked>
+                                <label for="watermarkToggle">Enable watermark</label>
+                            </div>
+                            <div class="tool-display__input-group" style="min-width:160px;">
+                                <label class="tool-display__label" for="pageSize">Page Size</label>
+                                <select id="pageSize" class="tool-display__input">
+                                    <option value="a4">A4</option>
+                                    <option value="letter">Letter</option>
+                                </select>
+                            </div>
+                            <div class="tool-display__input-group" style="min-width:160px;">
+                                <label class="tool-display__label" for="orientation">Orientation</label>
+                                <select id="orientation" class="tool-display__input">
+                                    <option value="portrait">Portrait</option>
+                                    <option value="landscape">Landscape</option>
+                                </select>
+                            </div>
+                            <button id="convertAllBtn" class="tool-display__button"><i class="fas fa-file-pdf"></i> Convert All</button>
+                            <button id="downloadZipBtn" class="tool-display__button tool-display__button--secondary"><i class="fas fa-file-archive"></i> Download ZIP</button>
+                        </div>
+
+                        <div class="help" style="margin-top:.25rem;">Tip: You can paste a .docx file from clipboard in supported browsers.</div>
+
+                        <div class="queue" id="queue"></div>
+                    </div>
+
+                    <div class="tool-display__output-section">
+                        <div class="tool-display__header" style="margin-bottom:.5rem;">
+                            <h3 class="tool-display__title" style="font-size:1.25rem;">Preview</h3>
+                        </div>
+                        <div id="preview" class="preview-frame"></div>
+                        <div class="tool-display__controls">
+                            <button id="copyPdfBtn" class="tool-display__button"><i class="fas fa-copy"></i> Copy PDF</button>
+                            <button id="downloadPdfBtn" class="tool-display__button"><i class="fas fa-download"></i> Download PDF</button>
+                            <button id="printPdfBtn" class="tool-display__button tool-display__button--secondary"><i class="fas fa-print"></i> Print</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">How the Conversion Works</h2>
+                <p class="tool-blog__subtitle">Your files never leave your device. We parse DOCX in-browser and render to PDF with an optional watermark.</p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Privacy & Limitations</h3>
+                    <div class="blog-section__content">
+                        <ul>
+                            <li><strong>Private:</strong> Everything runs locally in your browser—no uploads.</li>
+                            <li><strong>Formatting:</strong> Complex layouts may differ slightly from Word.</li>
+                            <li><strong>Batch:</strong> Queue multiple files and export all as a ZIP.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Quick answers about DOCX to PDF conversion</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">Are my documents uploaded to a server?<i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer"><p>No. All processing happens locally in your browser for maximum privacy.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Why does formatting look slightly different?<i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer"><p>DOCX rendering is best-effort in the browser. Most common content looks great; very complex layouts may vary.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Libraries -->
+    <script src="https://unpkg.com/mammoth@1/dist/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <script>
+    const q = (sel, el=document) => el.querySelector(sel);
+    const qa = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+
+    const dropzone = q('#dropzone');
+    const fileInput = q('#fileInput');
+    const queueEl = q('#queue');
+    const previewEl = q('#preview');
+
+    const watermarkToggle = q('#watermarkToggle');
+    const watermarkText = q('#watermarkText');
+    const pageSizeSel = q('#pageSize');
+    const orientationSel = q('#orientation');
+
+    const convertAllBtn = q('#convertAllBtn');
+    const downloadZipBtn = q('#downloadZipBtn');
+    const copyPdfBtn = q('#copyPdfBtn');
+    const downloadPdfBtn = q('#downloadPdfBtn');
+    const printPdfBtn = q('#printPdfBtn');
+
+    const queue = []; // {file, name, status, pdfBlob}
+
+    function addToQueue(files){
+        [...files].forEach(file => {
+            if (!file.name.toLowerCase().endsWith('.docx')) return;
+            const item = { file, name: file.name, status: 'Ready', pdfBlob: null };
+            queue.push(item);
+        });
+        renderQueue();
+    }
+
+    function renderQueue(){
+        queueEl.innerHTML = '';
+        queue.forEach((item, idx) => {
+            const row = document.createElement('div');
+            row.className = 'queue-item';
+            row.innerHTML = `<div style="display:flex;align-items:center;gap:.5rem;"><i class="fas fa-file-word" style="color:var(--primary)"></i><span>${item.name}</span></div>
+                             <div style="display:flex;align-items:center;gap:.5rem;" class="tool-display__controls">
+                               <span class="help">${item.status}</span>
+                               <button class="tool-display__button tool-display__button--secondary" data-idx="${idx}" data-act="convert">Convert</button>
+                               <button class="tool-display__button tool-display__button--secondary" data-idx="${idx}" data-act="download" ${item.pdfBlob? '':'disabled'}>Download</button>
+                             </div>`;
+            queueEl.appendChild(row);
+        });
+    }
+
+    async function docxArrayBuffer(file){
+        return await file.arrayBuffer();
+    }
+
+    async function docxToHtml(ab){
+        const res = await window.mammoth.convertToHtml({ arrayBuffer: ab });
+        return res.value; // HTML string
+    }
+
+    function pageConfig(){
+        const size = pageSizeSel.value === 'a4' ? [595.28, 841.89] : [612, 792]; // points
+        const landscape = orientationSel.value === 'landscape';
+        return { size, landscape };
+    }
+
+    async function renderHtmlToPdf(html){
+        const container = document.createElement('div');
+        container.style.width = '800px';
+        container.innerHTML = html;
+        previewEl.innerHTML = '';
+        previewEl.appendChild(container);
+
+        const { jsPDF } = window.jspdf;
+        const { size, landscape } = pageConfig();
+        const pdf = new jsPDF({ unit: 'pt', format: size, orientation: landscape ? 'landscape' : 'portrait' });
+
+        // Render the container into a canvas and paginate by page height
+        const fullCanvas = await html2canvas(container, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
+        const imgData = fullCanvas.toDataURL('image/jpeg', 0.98);
+
+        const pageWidth = landscape ? Math.max(size[0], size[1]) : size[0];
+        const pageHeight = landscape ? Math.min(size[0], size[1]) : size[1];
+
+        // Fit width; compute image height
+        const imgWidth = pageWidth;
+        const ratio = fullCanvas.height / fullCanvas.width;
+        const imgHeight = imgWidth * ratio;
+
+        let y = 0;
+        let pageIndex = 0;
+        while (y < imgHeight) {
+            if (pageIndex > 0) pdf.addPage();
+            const srcY = Math.floor((y / imgHeight) * fullCanvas.height);
+            const sliceHeightPx = Math.min(Math.floor((pageHeight / imgWidth) * fullCanvas.width * ratio), fullCanvas.height - srcY);
+
+            // Create slice canvas
+            const sliceCanvas = document.createElement('canvas');
+            const sliceCtx = sliceCanvas.getContext('2d');
+            sliceCanvas.width = fullCanvas.width;
+            sliceCanvas.height = sliceHeightPx;
+            sliceCtx.drawImage(fullCanvas, 0, srcY, fullCanvas.width, sliceHeightPx, 0, 0, fullCanvas.width, sliceHeightPx);
+            const sliceImg = sliceCanvas.toDataURL('image/jpeg', 0.98);
+
+            const sliceHeightPt = (sliceHeightPx / fullCanvas.width) * imgWidth;
+            pdf.addImage(sliceImg, 'JPEG', 0, 0, imgWidth, sliceHeightPt, undefined, 'FAST');
+
+            // Watermark
+            if (watermarkToggle.checked && watermarkText.value.trim()) {
+                try { if (pdf.GState) { pdf.setGState(new pdf.GState({ opacity: 0.12 })); } } catch(e) {}
+                pdf.setTextColor(150, 150, 150);
+                pdf.setFontSize(48);
+                pdf.text(watermarkText.value.trim(), pageWidth/2, pageHeight/2, { align: 'center', angle: 45 });
+                try { if (pdf.GState) { pdf.setGState(new pdf.GState({ opacity: 1 })); } } catch(e) {}
+            }
+
+            y += sliceHeightPt;
+            pageIndex++;
+        }
+        const blob = pdf.output('blob');
+        return { blob, pdf };
+    }
+
+    async function convertItem(item){
+        try{
+            item.status = 'Converting...'; renderQueue();
+            const ab = await docxArrayBuffer(item.file);
+            const html = await docxToHtml(ab);
+            const { blob, pdf } = await renderHtmlToPdf(html);
+            item.pdfBlob = blob;
+            item.status = 'Done'; renderQueue();
+            // Show preview via first page image
+            // We already injected HTML preview; keep as-is.
+            // Keep a reference for output controls
+            window.__currentPdfBlob = blob;
+        }catch(err){
+            console.error(err);
+            item.status = 'Failed'; renderQueue();
+        }
+    }
+
+    async function convertAll(){
+        for (const item of queue){
+            if (!item.pdfBlob) await convertItem(item);
+        }
+    }
+
+    async function downloadZip(){
+        const zip = new JSZip();
+        let converted = 0;
+        for (const item of queue){
+            if (!item.pdfBlob){ await convertItem(item); }
+            if (item.pdfBlob){ zip.file(item.name.replace(/\.docx$/i, '.pdf'), item.pdfBlob); converted++; }
+        }
+        if (converted === 0) return;
+        const content = await zip.generateAsync({ type: 'blob' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(content);
+        a.download = 'converted-pdfs.zip';
+        a.click();
+        URL.revokeObjectURL(a.href);
+    }
+
+    function attachEvents(){
+        fileInput.addEventListener('change', e => addToQueue(e.target.files));
+
+        ['dragover','dragenter'].forEach(evt => dropzone.addEventListener(evt, e=>{ e.preventDefault(); dropzone.style.background = 'var(--primary-lighter)'; }));
+        ;['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, e=>{ e.preventDefault(); dropzone.style.background = 'var(--bg-accent)'; }));
+        dropzone.addEventListener('drop', e => { if (e.dataTransfer?.files) addToQueue(e.dataTransfer.files); });
+
+        document.addEventListener('paste', async (e) => {
+            if (!e.clipboardData) return;
+            const files = [];
+            for (const item of e.clipboardData.items){
+                if (item.kind === 'file') files.push(item.getAsFile());
+            }
+            if (files.length) addToQueue(files);
+        });
+
+        queueEl.addEventListener('click', async (e)=>{
+            const btn = e.target.closest('button'); if(!btn) return;
+            const idx = +btn.dataset.idx; const act = btn.dataset.act; const item = queue[idx];
+            if (!item) return;
+            if (act==='convert') await convertItem(item);
+            if (act==='download' && item.pdfBlob){
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(item.pdfBlob);
+                a.download = item.name.replace(/\.docx$/i, '.pdf');
+                a.click();
+                URL.revokeObjectURL(a.href);
+            }
+        });
+
+        convertAllBtn.addEventListener('click', convertAll);
+        downloadZipBtn.addEventListener('click', downloadZip);
+
+        copyPdfBtn.addEventListener('click', async ()=>{
+            if (!window.__currentPdfBlob) return;
+            try{
+                await navigator.clipboard.write([new ClipboardItem({ 'application/pdf': window.__currentPdfBlob })]);
+                copyPdfBtn.textContent = 'Copied!'; setTimeout(()=>copyPdfBtn.textContent='Copy PDF', 1200);
+            }catch(err){ console.error(err); }
+        });
+
+        downloadPdfBtn.addEventListener('click', ()=>{
+            if (!window.__currentPdfBlob) return;
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(window.__currentPdfBlob);
+            a.download = 'document.pdf';
+            a.click();
+            URL.revokeObjectURL(a.href);
+        });
+
+        printPdfBtn.addEventListener('click', ()=>{
+            if (!window.__currentPdfBlob) return;
+            const url = URL.createObjectURL(window.__currentPdfBlob);
+            const iframe = document.createElement('iframe');
+            iframe.style.position = 'fixed'; iframe.style.right='0'; iframe.style.bottom='0'; iframe.style.width='0'; iframe.style.height='0';
+            iframe.src = url;
+            document.body.appendChild(iframe);
+            iframe.onload = () => { iframe.contentWindow.focus(); iframe.contentWindow.print(); setTimeout(()=>{ URL.revokeObjectURL(url); iframe.remove(); }, 1000); };
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+        attachEvents();
+    });
+    </script>
+
+    <!-- Header/Footer loader -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadScript = (src) => new Promise((resolve, reject) => { const s=document.createElement('script'); s.src=src; s.onload=()=>resolve(s); s.onerror=()=>reject(new Error('load '+src)); document.body.appendChild(s); });
+            const loadHeader = () => {
+                const el = document.getElementById('header-placeholder'); if(!el) return;
+                fetch('/header.html').then(r=>{ if(!r.ok) throw new Error('header'); return r.text(); }).then(html=>{ el.innerHTML = html; return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2'); }).then(()=> loadScript('/header-search.js')).then(()=>{ if (typeof initializeHeader === 'function') initializeHeader(); }).catch(console.error);
+            };
+            const loadFooter = () => {
+                const el = document.getElementById('footer-placeholder'); if(!el) return;
+                fetch('/footer.html').then(r=> r.ok ? r.text() : Promise.reject('footer fail')).then(html=> el.innerHTML = html).catch(console.error);
+            };
+            loadHeader(); loadFooter();
+        });
+    </script>
+    <script src="/app-loader.js" defer></script>
+</body>
+</html>
+
+

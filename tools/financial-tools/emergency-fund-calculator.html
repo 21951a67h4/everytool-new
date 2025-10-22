@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Fund Calculator | Calculate Your Emergency Fund Size | EveryTool.tech</title>
+    <meta name="description" content="Calculate your ideal emergency fund size based on expenses, job stability, and dependents. Get personalized recommendations and track your progress with our free Emergency Fund Calculator.">
+    <meta name="keywords" content="emergency fund calculator, emergency fund size, financial planning calculator, emergency savings calculator, financial security calculator">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Emergency Fund Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate your ideal emergency fund size based on expenses, job stability, and dependents. Get personalized recommendations and track your progress.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/financial-tools/emergency-fund-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tool CSS -->
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <!-- Add in <head> if not present -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Core Variables */
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --primary-darker: #1f37a8;
+            --primary-light: #6b83f1;
+            --primary-lighter: #94a5f4;
+            --secondary: #7209B7;
+            --secondary-dark: #560BAD;
+            --accent: #F72585;
+            --accent-dark: #B5179E;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-light: #9CA3AF;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --bg-dark: #111827;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1.5rem;
+            --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        /* Header Placeholder */
+        #header-placeholder {
+            height: 64px;
+        }
+
+        /* Tool Hero Section */
+        .tool-hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="%234361EE" opacity="0.1"/></svg>');
+            opacity: 0.5;
+            animation: patternMove 20s linear infinite;
+        }
+
+        .tool-hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-hero__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tool-hero__left {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .tool-hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .tool-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .tool-hero__features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .tool-hero__cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tool-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-button--primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-button--primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-button--secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tool-hero__right {
+            position: relative;
+            animation: slideIn 1s ease-out;
+        }
+
+        /* Tool Display Section */
+        .tool-display {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .tool-display__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-display__wrapper {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-display__wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .tool-display__header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tool-display__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__description {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tool-display__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .tool-display__input-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .tool-display__output-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .tool-display__controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-display__button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-display__button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-display__button--secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__input-group {
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-display__input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .tool-display__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+            background: white;
+        }
+
+        .tool-display__select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .emergency-summary {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            background: var(--bg-accent);
+        }
+
+        .emergency-summary__item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--bg-secondary);
+        }
+
+        .emergency-summary__item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .emergency-summary__label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .emergency-summary__value {
+            color: var(--text-secondary);
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .progress-tracker {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: var(--bg-accent);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .scenario-presets {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .scenario-preset {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-sm);
+            background: white;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition-all);
+            font-size: 0.875rem;
+        }
+
+        .scenario-preset:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .slider-container {
+            margin: 1rem 0;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--bg-accent);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: none;
+        }
+
+        .slider-value {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Mobile-specific optimizations for Emergency Fund Calculator */
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                display: grid;
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .tool-display__input-group { 
+                margin-bottom: 1rem; 
+            }
+            .tool-display__input, .tool-display__select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .tool-display__button { 
+                width: 100%; 
+                margin-bottom: 0.5rem; 
+            }
+            .tool-display__controls { 
+                display: flex;
+                flex-direction: column; 
+            }
+            .scenario-presets {
+                flex-direction: column;
+            }
+            .scenario-preset {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-display__input { 
+                padding: 0.65rem; 
+            }
+            .tool-display__button { 
+                padding: 0.8rem; 
+                font-size: 0.95rem; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Calculate Your Emergency Fund</h1>
+                    <p class="tool-hero__description">
+                        Build financial security with the right emergency fund size. Calculate your ideal emergency fund 
+                        based on expenses, job stability, and personal circumstances.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Financial Security</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Smart Allocation</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-tasks"></i>
+                            <span>Progress Tracking</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Private</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Fund
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Emergency Fund Calculator</h2>
+                    <p class="tool-display__description">
+                        Enter your monthly expenses and personal details to calculate your ideal emergency fund size.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Monthly Fixed Expenses (₹)</label>
+                            <input type="number" class="tool-display__input" id="fixed-expenses" placeholder="Rent, EMI, insurance, etc.">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Monthly Variable Expenses (₹)</label>
+                            <input type="number" class="tool-display__input" id="variable-expenses" placeholder="Food, transport, entertainment, etc.">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Number of Dependents</label>
+                            <input type="number" class="tool-display__input" id="dependents" placeholder="Family members dependent on you" min="0">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Job Stability Score</label>
+                            <div class="slider-container">
+                                <input type="range" class="slider" id="job-stability" min="1" max="10" value="5">
+                                <div class="slider-value" id="job-stability-value">5/10</div>
+                            </div>
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Insurance Coverage (₹)</label>
+                            <input type="number" class="tool-display__input" id="insurance-coverage" placeholder="Health, life insurance coverage">
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Location Factor</label>
+                            <select class="tool-display__select" id="location-factor">
+                                <option value="metro">Metro City (High Cost)</option>
+                                <option value="tier1">Tier 1 City (Medium Cost)</option>
+                                <option value="tier2">Tier 2 City (Lower Cost)</option>
+                                <option value="rural">Rural/Small Town (Lowest Cost)</option>
+                            </select>
+                        </div>
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Scenario Presets</label>
+                            <div class="scenario-presets">
+                                <button class="scenario-preset" data-preset="conservative">Conservative (12 months)</button>
+                                <button class="scenario-preset" data-preset="balanced">Balanced (6 months)</button>
+                                <button class="scenario-preset" data-preset="aggressive">Aggressive (3 months)</button>
+                            </div>
+                        </div>
+                        <div class="tool-display__controls">
+                            <button class="tool-display__button" id="calculate-emergency">
+                                <i class="fas fa-calculator"></i>
+                                Calculate Fund
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="reset-emergency">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="export-emergency">
+                                <i class="fas fa-download"></i>
+                                Export Plan
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Emergency Fund Results</h3>
+                        <div class="tool-display__result" id="emergency-result">
+                            Your emergency fund calculation results will appear here...
+                        </div>
+                        <div class="emergency-summary" id="emergency-summary" style="display: none;">
+                            <div class="emergency-summary__item">
+                                <span class="emergency-summary__label">Target Fund Size:</span>
+                                <span class="emergency-summary__value" id="target-fund-size"></span>
+                            </div>
+                            <div class="emergency-summary__item">
+                                <span class="emergency-summary__label">Months Covered:</span>
+                                <span class="emergency-summary__value" id="months-covered"></span>
+                            </div>
+                            <div class="emergency-summary__item">
+                                <span class="emergency-summary__label">Time to Build (₹10K/month):</span>
+                                <span class="emergency-summary__value" id="time-to-build"></span>
+                            </div>
+                            <div class="emergency-summary__item">
+                                <span class="emergency-summary__label">Risk Level:</span>
+                                <span class="emergency-summary__value" id="risk-level"></span>
+                            </div>
+                        </div>
+                        <div class="chart-container" id="chart-container" style="display: none;">
+                            <canvas id="allocationChart" width="400" height="200"></canvas>
+                        </div>
+                        <div class="progress-tracker" id="progress-tracker" style="display: none;">
+                            <h4>Progress Tracker</h4>
+                            <div class="tool-display__input-group">
+                                <label class="tool-display__label">Current Emergency Fund (₹)</label>
+                                <input type="number" class="tool-display__input" id="current-fund" placeholder="Enter your current emergency fund">
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <div id="progress-text">0% Complete</div>
+                            <button class="tool-display__button tool-display__button--secondary" id="update-progress" style="margin-top: 0.5rem;">
+                                <i class="fas fa-save"></i>
+                                Update Progress
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Building Your Emergency Fund: A Complete Guide</h2>
+                <p class="tool-blog__subtitle">
+                    Learn how to build and maintain an emergency fund that provides financial security and peace of mind
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is an Emergency Fund?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            An emergency fund is a dedicated savings account set aside to cover unexpected expenses or financial emergencies. 
+                            It acts as a financial safety net, protecting you from having to rely on credit cards, loans, or other high-interest 
+                            debt during difficult times.
+                        </p>
+                        <p>
+                            Common emergencies that an emergency fund can help with include:
+                        </p>
+                        <ul>
+                            <li>Job loss or reduced income</li>
+                            <li>Medical emergencies</li>
+                            <li>Major home or car repairs</li>
+                            <li>Unexpected travel expenses</li>
+                            <li>Family emergencies</li>
+                        </ul>
+                        <p>
+                            Having an emergency fund provides peace of mind and financial stability, allowing you to handle unexpected situations 
+                            without derailing your long-term financial goals.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">How Much Should You Save?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            The ideal emergency fund size depends on several factors:
+                        </p>
+                        <ul>
+                            <li><strong>Monthly Expenses:</strong> Higher expenses require a larger emergency fund</li>
+                            <li><strong>Job Stability:</strong> Less stable jobs require more months of coverage</li>
+                            <li><strong>Dependents:</strong> More dependents increase the need for a larger fund</li>
+                            <li><strong>Insurance Coverage:</strong> Good insurance reduces emergency fund needs</li>
+                            <li><strong>Location:</strong> Higher cost areas require larger funds</li>
+                        </ul>
+                        <p>
+                            <strong>General Guidelines:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Conservative:</strong> 12 months of expenses (for unstable income or high-risk situations)</li>
+                            <li><strong>Balanced:</strong> 6 months of expenses (most common recommendation)</li>
+                            <li><strong>Aggressive:</strong> 3 months of expenses (for stable jobs with good insurance)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Where to Keep Your Emergency Fund</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Emergency funds should be easily accessible but separate from your regular spending account. 
+                            Here are the best options:
+                        </p>
+                        <ul>
+                            <li><strong>High-Yield Savings Account:</strong> Easy access with better interest rates</li>
+                            <li><strong>Money Market Account:</strong> Higher interest with check-writing privileges</li>
+                            <li><strong>Liquid Mutual Funds:</strong> Better returns while maintaining liquidity</li>
+                            <li><strong>Fixed Deposits:</strong> Higher interest with penalty for early withdrawal</li>
+                        </ul>
+                        <p>
+                            <strong>Recommended Allocation:</strong>
+                        </p>
+                        <ul>
+                            <li>50% in high-yield savings account (immediate access)</li>
+                            <li>30% in liquid mutual funds (better returns)</li>
+                            <li>20% in short-term fixed deposits (highest returns)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Building Your Emergency Fund</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Here's a step-by-step approach to building your emergency fund:
+                        </p>
+                        <ol>
+                            <li><strong>Start Small:</strong> Begin with ₹1,000-₹5,000 as a mini emergency fund</li>
+                            <li><strong>Set a Target:</strong> Use our calculator to determine your ideal fund size</li>
+                            <li><strong>Automate Savings:</strong> Set up automatic transfers to your emergency fund</li>
+                            <li><strong>Cut Expenses:</strong> Reduce discretionary spending to boost savings</li>
+                            <li><strong>Use Windfalls:</strong> Direct bonuses, tax refunds, or gifts to your emergency fund</li>
+                            <li><strong>Track Progress:</strong> Monitor your progress and celebrate milestones</li>
+                        </ol>
+                        <p>
+                            Remember, building an emergency fund takes time. Be patient and consistent with your savings efforts.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Emergency Fund Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about Emergency Fund Calculator</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>How much should I save in my emergency fund?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>The general recommendation is 3-6 months of expenses, but it depends on your job stability, dependents, and risk tolerance. Use our calculator to get a personalized recommendation.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Where should I keep my emergency fund?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Keep it in easily accessible accounts like high-yield savings accounts, liquid mutual funds, or short-term fixed deposits. Avoid investing it in volatile assets.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Should I pay off debt or build an emergency fund first?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Start with a small emergency fund (₹10,000-₹50,000), then focus on high-interest debt. Once debt is paid off, build your full emergency fund.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I use my emergency fund for planned expenses?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>No, emergency funds should only be used for true emergencies like job loss, medical emergencies, or unexpected major expenses. Plan and save separately for other goals.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Fetch and insert header
+        fetch('../../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Emergency Fund Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const fixedExpensesInput = document.getElementById('fixed-expenses');
+            const variableExpensesInput = document.getElementById('variable-expenses');
+            const dependentsInput = document.getElementById('dependents');
+            const jobStabilitySlider = document.getElementById('job-stability');
+            const jobStabilityValue = document.getElementById('job-stability-value');
+            const insuranceCoverageInput = document.getElementById('insurance-coverage');
+            const locationFactorSelect = document.getElementById('location-factor');
+            const calculateButton = document.getElementById('calculate-emergency');
+            const resetButton = document.getElementById('reset-emergency');
+            const exportButton = document.getElementById('export-emergency');
+            const resultDiv = document.getElementById('emergency-result');
+            const summaryDiv = document.getElementById('emergency-summary');
+            const chartContainer = document.getElementById('chart-container');
+            const progressTracker = document.getElementById('progress-tracker');
+            const currentFundInput = document.getElementById('current-fund');
+            const updateProgressButton = document.getElementById('update-progress');
+            
+            const targetFundSizeSpan = document.getElementById('target-fund-size');
+            const monthsCoveredSpan = document.getElementById('months-covered');
+            const timeToBuildSpan = document.getElementById('time-to-build');
+            const riskLevelSpan = document.getElementById('risk-level');
+            
+            let allocationChart = null;
+
+            // Scenario presets
+            const scenarioPresets = document.querySelectorAll('.scenario-preset');
+            scenarioPresets.forEach(preset => {
+                preset.addEventListener('click', () => {
+                    const scenario = preset.dataset.preset;
+                    applyScenarioPreset(scenario);
+                });
+            });
+
+            function applyScenarioPreset(scenario) {
+                switch(scenario) {
+                    case 'conservative':
+                        jobStabilitySlider.value = '3';
+                        updateJobStabilityValue();
+                        break;
+                    case 'balanced':
+                        jobStabilitySlider.value = '5';
+                        updateJobStabilityValue();
+                        break;
+                    case 'aggressive':
+                        jobStabilitySlider.value = '8';
+                        updateJobStabilityValue();
+                        break;
+                }
+            }
+
+            function updateJobStabilityValue() {
+                const value = jobStabilitySlider.value;
+                jobStabilityValue.textContent = `${value}/10`;
+            }
+
+            jobStabilitySlider.addEventListener('input', updateJobStabilityValue);
+
+            function calculateEmergencyFund() {
+                const fixedExpenses = parseFloat(fixedExpensesInput.value) || 0;
+                const variableExpenses = parseFloat(variableExpensesInput.value) || 0;
+                const dependents = parseInt(dependentsInput.value) || 0;
+                const jobStability = parseInt(jobStabilitySlider.value) || 5;
+                const insuranceCoverage = parseFloat(insuranceCoverageInput.value) || 0;
+                const locationFactor = locationFactorSelect.value;
+
+                if (fixedExpenses || variableExpenses) {
+                    const totalMonthlyExpenses = fixedExpenses + variableExpenses;
+                    
+                    // Calculate base months based on job stability
+                    let baseMonths = 3;
+                    if (jobStability <= 3) baseMonths = 12; // Very unstable
+                    else if (jobStability <= 5) baseMonths = 8; // Moderately unstable
+                    else if (jobStability <= 7) baseMonths = 6; // Stable
+                    else baseMonths = 4; // Very stable
+
+                    // Adjust for dependents
+                    const dependentMultiplier = 1 + (dependents * 0.2);
+                    baseMonths *= dependentMultiplier;
+
+                    // Adjust for insurance coverage
+                    const insuranceAdjustment = Math.max(0, 1 - (insuranceCoverage / (totalMonthlyExpenses * 12)));
+                    baseMonths *= (1 + insuranceAdjustment * 0.5);
+
+                    // Adjust for location factor
+                    const locationMultipliers = {
+                        'metro': 1.2,
+                        'tier1': 1.1,
+                        'tier2': 1.0,
+                        'rural': 0.9
+                    };
+                    baseMonths *= locationMultipliers[locationFactor];
+
+                    // Cap between 3 and 18 months
+                    baseMonths = Math.max(3, Math.min(18, Math.round(baseMonths)));
+
+                    const targetFundSize = totalMonthlyExpenses * baseMonths;
+                    const timeToBuildMonths = Math.ceil(targetFundSize / 10000); // Assuming ₹10K/month savings
+                    const timeToBuildYears = Math.floor(timeToBuildMonths / 12);
+                    const timeToBuildMonthsRemainder = timeToBuildMonths % 12;
+
+                    // Determine risk level
+                    let riskLevel = 'Low';
+                    if (baseMonths <= 4) riskLevel = 'Low';
+                    else if (baseMonths <= 8) riskLevel = 'Medium';
+                    else riskLevel = 'High';
+
+                    // Format numbers with commas and 2 decimal places
+                    const formatNumber = (num) => {
+                        return '₹' + num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    };
+
+                    targetFundSizeSpan.textContent = formatNumber(targetFundSize);
+                    monthsCoveredSpan.textContent = `${baseMonths} months`;
+                    timeToBuildSpan.textContent = timeToBuildYears > 0 ? 
+                        `${timeToBuildYears} year${timeToBuildYears > 1 ? 's' : ''} ${timeToBuildMonthsRemainder} month${timeToBuildMonthsRemainder > 1 ? 's' : ''}` :
+                        `${timeToBuildMonthsRemainder} month${timeToBuildMonthsRemainder > 1 ? 's' : ''}`;
+                    riskLevelSpan.textContent = riskLevel;
+
+                    resultDiv.textContent = 'Emergency fund calculation completed!';
+                    summaryDiv.style.display = 'block';
+                    chartContainer.style.display = 'block';
+                    progressTracker.style.display = 'block';
+
+                    // Create allocation chart
+                    createAllocationChart();
+
+                    // Load current fund from localStorage
+                    loadCurrentFund();
+
+                    // Save to localStorage
+                    saveToLocalStorage();
+                } else {
+                    resultDiv.textContent = 'Please enter your monthly expenses.';
+                    summaryDiv.style.display = 'none';
+                    chartContainer.style.display = 'none';
+                    progressTracker.style.display = 'none';
+                }
+            }
+
+            function createAllocationChart() {
+                if (allocationChart) {
+                    allocationChart.destroy();
+                }
+
+                const ctx = document.getElementById('allocationChart').getContext('2d');
+                allocationChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['High-Yield Savings (50%)', 'Liquid Mutual Funds (30%)', 'Short-term FD (20%)'],
+                        datasets: [{
+                            data: [50, 30, 20],
+                            backgroundColor: ['#4361EE', '#F72585', '#7209B7'],
+                            borderColor: ['#2945c8', '#B5179E', '#560BAD'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Recommended Emergency Fund Allocation'
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            function updateProgress() {
+                const currentFund = parseFloat(currentFundInput.value) || 0;
+                const targetFund = parseFloat(targetFundSizeSpan.textContent.replace(/[₹,]/g, '')) || 1;
+                const progressPercentage = Math.min(100, (currentFund / targetFund) * 100);
+                
+                document.getElementById('progress-fill').style.width = `${progressPercentage}%`;
+                document.getElementById('progress-text').textContent = `${progressPercentage.toFixed(1)}% Complete`;
+                
+                // Save progress to localStorage
+                localStorage.setItem('emergencyFundProgress', JSON.stringify({
+                    currentFund: currentFund,
+                    targetFund: targetFund,
+                    progressPercentage: progressPercentage
+                }));
+            }
+
+            function loadCurrentFund() {
+                const savedProgress = localStorage.getItem('emergencyFundProgress');
+                if (savedProgress) {
+                    const progress = JSON.parse(savedProgress);
+                    currentFundInput.value = progress.currentFund || '';
+                    updateProgress();
+                }
+            }
+
+            function exportToCSV() {
+                const fixedExpenses = parseFloat(fixedExpensesInput.value) || 0;
+                if (fixedExpenses === 0) {
+                    alert('Please calculate emergency fund first before exporting.');
+                    return;
+                }
+
+                let csv = 'Emergency Fund Plan\n';
+                csv += 'Particulars,Amount\n';
+                csv += `Monthly Fixed Expenses,${fixedExpenses}\n`;
+                csv += `Monthly Variable Expenses,${parseFloat(variableExpensesInput.value) || 0}\n`;
+                csv += `Total Monthly Expenses,${fixedExpenses + (parseFloat(variableExpensesInput.value) || 0)}\n`;
+                csv += `Target Fund Size,${targetFundSizeSpan.textContent}\n`;
+                csv += `Months Covered,${monthsCoveredSpan.textContent}\n`;
+                csv += `Time to Build,${timeToBuildSpan.textContent}\n`;
+                csv += `Risk Level,${riskLevelSpan.textContent}\n`;
+
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'emergency-fund-plan.csv';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+
+            function saveToLocalStorage() {
+                const emergencyState = {
+                    fixedExpenses: fixedExpensesInput.value,
+                    variableExpenses: variableExpensesInput.value,
+                    dependents: dependentsInput.value,
+                    jobStability: jobStabilitySlider.value,
+                    insuranceCoverage: insuranceCoverageInput.value,
+                    locationFactor: locationFactorSelect.value
+                };
+                localStorage.setItem('emergencyFundCalculatorState', JSON.stringify(emergencyState));
+            }
+
+            function loadFromLocalStorage() {
+                const savedState = localStorage.getItem('emergencyFundCalculatorState');
+                if (savedState) {
+                    const state = JSON.parse(savedState);
+                    fixedExpensesInput.value = state.fixedExpenses || '';
+                    variableExpensesInput.value = state.variableExpenses || '';
+                    dependentsInput.value = state.dependents || '';
+                    jobStabilitySlider.value = state.jobStability || '5';
+                    insuranceCoverageInput.value = state.insuranceCoverage || '';
+                    locationFactorSelect.value = state.locationFactor || 'metro';
+                    updateJobStabilityValue();
+                }
+            }
+
+            function resetCalculator() {
+                fixedExpensesInput.value = '';
+                variableExpensesInput.value = '';
+                dependentsInput.value = '';
+                jobStabilitySlider.value = '5';
+                insuranceCoverageInput.value = '';
+                locationFactorSelect.value = 'metro';
+                currentFundInput.value = '';
+                updateJobStabilityValue();
+                resultDiv.textContent = 'Your emergency fund calculation results will appear here...';
+                summaryDiv.style.display = 'none';
+                chartContainer.style.display = 'none';
+                progressTracker.style.display = 'none';
+                if (allocationChart) {
+                    allocationChart.destroy();
+                    allocationChart = null;
+                }
+                localStorage.removeItem('emergencyFundCalculatorState');
+                localStorage.removeItem('emergencyFundProgress');
+            }
+
+            calculateButton.addEventListener('click', calculateEmergencyFund);
+            resetButton.addEventListener('click', resetCalculator);
+            exportButton.addEventListener('click', exportToCSV);
+            updateProgressButton.addEventListener('click', updateProgress);
+
+            // Load saved state on page load
+            loadFromLocalStorage();
+
+            // Allow Enter key to trigger calculation
+            [fixedExpensesInput, variableExpensesInput].forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        calculateEmergencyFund();
+                    }
+                });
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with animation classes
+        document.querySelectorAll('.tool-hero__left, .tool-hero__right, .blog-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

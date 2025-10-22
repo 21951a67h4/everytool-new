@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess | EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Controls: Back + Theme Switch -->
+    <div class="game-controls">
+        <button id="back-btn" class="back-btn" aria-label="Go back">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="switch-track">
+                <span class="switch-thumb">
+                    <i class="fas fa-moon theme-icon moon-icon"></i>
+                    <i class="fas fa-sun theme-icon sun-icon"></i>
+                </span>
+            </span>
+        </label>
+    </div>
+
+    <main class="game-container" role="main">
+        <h1 class="game-title">Chess</h1>
+        <div class="chess-layout">
+            <div class="board-wrapper">
+                <!-- Top file labels -->
+                <div class="file-labels top" aria-hidden="true">
+                    <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span>
+                </div>
+                <div id="board" class="board" role="grid" aria-label="Chess board 8 by 8"></div>
+                <!-- Bottom file labels -->
+                <div class="file-labels bottom" aria-hidden="true">
+                    <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span>
+                </div>
+            </div>
+
+            <aside class="panel">
+                <div class="panel-row">
+                    <div class="stat">
+                        <span class="label">Turn</span>
+                        <span id="turn-indicator" class="value">White</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">Moves</span>
+                        <span id="move-counter" class="value">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">White Score</span>
+                        <span id="score-white" class="value">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">Black Score</span>
+                        <span id="score-black" class="value">0</span>
+                    </div>
+                </div>
+
+                <div class="panel-row">
+                    <label class="mode">
+                        <input type="checkbox" id="vs-computer" />
+                        <span>Vs Computer</span>
+                    </label>
+                    <select id="difficulty" class="select">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                    <button id="new-game" class="btn">New Game</button>
+                </div>
+
+                <div class="panel-row">
+                    <button id="undo" class="btn secondary">Undo</button>
+                    <button id="reset" class="btn secondary">Reset</button>
+                </div>
+
+                <div class="history">
+                    <div class="history-header">
+                        <i class="fas fa-list"></i>
+                        <span>Move History</span>
+                    </div>
+                    <ol id="history-list" class="history-list"></ol>
+                    <div class="scores">
+                        <div class="stat"><span class="label">Wins</span> <span id="score-wins" class="value">0</span></div>
+                        <div class="stat"><span class="label">Losses</span> <span id="score-losses" class="value">0</span></div>
+                        <div class="stat"><span class="label">Draws</span> <span id="score-draws" class="value">0</span></div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <div id="celebrate" class="celebrate" aria-hidden="true"></div>
+    <div id="result-banner" class="result-banner" role="status" aria-live="polite" hidden></div>
+    <div id="check-banner" class="result-banner" role="status" aria-live="polite" hidden>Check!</div>
+
+    <!-- Rules Modal -->
+    <div id="rules-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="rules-title">
+        <div class="modal-content">
+            <h2 id="rules-title">Chess Rules & Game Info</h2>
+            <div class="modal-body">
+                <ul>
+                    <li>Full rules: legal moves, check, checkmate, stalemate.</li>
+                    <li>Special rules: castling, en passant, and pawn promotion (choose piece).</li>
+                    <li>Draws: 50-move rule, threefold repetition, insufficient material.</li>
+                    <li>Indicators: red outline and banner when the side to move is in check.</li>
+                    <li>Modes: Local 2‑Player or Vs Computer (Easy/Medium/Hard).</li>
+                    <li>Scoring: +1 per move, capture bonus (P=1, N/B=3, R=5, Q=9). Per‑difficulty W/L/D stats.</li>
+                    <li>Controls: Undo, Reset, New Game; move history shown on the right.</li>
+                    <li>Theme: top‑right switch toggles light/dark; back button returns to Games Hub.</li>
+                </ul>
+            </div>
+            <div class="modal-actions">
+                <button id="rules-accept" class="btn">I Understand</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Promotion Modal -->
+    <div id="promotion-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="promotion-title" style="display:none">
+        <div class="modal-content">
+            <h2 id="promotion-title">Choose Promotion</h2>
+            <div class="modal-body">
+                <div class="promo-choices">
+                    <button class="btn promo" data-piece="Q">Queen</button>
+                    <button class="btn promo" data-piece="R">Rook</button>
+                    <button class="btn promo" data-piece="B">Bishop</button>
+                    <button class="btn promo" data-piece="N">Knight</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="game-footer">
+        <p><span id="copyright-year"></span><span>EveryTool.tech</span></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+

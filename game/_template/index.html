@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game | EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+     <!-- Top Controls: Back + Theme Switch -->
+     <div class="game-controls">
+         <button id="back-btn" class="back-btn" aria-label="Go back">
+             <i class="fas fa-arrow-left"></i>
+         </button>
+         <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+             <input type="checkbox" id="theme-toggle" />
+             <span class="switch-track">
+                 <span class="switch-thumb"><i class="fas fa-moon"></i></span>
+             </span>
+         </label>
+     </div>
+
+    <!-- Game Container (replace with actual game markup) -->
+    <main class="game-container" role="main">
+        <h1 class="game-title">Game Title</h1>
+        <div class="game-stage">
+            <!-- Your game canvas/elements go here -->
+        </div>
+    </main>
+
+    <!-- Footer (dynamic year) -->
+    <footer class="game-footer">
+        <p>
+            <span id="copyright-year"></span>
+            <span>EveryTool.tech</span>
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+

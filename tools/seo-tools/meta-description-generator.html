@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Description Generator | Create SEO-Optimized Descriptions | EveryTool.tech</title>
+    <meta name="description" content="Generate compelling meta descriptions with SERP preview, CTR optimization, and pixel-length estimation. Create multiple variants with highlights for better SEO performance.">
+    <meta name="keywords" content="meta description generator, seo meta description, serp preview, ctr optimization, meta tag generator">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Meta Description Generator | EveryTool.tech">
+    <meta property="og:description" content="Generate compelling meta descriptions with SERP preview, CTR optimization, and pixel-length estimation. Create multiple variants with highlights for better SEO performance.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/seo-tools/meta-description-generator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Meta Description Generator Specific Styles */
+        .meta-calc-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .meta-calc-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .meta-calc-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .meta-calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .meta-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .meta-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .meta-form-group input, .meta-form-group select, .meta-form-group textarea { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .meta-results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .serp-preview {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-family: Arial, sans-serif;
+        }
+        
+        .serp-title {
+            color: #1a0dab;
+            font-size: 18px;
+            font-weight: normal;
+            margin-bottom: 3px;
+            line-height: 1.3;
+        }
+        
+        .serp-url {
+            color: #006621;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+        
+        .serp-description {
+            color: #545454;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .description-variants {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .variant-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .variant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .variant-title {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .variant-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .variant-description {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        
+        .variant-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .variant-action {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .variant-action:hover {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        
+        .length-indicator {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .length-good {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .length-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .length-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .export-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .meta-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .meta-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .variant-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .variant-stats {
+                flex-wrap: wrap;
+            }
+            .export-buttons {
+                flex-direction: column;
+            }
+            .meta-form-group input, .meta-form-group select, .meta-form-group textarea { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .meta-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .meta-form-group input, .meta-form-group select, .meta-form-group textarea { 
+                padding: 8px; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="Meta Description Generator" data-meta-description="Generate compelling meta descriptions with SERP preview, CTR optimization, and pixel-length estimation. Create multiple variants with highlights for better SEO performance.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Meta Description Generator: SERP-Optimized Descriptions</h1>
+                    <p class="tool-hero__description">
+                        Generate compelling meta descriptions with SERP preview, CTR optimization, and pixel-length estimation. 
+                        Create multiple variants with highlights for better SEO performance.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-eye"></i>
+                            <span>SERP Preview</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>CTR Optimization</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-ruler"></i>
+                            <span>Pixel Length</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-copy"></i>
+                            <span>Multiple Variants</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-magic"></i>
+                            Generate Descriptions
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Meta Descriptions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Meta Description Generator</h2>
+                    <p class="tool-display__description">
+                        Create compelling meta descriptions with SERP preview and CTR optimization for better search performance.
+                    </p>
+                </div>
+                
+                <!-- Meta Description Generator Custom Interface -->
+                <div class="meta-calc-container">
+                    <div class="meta-calc-section">
+                        <h4>1. Content Input</h4>
+                        <div class="meta-calc-grid">
+                            <div class="meta-form-group">
+                                <label for="page-title">Page Title</label>
+                                <input type="text" id="page-title" placeholder="Your Page Title" maxlength="60">
+                            </div>
+                            
+                            <div class="meta-form-group">
+                                <label for="primary-keyword">Primary Keyword</label>
+                                <input type="text" id="primary-keyword" placeholder="Main keyword">
+                            </div>
+                            
+                            <div class="meta-form-group">
+                                <label for="brand-name">Brand Name</label>
+                                <input type="text" id="brand-name" placeholder="Your Brand">
+                            </div>
+                            
+                            <div class="meta-form-group">
+                                <label for="content-summary">Content Summary</label>
+                                <textarea id="content-summary" placeholder="Brief summary of your content..." rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meta-calc-section">
+                        <h4>2. Generation Settings</h4>
+                        <div class="meta-calc-grid">
+                            <div class="meta-form-group">
+                                <label for="tone">Tone</label>
+                                <select id="tone">
+                                    <option value="professional">Professional</option>
+                                    <option value="casual">Casual</option>
+                                    <option value="urgent">Urgent</option>
+                                    <option value="friendly">Friendly</option>
+                                    <option value="authoritative">Authoritative</option>
+                                </select>
+                            </div>
+                            
+                            <div class="meta-form-group">
+                                <label for="brand-length">Brand Length Rule</label>
+                                <select id="brand-length">
+                                    <option value="short">Short (1-2 words)</option>
+                                    <option value="medium">Medium (3-5 words)</option>
+                                    <option value="long">Long (6+ words)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="meta-form-group">
+                                <label for="variant-count">Number of Variants</label>
+                                <select id="variant-count">
+                                    <option value="3">3 Variants</option>
+                                    <option value="5" selected>5 Variants</option>
+                                    <option value="10">10 Variants</option>
+                                </select>
+                            </div>
+                            
+                            <div class="meta-form-group">
+                                <label for="include-cta">Include Call-to-Action</label>
+                                <select id="include-cta">
+                                    <option value="true" selected>Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meta-calc-section">
+                        <h4>3. Generate</h4>
+                        <div class="meta-calc-grid">
+                            <div class="meta-form-group">
+                                <button class="tool-display__button tool-display__button--primary" onclick="generateDescriptions()">
+                                    <i class="fas fa-magic"></i>
+                                    Generate Meta Descriptions
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meta-results" id="meta-results" style="display: none;">
+                        <h4>Generated Meta Descriptions</h4>
+                        
+                        <div class="serp-preview" id="serp-preview">
+                            <div class="serp-title" id="serp-title">Sample Page Title</div>
+                            <div class="serp-url" id="serp-url">https://example.com/page</div>
+                            <div class="serp-description" id="serp-description">Sample meta description preview...</div>
+                        </div>
+                        
+                        <div class="description-variants" id="description-variants">
+                            <!-- Variants will be added here -->
+                        </div>
+                    </div>
+
+                    <div class="export-section">
+                        <h4>4. Export & Copy</h4>
+                        <div class="export-buttons">
+                            <button class="tool-display__button" onclick="exportDescriptions()">
+                                <i class="fas fa-download"></i> Export All
+                            </button>
+                            <button class="tool-display__button" onclick="copyBestDescription()">
+                                <i class="fas fa-copy"></i> Copy Best
+                            </button>
+                            <button class="tool-display__button" onclick="generateHTML()">
+                                <i class="fas fa-code"></i> Generate HTML
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Mastering Meta Descriptions for SEO</h2>
+                <p class="tool-blog__subtitle">
+                    Learn how to create compelling meta descriptions that improve click-through rates and search rankings
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is a Meta Description?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            A meta description is an HTML element that provides a brief summary of a webpage's content. 
+                            It appears in search engine results pages (SERPs) below the title and URL.
+                        </p>
+                        <p>
+                            <strong>Purpose:</strong> To entice users to click on your link by providing relevant, compelling information.
+                        </p>
+                        <p>
+                            <strong>Length:</strong> Google typically displays 150-160 characters, but may show up to 320 characters on mobile.
+                        </p>
+                        <p>
+                            <strong>Impact:</strong> While not a direct ranking factor, meta descriptions significantly affect click-through rates (CTR).
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Best Practices for Meta Descriptions</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Length:</strong> Keep between 150-160 characters for optimal display across devices.
+                        </p>
+                        <p>
+                            <strong>Keywords:</strong> Include your primary keyword naturally, preferably near the beginning.
+                        </p>
+                        <p>
+                            <strong>Call-to-Action:</strong> Use action words like "Learn," "Discover," "Get," "Find" to encourage clicks.
+                        </p>
+                        <p>
+                            <strong>Uniqueness:</strong> Each page should have a unique meta description that accurately represents its content.
+                        </p>
+                        <p>
+                            <strong>Value Proposition:</strong> Clearly communicate what users will gain by clicking your link.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">CTR Optimization Techniques</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Emotional Triggers:</strong> Use words that evoke emotion or urgency ("exclusive," "limited time," "proven").
+                        </p>
+                        <p>
+                            <strong>Numbers and Statistics:</strong> Include specific numbers, percentages, or timeframes to add credibility.
+                        </p>
+                        <p>
+                            <strong>Questions:</strong> Pose questions that your target audience might have.
+                        </p>
+                        <p>
+                            <strong>Benefits Focus:</strong> Highlight the main benefit or outcome users will achieve.
+                        </p>
+                        <p>
+                            <strong>Brand Consistency:</strong> Maintain a consistent tone that reflects your brand personality.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Meta Description Generator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about meta description generation</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>What's the ideal length for a meta description?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Google typically displays 150-160 characters in desktop search results, but may show up to 320 characters on mobile. Our tool provides pixel-length estimation to help you optimize for both desktop and mobile displays.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How many meta description variants should I create?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>We recommend creating 3-5 variants to test different approaches. You can A/B test them to see which performs best for your audience. Our generator creates multiple variants with different tones and structures.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Should I include my brand name in the meta description?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>It depends on your brand recognition and available space. For well-known brands, including the name can increase trust and CTR. For lesser-known brands, focus on the value proposition instead.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I use the same meta description for multiple pages?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>No, each page should have a unique meta description that accurately represents its specific content. Duplicate meta descriptions can hurt your SEO and provide a poor user experience.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Meta Description Generator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageTitle = document.getElementById('page-title');
+            const primaryKeyword = document.getElementById('primary-keyword');
+            const brandName = document.getElementById('brand-name');
+            const contentSummary = document.getElementById('content-summary');
+            const tone = document.getElementById('tone');
+            const brandLength = document.getElementById('brand-length');
+            const variantCount = document.getElementById('variant-count');
+            const includeCta = document.getElementById('include-cta');
+            const metaResults = document.getElementById('meta-results');
+            const serpTitle = document.getElementById('serp-title');
+            const serpUrl = document.getElementById('serp-url');
+            const serpDescription = document.getElementById('serp-description');
+            const descriptionVariants = document.getElementById('description-variants');
+            
+            // Description templates based on tone
+            const templates = {
+                professional: [
+                    "Discover {keyword} solutions with {brand}. {summary} Learn more about our expert services.",
+                    "{brand} provides comprehensive {keyword} services. {summary} Contact us for professional assistance.",
+                    "Expert {keyword} solutions from {brand}. {summary} Get started with our proven methods."
+                ],
+                casual: [
+                    "Check out our {keyword} guide! {summary} We've got everything you need to know.",
+                    "Looking for {keyword}? {brand} has you covered. {summary} Let's dive in!",
+                    "Everything about {keyword} in one place. {summary} Join {brand} and learn more."
+                ],
+                urgent: [
+                    "Don't miss out on {keyword}! {summary} Limited time offer from {brand}.",
+                    "Act now on {keyword} opportunities. {summary} {brand} delivers results fast.",
+                    "Urgent: {keyword} solutions available now. {summary} {brand} gets it done quickly."
+                ],
+                friendly: [
+                    "Hey there! Learn about {keyword} with {brand}. {summary} We're here to help!",
+                    "Welcome to {brand}'s {keyword} guide. {summary} Let's explore together!",
+                    "Ready to discover {keyword}? {brand} makes it easy. {summary} Start your journey!"
+                ],
+                authoritative: [
+                    "The definitive guide to {keyword} by {brand}. {summary} Trusted by industry leaders.",
+                    "{brand} leads in {keyword} expertise. {summary} Proven results, expert knowledge.",
+                    "Master {keyword} with {brand}'s authoritative approach. {summary} Industry-leading insights."
+                ]
+            };
+            
+            // Call-to-action phrases
+            const ctaPhrases = [
+                "Learn more", "Discover how", "Get started", "Find out", "Explore now", 
+                "Start today", "Try now", "See results", "Join us", "Get expert help"
+            ];
+            
+            function generateDescriptions() {
+                const title = pageTitle.value.trim();
+                const keyword = primaryKeyword.value.trim();
+                const brand = brandName.value.trim();
+                const summary = contentSummary.value.trim();
+                const toneValue = tone.value;
+                const brandLengthValue = brandLength.value;
+                const variantCountValue = parseInt(variantCount.value);
+                const includeCtaValue = includeCta.value === 'true';
+                
+                if (!title || !keyword) {
+                    alert('Please enter at least a page title and primary keyword.');
+                    return;
+                }
+                
+                const descriptions = generateVariants(title, keyword, brand, summary, toneValue, brandLengthValue, variantCountValue, includeCtaValue);
+                displayResults(descriptions, title, keyword, brand);
+            }
+            
+            function generateVariants(title, keyword, brand, summary, toneValue, brandLengthValue, count, includeCta) {
+                const variants = [];
+                const baseTemplates = templates[toneValue] || templates.professional;
+                
+                for (let i = 0; i < count; i++) {
+                    let template = baseTemplates[i % baseTemplates.length];
+                    
+                    // Replace placeholders
+                    template = template.replace('{keyword}', keyword);
+                    template = template.replace('{brand}', adjustBrandLength(brand, brandLengthValue));
+                    template = template.replace('{summary}', summary || 'Comprehensive information and insights.');
+                    
+                    // Add CTA if requested
+                    if (includeCta && !template.includes('Learn more') && !template.includes('Get started')) {
+                        const cta = ctaPhrases[i % ctaPhrases.length];
+                        template += ` ${cta}.`;
+                    }
+                    
+                    // Ensure proper length
+                    template = adjustLength(template, 155);
+                    
+                    variants.push({
+                        text: template,
+                        length: template.length,
+                        pixelLength: estimatePixelLength(template)
+                    });
+                }
+                
+                return variants;
+            }
+            
+            function adjustBrandLength(brand, lengthRule) {
+                if (!brand) return '';
+                
+                const words = brand.split(' ');
+                switch(lengthRule) {
+                    case 'short': return words.slice(0, 2).join(' ');
+                    case 'medium': return words.slice(0, 5).join(' ');
+                    case 'long': return brand;
+                    default: return brand;
+                }
+            }
+            
+            function adjustLength(text, maxLength) {
+                if (text.length <= maxLength) return text;
+                
+                // Try to cut at word boundary
+                const truncated = text.substring(0, maxLength);
+                const lastSpace = truncated.lastIndexOf(' ');
+                
+                if (lastSpace > maxLength * 0.8) {
+                    return truncated.substring(0, lastSpace) + '...';
+                }
+                
+                return truncated + '...';
+            }
+            
+            function estimatePixelLength(text) {
+                // Rough estimation: average character width is about 6-8 pixels
+                return Math.round(text.length * 7);
+            }
+            
+            function displayResults(descriptions, title, keyword, brand) {
+                metaResults.style.display = 'block';
+                
+                // Update SERP preview
+                serpTitle.textContent = title;
+                serpUrl.textContent = `https://${brand.toLowerCase().replace(/\s+/g, '')}.com/${keyword.toLowerCase().replace(/\s+/g, '-')}`;
+                serpDescription.textContent = descriptions[0].text;
+                
+                // Display variants
+                descriptionVariants.innerHTML = descriptions.map((desc, index) => {
+                    const lengthClass = desc.length <= 155 ? 'length-good' : 
+                                      desc.length <= 160 ? 'length-warning' : 'length-danger';
+                    const lengthText = desc.length <= 155 ? 'Optimal' : 
+                                     desc.length <= 160 ? 'Good' : 'Long';
+                    
+                    return `
+                        <div class="variant-item">
+                            <div class="variant-header">
+                                <div class="variant-title">Variant ${index + 1}</div>
+                                <div class="variant-stats">
+                                    <span>${desc.length} chars</span>
+                                    <span>~${desc.pixelLength}px</span>
+                                    <span class="length-indicator ${lengthClass}">${lengthText}</span>
+                                </div>
+                            </div>
+                            <div class="variant-description">${desc.text}</div>
+                            <div class="variant-actions">
+                                <button class="variant-action" onclick="copyVariant(${index})">Copy</button>
+                                <button class="variant-action" onclick="previewVariant(${index})">Preview</button>
+                                <button class="variant-action" onclick="editVariant(${index})">Edit</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                // Store descriptions globally for actions
+                window.generatedDescriptions = descriptions;
+            }
+            
+            window.copyVariant = function(index) {
+                const description = window.generatedDescriptions[index].text;
+                navigator.clipboard.writeText(description).then(() => {
+                    alert('Meta description copied to clipboard!');
+                });
+            };
+            
+            window.previewVariant = function(index) {
+                const description = window.generatedDescriptions[index].text;
+                serpDescription.textContent = description;
+            };
+            
+            window.editVariant = function(index) {
+                const description = window.generatedDescriptions[index].text;
+                const newDescription = prompt('Edit meta description:', description);
+                if (newDescription && newDescription.trim()) {
+                    window.generatedDescriptions[index].text = newDescription.trim();
+                    window.generatedDescriptions[index].length = newDescription.trim().length;
+                    window.generatedDescriptions[index].pixelLength = estimatePixelLength(newDescription.trim());
+                    displayResults(window.generatedDescriptions, pageTitle.value, primaryKeyword.value, brandName.value);
+                }
+            };
+            
+            window.exportDescriptions = function() {
+                if (!window.generatedDescriptions) {
+                    alert('Please generate descriptions first.');
+                    return;
+                }
+                
+                const csv = 'Variant,Description,Length,Pixel Length\n' + 
+                    window.generatedDescriptions.map((desc, index) => 
+                        `${index + 1},"${desc.text}",${desc.length},${desc.pixelLength}`
+                    ).join('\n');
+                
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'meta-descriptions.csv';
+                link.click();
+                URL.revokeObjectURL(url);
+            };
+            
+            window.copyBestDescription = function() {
+                if (!window.generatedDescriptions) {
+                    alert('Please generate descriptions first.');
+                    return;
+                }
+                
+                // Find the best description (optimal length, includes keyword)
+                const best = window.generatedDescriptions.reduce((best, current) => {
+                    const currentScore = (current.length <= 155 ? 10 : current.length <= 160 ? 5 : 0) +
+                                       (current.text.toLowerCase().includes(primaryKeyword.value.toLowerCase()) ? 5 : 0);
+                    const bestScore = (best.length <= 155 ? 10 : best.length <= 160 ? 5 : 0) +
+                                    (best.text.toLowerCase().includes(primaryKeyword.value.toLowerCase()) ? 5 : 0);
+                    
+                    return currentScore > bestScore ? current : best;
+                });
+                
+                navigator.clipboard.writeText(best.text).then(() => {
+                    alert('Best meta description copied to clipboard!');
+                });
+            };
+            
+            window.generateHTML = function() {
+                if (!window.generatedDescriptions) {
+                    alert('Please generate descriptions first.');
+                    return;
+                }
+                
+                const html = window.generatedDescriptions.map((desc, index) => 
+                    `<!-- Meta Description Variant ${index + 1} -->\n<meta name="description" content="${desc.text}">`
+                ).join('\n\n');
+                
+                navigator.clipboard.writeText(html).then(() => {
+                    alert('HTML meta tags copied to clipboard!');
+                });
+            };
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

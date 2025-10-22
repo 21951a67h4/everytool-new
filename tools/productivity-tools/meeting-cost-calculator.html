@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Cost Calculator | Calculate Meeting Expenses & ROI | EveryTool.tech</title>
+    <meta name="description" content="Calculate the true cost of meetings with attendee hourly rates, duration, and recurrence. Get cost breakdowns, ROI analysis, and productivity insights for better meeting management.">
+    <meta name="keywords" content="meeting cost calculator, meeting expenses, meeting ROI, productivity calculator, meeting efficiency">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Meeting Cost Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate the true cost of meetings with attendee hourly rates, duration, and recurrence. Get cost breakdowns, ROI analysis, and productivity insights for better meeting management.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/productivity-tools/meeting-cost-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Meeting Cost Calculator Specific Styles */
+        .meeting-calc-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .meeting-calc-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .meeting-calc-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .meeting-calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .meeting-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .meeting-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .meeting-form-group input, .meeting-form-group select { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .attendee-list {
+            margin-top: 15px;
+        }
+        
+        .attendee-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .attendee-item input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .attendee-item select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            min-width: 120px;
+        }
+        
+        .remove-attendee {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .remove-attendee:hover {
+            background: #c82333;
+        }
+        
+        .add-attendee {
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .add-attendee:hover {
+            background: #218838;
+        }
+        
+        .cost-display {
+            text-align: center;
+            margin: 30px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .cost-amount {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .cost-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .cost-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .breakdown-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .breakdown-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .breakdown-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .results-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .result-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        
+        .result-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .attendee-breakdown {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        .breakdown-table th,
+        .breakdown-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .breakdown-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .roi-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .roi-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .export-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .meeting-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .meeting-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .attendee-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .attendee-item input,
+            .attendee-item select {
+                margin-bottom: 8px;
+            }
+            .cost-amount {
+                font-size: 2.5rem;
+            }
+            .cost-breakdown {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .export-buttons {
+                flex-direction: column;
+            }
+            .meeting-form-group input, .meeting-form-group select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .meeting-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .cost-amount {
+                font-size: 2rem;
+            }
+            .cost-breakdown {
+                grid-template-columns: 1fr;
+            }
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            .meeting-form-group input, .meeting-form-group select { 
+                padding: 8px; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="Meeting Cost Calculator" data-meta-description="Calculate the true cost of meetings with attendee hourly rates, duration, and recurrence. Get cost breakdowns, ROI analysis, and productivity insights for better meeting management.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Meeting Cost Calculator: Optimize Your Meeting ROI</h1>
+                    <p class="tool-hero__description">
+                        Calculate the true cost of meetings with attendee hourly rates, duration, and recurrence. 
+                        Get cost breakdowns, ROI analysis, and productivity insights for better meeting management.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-users"></i>
+                            <span>Attendee Management</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>Cost Breakdown</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>ROI Analysis</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Recurrence Tracking</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Meeting Cost
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Meeting ROI
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Meeting Cost Calculator</h2>
+                    <p class="tool-display__description">
+                        Calculate the true cost of your meetings and optimize your team's productivity and ROI.
+                    </p>
+                </div>
+                
+                <!-- Meeting Cost Calculator Custom Interface -->
+                <div class="meeting-calc-container">
+                    <div class="meeting-calc-section">
+                        <h4>1. Meeting Details</h4>
+                        <div class="meeting-calc-grid">
+                            <div class="meeting-form-group">
+                                <label for="meeting-title">Meeting Title</label>
+                                <input type="text" id="meeting-title" placeholder="e.g., Weekly Team Standup">
+                            </div>
+                            
+                            <div class="meeting-form-group">
+                                <label for="meeting-duration">Duration (minutes)</label>
+                                <input type="number" id="meeting-duration" value="60" min="15" max="480">
+                            </div>
+                            
+                            <div class="meeting-form-group">
+                                <label for="currency">Currency</label>
+                                <select id="currency">
+                                    <option value="USD">USD ($)</option>
+                                    <option value="EUR">EUR (€)</option>
+                                    <option value="GBP">GBP (£)</option>
+                                    <option value="INR">INR (₹)</option>
+                                    <option value="CAD">CAD (C$)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="meeting-form-group">
+                                <label for="recurrence">Recurrence</label>
+                                <select id="recurrence">
+                                    <option value="once">One-time</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="biweekly">Bi-weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="quarterly">Quarterly</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meeting-calc-section">
+                        <h4>2. Attendees & Rates</h4>
+                        <div class="attendee-list" id="attendee-list">
+                            <div class="attendee-item">
+                                <input type="text" placeholder="Attendee Name" class="attendee-name" value="Manager">
+                                <select class="attendee-role">
+                                    <option value="senior">Senior ($100/hr)</option>
+                                    <option value="mid">Mid-level ($75/hr)</option>
+                                    <option value="junior">Junior ($50/hr)</option>
+                                    <option value="executive">Executive ($150/hr)</option>
+                                    <option value="custom">Custom Rate</option>
+                                </select>
+                                <input type="number" placeholder="Custom Rate" class="custom-rate" style="display: none;" min="0" step="0.01">
+                                <button class="remove-attendee" onclick="removeAttendee(this)">Remove</button>
+                            </div>
+                            <div class="attendee-item">
+                                <input type="text" placeholder="Attendee Name" class="attendee-name" value="Developer">
+                                <select class="attendee-role">
+                                    <option value="senior">Senior ($100/hr)</option>
+                                    <option value="mid" selected>Mid-level ($75/hr)</option>
+                                    <option value="junior">Junior ($50/hr)</option>
+                                    <option value="executive">Executive ($150/hr)</option>
+                                    <option value="custom">Custom Rate</option>
+                                </select>
+                                <input type="number" placeholder="Custom Rate" class="custom-rate" style="display: none;" min="0" step="0.01">
+                                <button class="remove-attendee" onclick="removeAttendee(this)">Remove</button>
+                            </div>
+                        </div>
+                        <button class="add-attendee" onclick="addAttendee()">
+                            <i class="fas fa-plus"></i> Add Attendee
+                        </button>
+                    </div>
+
+                    <div class="meeting-calc-section">
+                        <h4>3. Cost Summary</h4>
+                        <div class="cost-display" id="cost-display">
+                            <div class="cost-amount" id="total-cost">$0</div>
+                            <div class="cost-label">Total Meeting Cost</div>
+                            <div class="cost-breakdown" id="cost-breakdown">
+                                <div class="breakdown-item">
+                                    <div class="breakdown-value" id="per-minute">$0</div>
+                                    <div class="breakdown-label">Per Minute</div>
+                                </div>
+                                <div class="breakdown-item">
+                                    <div class="breakdown-value" id="per-hour">$0</div>
+                                    <div class="breakdown-label">Per Hour</div>
+                                </div>
+                                <div class="breakdown-item">
+                                    <div class="breakdown-value" id="annual-cost">$0</div>
+                                    <div class="breakdown-label">Annual Cost</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="results-section" id="results-section">
+                        <h4>4. Detailed Breakdown</h4>
+                        <div class="results-grid" id="results-grid">
+                            <div class="result-item">
+                                <div class="result-value" id="attendee-count">0</div>
+                                <div class="result-label">Total Attendees</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-value" id="total-hours">0h</div>
+                                <div class="result-label">Total Hours</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-value" id="avg-rate">$0</div>
+                                <div class="result-label">Avg Hourly Rate</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-value" id="cost-per-person">$0</div>
+                                <div class="result-label">Cost Per Person</div>
+                            </div>
+                        </div>
+                        
+                        <div class="attendee-breakdown">
+                            <h5>Attendee Breakdown</h5>
+                            <table class="breakdown-table" id="breakdown-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Role</th>
+                                        <th>Hourly Rate</th>
+                                        <th>Cost</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="breakdown-tbody">
+                                    <!-- Attendee breakdown will be added here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="roi-section" id="roi-section">
+                        <h4>5. ROI & Productivity Insights</h4>
+                        <div id="roi-insights">
+                            <!-- ROI insights will be added here -->
+                        </div>
+                    </div>
+
+                    <div class="export-section">
+                        <h4>6. Export & Share</h4>
+                        <div class="export-buttons">
+                            <button class="tool-display__button" onclick="exportToCSV()">
+                                <i class="fas fa-file-csv"></i> Export CSV
+                            </button>
+                            <button class="tool-display__button" onclick="generateReport()">
+                                <i class="fas fa-file-pdf"></i> Generate Report
+                            </button>
+                            <button class="tool-display__button" onclick="shareMeeting()">
+                                <i class="fas fa-share"></i> Share Meeting
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Optimize Your Meeting ROI</h2>
+                <p class="tool-blog__subtitle">
+                    Learn how to calculate meeting costs and improve productivity through better meeting management
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Understanding Meeting Costs</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Meetings are one of the most expensive activities in any organization. The true cost includes not just 
+                            the time spent in the meeting, but also preparation time, follow-up actions, and opportunity costs.
+                        </p>
+                        <p>
+                            <strong>Key Cost Factors:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Attendee Salaries:</strong> Hourly rates × meeting duration</li>
+                            <li><strong>Preparation Time:</strong> Time spent preparing for the meeting</li>
+                            <li><strong>Follow-up Actions:</strong> Time spent on meeting outcomes</li>
+                            <li><strong>Opportunity Cost:</strong> What else could have been accomplished</li>
+                            <li><strong>Recurrence Impact:</strong> Annual costs for regular meetings</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Calculating True Meeting ROI</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>ROI Formula:</strong> (Meeting Benefits - Meeting Costs) / Meeting Costs × 100
+                        </p>
+                        <p>
+                            <strong>Meeting Benefits Include:</strong>
+                        </p>
+                        <ul>
+                            <li>Decisions made and actions taken</li>
+                            <li>Information shared and knowledge transferred</li>
+                            <li>Team alignment and collaboration</li>
+                            <li>Problem-solving and innovation</li>
+                            <li>Relationship building and trust</li>
+                        </ul>
+                        <p>
+                            <strong>High ROI Meeting Characteristics:</strong>
+                        </p>
+                        <ul>
+                            <li>Clear agenda and objectives</li>
+                            <li>Right people in the room</li>
+                            <li>Appropriate duration</li>
+                            <li>Actionable outcomes</li>
+                            <li>Follow-up accountability</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Optimizing Meeting Efficiency</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Before the Meeting:</strong>
+                        </p>
+                        <ul>
+                            <li>Define clear objectives and agenda</li>
+                            <li>Invite only necessary attendees</li>
+                            <li>Share relevant materials in advance</li>
+                            <li>Set time limits and stick to them</li>
+                        </ul>
+                        <p>
+                            <strong>During the Meeting:</strong>
+                        </p>
+                        <ul>
+                            <li>Start and end on time</li>
+                            <li>Stay focused on the agenda</li>
+                            <li>Encourage participation from all attendees</li>
+                            <li>Take clear notes and action items</li>
+                        </ul>
+                        <p>
+                            <strong>After the Meeting:</strong>
+                        </p>
+                        <ul>
+                            <li>Send meeting summary and action items</li>
+                            <li>Follow up on commitments</li>
+                            <li>Measure outcomes and adjust future meetings</li>
+                            <li>Cancel meetings that no longer add value</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Meeting Cost Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about meeting costs and ROI</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>How do I calculate the true cost of a meeting?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Multiply each attendee's hourly rate by the meeting duration, then sum all costs. Include preparation time, follow-up actions, and consider opportunity costs. For recurring meetings, multiply by frequency to get annual costs.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What's a good ROI for meetings?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>A good meeting ROI is typically 300% or higher, meaning the benefits are at least 3 times the cost. This includes decisions made, problems solved, information shared, and team alignment achieved. Regular meetings should show measurable productivity improvements.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How can I reduce meeting costs?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Reduce attendee count to essential people only, shorten meeting duration, eliminate unnecessary meetings, use async communication when possible, and ensure every meeting has clear objectives and actionable outcomes. Consider if the meeting could be an email or document instead.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Should I include preparation time in meeting costs?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes, preparation time is part of the true meeting cost. Include time spent creating agendas, reviewing materials, preparing presentations, and any pre-meeting discussions. This gives a more accurate picture of the total investment in each meeting.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Meeting Cost Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const meetingTitle = document.getElementById('meeting-title');
+            const meetingDuration = document.getElementById('meeting-duration');
+            const currency = document.getElementById('currency');
+            const recurrence = document.getElementById('recurrence');
+            const attendeeList = document.getElementById('attendee-list');
+            const totalCost = document.getElementById('total-cost');
+            const perMinute = document.getElementById('per-minute');
+            const perHour = document.getElementById('per-hour');
+            const annualCost = document.getElementById('annual-cost');
+            const resultsSection = document.getElementById('results-section');
+            const roiSection = document.getElementById('roi-section');
+            
+            // Role rates (in USD)
+            const roleRates = {
+                senior: 100,
+                mid: 75,
+                junior: 50,
+                executive: 150
+            };
+            
+            // Currency symbols
+            const currencySymbols = {
+                USD: '$',
+                EUR: '€',
+                GBP: '£',
+                INR: '₹',
+                CAD: 'C$'
+            };
+            
+            // Event listeners
+            [meetingDuration, currency, recurrence].forEach(element => {
+                element.addEventListener('change', calculateCosts);
+            });
+            
+            // Initial calculation
+            calculateCosts();
+            
+            function calculateCosts() {
+                const duration = parseInt(meetingDuration.value);
+                const selectedCurrency = currency.value;
+                const symbol = currencySymbols[selectedCurrency];
+                
+                let totalCostValue = 0;
+                let attendeeCount = 0;
+                let totalHours = 0;
+                let totalRates = 0;
+                
+                // Calculate costs for each attendee
+                const attendeeItems = attendeeList.querySelectorAll('.attendee-item');
+                const breakdownTbody = document.getElementById('breakdown-tbody');
+                breakdownTbody.innerHTML = '';
+                
+                attendeeItems.forEach(item => {
+                    const nameInput = item.querySelector('.attendee-name');
+                    const roleSelect = item.querySelector('.attendee-role');
+                    const customRateInput = item.querySelector('.custom-rate');
+                    
+                    const name = nameInput.value || 'Unnamed';
+                    const role = roleSelect.value;
+                    let rate = roleRates[role] || 0;
+                    
+                    if (role === 'custom' && customRateInput.value) {
+                        rate = parseFloat(customRateInput.value) || 0;
+                    }
+                    
+                    const cost = (rate * duration) / 60;
+                    totalCostValue += cost;
+                    attendeeCount++;
+                    totalHours += duration / 60;
+                    totalRates += rate;
+                    
+                    // Add to breakdown table
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${name}</td>
+                        <td>${role.charAt(0).toUpperCase() + role.slice(1)}</td>
+                        <td>${symbol}${rate.toFixed(2)}</td>
+                        <td>${symbol}${cost.toFixed(2)}</td>
+                    `;
+                    breakdownTbody.appendChild(row);
+                });
+                
+                // Update displays
+                totalCost.textContent = `${symbol}${totalCostValue.toFixed(2)}`;
+                perMinute.textContent = `${symbol}${(totalCostValue / duration).toFixed(2)}`;
+                perHour.textContent = `${symbol}${(totalCostValue * 60 / duration).toFixed(2)}`;
+                
+                // Calculate annual cost based on recurrence
+                const recurrenceMultipliers = {
+                    once: 1,
+                    weekly: 52,
+                    biweekly: 26,
+                    monthly: 12,
+                    quarterly: 4
+                };
+                
+                const annualCostValue = totalCostValue * recurrenceMultipliers[recurrence.value];
+                annualCost.textContent = `${symbol}${annualCostValue.toFixed(2)}`;
+                
+                // Update results
+                document.getElementById('attendee-count').textContent = attendeeCount;
+                document.getElementById('total-hours').textContent = `${(totalHours).toFixed(1)}h`;
+                document.getElementById('avg-rate').textContent = `${symbol}${(totalRates / attendeeCount).toFixed(2)}`;
+                document.getElementById('cost-per-person').textContent = `${symbol}${(totalCostValue / attendeeCount).toFixed(2)}`;
+                
+                // Show/hide sections
+                resultsSection.style.display = attendeeCount > 0 ? 'block' : 'none';
+                roiSection.style.display = attendeeCount > 0 ? 'block' : 'none';
+                
+                // Generate ROI insights
+                generateROIInsights(totalCostValue, duration, attendeeCount);
+            }
+            
+            function generateROIInsights(totalCost, duration, attendeeCount) {
+                const insightsContainer = document.getElementById('roi-insights');
+                const insights = [];
+                
+                // Cost per minute insight
+                const costPerMinute = totalCost / duration;
+                if (costPerMinute > 10) {
+                    insights.push({
+                        title: "High Cost Alert",
+                        description: `This meeting costs ${currencySymbols[currency.value]}${costPerMinute.toFixed(2)} per minute. Consider if all attendees are necessary.`
+                    });
+                }
+                
+                // Duration insight
+                if (duration > 60) {
+                    insights.push({
+                        title: "Long Meeting Warning",
+                        description: "Meetings over 60 minutes often have diminishing returns. Consider breaking into shorter sessions."
+                    });
+                }
+                
+                // Attendee count insight
+                if (attendeeCount > 8) {
+                    insights.push({
+                        title: "Large Meeting Impact",
+                        description: "Large meetings can reduce individual contribution. Consider smaller, focused sessions."
+                    });
+                }
+                
+                // ROI recommendations
+                insights.push({
+                    title: "ROI Optimization",
+                    description: "Ensure clear agenda, actionable outcomes, and follow-up to maximize meeting value."
+                });
+                
+                insightsContainer.innerHTML = insights.map(insight => `
+                    <div class="roi-item">
+                        <strong>${insight.title}:</strong> ${insight.description}
+                    </div>
+                `).join('');
+            }
+            
+            window.addAttendee = function() {
+                const newAttendee = document.createElement('div');
+                newAttendee.className = 'attendee-item';
+                newAttendee.innerHTML = `
+                    <input type="text" placeholder="Attendee Name" class="attendee-name">
+                    <select class="attendee-role">
+                        <option value="senior">Senior (${currencySymbols[currency.value]}100/hr)</option>
+                        <option value="mid" selected>Mid-level (${currencySymbols[currency.value]}75/hr)</option>
+                        <option value="junior">Junior (${currencySymbols[currency.value]}50/hr)</option>
+                        <option value="executive">Executive (${currencySymbols[currency.value]}150/hr)</option>
+                        <option value="custom">Custom Rate</option>
+                    </select>
+                    <input type="number" placeholder="Custom Rate" class="custom-rate" style="display: none;" min="0" step="0.01">
+                    <button class="remove-attendee" onclick="removeAttendee(this)">Remove</button>
+                `;
+                
+                attendeeList.appendChild(newAttendee);
+                
+                // Add event listeners
+                const roleSelect = newAttendee.querySelector('.attendee-role');
+                const customRateInput = newAttendee.querySelector('.custom-rate');
+                const nameInput = newAttendee.querySelector('.attendee-name');
+                
+                roleSelect.addEventListener('change', function() {
+                    if (this.value === 'custom') {
+                        customRateInput.style.display = 'block';
+                    } else {
+                        customRateInput.style.display = 'none';
+                    }
+                    calculateCosts();
+                });
+                
+                customRateInput.addEventListener('input', calculateCosts);
+                nameInput.addEventListener('input', calculateCosts);
+                
+                calculateCosts();
+            };
+            
+            window.removeAttendee = function(button) {
+                const attendeeItem = button.closest('.attendee-item');
+                if (attendeeList.children.length > 1) {
+                    attendeeItem.remove();
+                    calculateCosts();
+                } else {
+                    alert('You need at least one attendee.');
+                }
+            };
+            
+            // Update role rates when currency changes
+            currency.addEventListener('change', function() {
+                const symbol = currencySymbols[this.value];
+                const roleSelects = document.querySelectorAll('.attendee-role');
+                
+                roleSelects.forEach(select => {
+                    const options = select.querySelectorAll('option');
+                    options[0].textContent = `Senior (${symbol}100/hr)`;
+                    options[1].textContent = `Mid-level (${symbol}75/hr)`;
+                    options[2].textContent = `Junior (${symbol}50/hr)`;
+                    options[3].textContent = `Executive (${symbol}150/hr)`;
+                });
+                
+                calculateCosts();
+            });
+            
+            window.exportToCSV = function() {
+                const csv = 'Meeting Title,Duration (min),Attendee,Role,Hourly Rate,Cost\n' + 
+                    document.querySelectorAll('.attendee-item').map(item => {
+                        const name = item.querySelector('.attendee-name').value || 'Unnamed';
+                        const role = item.querySelector('.attendee-role').value;
+                        const customRate = item.querySelector('.custom-rate');
+                        let rate = roleRates[role] || 0;
+                        
+                        if (role === 'custom' && customRate.value) {
+                            rate = parseFloat(customRate.value) || 0;
+                        }
+                        
+                        const cost = (rate * parseInt(meetingDuration.value)) / 60;
+                        
+                        return `"${meetingTitle.value || 'Untitled Meeting'}",${meetingDuration.value},"${name}","${role}",${rate},${cost.toFixed(2)}`;
+                    }).join('\n');
+                
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'meeting-cost-analysis.csv';
+                link.click();
+                URL.revokeObjectURL(url);
+            };
+            
+            window.generateReport = function() {
+                // Simple text report generation
+                const report = `
+MEETING COST ANALYSIS REPORT
+============================
+
+Meeting: ${meetingTitle.value || 'Untitled Meeting'}
+Duration: ${meetingDuration.value} minutes
+Currency: ${currency.value}
+Recurrence: ${recurrence.value}
+
+ATTENDEES:
+${Array.from(document.querySelectorAll('.attendee-item')).map(item => {
+    const name = item.querySelector('.attendee-name').value || 'Unnamed';
+    const role = item.querySelector('.attendee-role').value;
+    const customRate = item.querySelector('.custom-rate');
+    let rate = roleRates[role] || 0;
+    
+    if (role === 'custom' && customRate.value) {
+        rate = parseFloat(customRate.value) || 0;
+    }
+    
+    const cost = (rate * parseInt(meetingDuration.value)) / 60;
+    
+    return `- ${name} (${role}): ${currencySymbols[currency.value]}${rate}/hr = ${currencySymbols[currency.value]}${cost.toFixed(2)}`;
+}).join('\n')}
+
+TOTAL COST: ${totalCost.textContent}
+COST PER MINUTE: ${perMinute.textContent}
+ANNUAL COST: ${annualCost.textContent}
+
+Generated on: ${new Date().toLocaleString()}
+                `;
+                
+                const blob = new Blob([report], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'meeting-cost-report.txt';
+                link.click();
+                URL.revokeObjectURL(url);
+            };
+            
+            window.shareMeeting = function() {
+                const meetingData = {
+                    title: meetingTitle.value || 'Untitled Meeting',
+                    duration: meetingDuration.value,
+                    currency: currency.value,
+                    recurrence: recurrence.value,
+                    attendees: Array.from(document.querySelectorAll('.attendee-item')).map(item => ({
+                        name: item.querySelector('.attendee-name').value || 'Unnamed',
+                        role: item.querySelector('.attendee-role').value,
+                        customRate: item.querySelector('.custom-rate').value
+                    })),
+                    totalCost: totalCost.textContent
+                };
+                
+                const shareText = `Meeting Cost Analysis: ${meetingData.title}\nDuration: ${meetingData.duration} min\nTotal Cost: ${meetingData.totalCost}\n\nGenerated with EveryTool.tech Meeting Cost Calculator`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Meeting Cost Analysis',
+                        text: shareText,
+                        url: window.location.href
+                    });
+                } else {
+                    // Fallback to clipboard
+                    navigator.clipboard.writeText(shareText).then(() => {
+                        alert('Meeting details copied to clipboard!');
+                    });
+                }
+            };
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

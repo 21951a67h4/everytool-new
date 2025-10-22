@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex Find & Replace Tester | EveryTool.tech</title>
+    <meta name="description" content="Test regex in real-time, highlight matches, quick patterns, explain regex, multiline and flags, export, and save patterns locally.">
+    <link rel="icon" type="image/svg+xml" href="../../assets/SVG/favicon.svg">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root{--primary:#4361EE;--muted:#f3f4f6}
+        body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#111827}
+        #header-placeholder{min-height:130px}
+        .container{max-width:1200px;margin:0 auto;padding:1rem}
+        .grid{display:grid;grid-template-columns:1fr;gap:1rem}
+        @media(min-width:1000px){.grid{grid-template-columns:1fr 1fr}}
+        .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:1rem;box-shadow:0 4px 10px rgba(0,0,0,.04)}
+        textarea{width:100%;min-height:260px;border:1px solid #e5e7eb;border-radius:12px;padding:.8rem;font-family:ui-monospace,Consolas,monospace}
+        .row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+        .btn{background:var(--primary);color:#fff;border:none;border-radius:10px;padding:.6rem .9rem;cursor:pointer}
+        .btn.ghost{background:transparent;border:1px solid #e5e7eb;color:#111827}
+        input[type=file]{display:none}
+        label.file{border:1px dashed #cbd5e1;padding:.55rem .9rem;border-radius:10px;cursor:pointer}
+        .flag{display:inline-flex;align-items:center;gap:.35rem;margin-right:.5rem}
+        .matches{white-space:pre-wrap;background:var(--muted);padding:.8rem;border-radius:10px;border:1px solid #e5e7eb;min-height:200px}
+        mark{background:#fde047}
+        .sidebar-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.5rem}
+        .kbd{font-family:ui-monospace,Consolas,monospace;background:#eef2ff;border:1px solid #c7d2fe;padding:2px 6px;border-radius:6px}
+    </style>
+    <script>
+        const QUICK_PATTERNS = [
+            {name:'Email', pattern:'^\\\S+@\\\S+\\.\\\S+$'},
+            {name:'URL', pattern:'https?:\\/\\/[^\\s]+'},
+            {name:'IPv4', pattern:'\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b'},
+            {name:'Hex Color', pattern:'#(?:[A-Fa-f0-9]{3}){1,2}\\b'},
+            {name:'Credit Card', pattern:'\\b(?:\\d[ -]*?){13,16}\\b'},
+            {name:'Date (YYYY-MM-DD)', pattern:'\\b\\d{4}-\\d{2}-\\d{2}\\b'}
+        ];
+        const explainRegex = (src) => {
+            try {
+                const parts = [];
+                if (src.startsWith('^')) parts.push('Anchored to start');
+                if (src.endsWith('$')) parts.push('Anchored to end');
+                if (/\\b/.test(src)) parts.push('Word boundary');
+                if (/\[.+\]/.test(src)) parts.push('Character class');
+                if (/\(\?:/.test(src)) parts.push('Non-capturing group');
+                if (/\(?!\?:/.test(src)) parts.push('Capturing group');
+                if (/\*/.test(src)) parts.push('Zero or more');
+                if (/\+/.test(src)) parts.push('One or more');
+                if (/\?/.test(src)) parts.push('Optional or lazy');
+                if (/\{\d/.test(src)) parts.push('Quantifier');
+                return parts.length? parts.join(', ') : 'No notable constructs detected';
+            } catch(e){ return 'Explanation unavailable'; }
+        };
+    </script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <main class="container">
+        <h1>Regex Find & Replace Tester</h1>
+        <p>Highlight matches in real-time, preview replacements, and save your favorite patterns.</p>
+
+        <div class="grid">
+            <section class="card">
+                <div class="row">
+                    <label class="file" for="file-input"><i class="fa-solid fa-file-arrow-up"></i> Upload .txt</label>
+                    <input id="file-input" type="file" accept=".txt,.log,.md,.csv,.json">
+                    <button class="btn ghost" id="paste-btn">Paste</button>
+                    <button class="btn ghost" id="clear-btn">Clear</button>
+                    <button class="btn" id="copy-output">Copy Output</button>
+                    <button class="btn" id="download-output">Download TXT</button>
+                </div>
+                <textarea id="source" placeholder="Input text..."></textarea>
+
+                <div class="row" style="margin-top:.75rem">
+                    <input id="pattern" placeholder="Regular expression (without / /)" style="flex:1;min-width:220px;border:1px solid #e5e7eb;border-radius:10px;padding:.55rem .7rem;font-family:ui-monospace,Consolas,monospace">
+                    <input id="replacement" placeholder="Replacement (supports $1, $2, ...)" style="flex:1;min-width:220px;border:1px solid #e5e7eb;border-radius:10px;padding:.55rem .7rem;font-family:ui-monospace,Consolas,monospace">
+                </div>
+                <div class="row" style="margin:.5rem 0">
+                    <label class="flag"><input type="checkbox" id="flag-g"> g</label>
+                    <label class="flag"><input type="checkbox" id="flag-i" checked> i</label>
+                    <label class="flag"><input type="checkbox" id="flag-m"> m</label>
+                    <label class="flag"><input type="checkbox" id="flag-s"> s</label>
+                    <label class="flag"><input type="checkbox" id="flag-u"> u</label>
+                    <label class="flag"><input type="checkbox" id="flag-y"> y</label>
+                    <button class="btn ghost" id="save-pattern">Save Pattern</button>
+                    <button class="btn ghost" id="load-patterns">My Patterns</button>
+                </div>
+                <div class="row"><span class="stat">Tip: Use <span class="kbd">Ctrl/⌘+Enter</span> to apply replace</span></div>
+            </section>
+
+            <aside class="card">
+                <h3 style="margin-top:0">Matches Preview</h3>
+                <div id="matches" class="matches"></div>
+                <h3>Quick Regex Library</h3>
+                <div class="sidebar-list" id="quick-list"></div>
+                <h3>Explanation</h3>
+                <p id="explain">—</p>
+            </aside>
+        </div>
+    </main>
+    <div id="footer-placeholder"></div>
+
+    <script src="/app-loader.js" defer></script>
+    <script>
+    (function(){
+        const source = document.getElementById('source');
+        const pattern = document.getElementById('pattern');
+        const replacement = document.getElementById('replacement');
+        const matchesEl = document.getElementById('matches');
+        const explainEl = document.getElementById('explain');
+        const flags = ['g','i','m','s','u','y'];
+        const flagEls = Object.fromEntries(flags.map(f=>[f, document.getElementById('flag-'+f)]));
+
+        const fileInput = document.getElementById('file-input');
+        const pasteBtn = document.getElementById('paste-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const copyOutput = document.getElementById('copy-output');
+        const downloadOutput = document.getElementById('download-output');
+        const savePattern = document.getElementById('save-pattern');
+        const loadPatterns = document.getElementById('load-patterns');
+        const quickList = document.getElementById('quick-list');
+
+        const getFlags = ()=> flags.filter(f=>flagEls[f].checked).join('');
+        const getRegex = ()=> {
+            try{ return new RegExp(pattern.value, getFlags()); }catch(e){ return null; }
+        };
+        const highlightMatches = () => {
+            const rx = getRegex();
+            explainEl.textContent = pattern.value ? explainRegex(pattern.value) : '—';
+            if (!rx) { matchesEl.textContent = 'Invalid regex'; return; }
+            const text = source.value;
+            if (!text) { matchesEl.textContent=''; return; }
+            let out = ''; let last = 0; let m; 
+            if (!rx.global) {
+                m = text.match(rx);
+                if (m) {
+                    out = text.replace(rx, (s)=>`<mark>${s}</mark>`);
+                } else out = text;
+            } else {
+                rx.lastIndex = 0;
+                while ((m = rx.exec(text)) !== null) {
+                    out += text.slice(last, m.index) + '<mark>' + (m[0]||'') + '</mark>';
+                    last = rx.lastIndex;
+                    if (m[0]==='') rx.lastIndex++;
+                }
+                out += text.slice(last);
+            }
+            matchesEl.innerHTML = out;
+        };
+        const applyReplace = () => {
+            const rx = getRegex(); if (!rx) return;
+            const replaced = source.value.replace(rx, replacement.value);
+            source.value = replaced;
+            highlightMatches();
+        };
+
+        Object.values(flagEls).forEach(el=> el.addEventListener('change', highlightMatches));
+        pattern.addEventListener('input', highlightMatches);
+        source.addEventListener('input', highlightMatches);
+        replacement.addEventListener('input', ()=> explainEl.textContent = pattern.value ? explainRegex(pattern.value) : '—');
+
+        document.addEventListener('keydown', (e)=>{
+            if ((e.ctrlKey||e.metaKey) && e.key==='Enter'){ e.preventDefault(); applyReplace(); }
+        });
+        document.addEventListener('keyup', (e)=>{
+            if (e.key==='F3'){ highlightMatches(); }
+        });
+
+        fileInput.addEventListener('change', async (e)=>{ const f=e.target.files[0]; if(!f) return; const t=await f.text(); source.value=t; highlightMatches(); e.target.value=''; });
+        pasteBtn.addEventListener('click', async ()=>{ try{ const t=await navigator.clipboard.readText(); if(t){ source.value=t; highlightMatches(); } }catch(e){} });
+        clearBtn.addEventListener('click', ()=>{ source.value=''; highlightMatches(); });
+        copyOutput.addEventListener('click', async ()=>{ try{ await navigator.clipboard.writeText(source.value); copyOutput.textContent='Copied!'; setTimeout(()=>copyOutput.textContent='Copy Output',1200);}catch(e){} });
+        downloadOutput.addEventListener('click', ()=>{ const blob=new Blob([source.value],{type:'text/plain'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='regex-output.txt'; a.click(); URL.revokeObjectURL(a.href); });
+
+        savePattern.addEventListener('click', ()=>{
+            const key = 'everytool.regex.patterns';
+            const list = JSON.parse(localStorage.getItem(key)||'[]');
+            const item = {pattern: pattern.value, flags: getFlags(), ts: Date.now()};
+            list.unshift(item);
+            localStorage.setItem(key, JSON.stringify(list.slice(0,50)));
+            alert('Pattern saved');
+        });
+        loadPatterns.addEventListener('click', ()=>{
+            const key = 'everytool.regex.patterns';
+            const list = JSON.parse(localStorage.getItem(key)||'[]');
+            if (list.length===0) { alert('No patterns saved.'); return; }
+            const pick = prompt('Enter index to load (0-'+(list.length-1)+'):\n' + list.map((p,i)=>`${i}) /${p.pattern}/${p.flags}`).join('\n'));
+            const idx = Number(pick);
+            if (!Number.isFinite(idx) || idx<0 || idx>=list.length) return;
+            pattern.value = list[idx].pattern;
+            flags.forEach(f=> flagEls[f].checked = list[idx].flags.includes(f));
+            highlightMatches();
+        });
+
+        QUICK_PATTERNS.forEach(p=>{
+            const b = document.createElement('button');
+            b.className = 'btn ghost';
+            b.textContent = p.name;
+            b.title = p.pattern;
+            b.addEventListener('click', ()=>{ pattern.value = p.pattern; highlightMatches(); });
+            quickList.appendChild(b);
+        });
+
+        // init
+        highlightMatches();
+    })();
+    </script>
+    <script src="/back-to-top.js"></script>
+</body>
+</html>
+
+

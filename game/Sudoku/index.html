@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sudoku – EveryTool.tech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <meta name="description" content="Play a clean, modern Sudoku with difficulty levels, timer, hints, validation, and printable board." />
+</head>
+<body>
+  <div class="game-controls">
+    <button id="back-btn" class="back-btn" aria-label="Go back">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+      <input type="checkbox" id="theme-toggle"/>
+      <span class="switch-track">
+        <span class="switch-thumb">
+          <i class="fas fa-moon theme-icon moon-icon"></i>
+          <i class="fas fa-sun theme-icon sun-icon"></i>
+        </span>
+      </span>
+    </label>
+  </div>
+  <main class="game-container" role="main">
+    <h1 class="game-title">Sudoku</h1>
+    <div class="sudoku-layout">
+      <section class="board" aria-label="9 by 9 Sudoku grid" role="grid" id="board"></section>
+      <aside class="panel">
+        <div class="panel-header">
+          <div class="metric">
+            <span class="label">Difficulty</span>
+            <select id="difficulty" class="select" aria-label="Select difficulty">
+              <option value="easy">Easy</option>
+              <option value="medium" selected>Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+          <div class="metric">
+            <span class="label">Timer</span>
+            <span id="timer">00:00</span>
+          </div>
+        </div>
+        <div class="controls">
+          <button id="new-puzzle" class="btn primary" aria-label="New Puzzle"><i class="fas fa-sync"></i> New</button>
+          <button id="reset" class="btn secondary" aria-label="Reset board"><i class="fas fa-eraser"></i> Reset</button>
+          <button id="hint" class="btn secondary" aria-label="Show a hint"><i class="fas fa-lightbulb"></i> Hint</button>
+          <button id="print" class="btn secondary" aria-label="Print puzzle"><i class="fas fa-print"></i> Print</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <footer class="game-footer">
+    <span id="copyright-year"></span> EveryTool.tech
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

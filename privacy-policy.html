@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="FAQ section/faq.css">
     <!-- Back to top button -->
     <link rel="stylesheet" href="back-to-top.css">
-    <script src="back-to-top.js"></script>
+    <script src="/back-to-top.js"></script>
     <style>
         :root {
             --primary: #4361EE;
@@ -446,29 +446,7 @@
 
     <!-- Scripts -->
     <script src="FAQ section/faq.js"></script>
-    <script>
-        // Load header and footer
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-placeholder').innerHTML = data;
-            })
-            .catch(error => console.error('Error loading header:', error));
-
-        fetch('footer.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('footer-placeholder').innerHTML = data;
-            })
-            .catch(error => console.error('Error loading footer:', error));
-
-        // Initialize FAQ functionality
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.faqManager) {
-                faqManager.init();
-            }
-        });
-    </script>
+    <script src="/app-loader.js" defer></script>
 
 <script>
     // =====================================================================
@@ -527,8 +505,7 @@
         }
     };
     
-    loadHeader();
-    loadFooter();
+    // Header/footer handled by app-loader.js
     });
     
         </script>

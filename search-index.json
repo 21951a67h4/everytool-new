@@ -6,7 +6,7 @@
   },
   {
     "title": "Tools",
-    "url": "/tools-hub-page/index.html",
+    "url": "/tools-hub/index.html",
     "content": "Tools"
   },
   {
@@ -16,18 +16,38 @@
   },
   {
     "title": "Contact",
-    "url": "https://contact.tech",
+    "url": "/contact.html",
     "content": "Contact"
   },
   {
     "title": "Support Us",
-    "url": "/support-us.html",
+    "url": "/support.html",
     "content": "Support Us"
   },
   {
     "title": "Creators",
     "url": "/creators.html",
     "content": "Creators"
+  },
+  {
+    "title": "Sitemap",
+    "url": "/sitemap.html",
+    "content": "Sitemap"
+  },
+  {
+    "title": "Privacy Policy",
+    "url": "/privacy-policy.html",
+    "content": "Privacy Policy"
+  },
+  {
+    "title": "Terms",
+    "url": "/terms.html",
+    "content": "Terms and Conditions"
+  },
+  {
+    "title": "Cookie Policy",
+    "url": "/cookie-policy.html",
+    "content": "Cookie Policy"
   },
   {
     "title": "Finance Tools",
@@ -50,44 +70,148 @@
     "content": "Math Tools"
   },
   {
-    "title": "Data & Time Tools",
+    "title": "Date & Time Tools",
     "url": "/category-pages/date-time-tools.html",
-    "content": "Data & Time Tools",
-    "category": "Data & Time"
+    "content": "Date & Time Tools",
+    "category": "Date & Time"
   },
   {
-    "title": "Age Calculator",
-    "url": "/tools/age-calculator.html",
-    "content": "Calculate your age in years, months, and days based on your date of birth. Find out exactly how old you are down to the day."
+    "title": "Developer Tools",
+    "url": "/category-pages/developer-tools.html",
+    "content": "Developer Tools"
   },
   {
-    "title": "BMI Calculator",
-    "url": "/tools/bmi-calculator.html",
-    "content": "Determine your Body Mass Index (BMI) using your height and weight. Assess if your weight is in a healthy range."
+    "title": "SEO Tools",
+    "url": "/category-pages/seo-tools.html",
+    "content": "SEO Tools"
   },
   {
-    "title": "Loan Calculator",
-    "url": "/tools/loan-calculator.html",
-    "content": "Calculate monthly payments, total interest, and amortization schedules for any type of loan, including personal, auto, or mortgages."
+    "title": "Productivity Tools",
+    "url": "/category-pages/productivity-tools.html",
+    "content": "Productivity Tools"
   },
   {
-    "title": "Percentage Calculator",
-    "url": "/tools/percentage-calculator.html",
-    "content": "Percentage Calculator"
+    "title": "File Conversion Tools",
+    "url": "/category-pages/file-conversion-tools.html",
+    "content": "File Conversion Tools"
   },
   {
-    "title": "Compound Interest Calculator",
-    "url": "/tools/Compound-interest-calculator.html",
-    "content": "See how your investments can grow over time with the power of compound interest. Project future balances with different contribution schedules."
+    "title": "Text Tools",
+    "url": "/category-pages/text-tools.html",
+    "content": "Text Tools"
   },
   {
-    "title": "Word and Character Counter",
-    "url": "/tools/words-count.html",
-    "content": "Count words, characters, sentences, and paragraphs in your text. A useful tool for writers, students, and editors."
+    "title": "Image & Media Tools",
+    "url": "/category-pages/image-media-tools.html",
+    "content": "Image & Media Tools"
   },
   {
-    "title": "Inflation Calculator",
-    "url": "/tools/Inflation-Calculator.html",
-    "content": "Calculate the buying power of money over time. See how inflation has affected the value of a certain amount from one year to another."
-  }
+    "title": "Utility & Data Tools",
+    "url": "/category-pages/utility-data-tools.html",
+    "content": "Utility & Data Tools"
+  },
+  {
+    "title": "FAQ",
+    "url": "/FAQ section/faq.html",
+    "content": "Frequently Asked Questions"
+  },
+  {
+    "title": "Updates",
+    "url": "/updates.html",
+    "content": "Latest site updates and changes"
+  },
+  
+  { "title": "Age Calculator", "url": "/tools/datetime-tools/age-calculator.html", "content": "Calculate your age in years, months, and days.", "category": "Date & Time" },
+  { "title": "Business Days Calculator", "url": "/tools/datetime-tools/business-days-calculator.html", "content": "Compute working days between two dates.", "category": "Date & Time" },
+  { "title": "Countdown Timer", "url": "/tools/datetime-tools/countdown-timer.html", "content": "Create a countdown to a specific date/time.", "category": "Date & Time" },
+  { "title": "Date Duration Calculator", "url": "/tools/datetime-tools/date-duration-calculator.html", "content": "Find duration between two dates.", "category": "Date & Time" },
+  { "title": "Time Calculator", "url": "/tools/datetime-tools/Time calculator.html", "content": "Add or subtract time values.", "category": "Date & Time" },
+  { "title": "Work Hours Calculator", "url": "/tools/datetime-tools/work-hours-calculator.html", "content": "Calculate work hours and breaks.", "category": "Date & Time" },
+  { "title": "World Timezone Converter", "url": "/tools/datetime-tools/world-timezone-converter.html", "content": "Convert time across time zones.", "category": "Date & Time" },
+
+  
+  { "title": "Assignment Deadline Calculator", "url": "/tools/education-tools/assignment-deadline-calculator.html", "content": "Plan assignment schedules and deadlines.", "category": "Education" },
+  { "title": "CGPA Percentage Converter", "url": "/tools/education-tools/cgpa-percentage-converter.html", "content": "Convert CGPA to percentage.", "category": "Education" },
+  { "title": "Final Grade Calculator", "url": "/tools/education-tools/final-grade-calculator.html", "content": "Calculate final course grades.", "category": "Education" },
+  { "title": "GPA Calculator", "url": "/tools/education-tools/GPA Calculator.html", "content": "Compute GPA from course grades.", "category": "Education" },
+  { "title": "GPA Weighted Calculator", "url": "/tools/education-tools/gpa-weighted-calculator.html", "content": "Calculate weighted GPA.", "category": "Education" },
+  { "title": "Reading Time Calculator", "url": "/tools/education-tools/reading-time-calculator.html", "content": "Estimate reading time for text.", "category": "Education" },
+  { "title": "Study Time Calculator", "url": "/tools/education-tools/study-time-calculator.html", "content": "Plan study hours per subject.", "category": "Education" },
+
+  
+  { "title": "Emergency Fund Calculator", "url": "/tools/financial-tools/emergency-fund-calculator.html", "content": "Estimate ideal emergency fund size.", "category": "Finance" },
+  { "title": "Expense Balance Calculator", "url": "/tools/financial-tools/expense-balance-calculator.html", "content": "Track income vs expenses.", "category": "Finance" },
+  { "title": "FIRE Age Simulator", "url": "/tools/financial-tools/FIRE-Age-Simulator.html", "content": "Simulate financial independence age.", "category": "Finance" },
+  { "title": "Gratuity Calculator", "url": "/tools/financial-tools/gratuity-calculator.html", "content": "Compute gratuity payout.", "category": "Finance" },
+  { "title": "Loan Calculator (Finance)", "url": "/tools/financial-tools/loan-calculator.html", "content": "Loan payments and amortization.", "category": "Finance" },
+  { "title": "Mortgage Calculator (Finance)", "url": "/tools/financial-tools/mortgage-calculator.html", "content": "Mortgage payments and amortization.", "category": "Finance" },
+  { "title": "Mutual Fund Overlap", "url": "/tools/financial-tools/mutual-fund-overlap-calculator.html", "content": "Compare fund holdings overlap.", "category": "Finance" },
+  { "title": "Paycheck Calculator", "url": "/tools/financial-tools/Paycheck-calculator.html", "content": "Estimate net paycheck after taxes.", "category": "Finance" },
+  { "title": "SIP Calculator", "url": "/tools/financial-tools/sip-calculator.html", "content": "Project SIP investment growth.", "category": "Finance" },
+  { "title": "Tax Regime Calculator", "url": "/tools/financial-tools/tax-regime-calculator.html", "content": "Compare tax regimes and liability.", "category": "Finance" },
+  { "title": "Tip Calculator", "url": "/tools/financial-tools/Tip-calculator.html", "content": "Split bills and tips easily.", "category": "Finance" },
+
+  
+  { "title": "BMI Calculator", "url": "/tools/health-tools/bmi-calculator.html", "content": "Calculate Body Mass Index.", "category": "Health" },
+  { "title": "Body Fat Calculator", "url": "/tools/health-tools/body-fat-calculator.html", "content": "Estimate body fat percentage.", "category": "Health" },
+  { "title": "Calorie Calculator", "url": "/tools/health-tools/calorie-calculator.html", "content": "Daily calorie needs estimator.", "category": "Health" },
+  { "title": "Carbs Calculator", "url": "/tools/health-tools/carbs-calculator.html", "content": "Daily carbohydrate intake.", "category": "Health" },
+  { "title": "Protein Calculator", "url": "/tools/health-tools/protein-calculator.html", "content": "Protein needs per activity level.", "category": "Health" },
+  { "title": "Target Heart Rate", "url": "/tools/health-tools/target-heart-rate-calculator.html", "content": "Target zones by age and fitness.", "category": "Health" },
+  { "title": "Water Intake Calculator", "url": "/tools/health-tools/water-intake-calculator.html", "content": "Recommended daily water intake.", "category": "Health" },
+
+  
+  { "title": "Derivative Calculator", "url": "/tools/math-tools/derivative-calculator.html", "content": "Compute derivatives of functions.", "category": "Math" },
+  { "title": "Fraction Calculator", "url": "/tools/math-tools/Fraction calculator.html", "content": "Operate on fractions and mixed numbers.", "category": "Math" },
+  { "title": "Graphing Calculator", "url": "/tools/math-tools/Graphing calculator.html", "content": "Plot math functions and data.", "category": "Math" },
+  { "title": "Integral Calculator", "url": "/tools/math-tools/Integral-calculator.html", "content": "Compute integrals of functions.", "category": "Math" },
+  { "title": "Matrix Calculator", "url": "/tools/math-tools/matrix-calculator.html", "content": "Matrix operations and properties.", "category": "Math" },
+  { "title": "Percentage Calculator (Math)", "url": "/tools/math-tools/percentage-calculator.html", "content": "Percentage increase/decrease and more.", "category": "Math" },
+  { "title": "Quadratic Solver", "url": "/tools/math-tools/quadratic-solver.html", "content": "Solve quadratic equations.", "category": "Math" },
+  { "title": "Scientific Calculator", "url": "/tools/math-tools/scientific-calculator.html", "content": "Scientific calculator functions.", "category": "Math" },
+  { "title": "Statistics Calculator", "url": "/tools/math-tools/statistics-calculator.html", "content": "Basic descriptive statistics.", "category": "Math" },
+  { "title": "Unit Converter", "url": "/tools/math-tools/unit-converter.html", "content": "Convert units across categories.", "category": "Math" },
+
+  { "title": "Base64 Encoder/Decoder (Dev)", "url": "/tools/developer-tools/base64-encoder-decoder.html", "content": "Encode or decode Base64.", "category": "Developer" },
+  { "title": "Color Picker & Converter", "url": "/tools/developer-tools/color-picker-converter.html", "content": "Pick colors and convert formats.", "category": "Developer" },
+  { "title": "CSS Gradient Generator", "url": "/tools/developer-tools/css-gradient-generator.html", "content": "Create CSS gradients.", "category": "Developer" },
+  { "title": "JSON Formatter & Validator", "url": "/tools/developer-tools/json-formatter-validator.html", "content": "Format and validate JSON.", "category": "Developer" },
+  { "title": "Regex Tester", "url": "/tools/developer-tools/regex-tester.html", "content": "Test regular expressions.", "category": "Developer" },
+  { "title": "Text Diff Checker", "url": "/tools/developer-tools/text-diff-checker.html", "content": "Compare two texts for differences.", "category": "Developer" },
+  { "title": "URL Parser & Encoder", "url": "/tools/developer-tools/url-parser-encoder.html", "content": "Parse and encode URL components.", "category": "Developer" },
+  { "title": "UUID Generator", "url": "/tools/developer-tools/uuid-generator.html", "content": "Generate UUIDs.", "category": "Developer" },
+
+  { "title": "Header Tags Analyzer", "url": "/tools/seo-tools/header-tags-analyzer.html", "content": "Analyze H1-H6 structure.", "category": "SEO" },
+  { "title": "Keyword Density Analyzer", "url": "/tools/seo-tools/keyword-density-analyzer.html", "content": "Check keyword density in text.", "category": "SEO" },
+  { "title": "Keyword Density Checker", "url": "/tools/seo-tools/keyword-density-checker.html", "content": "Alternate keyword density tool.", "category": "SEO" },
+  { "title": "Meta Description Generator", "url": "/tools/seo-tools/meta-description-generator.html", "content": "Generate meta descriptions.", "category": "SEO" },
+  { "title": "Meta Tag Generator", "url": "/tools/seo-tools/meta-tag-generator.html", "content": "Generate SEO meta tags.", "category": "SEO" },
+  { "title": "Open Graph & Twitter Card", "url": "/tools/seo-tools/open-graph-twitter-card-generator.html", "content": "Generate OG/Twitter tags.", "category": "SEO" },
+  { "title": "Robots.txt Generator", "url": "/tools/seo-tools/robots-txt-generator.html", "content": "Create robots.txt files.", "category": "SEO" },
+  { "title": "Schema Markup Generator", "url": "/tools/seo-tools/schema-markup-generator.html", "content": "Generate JSON-LD schemas.", "category": "SEO" },
+  { "title": "SERP Preview Tool", "url": "/tools/seo-tools/serp-preview-tool.html", "content": "Preview Google search snippet.", "category": "SEO" },
+  { "title": "Title/Description Length Checker", "url": "/tools/seo-tools/title-description-length-checker.html", "content": "Check title/meta lengths.", "category": "SEO" },
+  { "title": "XML Sitemap Generator", "url": "/tools/seo-tools/xml-sitemap-generator.html", "content": "Generate sitemaps for websites.", "category": "SEO" },
+
+  
+  { "title": "Focus Mode Timer", "url": "/tools/productivity-tools/focus-mode-timer.html", "content": "Minimal focus timer.", "category": "Productivity" },
+  { "title": "Meeting Cost Calculator", "url": "/tools/productivity-tools/meeting-cost-calculator.html", "content": "Estimate meeting costs.", "category": "Productivity" },
+  { "title": "Pomodoro Timer", "url": "/tools/productivity-tools/pomodoro-timer.html", "content": "Work in Pomodoro intervals.", "category": "Productivity" },
+  { "title": "Reading Speed Test", "url": "/tools/productivity-tools/reading-speed-test.html", "content": "Measure reading speed.", "category": "Productivity" },
+  { "title": "Task Priority Matrix", "url": "/tools/productivity-tools/task-priority-matrix.html", "content": "Prioritize tasks via Eisenhower matrix.", "category": "Productivity" },
+  { "title": "Word and Character Counter", "url": "/tools/productivity-tools/words-count.html", "content": "Count words and characters.", "category": "Productivity" },
+
+
+  { "title": "Base64 Encoder/Decoder", "url": "/tools/base64-encoder-decoder.html", "content": "Encode or decode Base64 (legacy path).", "category": "Standalone" },
+  { "title": "Loan Calculator (root)", "url": "/tools/loan-calculator.html", "content": "Loan payments calculator (legacy path).", "category": "Standalone" },
+  { "title": "Mortgage Calculator (root)", "url": "/tools/mortgage-calculator.html", "content": "Mortgage payments calculator (legacy path).", "category": "Standalone" },
+
+  { "title": "Games Hub", "url": "/game/index.html", "content": "All browser games in one place.", "category": "Games" },
+  { "title": "2048", "url": "/game/2048/index.html", "content": "Play the 2048 puzzle game.", "category": "Games" },
+  { "title": "Chess", "url": "/game/Chess/index.html", "content": "Play chess vs AI or friend.", "category": "Games" },
+  { "title": "Connect Four", "url": "/game/Connect-Four/index.html", "content": "Classic Connect Four game.", "category": "Games" },
+  { "title": "Minesweeper", "url": "/game/Minesweeper/index.html", "content": "Clear the minefield.", "category": "Games" },
+  { "title": "Snake", "url": "/game/Snake/index.html", "content": "Grow the snake without crashing.", "category": "Games" },
+  { "title": "Sudoku", "url": "/game/Sudoku/index.html", "content": "Solve Sudoku puzzles.", "category": "Games" },
+  { "title": "Tic Tac Toe", "url": "/game/Tic-Tac-Toe/index.html", "content": "Play Tic-Tac-Toe.", "category": "Games" }
 ]

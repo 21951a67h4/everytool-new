@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Converter (SVG/PNG/JPG/WebP) | EveryTool.tech</title>
+    <meta name="description" content="Convert SVG/PNG/JPG/WebP with custom size, background, quality, live preview, batch conversion, and ZIP download — all in your browser.">
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <style>
+        #header-placeholder { min-height: 130px; position: relative; z-index: 2000; }
+        @media (max-width: 768px){ #header-placeholder{ min-height: 64px; } }
+        .queue { margin-top: 1rem; display: grid; gap: .5rem; }
+        .queue-item { display:flex; align-items:center; justify-content: space-between; background:#fff; border:1px solid var(--bg-accent); border-radius: var(--radius-md); padding:.5rem .75rem; }
+        .preview-wrap { background:#fff; border:1px solid var(--bg-accent); border-radius: var(--radius-md); padding:.5rem; min-height:260px; display:flex; align-items:center; justify-content:center; }
+        canvas { max-width:100%; height:auto; }
+        /* UI normalization overrides */
+        .tool-display__button { min-height: 40px; padding: 0.5rem 1rem; font-size: 0.95rem; }
+        .tool-display__file-label { padding: 0.75rem; }
+        .tool-display__wrapper { padding: 1.5rem; }
+        .tool-display__controls { gap: 0.5rem; }
+        .queue .tool-display__button.tool-display__button--secondary { padding: 0.4rem 0.8rem; }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Image Converter (SVG/PNG/JPG/WebP)</h1>
+                    <p class="tool-hero__description">Convert between SVG, PNG, JPG, and WebP with custom size, background color/transparency, compression, and ZIP download.</p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature"><i class="fas fa-image"></i><span>PNG/JPG/WebP</span></div>
+                        <div class="tool-feature"><i class="fas fa-expand"></i><span>Custom Size</span></div>
+                        <div class="tool-feature"><i class="fas fa-layer-group"></i><span>Batch & ZIP</span></div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary"><i class="fas fa-play"></i> Use Tool Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Convert Images</h2>
+                    <p class="tool-display__description">Preview renders in real-time. For JPG/WebP, choose quality. JPG supports background color.</p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__file-upload">
+                            <input id="fileInput" type="file" class="tool-display__file-input" accept="image/*" multiple>
+                            <label for="fileInput" class="tool-display__file-label"><i class="fas fa-cloud-upload-alt"></i><span>Choose or drop SVG/PNG/JPG/WebP files</span></label>
+                        </div>
+                        <div class="tool-display__controls">
+                            <div class="tool-display__input-group" style="min-width:160px;">
+                                <label class="tool-display__label" for="format">Output</label>
+                                <select id="format" class="tool-display__input">
+                                    <option value="png">PNG</option>
+                                    <option value="jpg">JPG</option>
+                                    <option value="webp">WebP</option>
+                                </select>
+                            </div>
+                            <div class="tool-display__input-group" style="min-width:140px;">
+                                <label class="tool-display__label" for="width">Width (px)</label>
+                                <input id="width" type="number" class="tool-display__input" placeholder="Auto">
+                            </div>
+                            <div class="tool-display__input-group" style="min-width:140px;">
+                                <label class="tool-display__label" for="height">Height (px)</label>
+                                <input id="height" type="number" class="tool-display__input" placeholder="Auto">
+                            </div>
+                            <div class="tool-display__input-group" style="min-width:160px;">
+                                <label class="tool-display__label" for="bg">Background</label>
+                                <input id="bg" class="tool-display__input" placeholder="transparent or #ffffff">
+                            </div>
+                            <div class="tool-display__input-group" style="min-width:160px;">
+                                <label class="tool-display__label" for="quality">Quality (JPG/WebP)</label>
+                                <input id="quality" type="number" min="0" max="1" step="0.05" class="tool-display__input" value="0.92">
+                            </div>
+                            <button id="convertAllBtn" class="tool-display__button"><i class="fas fa-sync"></i> Convert All</button>
+                            <button id="downloadZipBtn" class="tool-display__button tool-display__button--secondary"><i class="fas fa-file-archive"></i> Download ZIP</button>
+                        </div>
+                        <div class="queue" id="queue"></div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <div class="preview-wrap" id="preview"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvg@3.0.10/lib/umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pica@9.0.1/dist/pica.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>
+    const q=(s,d=document)=>d.querySelector(s); const qa=(s,d=document)=>Array.from(d.querySelectorAll(s));
+    const fileInput=q('#fileInput'); const queueEl=q('#queue'); const preview=q('#preview');
+    const formatSel=q('#format'); const widthInp=q('#width'); const heightInp=q('#height'); const bgInp=q('#bg'); const qualityInp=q('#quality');
+    const convertAllBtn=q('#convertAllBtn'); const downloadZipBtn=q('#downloadZipBtn');
+    const queue=[]; // {file,name,status,blob}
+
+    function addToQueue(files){
+        [...files].forEach(f=>{
+            if(!/\.(svg|png|jpg|jpeg|webp)$/i.test(f.name)) return;
+            queue.push({file:f,name:f.name,status:'Ready',blob:null});
+        });
+        renderQueue();
+    }
+    function renderQueue(){ queueEl.innerHTML=''; queue.forEach((it,idx)=>{ const row=document.createElement('div'); row.className='queue-item'; row.innerHTML=`<div style="display:flex;align-items:center;gap:.5rem;"><i class=\"fas fa-image\" style=\"color:var(--primary)\"></i><span>${it.name}</span></div><div style=\"display:flex;gap:.5rem;\" class=\"tool-display__controls\"><span class=\"help\">${it.status}</span><button data-idx=${idx} data-act=\"preview\" class=\"tool-display__button tool-display__button--secondary\">Preview</button><button data-idx=${idx} data-act=\"convert\" class=\"tool-display__button tool-display__button--secondary\">Convert</button><button data-idx=${idx} data-act=\"download\" class=\"tool-display__button tool-display__button--secondary\" ${it.blob?'':'disabled'}>Download</button></div>`; queueEl.appendChild(row); }); }
+
+    async function renderSvgToCanvas(svgText){
+        const c=document.createElement('canvas');
+        const ctx=c.getContext('2d');
+        const v = await Canvg.from(ctx, svgText, { ignoreMouse: true, ignoreAnimation: true });
+        // Intrinsic size
+        const iw = v.svg.document.documentElement.getAttribute('width');
+        const ih = v.svg.document.documentElement.getAttribute('height');
+        const W = parseInt(widthInp.value)||parseInt(iw)||512;
+        const H = parseInt(heightInp.value)||parseInt(ih)||512;
+        c.width=W; c.height=H;
+        const bg = bgInp.value.trim();
+        if(bg && bg.toLowerCase()!=='transparent'){ ctx.fillStyle=bg; ctx.fillRect(0,0,W,H); }
+        await v.render();
+        return c;
+    }
+    async function renderRasterToCanvas(blob){
+        const imgUrl = URL.createObjectURL(blob);
+        try{
+            const img = new Image();
+            img.decoding = 'sync';
+            const loaded = new Promise((res,rej)=>{ img.onload=()=>res(); img.onerror=rej; });
+            img.src = imgUrl;
+            await loaded;
+            const W = parseInt(widthInp.value)||img.naturalWidth||512;
+            const H = parseInt(heightInp.value)||img.naturalHeight||512;
+            const c=document.createElement('canvas');
+            const ctx=c.getContext('2d');
+            c.width=W; c.height=H;
+            const bg = bgInp.value.trim();
+            if((bg && bg.toLowerCase()!=='transparent') || formatSel.value==='jpg'){
+                ctx.fillStyle = bg || '#ffffff';
+                ctx.fillRect(0,0,W,H);
+            }
+            ctx.drawImage(img, 0, 0, W, H);
+            return c;
+        } finally {
+            URL.revokeObjectURL(imgUrl);
+        }
+    }
+    async function convertItem(it){
+        it.status='Converting...'; renderQueue();
+        const ext = it.name.split('.').pop().toLowerCase();
+        let canvas;
+        if(ext==='svg'){
+            const text = await it.file.text();
+            canvas = await renderSvgToCanvas(text);
+        } else {
+            canvas = await renderRasterToCanvas(it.file);
+        }
+        const fmt = formatSel.value;
+        const qlBase = Math.min(Math.max(parseFloat(qualityInp.value)||0.92,0),1);
+        let type = 'image/png';
+        if(fmt==='jpg') type='image/jpeg';
+        if(fmt==='webp') type='image/webp';
+        const blob = await new Promise(res=> canvas.toBlob(res, type, qlBase));
+        it.blob=blob; it.status='Done'; renderQueue();
+        // live preview
+        preview.innerHTML=''; const img=document.createElement('img'); img.src=URL.createObjectURL(blob); img.style.maxWidth='100%'; preview.appendChild(img);
+    }
+    async function previewItem(it){
+        const ext = it.name.split('.').pop().toLowerCase();
+        let canvas;
+        if(ext==='svg'){
+            const text= await it.file.text();
+            canvas = await renderSvgToCanvas(text);
+        } else {
+            canvas = await renderRasterToCanvas(it.file);
+        }
+        preview.innerHTML=''; preview.appendChild(canvas);
+    }
+    async function convertAll(){ for(const it of queue){ if(!it.blob) await convertItem(it); } }
+    async function downloadZip(){ const zip=new JSZip(); for(const it of queue){ if(!it.blob) await convertItem(it); const ext='.'+formatSel.value; zip.file(it.name.replace(/\.svg$/i, ext), it.blob); } const content=await zip.generateAsync({type:'blob'}); const a=document.createElement('a'); a.href=URL.createObjectURL(content); a.download='svg-converted.zip'; a.click(); URL.revokeObjectURL(a.href); }
+
+    fileInput.addEventListener('change', e=> addToQueue(e.target.files));
+    queueEl.addEventListener('click', async e=>{ const btn=e.target.closest('button'); if(!btn) return; const idx=+btn.dataset.idx; const act=btn.dataset.act; const it=queue[idx]; if(!it) return; if(act==='convert') await convertItem(it); if(act==='preview') await previewItem(it); if(act==='download'&&it.blob){ const a=document.createElement('a'); a.href=URL.createObjectURL(it.blob); const newExt='.'+formatSel.value; a.download= it.name.replace(/\.[^.]+$/i, newExt); a.click(); URL.revokeObjectURL(a.href);} });
+    convertAllBtn.addEventListener('click', convertAll);
+    downloadZipBtn.addEventListener('click', downloadZip);
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const loadScript = (src) => new Promise((resolve, reject) => { const s=document.createElement('script'); s.src=src; s.onload=()=>resolve(s); s.onerror=()=>reject(new Error('load '+src)); document.body.appendChild(s); });
+        const loadHeader = () => { const el=document.getElementById('header-placeholder'); if(!el) return; fetch('/header.html').then(r=>r.ok?r.text():Promise.reject('header')).then(html=>{ el.innerHTML=html; return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2'); }).then(()=>loadScript('/header-search.js')).then(()=>{ if(typeof initializeHeader==='function') initializeHeader(); }).catch(console.error); };
+        const loadFooter = () => { const el=document.getElementById('footer-placeholder'); if(!el) return; fetch('/footer.html').then(r=>r.ok?r.text():Promise.reject('footer')).then(html=>{ el.innerHTML=html; }).catch(console.error); };
+        loadHeader(); loadFooter();
+    });
+    </script>
+    <script src="/app-loader.js" defer></script>
+</body>
+</html>
+
+

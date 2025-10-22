@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect Four - Classic Strategy Game | EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Play Connect Four - the classic strategy game. Get four in a row to win!">
+</head>
+<body>
+    <!-- Game Controls -->
+    <div class="game-controls">
+        <button id="back-btn" class="back-btn" aria-label="Go back">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="switch-track">
+                <span class="switch-thumb">
+                    <i class="fas fa-moon theme-icon moon-icon"></i>
+                    <i class="fas fa-sun theme-icon sun-icon"></i>
+                </span>
+            </span>
+        </label>
+    </div>
+
+    <main class="game-container" role="main">
+        <div class="game-header">
+            <h1 class="game-title">Connect Four</h1>
+            <p class="game-subtitle">Get four in a row to win! Drop your pieces strategically.</p>
+        </div>
+
+        <div class="game-stats">
+            <div class="stat">
+                <span class="stat-label">Player 1</span>
+                <span id="player1-score" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Player 2</span>
+                <span id="player2-score" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Current Turn</span>
+                <span id="current-player" class="stat-value">Player 1</span>
+            </div>
+        </div>
+
+        <div class="game-mode-selector">
+            <div class="mode-options">
+                <button id="two-player-mode" class="mode-btn active">
+                    <i class="fas fa-users"></i>
+                    Two Players
+                </button>
+                <button id="vs-computer-mode" class="mode-btn">
+                    <i class="fas fa-robot"></i>
+                    vs Computer
+                </button>
+            </div>
+        </div>
+
+        <div class="game-settings" id="game-settings">
+            <div class="difficulty-selector" id="difficulty-selector">
+                <label for="difficulty" id="difficulty-label">Game Difficulty:</label>
+                <select id="difficulty">
+                    <option value="easy">Easy (6×7)</option>
+                    <option value="medium" selected>Medium (6×7)</option>
+                    <option value="hard">Hard (8×9)</option>
+                    <option value="expert">Expert (10×11)</option>
+                </select>
+            </div>
+            <div class="computer-difficulty-selector" id="computer-difficulty-selector" style="display: none;">
+                <label for="computer-difficulty">Computer AI Level:</label>
+                <select id="computer-difficulty">
+                    <option value="easy">Easy AI</option>
+                    <option value="medium" selected>Medium AI</option>
+                    <option value="hard">Hard AI</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="game-board-container">
+            <div id="game-board" class="game-board" role="grid" aria-label="Connect Four game board">
+                <!-- Game board will be dynamically generated -->
+            </div>
+            <div id="game-over" class="game-over hidden">
+                <div class="game-over-content">
+                    <h2 id="winner-message">Game Over!</h2>
+                    <p id="winner-details">Player 1 wins!</p>
+                    <div class="game-over-actions">
+                        <button id="restart-btn" class="btn primary">
+                            <i class="fas fa-redo"></i>
+                            Play Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-controls-panel">
+            <button id="reset-btn" class="btn secondary">
+                <i class="fas fa-stop"></i>
+                Reset Game
+            </button>
+            <button id="new-game-btn" class="btn primary">
+                <i class="fas fa-play"></i>
+                New Game
+            </button>
+        </div>
+
+        <div class="game-status">
+            <div id="game-message" class="game-message">Click a column to drop your piece!</div>
+        </div>
+
+        <div class="game-instructions">
+            <p><strong>How to play:</strong></p>
+            <ul>
+                <li><strong>Click</strong> on any column to drop your piece</li>
+                <li><strong>Player 1</strong> uses red pieces (🔴)</li>
+                <li><strong>Player 2</strong> uses yellow pieces (🟡)</li>
+                <li><strong>Goal:</strong> Get four pieces in a row (horizontal, vertical, or diagonal)</li>
+                <li><strong>Strategy:</strong> Block your opponent while building your own line</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer class="game-footer">
+        <p><span id="copyright-year"></span> EveryTool.tech</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

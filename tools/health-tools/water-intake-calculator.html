@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Intake Calculator | Daily Hydration Needs | EveryTool.tech</title>
+    <meta name="description" content="Calculate your daily water intake needs based on weight, activity level, climate, and health conditions. Get personalized hydration schedule with reminders and track your progress.">
+    <meta name="keywords" content="water intake calculator, daily water intake, hydration calculator, water consumption calculator, hydration schedule">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Water Intake Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate your daily water intake needs based on weight, activity level, climate, and health conditions. Get personalized hydration schedule with reminders.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/health-tools/water-intake-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tool CSS -->
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <!-- Add in <head> if not present -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Core Variables */
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --primary-darker: #1f37a8;
+            --primary-light: #6b83f1;
+            --primary-lighter: #94a5f4;
+            --secondary: #7209B7;
+            --secondary-dark: #560BAD;
+            --accent: #F72585;
+            --accent-dark: #B5179E;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-light: #9CA3AF;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --bg-dark: #111827;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1.5rem;
+            --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        /* Header Placeholder */
+        #header-placeholder {
+            height: 64px;
+        }
+
+        /* Tool Hero Section */
+        .tool-hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="%234361EE" opacity="0.1"/></svg>');
+            opacity: 0.5;
+            animation: patternMove 20s linear infinite;
+        }
+
+        .tool-hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-hero__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tool-hero__left {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .tool-hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .tool-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .tool-hero__features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .tool-hero__cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tool-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-button--primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-button--primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-button--secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tool-hero__right {
+            position: relative;
+            animation: slideIn 1s ease-out;
+        }
+
+        /* Tool Display Section */
+        .tool-display {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .tool-display__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-display__wrapper {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-display__wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .tool-display__header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tool-display__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__description {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tool-display__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .tool-display__input-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .tool-display__output-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .tool-display__controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-display__button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-display__button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-display__button--secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__input-group {
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-display__input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .tool-display__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+            background: white;
+        }
+
+        .tool-display__select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .water-summary {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            background: var(--bg-accent);
+        }
+
+        .water-summary__item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--bg-secondary);
+        }
+
+        .water-summary__item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .water-summary__label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .water-summary__value {
+            color: var(--text-secondary);
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .schedule-table {
+            margin-top: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+        }
+
+        .schedule-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .schedule-table th,
+        .schedule-table td {
+            padding: 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--bg-accent);
+        }
+
+        .schedule-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        .unit-switcher {
+            display: flex;
+            border: 1px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .unit-switcher button {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .unit-switcher button.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .notification-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .notification-toggle input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+
+        .custom-factors {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .factor-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+        }
+
+        .factor-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .add-factor {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .add-factor input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--bg-accent);
+            border-radius: var(--radius-sm);
+        }
+
+        .add-factor button {
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+        }
+
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Mobile-specific optimizations for Water Intake Calculator */
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                display: grid;
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .tool-display__input-group { 
+                margin-bottom: 1rem; 
+            }
+            .tool-display__input, .tool-display__select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .tool-display__button { 
+                width: 100%; 
+                margin-bottom: 0.5rem; 
+            }
+            .tool-display__controls { 
+                display: flex;
+                flex-direction: column; 
+            }
+            .unit-switcher {
+                flex-direction: column;
+            }
+            .add-factor {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-display__input { 
+                padding: 0.65rem; 
+            }
+            .tool-display__button { 
+                padding: 0.8rem; 
+                font-size: 0.95rem; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Calculate Your Daily Water Intake</h1>
+                    <p class="tool-hero__description">
+                        Stay properly hydrated with personalized water intake recommendations. 
+                        Get hourly schedules, reminders, and track your hydration progress.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-tint"></i>
+                            <span>Personalized Schedule</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-bell"></i>
+                            <span>Hydration Reminders</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Progress Tracking</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Private</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Intake
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Water Intake Calculator</h2>
+                    <p class="tool-display__description">
+                        Enter your details to get personalized water intake recommendations and hydration schedule.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="unit-switcher">
+                            <button id="btn-metric" class="active">Metric (ml)</button>
+                            <button id="btn-imperial">Imperial (oz)</button>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Weight</label>
+                            <input type="number" class="tool-display__input" id="weight" placeholder="Enter your weight" step="0.1">
+                            <span id="weight-unit">kg</span>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Age</label>
+                            <input type="number" class="tool-display__input" id="age" placeholder="Enter your age" min="1" max="120">
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Gender</label>
+                            <select class="tool-display__select" id="gender">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Climate</label>
+                            <select class="tool-display__select" id="climate">
+                                <option value="cold">Cold</option>
+                                <option value="moderate">Moderate</option>
+                                <option value="hot">Hot</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Activity Level</label>
+                            <select class="tool-display__select" id="activity-level">
+                                <option value="sedentary">Sedentary</option>
+                                <option value="light">Light Activity</option>
+                                <option value="moderate">Moderate Activity</option>
+                                <option value="high">High Activity</option>
+                                <option value="very-high">Very High Activity</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">
+                                <input type="checkbox" id="pregnancy" style="margin-right: 0.5rem;">
+                                Pregnancy
+                            </label>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">
+                                <input type="checkbox" id="lactation" style="margin-right: 0.5rem;">
+                                Lactation
+                            </label>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Wake-up Time</label>
+                            <input type="time" class="tool-display__input" id="wake-time" value="07:00">
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Bedtime</label>
+                            <input type="time" class="tool-display__input" id="bedtime" value="23:00">
+                        </div>
+                        
+                        <div class="notification-toggle">
+                            <input type="checkbox" id="enable-notifications">
+                            <label for="enable-notifications">Enable Hydration Reminders</label>
+                        </div>
+                        
+                        <div class="custom-factors">
+                            <h4>Custom Factors</h4>
+                            <div id="factors-list"></div>
+                            <div class="add-factor">
+                                <input type="text" id="factor-name" placeholder="Factor name (e.g., Sick day)">
+                                <input type="number" id="factor-amount" placeholder="Amount" step="0.1">
+                                <button id="add-factor-btn">Add</button>
+                            </div>
+                        </div>
+                        
+                        <div class="tool-display__controls">
+                            <button class="tool-display__button" id="calculate-water">
+                                <i class="fas fa-calculator"></i>
+                                Calculate Intake
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="reset-water">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="export-water">
+                                <i class="fas fa-download"></i>
+                                Export Plan
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Your Hydration Plan</h3>
+                        <div class="tool-display__result" id="water-result">
+                            Your water intake calculation results will appear here...
+                        </div>
+                        <div class="water-summary" id="water-summary" style="display: none;">
+                            <div class="water-summary__item">
+                                <span class="water-summary__label">Daily Target:</span>
+                                <span class="water-summary__value" id="daily-target"></span>
+                            </div>
+                            <div class="water-summary__item">
+                                <span class="water-summary__label">Base Requirement:</span>
+                                <span class="water-summary__value" id="base-requirement"></span>
+                            </div>
+                            <div class="water-summary__item">
+                                <span class="water-summary__label">Activity Adjustment:</span>
+                                <span class="water-summary__value" id="activity-adjustment"></span>
+                            </div>
+                            <div class="water-summary__item">
+                                <span class="water-summary__label">Climate Adjustment:</span>
+                                <span class="water-summary__value" id="climate-adjustment"></span>
+                            </div>
+                        </div>
+                        <div class="chart-container" id="chart-container" style="display: none;">
+                            <canvas id="waterChart" width="400" height="200"></canvas>
+                        </div>
+                        <div class="schedule-table" id="schedule-table" style="display: none;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Amount</th>
+                                        <th>Activity</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="schedule-body">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Daily Water Intake</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about proper hydration, factors affecting water needs, and how to maintain optimal fluid balance
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Why is Water Intake Important?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Water is essential for life and makes up about 60% of our body weight. Proper hydration is crucial for:
+                        </p>
+                        <ul>
+                            <li><strong>Temperature Regulation:</strong> Helps maintain body temperature through sweating</li>
+                            <li><strong>Joint Lubrication:</strong> Keeps joints and tissues moist</li>
+                            <li><strong>Nutrient Transport:</strong> Carries nutrients and oxygen to cells</li>
+                            <li><strong>Waste Removal:</strong> Helps kidneys filter waste from blood</li>
+                            <li><strong>Digestive Health:</strong> Aids in digestion and prevents constipation</li>
+                            <li><strong>Cognitive Function:</strong> Even mild dehydration can affect concentration and mood</li>
+                        </ul>
+                        <p>
+                            Dehydration can lead to fatigue, headaches, dizziness, and in severe cases, heat stroke or kidney problems.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">How Much Water Do You Need?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            The "8 glasses a day" rule is a good starting point, but individual needs vary significantly based on several factors:
+                        </p>
+                        <ul>
+                            <li><strong>Body Weight:</strong> Larger people need more water (30-35ml per kg body weight)</li>
+                            <li><strong>Activity Level:</strong> Exercise increases water needs through sweat</li>
+                            <li><strong>Climate:</strong> Hot, humid weather increases fluid requirements</li>
+                            <li><strong>Health Conditions:</strong> Pregnancy, lactation, fever, and certain medications affect needs</li>
+                            <li><strong>Diet:</strong> High-sodium or high-protein diets require more water</li>
+                        </ul>
+                        <p>
+                            Our calculator considers all these factors to provide personalized recommendations.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Signs of Proper Hydration</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            How can you tell if you're drinking enough water? Look for these positive signs:
+                        </p>
+                        <ul>
+                            <li><strong>Urine Color:</strong> Light yellow or clear (not dark yellow)</li>
+                            <li><strong>Frequency:</strong> Urinating every 2-4 hours</li>
+                            <li><strong>Energy Levels:</strong> Feeling alert and energetic</li>
+                            <li><strong>Skin:</strong> Moist, elastic skin</li>
+                            <li><strong>No Thirst:</strong> Rarely feeling thirsty</li>
+                        </ul>
+                        <p>
+                            <strong>Warning Signs of Dehydration:</strong>
+                        </p>
+                        <ul>
+                            <li>Dark yellow urine</li>
+                            <li>Dry mouth and lips</li>
+                            <li>Headaches</li>
+                            <li>Fatigue or dizziness</li>
+                            <li>Reduced skin elasticity</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Tips for Staying Hydrated</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Here are practical strategies to maintain proper hydration:
+                        </p>
+                        <ul>
+                            <li><strong>Start Your Day:</strong> Drink water first thing in the morning</li>
+                            <li><strong>Set Reminders:</strong> Use apps or alarms to remind you to drink</li>
+                            <li><strong>Carry Water:</strong> Keep a water bottle with you throughout the day</li>
+                            <li><strong>Eat Water-Rich Foods:</strong> Fruits and vegetables contribute to hydration</li>
+                            <li><strong>Monitor Intake:</strong> Track your daily water consumption</li>
+                            <li><strong>Adjust for Activity:</strong> Drink extra water before, during, and after exercise</li>
+                            <li><strong>Listen to Your Body:</strong> Thirst is a good indicator of hydration needs</li>
+                        </ul>
+                        <p>
+                            Remember that other beverages like tea, coffee, and milk also contribute to your daily fluid intake, though water is the best choice for hydration.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Water Intake Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about Water Intake Calculator</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>How accurate is the water intake calculation?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Our calculator uses established hydration guidelines (30-35ml per kg body weight) and adjusts for factors like activity level, climate, and health conditions. It provides a good starting point, but individual needs may vary.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Do other beverages count toward my daily water intake?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes, tea, coffee, milk, and other beverages contribute to hydration. However, water is the best choice as it's calorie-free and doesn't contain caffeine or other substances that might affect hydration.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I drink too much water?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes, excessive water intake can lead to hyponatremia (low sodium levels). Our calculator provides safe ranges, and it's important to listen to your body's signals.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How do I know if I'm properly hydrated?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Good indicators include light yellow or clear urine, regular urination every 2-4 hours, feeling energetic, and rarely feeling thirsty. Dark yellow urine and frequent thirst are signs of dehydration.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Fetch and insert header
+        fetch('../../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Water Intake Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const weightInput = document.getElementById('weight');
+            const ageInput = document.getElementById('age');
+            const genderSelect = document.getElementById('gender');
+            const climateSelect = document.getElementById('climate');
+            const activityLevelSelect = document.getElementById('activity-level');
+            const pregnancyCheckbox = document.getElementById('pregnancy');
+            const lactationCheckbox = document.getElementById('lactation');
+            const wakeTimeInput = document.getElementById('wake-time');
+            const bedtimeInput = document.getElementById('bedtime');
+            const enableNotificationsCheckbox = document.getElementById('enable-notifications');
+            const calculateButton = document.getElementById('calculate-water');
+            const resetButton = document.getElementById('reset-water');
+            const exportButton = document.getElementById('export-water');
+            const resultDiv = document.getElementById('water-result');
+            const summaryDiv = document.getElementById('water-summary');
+            const chartContainer = document.getElementById('chart-container');
+            const scheduleTable = document.getElementById('schedule-table');
+            
+            const dailyTargetSpan = document.getElementById('daily-target');
+            const baseRequirementSpan = document.getElementById('base-requirement');
+            const activityAdjustmentSpan = document.getElementById('activity-adjustment');
+            const climateAdjustmentSpan = document.getElementById('climate-adjustment');
+            
+            let waterChart = null;
+            let isMetric = true;
+            let customFactors = [];
+            let waterData = [];
+
+            // Unit switcher
+            const metricBtn = document.getElementById('btn-metric');
+            const imperialBtn = document.getElementById('btn-imperial');
+            const weightUnitSpan = document.getElementById('weight-unit');
+
+            metricBtn.addEventListener('click', () => {
+                isMetric = true;
+                metricBtn.classList.add('active');
+                imperialBtn.classList.remove('active');
+                weightUnitSpan.textContent = 'kg';
+                if (weightInput.value) {
+                    weightInput.value = (parseFloat(weightInput.value) * 0.453592).toFixed(1);
+                }
+            });
+
+            imperialBtn.addEventListener('click', () => {
+                isMetric = false;
+                imperialBtn.classList.add('active');
+                metricBtn.classList.remove('active');
+                weightUnitSpan.textContent = 'lbs';
+                if (weightInput.value) {
+                    weightInput.value = (parseFloat(weightInput.value) / 0.453592).toFixed(1);
+                }
+            });
+
+            // Custom factors
+            const factorNameInput = document.getElementById('factor-name');
+            const factorAmountInput = document.getElementById('factor-amount');
+            const addFactorBtn = document.getElementById('add-factor-btn');
+            const factorsListDiv = document.getElementById('factors-list');
+
+            addFactorBtn.addEventListener('click', () => {
+                const name = factorNameInput.value.trim();
+                const amount = parseFloat(factorAmountInput.value);
+                
+                if (name && !isNaN(amount)) {
+                    customFactors.push({ name, amount });
+                    updateFactorsList();
+                    factorNameInput.value = '';
+                    factorAmountInput.value = '';
+                }
+            });
+
+            function updateFactorsList() {
+                factorsListDiv.innerHTML = '';
+                customFactors.forEach((factor, index) => {
+                    const factorDiv = document.createElement('div');
+                    factorDiv.className = 'factor-item';
+                    factorDiv.innerHTML = `
+                        <span>${factor.name}: +${factor.amount}${isMetric ? 'ml' : 'oz'}</span>
+                        <button onclick="removeFactor(${index})" style="background: #dc3545; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer;">Remove</button>
+                    `;
+                    factorsListDiv.appendChild(factorDiv);
+                });
+            }
+
+            window.removeFactor = function(index) {
+                customFactors.splice(index, 1);
+                updateFactorsList();
+            };
+
+            function calculateWaterIntake() {
+                const weight = parseFloat(weightInput.value) || 0;
+                const age = parseInt(ageInput.value) || 0;
+                const gender = genderSelect.value;
+                const climate = climateSelect.value;
+                const activityLevel = activityLevelSelect.value;
+                const pregnancy = pregnancyCheckbox.checked;
+                const lactation = lactationCheckbox.checked;
+
+                if (weight && age) {
+                    // Convert weight to kg if imperial
+                    const weightKg = isMetric ? weight : weight * 0.453592;
+                    
+                    // Base requirement: 30-35ml per kg body weight
+                    let baseRequirement = weightKg * 32.5; // Average of 30-35ml
+                    
+                    // Activity level adjustments
+                    const activityMultipliers = {
+                        'sedentary': 1.0,
+                        'light': 1.1,
+                        'moderate': 1.2,
+                        'high': 1.3,
+                        'very-high': 1.4
+                    };
+                    
+                    const activityAdjustment = baseRequirement * (activityMultipliers[activityLevel] - 1);
+                    baseRequirement *= activityMultipliers[activityLevel];
+                    
+                    // Climate adjustments
+                    const climateAdjustments = {
+                        'cold': 0,
+                        'moderate': baseRequirement * 0.1,
+                        'hot': baseRequirement * 0.2
+                    };
+                    
+                    const climateAdjustment = climateAdjustments[climate];
+                    baseRequirement += climateAdjustment;
+                    
+                    // Pregnancy/lactation adjustments
+                    if (pregnancy) {
+                        baseRequirement += 300; // Additional 300ml for pregnancy
+                    }
+                    if (lactation) {
+                        baseRequirement += 700; // Additional 700ml for lactation
+                    }
+                    
+                    // Add custom factors
+                    let customAdjustment = 0;
+                    customFactors.forEach(factor => {
+                        customAdjustment += factor.amount;
+                    });
+                    
+                    const totalIntake = baseRequirement + customAdjustment;
+                    
+                    // Convert to display units
+                    const displayIntake = isMetric ? totalIntake : totalIntake * 0.033814;
+                    const displayBase = isMetric ? baseRequirement : baseRequirement * 0.033814;
+                    const displayActivity = isMetric ? activityAdjustment : activityAdjustment * 0.033814;
+                    const displayClimate = isMetric ? climateAdjustment : climateAdjustment * 0.033814;
+                    
+                    const unit = isMetric ? 'ml' : 'oz';
+                    
+                    dailyTargetSpan.textContent = `${displayIntake.toFixed(0)} ${unit}`;
+                    baseRequirementSpan.textContent = `${displayBase.toFixed(0)} ${unit}`;
+                    activityAdjustmentSpan.textContent = `${displayActivity.toFixed(0)} ${unit}`;
+                    climateAdjustmentSpan.textContent = `${displayClimate.toFixed(0)} ${unit}`;
+
+                    resultDiv.textContent = 'Water intake calculation completed!';
+                    summaryDiv.style.display = 'block';
+                    chartContainer.style.display = 'block';
+                    scheduleTable.style.display = 'block';
+
+                    // Create hourly schedule
+                    createHourlySchedule(displayIntake);
+                    
+                    // Create chart
+                    createChart();
+                    
+                    // Save to localStorage
+                    saveToLocalStorage();
+                    
+                    // Set up notifications if enabled
+                    if (enableNotificationsCheckbox.checked) {
+                        setupNotifications();
+                    }
+                } else {
+                    resultDiv.textContent = 'Please enter valid weight and age.';
+                    summaryDiv.style.display = 'none';
+                    chartContainer.style.display = 'none';
+                    scheduleTable.style.display = 'none';
+                }
+            }
+
+            function createHourlySchedule(dailyIntake) {
+                const wakeTime = wakeTimeInput.value;
+                const bedtime = bedtimeInput.value;
+                
+                const wakeHour = parseInt(wakeTime.split(':')[0]);
+                const wakeMinute = parseInt(wakeTime.split(':')[1]);
+                const bedHour = parseInt(bedtime.split(':')[0]);
+                const bedMinute = parseInt(bedtime.split(':')[1]);
+                
+                const wakeMinutes = wakeHour * 60 + wakeMinute;
+                const bedMinutes = bedHour * 60 + bedMinute;
+                const activeMinutes = bedMinutes - wakeMinutes;
+                
+                const hourlyAmount = dailyIntake / (activeMinutes / 60);
+                
+                const tbody = document.getElementById('schedule-body');
+                tbody.innerHTML = '';
+                
+                const unit = isMetric ? 'ml' : 'oz';
+                
+                // Morning routine
+                tbody.innerHTML += `
+                    <tr><td>${wakeTime}</td><td>${(hourlyAmount * 0.5).toFixed(0)} ${unit}</td><td>Wake up</td></tr>
+                    <tr><td>${wakeTime.split(':')[0]}:${(parseInt(wakeTime.split(':')[1]) + 30).toString().padStart(2, '0')}</td><td>${(hourlyAmount * 0.3).toFixed(0)} ${unit}</td><td>Breakfast</td></tr>
+                `;
+                
+                // Hourly schedule
+                for (let hour = wakeHour + 1; hour < bedHour; hour++) {
+                    const timeStr = `${hour.toString().padStart(2, '0')}:00`;
+                    tbody.innerHTML += `
+                        <tr><td>${timeStr}</td><td>${hourlyAmount.toFixed(0)} ${unit}</td><td>Regular intake</td></tr>
+                    `;
+                }
+                
+                // Evening routine
+                tbody.innerHTML += `
+                    <tr><td>${bedtime}</td><td>${(hourlyAmount * 0.2).toFixed(0)} ${unit}</td><td>Before bed</td></tr>
+                `;
+            }
+
+            function createChart() {
+                if (waterChart) {
+                    waterChart.destroy();
+                }
+
+                const ctx = document.getElementById('waterChart').getContext('2d');
+                waterChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: waterData.map(d => d.date),
+                        datasets: [{
+                            label: 'Water Intake',
+                            data: waterData.map(d => d.amount),
+                            borderColor: '#4361EE',
+                            backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Water Intake History'
+                            },
+                            legend: {
+                                display: true
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: isMetric ? 'Amount (ml)' : 'Amount (oz)'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function setupNotifications() {
+                if ('Notification' in window) {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === 'granted') {
+                            // Set up hourly notifications
+                            const wakeTime = wakeTimeInput.value;
+                            const wakeHour = parseInt(wakeTime.split(':')[0]);
+                            
+                            for (let hour = wakeHour + 1; hour < 23; hour++) {
+                                setTimeout(() => {
+                                    new Notification('Hydration Reminder', {
+                                        body: 'Time to drink some water! Stay hydrated.',
+                                        icon: '../../assets/favicon.png'
+                                    });
+                                }, (hour - wakeHour) * 60 * 60 * 1000);
+                            }
+                        }
+                    });
+                }
+            }
+
+            function exportToCSV() {
+                const weight = parseFloat(weightInput.value) || 0;
+                if (weight === 0) {
+                    alert('Please calculate water intake first before exporting.');
+                    return;
+                }
+
+                let csv = 'Water Intake Plan\n';
+                csv += 'Time,Amount,Activity\n';
+                
+                const scheduleRows = document.querySelectorAll('#schedule-body tr');
+                scheduleRows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length === 3) {
+                        csv += `${cells[0].textContent},${cells[1].textContent},${cells[2].textContent}\n`;
+                    }
+                });
+
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'water-intake-plan.csv';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+
+            function saveToLocalStorage() {
+                const waterState = {
+                    weight: weightInput.value,
+                    age: ageInput.value,
+                    gender: genderSelect.value,
+                    climate: climateSelect.value,
+                    activityLevel: activityLevelSelect.value,
+                    pregnancy: pregnancyCheckbox.checked,
+                    lactation: lactationCheckbox.checked,
+                    wakeTime: wakeTimeInput.value,
+                    bedtime: bedtimeInput.value,
+                    enableNotifications: enableNotificationsCheckbox.checked,
+                    customFactors: customFactors,
+                    isMetric: isMetric
+                };
+                localStorage.setItem('waterIntakeCalculatorState', JSON.stringify(waterState));
+            }
+
+            function loadFromLocalStorage() {
+                const savedState = localStorage.getItem('waterIntakeCalculatorState');
+                if (savedState) {
+                    const state = JSON.parse(savedState);
+                    weightInput.value = state.weight || '';
+                    ageInput.value = state.age || '';
+                    genderSelect.value = state.gender || 'male';
+                    climateSelect.value = state.climate || 'moderate';
+                    activityLevelSelect.value = state.activityLevel || 'sedentary';
+                    pregnancyCheckbox.checked = state.pregnancy || false;
+                    lactationCheckbox.checked = state.lactation || false;
+                    wakeTimeInput.value = state.wakeTime || '07:00';
+                    bedtimeInput.value = state.bedtime || '23:00';
+                    enableNotificationsCheckbox.checked = state.enableNotifications || false;
+                    customFactors = state.customFactors || [];
+                    isMetric = state.isMetric !== false;
+                    
+                    if (isMetric) {
+                        metricBtn.classList.add('active');
+                        imperialBtn.classList.remove('active');
+                        weightUnitSpan.textContent = 'kg';
+                    } else {
+                        imperialBtn.classList.add('active');
+                        metricBtn.classList.remove('active');
+                        weightUnitSpan.textContent = 'lbs';
+                    }
+                    
+                    updateFactorsList();
+                }
+            }
+
+            function resetCalculator() {
+                weightInput.value = '';
+                ageInput.value = '';
+                genderSelect.value = 'male';
+                climateSelect.value = 'moderate';
+                activityLevelSelect.value = 'sedentary';
+                pregnancyCheckbox.checked = false;
+                lactationCheckbox.checked = false;
+                wakeTimeInput.value = '07:00';
+                bedtimeInput.value = '23:00';
+                enableNotificationsCheckbox.checked = false;
+                customFactors = [];
+                updateFactorsList();
+                resultDiv.textContent = 'Your water intake calculation results will appear here...';
+                summaryDiv.style.display = 'none';
+                chartContainer.style.display = 'none';
+                scheduleTable.style.display = 'none';
+                if (waterChart) {
+                    waterChart.destroy();
+                    waterChart = null;
+                }
+                localStorage.removeItem('waterIntakeCalculatorState');
+            }
+
+            calculateButton.addEventListener('click', calculateWaterIntake);
+            resetButton.addEventListener('click', resetCalculator);
+            exportButton.addEventListener('click', exportToCSV);
+
+            // Load saved state on page load
+            loadFromLocalStorage();
+
+            // Allow Enter key to trigger calculation
+            [weightInput, ageInput].forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        calculateWaterIntake();
+                    }
+                });
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with animation classes
+        document.querySelectorAll('.tool-hero__left, .tool-hero__right, .blog-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

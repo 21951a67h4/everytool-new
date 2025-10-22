@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA to Percentage Converter | University Grade Conversion | EveryTool.tech</title>
+    <meta name="description" content="Convert CGPA to percentage for Anna University, JNTU, VTU, CBSE, ICSE and other boards. Compare multiple conversion schemes and save your profiles locally.">
+    <meta name="keywords" content="cgpa to percentage converter, anna university cgpa, jntu cgpa, vtu cgpa, cbse cgpa, icse cgpa, grade conversion">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="CGPA to Percentage Converter | EveryTool.tech">
+    <meta property="og:description" content="Convert CGPA to percentage for Anna University, JNTU, VTU, CBSE, ICSE and other boards. Compare multiple conversion schemes and save your profiles locally.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/education-tools/cgpa-percentage-converter">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* CGPA Converter Specific Styles */
+        .cgpa-calc-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .cgpa-calc-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .cgpa-calc-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .cgpa-calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .cgpa-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .cgpa-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .cgpa-form-group input, .cgpa-form-group select { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .scheme-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .scheme-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .scheme-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .scheme-formula {
+            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .scheme-result {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #007bff;
+        }
+        
+        .grade-classification {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e8f5e8;
+            border-radius: 4px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .custom-formula-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .formula-builder {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: end;
+        }
+        
+        .profile-manager {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .profile-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .profile-item {
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .profile-item:hover {
+            background: #f0f0f0;
+        }
+        
+        .profile-item.active {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        
+        #cgpa-result-section { 
+            margin-top: 10px; 
+            padding: 25px; 
+            background: #eef7ff; 
+            border: 1px solid #cce4ff; 
+            border-radius: 8px; 
+            text-align: center; 
+        }
+        
+        #cgpa-result-section h4 { 
+            margin: 0 0 10px; 
+            font-size: 1.2rem; 
+            color: #555; 
+        }
+        
+        #percentage-display { 
+            font-size: 4rem; 
+            font-weight: 700; 
+            color: #0056b3; 
+            line-height: 1.1; 
+        }
+        
+        #result-message { 
+            margin-top: 10px; 
+            font-size: 1.1rem; 
+            font-weight: 500; 
+            color: #333; 
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .cgpa-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .cgpa-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .scheme-comparison {
+                grid-template-columns: 1fr;
+            }
+            .formula-builder {
+                grid-template-columns: 1fr;
+            }
+            .cgpa-form-group input, .cgpa-form-group select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            #cgpa-result-section { 
+                padding: 20px 15px; 
+            }
+            #percentage-display { 
+                font-size: 3rem; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cgpa-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            #percentage-display { 
+                font-size: 2.5rem; 
+            }
+            .cgpa-form-group input, .cgpa-form-group select { 
+                padding: 8px; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="CGPA to Percentage Converter" data-meta-description="Convert CGPA to percentage for Anna University, JNTU, VTU, CBSE, ICSE and other boards. Compare multiple conversion schemes and save your profiles locally.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">CGPA to Percentage Converter: University Grade Conversion</h1>
+                    <p class="tool-hero__description">
+                        Convert your CGPA to percentage using official formulas from Anna University, JNTU, VTU, CBSE, ICSE and other boards. 
+                        Compare multiple conversion schemes and save your profiles for future use.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-university"></i>
+                            <span>University Presets</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-balance-scale"></i>
+                            <span>Compare Schemes</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-save"></i>
+                            <span>Save Profiles</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-share"></i>
+                            <span>Shareable Links</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Convert CGPA
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About CGPA
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">CGPA to Percentage Converter</h2>
+                    <p class="tool-display__description">
+                        Enter your CGPA and select conversion schemes to see percentage equivalents.
+                    </p>
+                </div>
+                
+                <!-- CGPA Converter Custom Interface -->
+                <div class="cgpa-calc-container">
+                    <div class="cgpa-calc-section">
+                        <h4>1. Enter Your CGPA</h4>
+                        <div class="cgpa-calc-grid">
+                            <div class="cgpa-form-group">
+                                <label for="cgpa-input">CGPA Score</label>
+                                <input type="number" id="cgpa-input" placeholder="e.g., 8.5" min="0" max="10" step="0.01" value="8.5">
+                            </div>
+                            <div class="cgpa-form-group">
+                                <label for="cgpa-scale">CGPA Scale</label>
+                                <select id="cgpa-scale">
+                                    <option value="10">10 Point Scale</option>
+                                    <option value="4">4 Point Scale</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cgpa-calc-section">
+                        <h4>2. Select Conversion Schemes</h4>
+                        <div class="cgpa-calc-grid">
+                            <div class="cgpa-form-group">
+                                <label>
+                                    <input type="checkbox" id="anna-university" checked> Anna University
+                                </label>
+                            </div>
+                            <div class="cgpa-form-group">
+                                <label>
+                                    <input type="checkbox" id="jntu" checked> JNTU
+                                </label>
+                            </div>
+                            <div class="cgpa-form-group">
+                                <label>
+                                    <input type="checkbox" id="vtu" checked> VTU
+                                </label>
+                            </div>
+                            <div class="cgpa-form-group">
+                                <label>
+                                    <input type="checkbox" id="cbse" checked> CBSE
+                                </label>
+                            </div>
+                            <div class="cgpa-form-group">
+                                <label>
+                                    <input type="checkbox" id="icse" checked> ICSE
+                                </label>
+                            </div>
+                            <div class="cgpa-form-group">
+                                <label>
+                                    <input type="checkbox" id="custom-formula"> Custom Formula
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="custom-formula-section" id="custom-formula-section" style="display: none;">
+                        <h4>3. Custom Formula Builder</h4>
+                        <div class="formula-builder">
+                            <div class="cgpa-form-group">
+                                <label for="custom-formula-input">Formula (use 'x' for CGPA)</label>
+                                <input type="text" id="custom-formula-input" placeholder="e.g., (x - 0.75) * 10" value="(x - 0.75) * 10">
+                            </div>
+                            <button class="tool-display__button" id="test-formula">
+                                <i class="fas fa-check"></i>
+                                Test Formula
+                            </button>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+                            Use 'x' to represent CGPA. Examples: (x - 0.75) * 10, x * 9.5, (x - 0.5) * 10
+                        </p>
+                    </div>
+
+                    <div class="profile-manager">
+                        <h4>4. Profile Manager</h4>
+                        <div class="cgpa-calc-grid">
+                            <div class="cgpa-form-group">
+                                <label for="profile-name">Profile Name</label>
+                                <input type="text" id="profile-name" placeholder="e.g., My University Profile">
+                            </div>
+                            <div class="cgpa-form-group">
+                                <button class="tool-display__button" id="save-profile">
+                                    <i class="fas fa-save"></i>
+                                    Save Profile
+                                </button>
+                            </div>
+                        </div>
+                        <div class="profile-list" id="profile-list">
+                            <!-- Saved profiles will appear here -->
+                        </div>
+                    </div>
+
+                    <div id="cgpa-result-section" class="cgpa-result-section" style="display: none;">
+                        <h4>Conversion Results</h4>
+                        <div id="percentage-display">0%</div>
+                        <div id="result-message">Your percentage equivalent</div>
+                        
+                        <div class="scheme-comparison" id="scheme-comparison">
+                            <!-- Scheme comparison cards will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding CGPA to Percentage Conversion</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about different CGPA conversion methods used by universities and boards across India
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What is CGPA?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            CGPA (Cumulative Grade Point Average) is a grading system used by many universities and boards 
+                            to evaluate a student's academic performance. It provides a standardized way to represent 
+                            overall academic achievement.
+                        </p>
+                        <p>
+                            <strong>Key Features:</strong>
+                        </p>
+                        <ul>
+                            <li>Usually on a 10-point or 4-point scale</li>
+                            <li>Considers all subjects/courses equally</li>
+                            <li>Provides a single number representing overall performance</li>
+                            <li>Used for academic progression and job applications</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">University-Specific Conversion Formulas</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Anna University:</strong> Percentage = (CGPA - 0.75) × 10
+                        </p>
+                        <p>
+                            <strong>JNTU (Jawaharlal Nehru Technological University):</strong> Percentage = (CGPA - 0.5) × 10
+                        </p>
+                        <p>
+                            <strong>VTU (Visvesvaraya Technological University):</strong> Percentage = (CGPA - 0.75) × 10
+                        </p>
+                        <p>
+                            <strong>CBSE (Central Board of Secondary Education):</strong> Percentage = CGPA × 9.5
+                        </p>
+                        <p>
+                            <strong>ICSE (Indian Certificate of Secondary Education):</strong> Percentage = CGPA × 9.5
+                        </p>
+                        <p>
+                            Each university uses its own conversion formula based on their grading system and academic policies.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Grade Classifications</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Percentage-based Classifications:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>90% and above:</strong> Outstanding/Distinction</li>
+                            <li><strong>80-89%:</strong> First Class with Distinction</li>
+                            <li><strong>70-79%:</strong> First Class</li>
+                            <li><strong>60-69%:</strong> Second Class</li>
+                            <li><strong>50-59%:</strong> Pass Class</li>
+                            <li><strong>Below 50%:</strong> Fail</li>
+                        </ul>
+                        <p>
+                            These classifications may vary slightly between different universities and boards.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Why Conversion Matters</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Job Applications:</strong> Many employers prefer percentage scores for easier comparison.
+                        </p>
+                        <p>
+                            <strong>Higher Education:</strong> Universities often require percentage scores for admission.
+                        </p>
+                        <p>
+                            <strong>Scholarships:</strong> Many scholarship programs use percentage-based criteria.
+                        </p>
+                        <p>
+                            <strong>Government Jobs:</strong> Most government positions specify percentage requirements.
+                        </p>
+                        <p>
+                            Understanding your percentage equivalent helps you present your academic achievements 
+                            in the most appropriate format for different opportunities.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">CGPA to Percentage Converter FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about CGPA to percentage conversion</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>Which conversion formula should I use?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Use the formula specific to your university or board. Anna University, JNTU, and VTU have different formulas, while CBSE and ICSE use the same formula. Check your university's official website for the correct conversion method.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I use multiple conversion schemes?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes! Our tool allows you to compare multiple conversion schemes simultaneously. This is useful when applying to different institutions that may use different conversion methods.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How accurate are these conversions?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Our conversions use the official formulas from each university and board. However, always verify with your institution's official guidelines, as conversion methods may occasionally change.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I save my conversion profiles?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes! You can save your preferred conversion schemes as profiles and load them later. This is especially useful if you need to convert multiple CGPA scores using the same schemes.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // CGPA to Percentage Converter Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const cgpaInput = document.getElementById('cgpa-input');
+            const cgpaScale = document.getElementById('cgpa-scale');
+            const schemeCheckboxes = document.querySelectorAll('input[type="checkbox"]:not(#custom-formula)');
+            const customFormulaCheckbox = document.getElementById('custom-formula');
+            const customFormulaSection = document.getElementById('custom-formula-section');
+            const customFormulaInput = document.getElementById('custom-formula-input');
+            const testFormulaButton = document.getElementById('test-formula');
+            const profileNameInput = document.getElementById('profile-name');
+            const saveProfileButton = document.getElementById('save-profile');
+            const profileList = document.getElementById('profile-list');
+            const resultSection = document.getElementById('cgpa-result-section');
+            const percentageDisplay = document.getElementById('percentage-display');
+            const resultMessage = document.getElementById('result-message');
+            const schemeComparison = document.getElementById('scheme-comparison');
+            
+            // University conversion formulas
+            const conversionFormulas = {
+                'anna-university': { name: 'Anna University', formula: (x) => (x - 0.75) * 10, description: '(CGPA - 0.75) × 10' },
+                'jntu': { name: 'JNTU', formula: (x) => (x - 0.5) * 10, description: '(CGPA - 0.5) × 10' },
+                'vtu': { name: 'VTU', formula: (x) => (x - 0.75) * 10, description: '(CGPA - 0.75) × 10' },
+                'cbse': { name: 'CBSE', formula: (x) => x * 9.5, description: 'CGPA × 9.5' },
+                'icse': { name: 'ICSE', formula: (x) => x * 9.5, description: 'CGPA × 9.5' }
+            };
+            
+            let savedProfiles = JSON.parse(localStorage.getItem('cgpaProfiles') || '[]');
+            
+            function convertCGPA() {
+                const cgpa = parseFloat(cgpaInput.value);
+                const scale = parseInt(cgpaScale.value);
+                
+                if (isNaN(cgpa) || cgpa < 0 || cgpa > scale) {
+                    resultSection.style.display = 'none';
+                    return;
+                }
+                
+                // Adjust CGPA if needed for different scales
+                let adjustedCGPA = cgpa;
+                if (scale === 4 && cgpa <= 4) {
+                    // Convert 4-point scale to 10-point scale for formula application
+                    adjustedCGPA = (cgpa / 4) * 10;
+                }
+                
+                const results = [];
+                let totalPercentage = 0;
+                let count = 0;
+                
+                // Calculate using selected schemes
+                schemeCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked && conversionFormulas[checkbox.id]) {
+                        const scheme = conversionFormulas[checkbox.id];
+                        const percentage = scheme.formula(adjustedCGPA);
+                        results.push({
+                            name: scheme.name,
+                            percentage: Math.max(0, Math.min(100, percentage)),
+                            formula: scheme.description
+                        });
+                        totalPercentage += percentage;
+                        count++;
+                    }
+                });
+                
+                // Calculate custom formula if enabled
+                if (customFormulaCheckbox.checked) {
+                    try {
+                        const customFormula = customFormulaInput.value;
+                        const customPercentage = evaluateCustomFormula(customFormula, adjustedCGPA);
+                        results.push({
+                            name: 'Custom Formula',
+                            percentage: Math.max(0, Math.min(100, customPercentage)),
+                            formula: customFormula
+                        });
+                        totalPercentage += customPercentage;
+                        count++;
+                    } catch (error) {
+                        console.error('Custom formula error:', error);
+                    }
+                }
+                
+                if (results.length > 0) {
+                    displayResults(results);
+                    updateURL();
+                } else {
+                    resultSection.style.display = 'none';
+                }
+            }
+            
+            function evaluateCustomFormula(formula, cgpa) {
+                // Replace 'x' with CGPA value and evaluate
+                const expression = formula.replace(/x/g, cgpa);
+                return eval(expression);
+            }
+            
+            function displayResults(results) {
+                resultSection.style.display = 'block';
+                
+                // Calculate average percentage
+                const averagePercentage = results.reduce((sum, result) => sum + result.percentage, 0) / results.length;
+                percentageDisplay.textContent = averagePercentage.toFixed(1) + '%';
+                
+                // Determine grade classification
+                let classification = '';
+                if (averagePercentage >= 90) classification = 'Outstanding/Distinction';
+                else if (averagePercentage >= 80) classification = 'First Class with Distinction';
+                else if (averagePercentage >= 70) classification = 'First Class';
+                else if (averagePercentage >= 60) classification = 'Second Class';
+                else if (averagePercentage >= 50) classification = 'Pass Class';
+                else classification = 'Below Pass';
+                
+                resultMessage.textContent = `Average: ${averagePercentage.toFixed(1)}% - ${classification}`;
+                
+                // Display scheme comparison
+                schemeComparison.innerHTML = results.map(result => `
+                    <div class="scheme-card">
+                        <div class="scheme-name">${result.name}</div>
+                        <div class="scheme-formula">${result.formula}</div>
+                        <div class="scheme-result">${result.percentage.toFixed(1)}%</div>
+                        <div class="grade-classification">
+                            <strong>Grade:</strong> ${getGradeClassification(result.percentage)}
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            function getGradeClassification(percentage) {
+                if (percentage >= 90) return 'Outstanding';
+                if (percentage >= 80) return 'First Class with Distinction';
+                if (percentage >= 70) return 'First Class';
+                if (percentage >= 60) return 'Second Class';
+                if (percentage >= 50) return 'Pass Class';
+                return 'Below Pass';
+            }
+            
+            function saveProfile() {
+                const profileName = profileNameInput.value.trim();
+                if (!profileName) {
+                    alert('Please enter a profile name.');
+                    return;
+                }
+                
+                const selectedSchemes = Array.from(schemeCheckboxes)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.id);
+                
+                const customFormula = customFormulaCheckbox.checked ? customFormulaInput.value : '';
+                
+                const profile = {
+                    name: profileName,
+                    schemes: selectedSchemes,
+                    customFormula: customFormula,
+                    timestamp: Date.now()
+                };
+                
+                savedProfiles.unshift(profile);
+                savedProfiles = savedProfiles.slice(0, 10); // Keep only last 10 profiles
+                localStorage.setItem('cgpaProfiles', JSON.stringify(savedProfiles));
+                
+                updateProfileList();
+                profileNameInput.value = '';
+            }
+            
+            function loadProfile(profile) {
+                // Clear all checkboxes
+                schemeCheckboxes.forEach(checkbox => checkbox.checked = false);
+                customFormulaCheckbox.checked = false;
+                
+                // Load profile schemes
+                profile.schemes.forEach(schemeId => {
+                    const checkbox = document.getElementById(schemeId);
+                    if (checkbox) checkbox.checked = true;
+                });
+                
+                // Load custom formula
+                if (profile.customFormula) {
+                    customFormulaCheckbox.checked = true;
+                    customFormulaInput.value = profile.customFormula;
+                }
+                
+                convertCGPA();
+            }
+            
+            function updateProfileList() {
+                profileList.innerHTML = savedProfiles.map((profile, index) => `
+                    <div class="profile-item" onclick="loadProfile(${index})">
+                        ${profile.name}
+                    </div>
+                `).join('');
+            }
+            
+            function updateURL() {
+                const cgpa = cgpaInput.value;
+                const schemes = Array.from(schemeCheckboxes)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.id);
+                const customFormula = customFormulaCheckbox.checked ? customFormulaInput.value : '';
+                
+                const params = new URLSearchParams();
+                if (cgpa) params.set('cgpa', cgpa);
+                if (schemes.length > 0) params.set('schemes', schemes.join(','));
+                if (customFormula) params.set('formula', customFormula);
+                
+                const newURL = window.location.pathname + '?' + params.toString();
+                window.history.replaceState({}, '', newURL);
+            }
+            
+            function loadFromURL() {
+                const params = new URLSearchParams(window.location.search);
+                const cgpa = params.get('cgpa');
+                const schemes = params.get('schemes');
+                const formula = params.get('formula');
+                
+                if (cgpa) {
+                    cgpaInput.value = cgpa;
+                }
+                
+                if (schemes) {
+                    const schemeList = schemes.split(',');
+                    schemeCheckboxes.forEach(checkbox => {
+                        checkbox.checked = schemeList.includes(checkbox.id);
+                    });
+                }
+                
+                if (formula) {
+                    customFormulaCheckbox.checked = true;
+                    customFormulaInput.value = formula;
+                }
+                
+                if (cgpa) {
+                    convertCGPA();
+                }
+            }
+            
+            // Event listeners
+            cgpaInput.addEventListener('input', convertCGPA);
+            cgpaScale.addEventListener('change', convertCGPA);
+            
+            schemeCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', convertCGPA);
+            });
+            
+            customFormulaCheckbox.addEventListener('change', function() {
+                customFormulaSection.style.display = this.checked ? 'block' : 'none';
+                convertCGPA();
+            });
+            
+            customFormulaInput.addEventListener('input', convertCGPA);
+            
+            testFormulaButton.addEventListener('click', function() {
+                try {
+                    const testResult = evaluateCustomFormula(customFormulaInput.value, 8.5);
+                    alert(`Test result for CGPA 8.5: ${testResult.toFixed(1)}%`);
+                } catch (error) {
+                    alert('Invalid formula. Please check your syntax.');
+                }
+            });
+            
+            saveProfileButton.addEventListener('click', saveProfile);
+            
+            // Initialize
+            updateProfileList();
+            loadFromURL();
+            
+            // Make loadProfile available globally for onclick
+            window.loadProfile = function(index) {
+                loadProfile(savedProfiles[index]);
+            };
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Case Converter | EveryTool.tech</title>
+    <meta name="description" content="Convert text between upper, lower, title, sentence, camel, snake, and kebab case. Includes live preview, counts, copy, undo/redo, and file support.">
+    <link rel="icon" type="image/svg+xml" href="../../assets/SVG/favicon.svg">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --primary:#4361EE; --secondary:#2945c8; --bg:#ffffff; --muted:#f3f4f6; --text:#111827; }
+        body { margin:0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text); }
+        #header-placeholder{min-height:130px;}
+        .container { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+        .tool-header { text-align:center; margin: 1rem 0 1.5rem; }
+        .tool-header h1 { margin: 0 0 0.5rem; }
+        .grid { display:grid; grid-template-columns: 1fr; gap: 1rem; }
+        @media(min-width: 960px){ .grid{ grid-template-columns: 1.2fr 0.8fr; } }
+        .card { background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.04); }
+        .actions { display:flex; flex-wrap:wrap; gap:.5rem; margin:.75rem 0 1rem; }
+        .btn { background: var(--primary); color:#fff; border:none; border-radius:10px; padding:.6rem .9rem; cursor:pointer; }
+        .btn.secondary { background:#e5e7eb; color:#111827; }
+        .btn.ghost { background:transparent; border:1px solid #e5e7eb; color:#111827; }
+        .btn:disabled { opacity:.6; cursor:not-allowed; }
+        textarea { width:100%; min-height: 260px; resize: vertical; border:1px solid #e5e7eb; border-radius:12px; padding:0.8rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+        .row { display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; }
+        .stat { background: var(--muted); border-radius:10px; padding:.4rem .7rem; font-size:.9rem; }
+        .preview { white-space: pre-wrap; word-break: break-word; min-height: 200px; background: var(--muted); padding: .8rem; border-radius: 10px; border:1px solid #e5e7eb; }
+        .case-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap:.5rem; }
+        input[type=file]{ display:none; }
+        label.file { border:1px dashed #cbd5e1; padding:.55rem .9rem; border-radius:10px; cursor:pointer; }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <main class="container">
+        <div class="tool-header">
+            <h1>Text Case Converter</h1>
+            <p>Convert to UPPER, lower, Title, Sentence, camelCase, snake_case, and kebab-case.</p>
+        </div>
+
+        <div class="grid">
+            <section class="card">
+                <div class="row">
+                    <label for="file-input" class="file"><i class="fa-solid fa-file-arrow-up"></i> Upload .txt</label>
+                    <input id="file-input" type="file" accept=".txt,.md,.csv,.json,.log,.text">
+                    <button class="btn ghost" id="paste-btn"><i class="fa-solid fa-paste"></i> Paste</button>
+                    <button class="btn ghost" id="clear-btn"><i class="fa-solid fa-broom"></i> Clear</button>
+                    <button class="btn ghost" id="undo-btn" disabled><i class="fa-solid fa-rotate-left"></i> Undo</button>
+                    <button class="btn ghost" id="redo-btn" disabled><i class="fa-solid fa-rotate-right"></i> Redo</button>
+                </div>
+                <textarea id="input" placeholder="Paste or type your text here..."></textarea>
+
+                <div class="actions">
+                    <button class="btn" data-case="upper">UPPERCASE</button>
+                    <button class="btn" data-case="lower">lowercase</button>
+                    <button class="btn" data-case="title">Title Case</button>
+                    <button class="btn" data-case="sentence">Sentence case</button>
+                    <button class="btn" data-case="camel">camelCase</button>
+                    <button class="btn" data-case="snake">snake_case</button>
+                    <button class="btn" data-case="kebab">kebab-case</button>
+                    <button class="btn secondary" id="copy-btn"><i class="fa-regular fa-copy"></i> Copy</button>
+                    <button class="btn secondary" id="download-btn"><i class="fa-solid fa-download"></i> Download TXT</button>
+                </div>
+                <div class="row">
+                    <span class="stat" id="words">0 words</span>
+                    <span class="stat" id="chars">0 chars</span>
+                    <span class="stat" id="lines">0 lines</span>
+                </div>
+            </section>
+            <aside class="card">
+                <h3 style="margin-top:0">Live Preview</h3>
+                <div id="preview" class="preview"></div>
+                <h3>Batch Presets</h3>
+                <div class="case-grid">
+                    <button class="btn ghost" data-case="trim">Trim whitespace</button>
+                    <button class="btn ghost" data-case="dedupe">Remove duplicate lines</button>
+                    <button class="btn ghost" data-case="squash">Squash spaces</button>
+                </div>
+            </aside>
+        </div>
+    </main>
+    <div id="footer-placeholder"></div>
+
+    <script src="/app-loader.js" defer></script>
+    <script>
+    (function(){
+        const input = document.getElementById('input');
+        const preview = document.getElementById('preview');
+        const words = document.getElementById('words');
+        const chars = document.getElementById('chars');
+        const lines = document.getElementById('lines');
+        const fileInput = document.getElementById('file-input');
+        const pasteBtn = document.getElementById('paste-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const undoBtn = document.getElementById('undo-btn');
+        const redoBtn = document.getElementById('redo-btn');
+
+        const history = { stack: [], index: -1 };
+        const pushHistory = (val) => {
+            if (history.index < history.stack.length - 1) history.stack = history.stack.slice(0, history.index + 1);
+            history.stack.push(val);
+            history.index++;
+            updateUndoRedo();
+        };
+        const updateUndoRedo = () => {
+            undoBtn.disabled = history.index <= 0;
+            redoBtn.disabled = history.index >= history.stack.length - 1;
+        };
+
+        const toTitle = (s) => s.replace(/\w\S*/g, (w) => w[0].toUpperCase() + w.slice(1).toLowerCase());
+        const toSentence = (s) => s.replace(/(^\s*[a-z])|([\.\!\?]\s+[a-z])/g, (m) => m.toUpperCase());
+        const toCamel = (s) => s
+            .toLowerCase()
+            .replace(/[^a-z0-9]+(.)/g, (_, c) => c.toUpperCase())
+            .replace(/^[A-Z]/, (c) => c.toLowerCase());
+        const toSnake = (s) => s
+            .trim()
+            .replace(/\s+/g, ' ')
+            .replace(/[^A-Za-z0-9]+/g, '_')
+            .replace(/_+/g, '_')
+            .replace(/^_|_$/g, '')
+            .toLowerCase();
+        const toKebab = (s) => toSnake(s).replace(/_/g, '-');
+
+        const transform = (kind, value) => {
+            let s = value;
+            switch(kind){
+                case 'upper': s = s.toUpperCase(); break;
+                case 'lower': s = s.toLowerCase(); break;
+                case 'title': s = toTitle(s); break;
+                case 'sentence': s = toSentence(s); break;
+                case 'camel': s = toCamel(s); break;
+                case 'snake': s = toSnake(s); break;
+                case 'kebab': s = toKebab(s); break;
+                case 'trim': s = s.split('\n').map(l=>l.trim()).join('\n'); break;
+                case 'dedupe': s = Array.from(new Set(s.split('\n'))).join('\n'); break;
+                case 'squash': s = s.replace(/\s+/g, ' ').trim(); break;
+            }
+            return s;
+        };
+
+        const updateStats = () => {
+            const v = input.value;
+            const wordCount = (v.trim().match(/\S+/g) || []).length;
+            words.textContent = wordCount + ' words';
+            chars.textContent = v.length + ' chars';
+            lines.textContent = (v.split('\n').length) + ' lines';
+            preview.textContent = v;
+        };
+
+        document.querySelectorAll('[data-case]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const kind = btn.getAttribute('data-case');
+                const out = transform(kind, input.value);
+                if (out !== input.value) { pushHistory(input.value); input.value = out; updateStats(); }
+            });
+        });
+
+        input.addEventListener('input', () => updateStats());
+        clearBtn.addEventListener('click', () => { if (!input.value) return; pushHistory(input.value); input.value=''; updateStats(); });
+        pasteBtn.addEventListener('click', async () => { try { const t = await navigator.clipboard.readText(); if (t){ pushHistory(input.value); input.value = t; updateStats(); } } catch(e){} });
+        copyBtn.addEventListener('click', async () => { try { await navigator.clipboard.writeText(input.value); copyBtn.textContent = 'Copied!'; setTimeout(()=>copyBtn.textContent='Copy',1200); } catch(e){} });
+        downloadBtn.addEventListener('click', () => { const blob = new Blob([input.value], {type:'text/plain'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='converted.txt'; a.click(); URL.revokeObjectURL(a.href); });
+        fileInput.addEventListener('change', async (e) => { const f=e.target.files[0]; if(!f) return; const text = await f.text(); pushHistory(input.value); input.value = text; updateStats(); e.target.value=''; });
+        undoBtn.addEventListener('click', () => { if (history.index>0){ history.index--; input.value = history.stack[history.index]; updateUndoRedo(); updateStats(); }});
+        redoBtn.addEventListener('click', () => { if (history.index<history.stack.length-1){ history.index++; input.value = history.stack[history.index]; updateUndoRedo(); updateStats(); }});
+
+        // init
+        pushHistory('');
+        updateStats();
+    })();
+    </script>
+    <script src="/back-to-top.js"></script>
+</body>
+</html>
+
+

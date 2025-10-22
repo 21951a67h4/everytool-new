@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentage Calculator | Calculate Percentages Instantly | EveryTool.tech</title>
+    <meta name="description" content="A free and versatile Percentage Calculator with multiple modes: find a percentage of a number, calculate percentage change, reverse percentages, and a tip calculator.">
+    <meta name="keywords" content="percentage calculator, percent calculator, calculate percentage, percentage change, reverse percentage, tip calculator">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Versatile Percentage Calculator with Multiple Modes | EveryTool.tech">
+    <meta property="og:description" content="A free and versatile Percentage Calculator with multiple modes: find a percentage of a number, calculate percentage change, reverse percentages, and a tip calculator.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/percentage-calculator">
+    <meta property="og:image" content="https://everytool.tech/assets/tool-preview.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Custom styles for Percentage Calculator */
+        .percentage-calc-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .calc-mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .mode-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .mode-btn.active {
+            background: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+        .calc-input-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .calc-result-section {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+        }
+        .result-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #28a745;
+            margin: 15px 0;
+        }
+        .result-label {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .calc-mode-selector { 
+                flex-direction: column; 
+                gap: 8px; 
+            }
+            .calc-input-section { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .calc-result-section { 
+                padding: 20px; 
+            }
+            .result-value { 
+                font-size: 2.5rem; 
+            }
+            .mode-btn { 
+                padding: 10px; 
+            }
+            .tool-display__input { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .result-value { 
+                font-size: 2rem; 
+            }
+            .result-label { 
+                font-size: 1rem; 
+            }
+            .calc-result-section { 
+                padding: 15px; 
+            }
+            .mode-btn { 
+                padding: 8px; 
+                font-size: 0.9rem; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Percentage Calculator: Fast & Simple Percent Tools</h1>
+                    <p class="tool-hero__description">
+                        Solve any percentage problem with ease. Our versatile calculator handles percentage of, percentage change, reverse percentages, and even splits tips.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-calculator"></i>
+                            <span>Multiple Modes</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-undo"></i>
+                            <span>Reverse Calculations</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-history"></i>
+                            <span>Calculation History</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Tip Calculator</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-play"></i>
+                            Start Calculating
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Percentages
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                 <div class="tool-display__header">
+                    <h2 class="tool-display__title">Your All-in-One Percentage Tool</h2>
+                    <p class="tool-display__description">
+                        Select a calculation mode below to get started. Results are instant.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="calc-tabs">
+                        <div class="calc-tab active" data-tab="mode1"><i class="fas fa-percent"></i> % of a Number</div>
+                        <div class="calc-tab" data-tab="mode2"><i class="fas fa-divide"></i> X is what % of Y</div>
+                        <div class="calc-tab" data-tab="mode3"><i class="fas fa-chart-line"></i> % Change</div>
+                        <div class="calc-tab" data-tab="mode4"><i class="fas fa-undo"></i> Reverse %</div>
+                        <div class="calc-tab" data-tab="mode5"><i class="fas fa-utensils"></i> Tip Calculator</div>
+                    </div>
+
+                    <!-- Mode 1: What is X% of Y? -->
+                    <div id="mode1" class="calc-panel active">
+                        <h4>What is X% of Y?</h4>
+                        <div class="calc-form">
+                             <div class="tool-display__input-group">
+                                <input type="number" id="m1-percent" class="tool-display__input" placeholder="Percentage (%)">
+                            </div>
+                            <span>of</span>
+                            <div class="tool-display__input-group">
+                                <input type="number" id="m1-value" class="tool-display__input" placeholder="Total Value">
+                            </div>
+                        </div>
+                        <div id="m1-result" class="calc-result" style="display: none;"></div>
+                    </div>
+
+                    <!-- Mode 2: X is what percentage of Y? -->
+                    <div id="mode2" class="calc-panel">
+                         <h4>X is what percentage of Y?</h4>
+                        <div class="calc-form">
+                             <div class="tool-display__input-group">
+                                <input type="number" id="m2-part" class="tool-display__input" placeholder="Part Value">
+                            </div>
+                            <span>is what % of</span>
+                            <div class="tool-display__input-group">
+                                <input type="number" id="m2-total" class="tool-display__input" placeholder="Total Value">
+                            </div>
+                        </div>
+                        <div id="m2-result" class="calc-result" style="display: none;"></div>
+                    </div>
+
+                    <!-- Mode 3: Percentage Increase/Decrease -->
+                    <div id="mode3" class="calc-panel">
+                         <h4>Percentage Increase/Decrease</h4>
+                        <div class="calc-form">
+                             <div class="tool-display__input-group">
+                                <input type="number" id="m3-start" class="tool-display__input" placeholder="Starting Value">
+                            </div>
+                            <span>to</span>
+                            <div class="tool-display__input-group">
+                                <input type="number" id="m3-end" class="tool-display__input" placeholder="Ending Value">
+                            </div>
+                        </div>
+                        <div id="m3-result" class="calc-result" style="display: none;"></div>
+                    </div>
+
+                    <!-- Mode 4: Reverse Percentage -->
+                    <div id="mode4" class="calc-panel">
+                        <h4>Reverse Percentage (Original Price)</h4>
+                        <div class="calc-form">
+                            <div class="tool-display__input-group">
+                                <input type="number" id="m4-final" class="tool-display__input" placeholder="Final Price ($)">
+                            </div>
+                            <span>after a</span>
+                             <div class="tool-display__input-group">
+                                <input type="number" id="m4-percent" class="tool-display__input" placeholder="Discount (%)">
+                            </div>
+                            <span>discount</span>
+                        </div>
+                        <div id="m4-result" class="calc-result" style="display: none;"></div>
+                    </div>
+
+                    <!-- Mode 5: Tip Calculator -->
+                    <div id="mode5" class="calc-panel">
+                        <h4>Tip Calculator</h4>
+                        <div class="calc-form">
+                             <div class="tool-display__input-group">
+                                <label>Bill Total</label>
+                                <input type="number" id="m5-bill" class="tool-display__input" placeholder="$">
+                            </div>
+                            <div class="tool-display__input-group">
+                                <label>Tip %</label>
+                                <input type="number" id="m5-tip-percent" class="tool-display__input" value="18">
+                            </div>
+                             <div class="tool-display__input-group">
+                                <label>Split by</label>
+                                <input type="number" id="m5-people" class="tool-display__input" value="1">
+                            </div>
+                        </div>
+                        <div id="m5-result" class="calc-result" style="display: none;"></div>
+                    </div>
+
+                    <!-- History Section -->
+                    <div id="history-section">
+                        <h3><i class="fas fa-history"></i> Recent Calculations</h3>
+                        <ul id="history-list">
+                            <li class="empty-history">No calculations yet.</li>
+                        </ul>
+                        <button id="clear-history-btn" class="tool-display__button tool-display__button--secondary" style="margin-top:1rem;">Clear History</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Mastering Percentages: A Practical Guide for Everyday Life</h2>
+                <p class="tool-blog__subtitle">
+                    From shopping discounts to understanding statistics, learn the simple math behind percentages and how to solve any problem with our versatile calculator.
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Introduction: Why Percentages Are Everywhere</h3>
+                    <div class="blog-section__content">
+                        <p>
+                           Percentages are one of the most common mathematical concepts we encounter in our daily lives, yet they can often be a source of confusion. From a 25% discount at your favorite store to a 3.5% interest rate on your savings account, or a news report stating a 10% increase in prices, percentages are the language of comparison and change. Understanding them is not just an academic exercise—it's a crucial life skill that empowers you to make smarter financial decisions and better comprehend the world around you.
+                        </p>
+                        <p>
+                            That's why we created this all-in-one <strong>Percentage Calculator</strong>. It's designed to be more than just a simple tool; it's a comprehensive resource to handle any percentage-based problem you might face. This guide will walk you through the most common types of percentage calculations, explain the simple logic behind them, and show you how to use each mode of our calculator to get instant, accurate answers.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Mode 1: "What is X% of Y?" - The Foundation</h3>
+                    <div class="blog-section__content">
+                        <p>
+                           This is the most fundamental percentage calculation. It's used to find a specific part of a whole.
+                        </p>
+                        <p><strong>The Scenario:</strong> You're buying a laptop that costs $800, and the sales tax is 7%.</p>
+                        <p><strong>The Question:</strong> What is 7% of $800?</p>
+                        <p><strong>The Math:</strong> The word "of" in mathematics almost always means "multiply." And a percentage is simply a fraction of 100. So, 7% is the same as 7/100 or 0.07. The formula is:</p>
+                        <p><code>Percentage/100 * Total Value = Result</code></p>
+                        <p><code>0.07 * 800 = 56</code></p>
+                        <p><strong>Using Our Calculator:</strong> In the first tab, simply enter "7" in the percentage box and "800" in the value box. The tool instantly tells you the answer is 56.</p>
+                    </div>
+                </div>
+                
+                 <div class="blog-section">
+                    <h3 class="blog-section__title">Mode 2: "X is what percentage of Y?" - Finding the Proportion</h3>
+                    <div class="blog-section__content">
+                        <p>
+                           This calculation is used when you have two numbers and you want to express their relationship as a percentage.
+                        </p>
+                         <p><strong>The Scenario:</strong> You answered 45 questions correctly on a test that had 60 questions in total.</p>
+                        <p><strong>The Question:</strong> 45 is what percentage of 60?</p>
+                        <p><strong>The Math:</strong> To find the percentage, you divide the "part" by the "whole" and then multiply by 100.</p>
+                        <p><code>(Part Value / Total Value) * 100 = Percentage</code></p>
+                        <p><code>(45 / 60) * 100 = 0.75 * 100 = 75%</code></p>
+                        <p><strong>Using Our Calculator:</strong> In the second tab, enter "45" in the first box and "60" in the second. It will immediately show you the result: 75%.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Mode 3: "Percentage Change" - Measuring Growth and Decline</h3>
+                    <div class="blog-section__content">
+                        <p>
+                           This is essential for tracking changes over time, whether it's the price of a stock, your monthly expenses, or website traffic.
+                        </p>
+                         <p><strong>The Scenario:</strong> Your rent was $1,500 last year, and this year it increased to $1,620.</p>
+                        <p><strong>The Question:</strong> What is the percentage increase from 1,500 to 1,620?</p>
+                        <p><strong>The Math:</strong> The formula is to find the difference between the new and old values, divide it by the original value, and multiply by 100.</p>
+                        <p><code>[(Ending Value - Starting Value) / Starting Value] * 100 = Percentage Change</code></p>
+                        <p><code>[(1620 - 1500) / 1500] * 100 = (120 / 1500) * 100 = 0.08 * 100 = 8% increase</code></p>
+                        <p><strong>Using Our Calculator:</strong> Go to the "% Change" tab. Enter "1500" as the starting value and "1620" as the ending value. The tool will calculate the 8% increase for you.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Advanced Modes: Solving Real-World Problems</h3>
+                    <div class="blog-section__content">
+                       <h4>Reverse Percentage: Finding the Original Price</h4>
+                       <p>This is a lifesaver during sales. You know the final price and the discount, but what was it originally?</p>
+                       <p><strong>The Scenario:</strong> You bought a coat for $120, which was marked as 40% off.</p>
+                        <p><strong>The Question:</strong> What was the original price?</p>
+                        <p><strong>The Logic:</strong> If you got 40% off, you paid 60% of the original price (100% - 40% = 60%). So, $120 is 60% of the original price. The math is:</p>
+                        <p><code>Original Price = Final Price / (1 - (Discount Percentage / 100))</code></p>
+                        <p><code>Original Price = 120 / (1 - 0.40) = 120 / 0.60 = $200</code></p>
+                        <p><strong>Using Our Calculator:</strong> The "Reverse %" tab is built for this. Enter "120" as the final price and "40" as the discount. It instantly calculates the original price of $200.</p>
+
+                        <h4>Tip Calculator: Dining Out Made Easy</h4>
+                        <p>This specialized mode takes the mental math out of splitting the bill. It combines "What is X% of Y?" (to find the tip) with addition and division. Simply enter the bill total, your desired tip percentage, and the number of people. Our tool handles the rest, giving you the tip amount, total bill, and per-person share, preventing any awkward post-meal calculations.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Conclusion: The Practical Power of Percent</h3>
+                    <div class="blog-section__content">
+                        <p>
+                           Percentages are a fundamental tool for making sense of numbers in a relative way. By understanding the simple formulas behind the calculations, you can approach everyday situations with more confidence.
+                        </p>
+                        <p>
+                            Bookmark our <strong>Percentage Calculator</strong> to make these tasks even easier. With its multiple modes and clear, contextual answers, it's the only percentage tool you'll ever need. From quick checks to complex problems, you now have the resource to solve them all instantly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Common questions about percentage calculations.</p>
+            </div>
+            <div class="faq-list">
+                 <div class="faq-item">
+                    <div class="faq-question">
+                        How do I calculate a percentage of a number?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To find the percentage of a number, convert the percentage to a decimal (by dividing by 100) and then multiply it by the number. For example, to find 20% of 50, you would calculate 0.20 * 50 = 10. Our calculator's first mode does this for you instantly.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I calculate a percentage increase or decrease?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Subtract the old value from the new value to find the difference. Then, divide this difference by the old value. Finally, multiply the result by 100 to get the percentage change. A positive result is an increase, and a negative result is a decrease.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What does "per cent" actually mean?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The term "per cent" is derived from Latin ("per centum") and literally means "by the hundred." So, 25 percent means 25 out of every 100, which is why it can be written as the fraction 25/100 or the decimal 0.25.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How does the "Reverse Percentage" calculator work?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>It calculates the original amount before a percentage was deducted. For example, if you paid $80 after a 20% discount, you paid 80% of the original price. The tool calculates what 100% of the price was by dividing the final price by the percentage you paid (80 / 0.80 = $100).</p>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <div class="faq-question">
+                        Is my calculation history stored on your servers?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No. Your privacy is important to us. The calculation history is saved using your browser's local storage, which means the data stays on your device and is never sent to us. Clearing your browser data will erase the history.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Fetch and insert header/footer
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('../../header.html').then(r => r.text()).then(h => document.getElementById('header-placeholder').innerHTML = h);
+            fetch('../../footer.html').then(r => r.text()).then(h => document.getElementById('footer-placeholder').innerHTML = h);
+        });
+
+        // Percentage Calculator Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.calc-tab');
+            const panels = document.querySelectorAll('.calc-panel');
+            const historyList = document.getElementById('history-list');
+            const clearHistoryBtn = document.getElementById('clear-history-btn');
+
+            // --- Tab Switching ---
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    panels.forEach(p => p.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // --- Calculation History ---
+            function getHistory() {
+                return JSON.parse(localStorage.getItem('percentageHistory')) || [];
+            }
+            function saveHistory(history) {
+                localStorage.setItem('percentageHistory', JSON.stringify(history));
+            }
+            function addToHistory(text) {
+                let history = getHistory();
+                history.unshift(text); // Add to the top
+                if (history.length > 10) history.pop(); // Keep only last 10
+                saveHistory(history);
+                loadHistory();
+            }
+            function loadHistory() {
+                const history = getHistory();
+                historyList.innerHTML = '';
+                if (history.length === 0) {
+                    historyList.innerHTML = '<li class="empty-history">No calculations yet.</li>';
+                    return;
+                }
+                history.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    historyList.appendChild(li);
+                });
+            }
+            clearHistoryBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to clear all calculation history?')) {
+                    localStorage.removeItem('percentageHistory');
+                    loadHistory();
+                }
+            });
+
+            // --- Calculation Logic ---
+            const inputs = document.querySelectorAll('.calc-panel input');
+            inputs.forEach(input => input.addEventListener('input', calculate));
+
+            function calculate() {
+                // Mode 1
+                const m1_p = parseFloat(document.getElementById('m1-percent').value);
+                const m1_v = parseFloat(document.getElementById('m1-value').value);
+                const m1_res = document.getElementById('m1-result');
+                if (!isNaN(m1_p) && !isNaN(m1_v)) {
+                    const result = (m1_p / 100) * m1_v;
+                    const text = `${m1_p}% of ${m1_v} is <strong class="result-value">${result.toLocaleString()}</strong>`;
+                    m1_res.innerHTML = `<p>${text}</p>`;
+                    m1_res.style.display = 'block';
+                    addToHistory(`${m1_p}% of ${m1_v} = ${result.toLocaleString()}`);
+                    document.getElementById('m1-percent').value = ''; // Clear after logging
+                    document.getElementById('m1-value').value = '';
+                }
+
+                // Mode 2
+                const m2_p = parseFloat(document.getElementById('m2-part').value);
+                const m2_t = parseFloat(document.getElementById('m2-total').value);
+                const m2_res = document.getElementById('m2-result');
+                if (!isNaN(m2_p) && !isNaN(m2_t) && m2_t !== 0) {
+                    const result = (m2_p / m2_t) * 100;
+                    const text = `${m2_p} is <strong class="result-value">${result.toFixed(2)}%</strong> of ${m2_t}`;
+                    m2_res.innerHTML = `<p>${text}</p>`;
+                    m2_res.style.display = 'block';
+                     addToHistory(`${m2_p} is what % of ${m2_t}? Ans: ${result.toFixed(2)}%`);
+                    document.getElementById('m2-part').value = '';
+                    document.getElementById('m2-total').value = '';
+                }
+
+                // Mode 3
+                const m3_s = parseFloat(document.getElementById('m3-start').value);
+                const m3_e = parseFloat(document.getElementById('m3-end').value);
+                const m3_res = document.getElementById('m3-result');
+                if (!isNaN(m3_s) && !isNaN(m3_e) && m3_s !== 0) {
+                    const change = ((m3_e - m3_s) / m3_s) * 100;
+                    const type = change >= 0 ? 'increase' : 'decrease';
+                    const text = `From ${m3_s} to ${m3_e} is a <strong class="result-value">${Math.abs(change).toFixed(2)}%</strong> ${type}`;
+                    m3_res.innerHTML = `<p>${text}</p>`;
+                    m3_res.style.display = 'block';
+                    addToHistory(`Change from ${m3_s} to ${m3_e} = ${change.toFixed(2)}%`);
+                    document.getElementById('m3-start').value = '';
+                    document.getElementById('m3-end').value = '';
+                }
+
+                // Mode 4
+                const m4_f = parseFloat(document.getElementById('m4-final').value);
+                const m4_p = parseFloat(document.getElementById('m4-percent').value);
+                const m4_res = document.getElementById('m4-result');
+                if (!isNaN(m4_f) && !isNaN(m4_p) && m4_p < 100) {
+                    const originalPrice = m4_f / (1 - (m4_p / 100));
+                    const text = `Original price was <strong class="result-value">${originalPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</strong>`;
+                    m4_res.innerHTML = `<p>${text}</p>`;
+                    m4_res.style.display = 'block';
+                    addToHistory(`Original price of ${m4_f} after ${m4_p}% off = ${originalPrice.toLocaleString()}`);
+                    document.getElementById('m4-final').value = '';
+                    document.getElementById('m4-percent').value = '';
+                }
+                
+                // Mode 5
+                const m5_bill = parseFloat(document.getElementById('m5-bill').value);
+                const m5_tip_p = parseFloat(document.getElementById('m5-tip-percent').value);
+                const m5_people = parseInt(document.getElementById('m5-people').value, 10);
+                const m5_res = document.getElementById('m5-result');
+                 if (!isNaN(m5_bill) && !isNaN(m5_tip_p) && !isNaN(m5_people) && m5_people > 0) {
+                    const tipAmount = m5_bill * (m5_tip_p / 100);
+                    const totalAmount = m5_bill + tipAmount;
+                    const perPerson = totalAmount / m5_people;
+                    
+                    let text = `
+                        <p>Tip Amount: <strong>${tipAmount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</strong></p>
+                        <p>Total Bill: <strong>${totalAmount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</strong></p>
+                    `;
+                    if (m5_people > 1) {
+                        text += `<p>Per Person: <strong>${perPerson.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</strong></p>`;
+                    }
+                    m5_res.innerHTML = text;
+                    m5_res.style.display = 'block';
+                }
+            }
+
+            // Initial load
+            loadHistory();
+        });
+
+    </script>
+    <script src="/app-loader.js" defer></script>
+    <script src="/universal-search-deploy.js"></script>
+    <script src="../../faq.js" defer></script>
+    <script src="../../view.js" defer></script>
+
+    <script>
+        // =====================================================================
+        // ====== START: MAGIC BLOCK TO COPY FOR EVERY NEW PAGE ======
+        // =====================================================================
+            document.addEventListener('DOMContentLoaded', () => {
+        
+        const loadScript = (src) => {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = () => resolve(script);
+                script.onerror = () => reject(new Error(`Script load error for ${src}`));
+                document.body.appendChild(script);
+            });
+        };
+        
+        const loadHeader = () => {
+            const headerPlaceholder = document.getElementById('header-placeholder');
+            if (!headerPlaceholder) return;
+        
+            // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+            fetch('/header.html') 
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response for header.html was not ok.');
+                    return response.text();
+                })
+                .then(html => {
+                    headerPlaceholder.innerHTML = html;
+                    return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2');
+                })
+                .then(() => {
+                    // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+                    return loadScript('/header-search.js');
+                })
+                .then(() => {
+                    if (typeof initializeHeader === 'function') {
+                        initializeHeader(); 
+                    } else {
+                        throw new Error('initializeHeader function not found.');
+                    }
+                })
+                .catch(error => {
+                    console.error('CRITICAL ERROR during header loading process:', error);
+                });
+        };
+        
+        const loadFooter = () => {
+            const footerPlaceholder = document.getElementById('footer-placeholder');
+            if (footerPlaceholder) {
+                // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
+                fetch('/footer.html')
+                    .then(response => response.ok ? response.text() : Promise.reject('Failed to load footer'))
+                    .then(html => { footerPlaceholder.innerHTML = html; })
+                    .catch(error => console.error('Error loading footer:', error));
+            }
+        };
+        
+        loadHeader();
+        loadFooter();
+        });
+        
+            </script>
+</body>
+</html>

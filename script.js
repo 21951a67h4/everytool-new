@@ -62,56 +62,10 @@ function animateNumbers() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadHeader();
-    loadFooter();
     // Always run trust section animation
     animateNumbers();
 
-    // Mobile menu functionality
-    const mobileMenuButton = document.querySelector('.header__mobile-menu');
-    const navList = document.querySelector('.header__nav-list');
-    
-    if (mobileMenuButton && navList) {
-        let isMenuOpen = false;
-
-        function toggleMenu(shouldOpen) {
-            isMenuOpen = typeof shouldOpen === 'boolean' ? shouldOpen : !isMenuOpen;
-            navList.classList.toggle('active', isMenuOpen);
-            mobileMenuButton.setAttribute('aria-expanded', isMenuOpen.toString());
-            mobileMenuButton.classList.toggle('open', isMenuOpen);
-            document.body.style.overflow = isMenuOpen ? 'hidden' : '';
-        }
-
-        mobileMenuButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMenu();
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (isMenuOpen && !e.target.closest('.header__nav')) {
-                toggleMenu(false);
-            }
-        });
-
-        // Close menu when pressing Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && isMenuOpen) {
-                toggleMenu(false);
-            }
-        });
-
-        // Close menu on resize if moving to desktop view
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(function() {
-                if (window.innerWidth > 768 && isMenuOpen) {
-                    toggleMenu(false);
-                }
-            }, 250);
-        });
-    }
+    // Header interactivity handled in header-search.js after header loads
 
     // Intersection Observer for animations
     const observerOptions = {
@@ -214,51 +168,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Static tool data for instant search
-        const allTools = [
-            {
-                title: 'PDF to Word Converter',
-                description: 'Convert PDF documents to editable Word files with high accuracy',
-                icon: 'file-pdf',
-                url: '/pdf-to-word'
-            },
-            {
-                title: 'Image to PDF Converter',
-                description: 'Convert images to PDF format while maintaining quality',
-                icon: 'image',
-                url: '/image-to-pdf'
-            },
-            {
-                title: 'Password Generator',
-                description: 'Create strong, secure passwords with custom requirements',
-                icon: 'key',
-                url: '/password-generator'
-            },
-            {
-                title: 'JSON Formatter',
-                description: 'Format and validate JSON data with syntax highlighting',
-                icon: 'code',
-                url: '/json-formatter'
-            },
-            {
-                title: 'SEO Analyzer',
-                description: 'Analyze your website SEO and get actionable insights',
-                icon: 'search',
-                url: '/seo-tools'
-            },
-            {
-                title: 'Image Optimizer',
-                description: 'Compress and optimize images without losing quality',
-                icon: 'image',
-                url: '/image-optimizer'
-            },
-            {
-                title: 'Code Beautifier',
-                description: 'Format and beautify your code with syntax highlighting',
-                icon: 'code',
-                url: '/code-beautifier'
+        // Tools index loaded from single source of truth (search-index.json)
+        let toolsIndex = [];
+        (async function preloadSearchIndex(){
+            try {
+                const res = await fetch('/search-index.json', { cache: 'no-store' });
+                if (res && res.ok) {
+                    const data = await res.json();
+                    // Normalize into minimal shape used below
+                    toolsIndex = Array.isArray(data) ? data.map(p => ({
+                        title: p.title || '',
+                        description: (p.content || '').slice(0, 180),
+                        icon: 'tools',
+                        url: p.url || p.href || '#'
+                    })) : [];
+                }
+            } catch (e) {
+                // Silent fallback; search will just show no results
+                console.warn('Failed to load search-index.json, using empty index');
+                toolsIndex = [];
             }
-        ];
+        })();
 
         // Error Handler
         const ErrorHandler = {
@@ -306,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 // Filter tools based on search term
-                const results = allTools.filter(tool => 
+                const results = toolsIndex.filter(tool => 
                     tool.title.toLowerCase().includes(searchTerm) || 
                     tool.description.toLowerCase().includes(searchTerm)
                 );
@@ -728,40 +658,5 @@ if (scroller) {
     });
 }
 
-async function loadHeader() {
-    try {
-        const response = await fetch('/header.html');
-        const headerHTML = await response.text();
-        const headerPlaceholder = document.getElementById('header-placeholder');
-        if (headerPlaceholder) {
-            headerPlaceholder.innerHTML = headerHTML;
-            
-            // Now load its script
-            const script = document.createElement('script');
-            script.src = '/header-search.js';
-            document.body.appendChild(script);
-        }
-    } catch (error) {
-        console.error('Failed to load header:', error);
-    }
-}
-
-async function loadFooter() {
-    try {
-        const response = await fetch('/footer.html');
-        const footerHTML = await response.text();
-        const footerPlaceholder = document.getElementById('footer-placeholder');
-        if (footerPlaceholder) {
-            footerPlaceholder.innerHTML = footerHTML;
-            
-        }
-    } catch (error) {
-        console.error('Failed to load footer:', error);
-    }
-}
-
-
-// =====================================================================
-// ====== END: MAGIC BLOCK TO COPY FOR EVERY NEW PAGE ======
-// =====================================================================
+// Header/footer loading moved to app-loader.js
 

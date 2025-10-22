@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 - Number Puzzle Game | EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Play 2048 - the addictive number puzzle game. Slide tiles to combine numbers and reach 2048!">
+</head>
+<body>
+    <!-- Game Controls -->
+    <div class="game-controls">
+        <button id="back-btn" class="back-btn" aria-label="Go back">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="switch-track">
+                <span class="switch-thumb">
+                    <i class="fas fa-moon theme-icon moon-icon"></i>
+                    <i class="fas fa-sun theme-icon sun-icon"></i>
+                </span>
+            </span>
+        </label>
+    </div>
+
+    <main class="game-container" role="main">
+        <div class="game-header">
+            <h1 class="game-title">2048</h1>
+            <p class="game-subtitle">Join the tiles, get to 2048!</p>
+        </div>
+
+        <div class="game-stats">
+            <div class="stat">
+                <span class="stat-label">Score</span>
+                <span id="score" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Best</span>
+                <span id="best-score" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Moves</span>
+                <span id="moves" class="stat-value">0</span>
+            </div>
+        </div>
+
+        <div class="game-board-container">
+            <div id="game-board" class="game-board" role="grid" aria-label="4 by 4 game board">
+                <!-- Tiles will be dynamically generated -->
+            </div>
+        </div>
+
+        <div class="game-controls-panel">
+            <button id="new-game" class="btn primary">
+                <i class="fas fa-plus"></i>
+                New Game
+            </button>
+            <button id="undo-btn" class="btn secondary">
+                <i class="fas fa-undo"></i>
+                Undo
+            </button>
+            <button id="restart-btn" class="btn secondary">
+                <i class="fas fa-redo"></i>
+                Restart
+            </button>
+        </div>
+
+        <div class="game-instructions">
+            <p><strong>How to play:</strong> Use your arrow keys or swipe to move the tiles. When two tiles with the same number touch, they merge into one!</p>
+        </div>
+    </main>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="game-over-title" style="display: none;">
+        <div class="modal-content">
+            <h2 id="game-over-title">Game Over!</h2>
+            <div class="modal-body">
+                <p id="game-over-message">You reached <span id="final-score">0</span> points!</p>
+                <div class="final-stats">
+                    <div class="final-stat">
+                        <span class="label">Final Score:</span>
+                        <span id="modal-final-score" class="value">0</span>
+                    </div>
+                    <div class="final-stat">
+                        <span class="label">Total Moves:</span>
+                        <span id="modal-moves" class="value">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="play-again" class="btn primary">Play Again</button>
+                <button id="close-modal" class="btn secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Win Modal -->
+    <div id="win-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="win-title" style="display: none;">
+        <div class="modal-content">
+            <h2 id="win-title">Congratulations!</h2>
+            <div class="modal-body">
+                <p>You reached 2048! Keep going to achieve an even higher score!</p>
+                <div class="final-stats">
+                    <div class="final-stat">
+                        <span class="label">Score:</span>
+                        <span id="win-score" class="value">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="continue-game" class="btn primary">Continue Playing</button>
+                <button id="new-game-win" class="btn secondary">New Game</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="game-footer">
+        <p><span id="copyright-year"></span> EveryTool.tech</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

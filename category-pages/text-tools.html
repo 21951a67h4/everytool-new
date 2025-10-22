@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Tools - Text Processing & Analysis Tools | EveryTool.tech</title>
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://everytool.tech/category-pages/text-tools.html" />
+    <link rel="stylesheet" href="../back-to-top.css">
+    <meta name="description" content="Free online text processing tools. Analyze text, count words, convert formats, generate Lorem Ipsum, and manipulate text with our comprehensive text utilities.">
+    <link rel="icon" type="image/svg+xml" href="../assets/SVG/favicon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../FAQ section/faq.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* UPDATED: Official Website Design System Variables */
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --primary-darker: #1f37a8;
+            --primary-light: #6b83f1;
+            --primary-lighter: #94a5f4;
+            --secondary: #7209B7;
+            --secondary-dark: #560BAD;
+            --accent: #F72585;
+            --accent-dark: #B5179E;
+            
+            /* Text Colors */
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-light: #9CA3AF;
+            --text-yellow: #ffe066;
+            --text-white: #ffffff;
+            --text-black: #000000;
+            --text-blue: #2945c8;
+            
+            /* Background Colors */
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --bg-dark: #111827;
+            
+            /* Gradient Colors */
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            --gradient-light: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1.5rem;
+            --radius-xl: 2rem;
+            --radius-full: 50%;
+            
+            /* Transitions */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        /* Hero Section */
+        .hero-layered-bg {
+            height: 70vh;
+            min-height: 500px;
+            display: grid;
+            place-items: center;
+            padding: 3rem 2rem;
+            background-color: var(--bg-secondary);
+        }
+
+        .hero-focus-card {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 450px;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            transform: perspective(1000px) translateZ(0);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .hero-focus-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-card-background {
+            border-radius: inherit;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            animation: aurora-flow 20s ease-in-out infinite;
+        }
+
+        @keyframes aurora-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(17, 24, 39, 0.3);
+        }
+
+        .hero-card-content {
+            animation: fadeUp 1s ease-out 0.3s backwards;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 700;
+            color: var(--text-white);
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-button {
+            display: inline-block;
+            padding: 0.85rem 2rem;
+            color: var(--text-white);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        /* Search and Filter */
+        .search-filter {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+            margin-top: -30px; 
+            height: 60px;
+        }
+
+        .search-container {
+            position: relative;
+            height: 100%;
+        }
+
+        .search-input {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%; 
+            max-width: 600px;
+            padding: 1.25rem 3.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--bg-primary);
+            z-index: 10;
+            box-shadow: var(--shadow-lg);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .search-input:hover {
+            transform: translateX(-50%) translateY(-2px);
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.2), var(--shadow-xl);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: calc(25% + 20px); 
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            z-index: 11;
+            pointer-events: none;
+            transition: color 0.2s ease;
+        }
+        
+        .search-icon:focus {
+            color: var(--primary-dark);
+        }
+        
+        .search-clear-btn {
+            position: absolute;
+            right: calc(30% - 2.5rem);
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            line-height: 1;
+            color: var(--text-secondary);
+            cursor: pointer;
+            z-index: 11;
+            transition: all 0.2s ease;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            min-width: 2.5rem;
+            min-height: 2.5rem;
+        }
+
+        .search-clear-btn:hover {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary-dark);
+        }
+
+        .search-clear-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .search-input:focus::placeholder {
+            opacity: 0.5;
+            transform: translateX(10px);
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+            margin-top: 4rem; 
+        }
+
+        .tool-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .tool-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .tool-card.is-visible:hover {
+            transform: translateY(-5px);
+        }
+
+        .tool-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-accent);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .tool-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .tool-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .tool-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-white);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            transition: var(--transition);
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .tool-button:hover {
+            border-radius: 50px;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .faq-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .faq-title {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .faq-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .faq-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .faq-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .faq-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background: var(--primary);
+            transition: height 0.3s ease;
+        }
+
+        .faq-item:hover::before {
+            height: 100%;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f8fafc;
+            padding-left: 2rem;
+        }
+
+        .faq-question i {
+            color: var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease-out;
+            background: white;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-layered-bg { height: auto; min-height: 340px; padding: 2rem 1rem; }
+            .hero-focus-card { height: auto; min-height: 300px; }
+            .hero-title { font-size: 2.5rem; }
+            .hero-subtitle { font-size: 1.1rem; }
+            
+            .search-filter {
+                margin: 0 auto 2rem;
+                padding: 0 1rem;
+                margin-top: -20px;
+                height: auto;
+            }
+            
+            .search-container {
+                height: auto;
+                position: relative;
+            }
+            
+            .search-input { 
+                position: relative !important;
+                width: 100% !important; 
+                left: 0 !important;
+                transform: none !important;
+                padding: 1rem 3rem;
+                font-size: 1rem;
+                border-radius: 25px;
+                box-shadow: 0 4px 20px rgba(67, 97, 238, 0.15);
+                max-width: none !important;
+            }
+            
+            .search-input:hover {
+                transform: none !important;
+            }
+            
+            .search-input:focus {
+                box-shadow: 0 6px 25px rgba(67, 97, 238, 0.25);
+                transform: none !important;
+            }
+            
+            .search-icon { 
+                left: 15px !important; 
+                font-size: 1.1rem;
+                color: var(--primary);
+            }
+            
+            .search-clear-btn { 
+                right: 15px !important; 
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1.3rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 0 1rem;
+                margin-top: 2rem;
+            }
+            
+            .tool-card { padding: 1.25rem; box-shadow: var(--shadow-sm); }
+            
+            .tool-name {
+                font-size: 1.1rem;
+            }
+            
+            .tool-description {
+                font-size: 0.85rem;
+            }
+            
+            .faq-container {
+                padding: 0 1rem;
+            }
+            
+            .faq-title {
+                font-size: 2rem;
+            }
+            
+            .faq-subtitle {
+                font-size: 1rem;
+            }
+            
+            .faq-question {
+                padding: 1.25rem;
+            }
+            
+            .faq-question h3 {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .search-input {
+                padding: 0.875rem 2.75rem;
+                font-size: 0.95rem;
+            }
+            
+            .search-icon {
+                left: 12px !important;
+                font-size: 1rem;
+            }
+            
+            .search-clear-btn {
+                right: 12px !important;
+                width: 2.25rem;
+                height: 2.25rem;
+                font-size: 1.2rem;
+            }
+            
+            .hero-title { font-size: 2rem; }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .tools-grid {
+                gap: 1.25rem;
+                padding: 0 0.75rem;
+            }
+            
+            .tool-card {
+                padding: 1rem;
+            }
+            
+            .faq-container {
+                padding: 0 0.75rem;
+            }
+            
+            .faq-title {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* Header Placeholder Styles */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 1001; 
+        }
+        @media (max-width: 768px) { #header-placeholder { min-height: 64px; } }
+        
+        /* Desktop-to-tablet search positioning simplification */
+        @media (max-width: 1024px) {
+            .search-input { position: relative; left: 0; transform: none; width: 100%; max-width: 600px; margin: 0 auto; }
+            .search-icon { left: 16px !important; }
+            .search-clear-btn { right: 16px !important; }
+        }
+        
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) { .hero-card-background { animation: none; } }
+        
+        /* Full-width CTAs on mobile */
+        @media (max-width: 768px) { .hero-button, .tool-button { width: 100%; } }
+    </style>
+
+    <!-- Category-specific styles injected by JavaScript -->
+    <style id="category-specific-styles"></style>
+
+    <!-- JSON-LD Schema for SEO -->
+    <script type="application/ld+json"> 
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are text processing tools safe for sensitive content?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, all text processing is done locally in your browser. Your text is never sent to our servers, ensuring complete privacy and security for sensitive content."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What types of text analysis can these tools perform?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our text tools can count words and characters, analyze readability, detect language, extract keywords, generate Lorem Ipsum, convert between text formats, and much more."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I process large documents with these tools?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, most tools can handle large documents. Performance depends on your browser's memory capacity, but documents up to several hundred pages typically work well."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do these tools support different languages?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Many of our text tools support multiple languages, including English, Spanish, French, German, and others. Language detection and analysis tools work with various languages."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I save or export the results from text analysis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, most tools provide options to copy results to clipboard or download them as text files. Some tools also offer formatted reports that can be saved."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <main class="main-content">
+        <section class="hero-section hero-layered-bg">
+            <div class="hero-focus-card">
+                <div class="hero-card-background"></div>
+                <div class="hero-card-overlay">
+                    <div class="hero-card-content">
+                        <h1 class="hero-title">Text, Perfected</h1>
+                        <p class="hero-subtitle">Powerful tools to analyze, process, and manipulate text with precision and ease.</p>
+                        <a href="#tools-container" class="hero-button">Explore Tools</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="search-filter">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search Text Tools..." aria-label="Search tools">
+                <button class="search-clear-btn" aria-label="Clear search input">×</button>
+            </div>
+        </div>
+
+        <div class="tools-grid" id="tools-container">
+            <!-- Tool cards are hard-coded for simplicity and reliability -->
+            <article class="tool-card">
+                <div class="tool-icon"><i class="fas fa-font"></i></div>
+                <h2 class="tool-name">Text Case Converter</h2>
+                <p class="tool-description">Convert text between uppercase, lowercase, title case, sentence case, and more formatting options.</p>
+                <a href="../tools/text-tools/text-case-converter.html" class="tool-button">Open Tool</a>
+            </article>
+            <article class="tool-card">
+                <div class="tool-icon"><i class="fas fa-sort-alpha-down"></i></div>
+                <h2 class="tool-name">Remove Duplicate Lines / Sort Text</h2>
+                <p class="tool-description">Deduplicate by line, sort alphabetically or numerically, ignore case/empty lines, and export as TXT/CSV.</p>
+                <a href="../tools/text-tools/remove-duplicates-sort.html" class="tool-button">Open Tool</a>
+            </article>
+            <article class="tool-card">
+                <div class="tool-icon"><i class="fas fa-search"></i></div>
+                <h2 class="tool-name">Regex Find & Replace Tester</h2>
+                <p class="tool-description">Test regex in real time, highlight matches, explain patterns, save presets, and export results.</p>
+                <a href="../tools/text-tools/regex-find-replace.html" class="tool-button">Open Tool</a>
+            </article>
+            <article class="tool-card">
+                <div class="tool-icon"><i class="fas fa-language"></i></div>
+                <h2 class="tool-name">Language Detector</h2>
+                <p class="tool-description">Detect the language of text automatically. Supports over 100 languages with confidence scores.</p>
+                <a href="../tools/text-tools/language-detector.html" class="tool-button">Open Tool</a>
+            </article>
+            <article class="tool-card">
+                <div class="tool-icon"><i class="fas fa-eye"></i></div>
+                <h2 class="tool-name">Readability Analyzer</h2>
+                <p class="tool-description">Analyze text readability using Flesch-Kincaid, Gunning Fog, and other readability metrics.</p>
+                <a href="../tools/text-tools/readability-analyzer.html" class="tool-button">Open Tool</a>
+            </article>
+            <article class="tool-card">
+                <div class="tool-icon"><i class="fas fa-key"></i></div>
+                <h2 class="tool-name">Keyword Extractor</h2>
+                <p class="tool-description">Extract keywords and key phrases from text. Identify important terms and topics automatically.</p>
+                <a href="../tools/text-tools/keyword-extractor.html" class="tool-button">Open Tool</a>
+            </article>
+            <article class="tool-card">
+                <div class="tool-icon"><i class="fas fa-paragraph"></i></div>
+                <h2 class="tool-name">Lorem Ipsum Generator</h2>
+                <p class="tool-description">Generate Lorem Ipsum placeholder text in various lengths and formats for design mockups.</p>
+                <a href="../tools/text-tools/lorem-ipsum-generator.html" class="tool-button">Open Tool</a>
+            </article>
+            <article class="tool-card">
+                <div class="tool-icon"><i class="fas fa-code"></i></div>
+                <h2 class="tool-name">Text to HTML Converter</h2>
+                <p class="tool-description">Convert plain text to HTML with proper formatting, line breaks, and HTML entities.</p>
+                <a href="../tools/text-tools/text-to-html-converter.html" class="tool-button">Open Tool</a>
+            </article>
+            <article class="tool-card">
+                <div class="tool-icon"><i class="fas fa-compress"></i></div>
+                <h2 class="tool-name">Text Compressor</h2>
+                <p class="tool-description">Compress and decompress text using various algorithms. Reduce file sizes while maintaining readability.</p>
+                <a href="../tools/text-tools/text-compressor.html" class="tool-button">Open Tool</a>
+            </article>
+            <article class="tool-card">
+                <div class="tool-icon"><i class="fas fa-random"></i></div>
+                <h2 class="tool-name">Text Randomizer</h2>
+                <p class="tool-description">Randomize text by shuffling words, sentences, or characters. Create variations for testing and analysis.</p>
+                <a href="../tools/text-tools/text-randomizer.html" class="tool-button">Open Tool</a>
+            </article>
+        </div>
+
+        <div class="tools-grid" id="tools-container-2">
+            <article class="tool-card">
+                <div class="tool-icon"><i class="fas fa-exchange-alt"></i></div>
+                <h2 class="tool-name">JSON ⇄ CSV Converter</h2>
+                <p class="tool-description">Paste/upload JSON or CSV, auto-detect and preview, map columns, pretty-print, and download output.</p>
+                <a href="../tools/text-tools/json-csv-converter.html" class="tool-button">Open Tool</a>
+            </article>
+            <article class="tool-card">
+                <div class="tool-icon"><i class="fas fa-code-compare"></i></div>
+                <h2 class="tool-name">Text Difference Checker (Diff Tool)</h2>
+                <p class="tool-description">Side-by-side diff, line/word modes, ignore whitespace/case, export unified diff, and merge output.</p>
+                <a href="../tools/text-tools/text-diff-checker.html" class="tool-button">Open Tool</a>
+            </article>
+        </div>
+
+        <section class="faq-section">
+            <div class="faq-container">
+                <div class="faq-header">
+                    <h2 class="faq-title">Frequently Asked Questions</h2>
+                    <p class="faq-subtitle">Find answers to common questions about our Text Tools</p>
+                </div>
+                <div class="faq-list" id="category-faqs">
+                    <div class="faq-item"> 
+                        <div class="faq-question"> 
+                            <h3>Are text processing tools safe for sensitive content?</h3> 
+                            <i class="fas fa-chevron-down"></i> 
+                        </div> 
+                        <div class="faq-answer"> 
+                            <p>Yes, all text processing is done locally in your browser. Your text is never sent to our servers, ensuring complete privacy and security for sensitive content.</p> 
+                        </div> 
+                    </div>
+                    
+                    <div class="faq-item"> 
+                        <div class="faq-question"> 
+                            <h3>What types of text analysis can these tools perform?</h3> 
+                            <i class="fas fa-chevron-down"></i> 
+                        </div> 
+                        <div class="faq-answer"> 
+                            <p>Our text tools can count words and characters, analyze readability, detect language, extract keywords, generate Lorem Ipsum, convert between text formats, and much more.</p> 
+                        </div> 
+                    </div>
+                    
+                    <div class="faq-item"> 
+                        <div class="faq-question"> 
+                            <h3>Can I process large documents with these tools?</h3> 
+                            <i class="fas fa-chevron-down"></i> 
+                        </div> 
+                        <div class="faq-answer"> 
+                            <p>Yes, most tools can handle large documents. Performance depends on your browser's memory capacity, but documents up to several hundred pages typically work well.</p> 
+                        </div> 
+                    </div>
+                    
+                    <div class="faq-item"> 
+                        <div class="faq-question"> 
+                            <h3>Do these tools support different languages?</h3> 
+                            <i class="fas fa-chevron-down"></i> 
+                        </div> 
+                        <div class="faq-answer"> 
+                            <p>Many of our text tools support multiple languages, including English, Spanish, French, German, and others. Language detection and analysis tools work with various languages.</p> 
+                        </div> 
+                    </div>
+                    
+                    <div class="faq-item"> 
+                        <div class="faq-question"> 
+                            <h3>Can I save or export the results from text analysis?</h3> 
+                            <i class="fas fa-chevron-down"></i> 
+                        </div> 
+                        <div class="faq-answer"> 
+                            <p>Yes, most tools provide options to copy results to clipboard or download them as text files. Some tools also offer formatted reports that can be saved.</p> 
+                        </div> 
+                    </div>                                    
+                </div>
+            </div>
+        </section>
+    </main>
+    <div id="footer-placeholder"></div>
+
+    <!-- Initialization Script -->
+    <script>
+        // --- CONFIGURATION ---
+        const categoryConfig = {
+            name: "Text Tools",
+            description: "Powerful tools to analyze, process, and manipulate text with precision and ease.",
+            // Text Tools-specific color theme (Teal)
+            colors: {
+                primary: "#009688",     // Teal
+                secondary: "#00695C",   // Darker Teal
+                accent: "#B2DFDB"       // Light Teal Accent
+            }
+        };
+
+        // --- INITIALIZATION FUNCTIONS ---
+
+        // 1. Function to apply page-level settings (title, hero, colors)
+        function initializePageContent(config) {
+            document.title = `${config.name} | EveryTool.tech`;
+            document.querySelector('meta[name="description"]').content = config.description;
+            document.querySelector('.hero-title').textContent = config.name;
+            document.querySelector('.hero-subtitle').textContent = config.description;
+            document.querySelector('.search-input').placeholder = `Search ${config.name}...`;
+
+            const styleSheet = document.getElementById('category-specific-styles');
+            if(styleSheet) {
+                styleSheet.textContent = `
+                    .tool-icon { color: ${config.colors.primary}; }
+                    .tool-button { background-color: ${config.colors.primary}; }
+                    .tool-button:hover { background-color: ${config.colors.secondary}; }
+                    .hero-button { 
+                        background-color: ${config.colors.primary}; 
+                        box-shadow: 0 4px 15px -5px ${config.colors.primary};
+                    }
+                    .hero-button:hover { 
+                        background-color: ${config.colors.secondary}; 
+                        box-shadow: 0 8px 20px -8px ${config.colors.primary};
+                    }
+                    .hero-card-background {
+                        background: radial-gradient(circle at 10% 20%, ${config.colors.primary} 0%, transparent 40%),
+                                    radial-gradient(circle at 80% 90%, ${config.colors.secondary} 0%, transparent 50%),
+                                    radial-gradient(circle at 50% 50%, ${config.colors.accent} 0%, transparent 40%);
+                        background-color: var(--bg-dark);
+                        background-size: 200% 200%;
+                        animation: aurora-flow 20s ease-in-out infinite;
+                    }
+                `;
+            }
+        }
+
+        // 2. Function to enable the enhanced in-page search
+        function initializeSearch() {
+            const searchInput = document.querySelector('.search-input');
+            const toolCards = document.querySelectorAll('.tool-card');
+            const clearBtn = document.querySelector('.search-clear-btn');
+
+            if (!searchInput || !clearBtn || toolCards.length === 0) {
+                console.warn("Search components not found. Search disabled.");
+                return;
+            }
+
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase().trim();
+                clearBtn.classList.toggle('visible', query.length > 0);
+
+                toolCards.forEach(card => {
+                    const name = card.querySelector('.tool-name').textContent.toLowerCase();
+                    const description = card.querySelector('.tool-description').textContent.toLowerCase();
+                    const isMatch = name.includes(query) || description.includes(query);
+                    card.style.display = isMatch ? '' : 'none';
+                });
+            });
+
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+                searchInput.focus();
+            });
+        }
+
+        // 3. Function for lazy-loading tool cards on scroll
+        function initializeLazyLoad() {
+            const toolCards = document.querySelectorAll('.tool-card');
+            if (toolCards.length === 0) return;
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { 
+                rootMargin: '100px 0px',
+                threshold: 0.05
+            });
+
+            toolCards.forEach(card => observer.observe(card));
+        }
+
+        // 4. Function for FAQ accordion
+        function initializeFAQs() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                if(!question) return;
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    // Close all FAQs first
+                    faqItems.forEach(i => {
+                        i.classList.remove('active');
+                        const answer = i.querySelector('.faq-answer');
+                        if (answer) answer.style.maxHeight = '0px';
+                    });
+                    // If the clicked item was not already active, open it
+                    if (!isActive) {
+                        item.classList.add('active');
+                        const answer = item.querySelector('.faq-answer');
+                        if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
+                    }
+                });
+            });
+        }
+        
+        // --- MAIN ENTRY POINT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initializePageContent(categoryConfig);
+            initializeSearch();
+            initializeLazyLoad();
+            initializeFAQs();
+        });
+    </script>
+    <script>
+        // =====================================================================
+        // ====== START: MAGIC BLOCK FOR HEADER/FOOTER LOADING ======
+        // This block dynamically loads header.html and footer.html
+        // =====================================================================
+            document.addEventListener('DOMContentLoaded', () => {
+        
+        const loadScript = (src) => {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = () => resolve(script);
+                script.onerror = () => reject(new Error(`Script load error for ${src}`));
+                document.body.appendChild(script);
+            });
+        };
+        
+        const loadHeader = () => {
+            const headerPlaceholder = document.getElementById('header-placeholder');
+            if (!headerPlaceholder) return;
+        
+            fetch('/header.html') 
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response for header.html was not ok.');
+                    return response.text();
+                })
+                .then(html => {
+                    headerPlaceholder.innerHTML = html;
+                    // Load Fuse.js for header search functionality
+                    return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2');
+                })
+                .then(() => {
+                    // Load your custom header search logic
+                    return loadScript('/header-search.js');
+                })
+                .then(() => {
+                    // Initialize header-specific JS if the function exists
+                    if (typeof initializeHeader === 'function') {
+                        initializeHeader(); 
+                    } else {
+                        console.warn('initializeHeader function not found, skipping initialization.');
+                    }
+                })
+                .catch(error => {
+                    console.error('CRITICAL ERROR during header loading process:', error);
+                });
+        };
+        
+        const loadFooter = () => {
+            const footerPlaceholder = document.getElementById('footer-placeholder');
+            if (footerPlaceholder) {
+                fetch('/footer.html')
+                    .then(response => response.ok ? response.text() : Promise.reject('Failed to load footer'))
+                    .then(html => { footerPlaceholder.innerHTML = html; })
+                    .catch(error => console.error('Error loading footer:', error));
+            }
+        };
+        
+        loadHeader();
+        loadFooter();
+        });
+    </script>
+    <script src="/app-loader.js" defer></script>
+    <script src="/back-to-top.js"></script>
+</body>
+</html>

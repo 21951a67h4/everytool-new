@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbs Calculator | Daily Carbohydrate Needs | EveryTool.tech</title>
+    <meta name="description" content="Calculate your daily carbohydrate needs based on TDEE, activity level, and macro split preferences. Get personalized carb targets for keto, low-carb, or balanced diets.">
+    <meta name="keywords" content="carbs calculator, carbohydrate calculator, macro calculator, TDEE calculator, keto calculator, low carb calculator">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Carbs Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate your daily carbohydrate needs based on TDEE, activity level, and macro split preferences. Get personalized carb targets for keto, low-carb, or balanced diets.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/health-tools/carbs-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tool CSS -->
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <!-- Add in <head> if not present -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Core Variables */
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --primary-darker: #1f37a8;
+            --primary-light: #6b83f1;
+            --primary-lighter: #94a5f4;
+            --secondary: #7209B7;
+            --secondary-dark: #560BAD;
+            --accent: #F72585;
+            --accent-dark: #B5179E;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-light: #9CA3AF;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --bg-dark: #111827;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1.5rem;
+            --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        /* Header Placeholder */
+        #header-placeholder {
+            height: 64px;
+        }
+
+        /* Tool Hero Section */
+        .tool-hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-hero__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tool-hero__left {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .tool-hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .tool-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .tool-hero__features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .tool-hero__cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tool-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-button--primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-button--primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-button--secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Tool Display Section */
+        .tool-display {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .tool-display__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-display__wrapper {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-display__wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .tool-display__header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tool-display__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__description {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tool-display__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .tool-display__input-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .tool-display__output-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .tool-display__controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-display__button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-display__button--secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .tool-display__button--secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tool-display__input-group {
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-display__input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .tool-display__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .tool-display__select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+            background: white;
+        }
+
+        .tool-display__select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-lighter);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--bg-accent);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-range {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .macro-breakdown {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .macro-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--bg-accent);
+        }
+
+        .macro-item:last-child {
+            border-bottom: none;
+        }
+
+        .macro-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .macro-amount {
+            color: var(--text-secondary);
+        }
+
+        .fiber-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .fiber-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--bg-accent);
+        }
+
+        .fiber-item:last-child {
+            border-bottom: none;
+        }
+
+        .fiber-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .fiber-amount {
+            color: var(--text-secondary);
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .unit-switcher {
+            display: flex;
+            border: 1px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .unit-switcher button {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .unit-switcher button.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .macro-presets {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .preset-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--bg-accent);
+            border-radius: var(--radius-sm);
+            background: white;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: var(--transition-all);
+        }
+
+        .preset-button:hover {
+            background: var(--bg-secondary);
+        }
+
+        .preset-button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--text-primary);
+            color: white;
+            text-align: center;
+            border-radius: var(--radius-sm);
+            padding: 0.5rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.75rem;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Mobile-specific optimizations for Carbs Calculator */
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                display: grid;
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .tool-display__input-group { 
+                margin-bottom: 1rem; 
+            }
+            .tool-display__input, .tool-display__select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            .tool-display__button { 
+                width: 100%; 
+                margin-bottom: 0.5rem; 
+            }
+            .tool-display__controls { 
+                display: flex;
+                flex-direction: column; 
+            }
+            .macro-presets {
+                flex-direction: column;
+            }
+            .preset-button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-display__input { 
+                padding: 0.65rem; 
+            }
+            .tool-display__button { 
+                padding: 0.8rem; 
+                font-size: 0.95rem; 
+            }
+            .result-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Calculate Your Daily Carb Needs</h1>
+                    <p class="tool-hero__description">
+                        Determine your optimal carbohydrate intake based on your TDEE, activity level, 
+                        and dietary preferences. Perfect for keto, low-carb, or balanced nutrition plans.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-fire"></i>
+                            <span>TDEE Integration</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Macro Wheel</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-leaf"></i>
+                            <span>Fiber Tracking</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Private</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Carbs
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Carbohydrate Calculator</h2>
+                    <p class="tool-display__description">
+                        Enter your details to get personalized carbohydrate recommendations and macro breakdown.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="unit-switcher">
+                            <button id="btn-metric" class="active">Metric</button>
+                            <button id="btn-imperial">Imperial</button>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Gender</label>
+                            <select class="tool-display__select" id="gender">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Age</label>
+                            <input type="number" class="tool-display__input" id="age" placeholder="Enter your age" min="1" max="120">
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Height</label>
+                            <input type="number" class="tool-display__input" id="height" placeholder="Enter your height" step="0.1">
+                            <span id="height-unit">cm</span>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Weight</label>
+                            <input type="number" class="tool-display__input" id="weight" placeholder="Enter your weight" step="0.1">
+                            <span id="weight-unit">kg</span>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Activity Level</label>
+                            <select class="tool-display__select" id="activity-level">
+                                <option value="sedentary">Sedentary (Little to no exercise)</option>
+                                <option value="light">Light Activity (Light exercise 1-3 days/week)</option>
+                                <option value="moderate">Moderate Activity (Moderate exercise 3-5 days/week)</option>
+                                <option value="high">High Activity (Heavy exercise 6-7 days/week)</option>
+                                <option value="very-high">Very High Activity (Very heavy exercise, physical job)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Fitness Goal</label>
+                            <select class="tool-display__select" id="goal">
+                                <option value="maintain">Maintain Weight</option>
+                                <option value="lose">Lose Weight</option>
+                                <option value="gain">Gain Weight</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Formula</label>
+                            <select class="tool-display__select" id="formula">
+                                <option value="mifflin">Mifflin-St Jeor</option>
+                                <option value="harris">Harris-Benedict</option>
+                            </select>
+                        </div>
+                        
+                        <div class="macro-presets">
+                            <button class="preset-button" data-preset="keto">Keto (5-10%)</button>
+                            <button class="preset-button" data-preset="low-carb">Low Carb (20-30%)</button>
+                            <button class="preset-button active" data-preset="balanced">Balanced (45-65%)</button>
+                            <button class="preset-button" data-preset="high-carb">High Carb (65-75%)</button>
+                        </div>
+                        
+                        <div class="tool-display__controls">
+                            <button class="tool-display__button" id="calculate-carbs">
+                                <i class="fas fa-calculator"></i>
+                                Calculate Carbs
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="reset-carbs">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                            <button class="tool-display__button tool-display__button--secondary" id="export-carbs">
+                                <i class="fas fa-download"></i>
+                                Export Plan
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Your Carb Plan</h3>
+                        <div class="tool-display__result" id="carbs-result">
+                            Your carbohydrate calculation results will appear here...
+                        </div>
+                        <div id="results-container"></div>
+                        <div class="chart-container" id="chart-container" style="display: none;">
+                            <canvas id="carbsChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Carbohydrate Needs</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about carbohydrates, different dietary approaches, and how to optimize your carb intake for your goals
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">What are Carbohydrates?</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Carbohydrates are one of the three macronutrients (along with protein and fat) that provide energy to the body. 
+                            They are broken down into glucose, which is the primary fuel source for your brain and muscles.
+                        </p>
+                        <p>
+                            <strong>Types of Carbohydrates:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Simple Carbs:</strong> Quick energy sources (sugars, fruits)</li>
+                            <li><strong>Complex Carbs:</strong> Sustained energy sources (grains, vegetables)</li>
+                            <li><strong>Fiber:</strong> Non-digestible carbs that support digestive health</li>
+                        </ul>
+                        <p>
+                            <strong>Functions:</strong>
+                        </p>
+                        <ul>
+                            <li>Primary energy source for the brain and muscles</li>
+                            <li>Spares protein for muscle building and repair</li>
+                            <li>Supports glycogen storage in muscles and liver</li>
+                            <li>Provides fiber for digestive health</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Carbohydrate Requirements</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Carbohydrate needs vary significantly based on individual factors:
+                        </p>
+                        <ul>
+                            <li><strong>Activity Level:</strong> Higher activity requires more carbs for fuel</li>
+                            <li><strong>Body Composition:</strong> More muscle mass increases carb needs</li>
+                            <li><strong>Training Type:</strong> Endurance athletes need more carbs than strength athletes</li>
+                            <li><strong>Metabolic Health:</strong> Insulin sensitivity affects carb tolerance</li>
+                            <li><strong>Goals:</strong> Weight loss vs. muscle gain vs. maintenance</li>
+                        </ul>
+                        <p>
+                            <strong>General Guidelines:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Sedentary:</strong> 45-65% of total calories</li>
+                            <li><strong>Active:</strong> 50-65% of total calories</li>
+                            <li><strong>Athletes:</strong> 55-70% of total calories</li>
+                            <li><strong>Minimum:</strong> 130g per day for brain function</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Dietary Approaches</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Ketogenic Diet (5-10% carbs):</strong>
+                        </p>
+                        <ul>
+                            <li>Very low carbohydrate intake to induce ketosis</li>
+                            <li>May help with weight loss and blood sugar control</li>
+                            <li>Requires careful monitoring and adaptation period</li>
+                        </ul>
+                        <p>
+                            <strong>Low-Carb Diet (20-30% carbs):</strong>
+                        </p>
+                        <ul>
+                            <li>Moderate carbohydrate restriction</li>
+                            <li>May help with weight loss and metabolic health</li>
+                            <li>More sustainable than keto for many people</li>
+                        </ul>
+                        <p>
+                            <strong>Balanced Diet (45-65% carbs):</strong>
+                        </p>
+                        <ul>
+                            <li>Standard macronutrient distribution</li>
+                            <li>Good for general health and athletic performance</li>
+                            <li>Flexible and sustainable long-term</li>
+                        </ul>
+                        <p>
+                            <strong>High-Carb Diet (65-75% carbs):</strong>
+                        </p>
+                        <ul>
+                            <li>Higher carbohydrate intake</li>
+                            <li>Common among endurance athletes</li>
+                            <li>May support high-volume training</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Fiber and Net Carbs</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Fiber:</strong> Essential for digestive health, blood sugar control, and satiety. 
+                            Aim for 25-38g per day for adults.
+                        </p>
+                        <p>
+                            <strong>Net Carbs:</strong> Total carbohydrates minus fiber and sugar alcohols. 
+                            Important for low-carb and ketogenic diets.
+                        </p>
+                        <p>
+                            <strong>Glycemic Index:</strong> Measures how quickly carbs raise blood sugar. 
+                            Lower GI foods provide more sustained energy.
+                        </p>
+                        <p>
+                            <strong>Best Carb Sources:</strong>
+                        </p>
+                        <ul>
+                            <li>Whole grains (oats, quinoa, brown rice)</li>
+                            <li>Fruits and vegetables</li>
+                            <li>Legumes (beans, lentils, chickpeas)</li>
+                            <li>Sweet potatoes and other starchy vegetables</li>
+                        </ul>
+                        <p>
+                            <strong>Timing:</strong> Consume most carbs around workouts for optimal performance and recovery.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Carbs Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about Carbohydrate Calculator</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>What's the difference between total carbs and net carbs?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Total carbs include all carbohydrates, while net carbs subtract fiber and sugar alcohols. Net carbs are more relevant for low-carb and ketogenic diets as they represent the carbs that actually impact blood sugar.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How do I know which macro split is right for me?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Consider your goals, activity level, and preferences. Keto works for weight loss but may affect performance. Balanced diets work well for most people. High-carb diets suit endurance athletes. Start with balanced and adjust based on results.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I eat carbs and still lose weight?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes! Weight loss is about calorie deficit, not carb elimination. Many people successfully lose weight on balanced diets. The key is choosing quality carbs and controlling portions.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What's the minimum amount of carbs I need?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>The absolute minimum is about 130g per day to fuel your brain. However, most people need more for optimal health and performance. Very low-carb diets require careful planning and monitoring.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Fetch and insert header
+        fetch('../../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Carbs Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const genderSelect = document.getElementById('gender');
+            const ageInput = document.getElementById('age');
+            const heightInput = document.getElementById('height');
+            const weightInput = document.getElementById('weight');
+            const activityLevelSelect = document.getElementById('activity-level');
+            const goalSelect = document.getElementById('goal');
+            const formulaSelect = document.getElementById('formula');
+            const calculateButton = document.getElementById('calculate-carbs');
+            const resetButton = document.getElementById('reset-carbs');
+            const exportButton = document.getElementById('export-carbs');
+            const resultDiv = document.getElementById('carbs-result');
+            const resultsContainer = document.getElementById('results-container');
+            const chartContainer = document.getElementById('chart-container');
+            
+            let carbsChart = null;
+            let isMetric = true;
+            let carbsData = [];
+
+            // Unit switcher
+            const metricBtn = document.getElementById('btn-metric');
+            const imperialBtn = document.getElementById('btn-imperial');
+            const heightUnitSpan = document.getElementById('height-unit');
+            const weightUnitSpan = document.getElementById('weight-unit');
+
+            metricBtn.addEventListener('click', () => {
+                isMetric = true;
+                metricBtn.classList.add('active');
+                imperialBtn.classList.remove('active');
+                heightUnitSpan.textContent = 'cm';
+                weightUnitSpan.textContent = 'kg';
+                if (heightInput.value) {
+                    heightInput.value = (parseFloat(heightInput.value) * 2.54).toFixed(1);
+                }
+                if (weightInput.value) {
+                    weightInput.value = (parseFloat(weightInput.value) * 0.453592).toFixed(1);
+                }
+            });
+
+            imperialBtn.addEventListener('click', () => {
+                isMetric = false;
+                imperialBtn.classList.add('active');
+                metricBtn.classList.remove('active');
+                heightUnitSpan.textContent = 'in';
+                weightUnitSpan.textContent = 'lbs';
+                if (heightInput.value) {
+                    heightInput.value = (parseFloat(heightInput.value) / 2.54).toFixed(1);
+                }
+                if (weightInput.value) {
+                    weightInput.value = (parseFloat(weightInput.value) / 0.453592).toFixed(1);
+                }
+            });
+
+            // Preset buttons
+            const presetButtons = document.querySelectorAll('.preset-button');
+            presetButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    presetButtons.forEach(b => b.classList.remove('active'));
+                    button.classList.add('active');
+                });
+            });
+
+            function calculateCarbs() {
+                const gender = genderSelect.value;
+                const age = parseInt(ageInput.value) || 0;
+                const height = parseFloat(heightInput.value) || 0;
+                const weight = parseFloat(weightInput.value) || 0;
+                const activityLevel = activityLevelSelect.value;
+                const goal = goalSelect.value;
+                const formula = formulaSelect.value;
+
+                if (age && height && weight) {
+                    // Convert to metric if imperial
+                    const heightCm = isMetric ? height : height * 2.54;
+                    const weightKg = isMetric ? weight : weight * 0.453592;
+                    
+                    // Calculate TDEE
+                    const tdee = calculateTDEE(gender, age, heightCm, weightKg, activityLevel, formula);
+                    
+                    // Adjust for goal
+                    const adjustedTDEE = adjustForGoal(tdee, goal);
+                    
+                    // Get selected macro split
+                    const activePreset = document.querySelector('.preset-button.active').dataset.preset;
+                    const carbPercentage = getCarbPercentage(activePreset);
+                    
+                    // Calculate carbs
+                    const carbCalories = adjustedTDEE * (carbPercentage / 100);
+                    const carbGrams = carbCalories / 4; // 4 calories per gram of carbs
+                    
+                    // Calculate fiber (25-38g recommended)
+                    const fiberGrams = Math.min(38, Math.max(25, weightKg * 0.5));
+                    
+                    // Calculate net carbs
+                    const netCarbs = carbGrams - fiberGrams;
+                    
+                    // Calculate other macros
+                    const proteinCalories = adjustedTDEE * 0.25; // 25% protein
+                    const fatCalories = adjustedTDEE * (1 - carbPercentage/100 - 0.25); // Remaining for fat
+                    
+                    displayResults(carbGrams, netCarbs, fiberGrams, carbPercentage, proteinCalories/4, fatCalories/9, adjustedTDEE);
+                    saveToLocalStorage(carbGrams, activePreset, goal);
+                    createChart(carbPercentage, 25, (100 - carbPercentage - 25));
+                } else {
+                    resultDiv.textContent = 'Please enter all required information.';
+                    resultsContainer.innerHTML = '';
+                    chartContainer.style.display = 'none';
+                }
+            }
+
+            function calculateTDEE(gender, age, heightCm, weightKg, activityLevel, formula) {
+                let bmr;
+                
+                if (formula === 'mifflin') {
+                    // Mifflin-St Jeor Equation
+                    if (gender === 'male') {
+                        bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) + 5;
+                    } else {
+                        bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) - 161;
+                    }
+                } else {
+                    // Harris-Benedict Equation
+                    if (gender === 'male') {
+                        bmr = 88.362 + (13.397 * weightKg) + (4.799 * heightCm) - (5.677 * age);
+                    } else {
+                        bmr = 447.593 + (9.247 * weightKg) + (3.098 * heightCm) - (4.330 * age);
+                    }
+                }
+                
+                // Activity multipliers
+                const activityMultipliers = {
+                    'sedentary': 1.2,
+                    'light': 1.375,
+                    'moderate': 1.55,
+                    'high': 1.725,
+                    'very-high': 1.9
+                };
+                
+                return bmr * activityMultipliers[activityLevel];
+            }
+
+            function adjustForGoal(tdee, goal) {
+                const adjustments = {
+                    'maintain': 1.0,
+                    'lose': 0.8, // 20% deficit
+                    'gain': 1.1  // 10% surplus
+                };
+                
+                return tdee * adjustments[goal];
+            }
+
+            function getCarbPercentage(preset) {
+                const percentages = {
+                    'keto': 7.5, // Average of 5-10%
+                    'low-carb': 25, // Average of 20-30%
+                    'balanced': 55, // Average of 45-65%
+                    'high-carb': 70 // Average of 65-75%
+                };
+                
+                return percentages[preset] || 55;
+            }
+
+            function displayResults(carbGrams, netCarbs, fiberGrams, carbPercentage, proteinGrams, fatGrams, tdee) {
+                resultsContainer.innerHTML = `
+                    <div class="result-card">
+                        <div class="result-value">${carbGrams.toFixed(0)}g</div>
+                        <div class="result-range">${carbPercentage}% of total calories</div>
+                        <div class="result-description">
+                            Daily carbohydrate target based on your TDEE and macro split
+                        </div>
+                    </div>
+                    
+                    <div class="macro-breakdown">
+                        <h4>Macro Breakdown</h4>
+                        <div class="macro-item">
+                            <span class="macro-name">Carbohydrates</span>
+                            <span class="macro-amount">${carbGrams.toFixed(0)}g (${carbPercentage}%)</span>
+                        </div>
+                        <div class="macro-item">
+                            <span class="macro-name">Protein</span>
+                            <span class="macro-amount">${proteinGrams.toFixed(0)}g (25%)</span>
+                        </div>
+                        <div class="macro-item">
+                            <span class="macro-name">Fat</span>
+                            <span class="macro-amount">${fatGrams.toFixed(0)}g (${(100 - carbPercentage - 25).toFixed(0)}%)</span>
+                        </div>
+                        <div class="macro-item">
+                            <span class="macro-name">Total Calories</span>
+                            <span class="macro-amount">${tdee.toFixed(0)} kcal</span>
+                        </div>
+                    </div>
+                    
+                    <div class="fiber-info">
+                        <h4>Fiber Information</h4>
+                        <div class="fiber-item">
+                            <span class="fiber-name">Total Carbs</span>
+                            <span class="fiber-amount">${carbGrams.toFixed(0)}g</span>
+                        </div>
+                        <div class="fiber-item">
+                            <span class="fiber-name">Fiber</span>
+                            <span class="fiber-amount">${fiberGrams.toFixed(0)}g</span>
+                        </div>
+                        <div class="fiber-item">
+                            <span class="fiber-name">Net Carbs</span>
+                            <span class="fiber-amount">${netCarbs.toFixed(0)}g</span>
+                        </div>
+                    </div>
+                `;
+
+                resultDiv.textContent = 'Carbohydrate calculation completed!';
+                chartContainer.style.display = 'block';
+            }
+
+            function createChart(carbPercentage, proteinPercentage, fatPercentage) {
+                if (carbsChart) {
+                    carbsChart.destroy();
+                }
+
+                const ctx = document.getElementById('carbsChart').getContext('2d');
+                carbsChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Carbohydrates', 'Protein', 'Fat'],
+                        datasets: [{
+                            data: [carbPercentage, proteinPercentage, fatPercentage],
+                            backgroundColor: [
+                                '#4361EE',
+                                '#28a745',
+                                '#ffc107'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Macro Distribution'
+                            },
+                            legend: {
+                                display: true,
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            function exportToCSV() {
+                const age = parseInt(ageInput.value) || 0;
+                if (age === 0) {
+                    alert('Please calculate carbohydrate needs first before exporting.');
+                    return;
+                }
+
+                let csv = 'Carbohydrate Plan\n';
+                csv += 'Macro,Grams,Percentage\n';
+                
+                const macroItems = document.querySelectorAll('.macro-item');
+                macroItems.forEach(item => {
+                    const macroName = item.querySelector('.macro-name').textContent;
+                    const macroAmount = item.querySelector('.macro-amount').textContent;
+                    csv += `${macroName},${macroAmount}\n`;
+                });
+
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'carbohydrate-plan.csv';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+
+            function saveToLocalStorage(carbGrams, preset, goal) {
+                const carbsState = {
+                    gender: genderSelect.value,
+                    age: ageInput.value,
+                    height: heightInput.value,
+                    weight: weightInput.value,
+                    activityLevel: activityLevelSelect.value,
+                    goal: goal,
+                    formula: formulaSelect.value,
+                    preset: preset,
+                    carbGrams: carbGrams,
+                    isMetric: isMetric
+                };
+                localStorage.setItem('carbsCalculatorState', JSON.stringify(carbsState));
+            }
+
+            function loadFromLocalStorage() {
+                const savedState = localStorage.getItem('carbsCalculatorState');
+                if (savedState) {
+                    const state = JSON.parse(savedState);
+                    genderSelect.value = state.gender || 'male';
+                    ageInput.value = state.age || '';
+                    heightInput.value = state.height || '';
+                    weightInput.value = state.weight || '';
+                    activityLevelSelect.value = state.activityLevel || 'sedentary';
+                    goalSelect.value = state.goal || 'maintain';
+                    formulaSelect.value = state.formula || 'mifflin';
+                    isMetric = state.isMetric !== false;
+                    
+                    if (isMetric) {
+                        metricBtn.classList.add('active');
+                        imperialBtn.classList.remove('active');
+                        heightUnitSpan.textContent = 'cm';
+                        weightUnitSpan.textContent = 'kg';
+                    } else {
+                        imperialBtn.classList.add('active');
+                        metricBtn.classList.remove('active');
+                        heightUnitSpan.textContent = 'in';
+                        weightUnitSpan.textContent = 'lbs';
+                    }
+                    
+                    // Set preset
+                    if (state.preset) {
+                        presetButtons.forEach(b => b.classList.remove('active'));
+                        document.querySelector(`[data-preset="${state.preset}"]`).classList.add('active');
+                    }
+                }
+            }
+
+            function resetCalculator() {
+                genderSelect.value = 'male';
+                ageInput.value = '';
+                heightInput.value = '';
+                weightInput.value = '';
+                activityLevelSelect.value = 'sedentary';
+                goalSelect.value = 'maintain';
+                formulaSelect.value = 'mifflin';
+                presetButtons.forEach(b => b.classList.remove('active'));
+                document.querySelector('[data-preset="balanced"]').classList.add('active');
+                resultDiv.textContent = 'Your carbohydrate calculation results will appear here...';
+                resultsContainer.innerHTML = '';
+                chartContainer.style.display = 'none';
+                if (carbsChart) {
+                    carbsChart.destroy();
+                    carbsChart = null;
+                }
+                localStorage.removeItem('carbsCalculatorState');
+            }
+
+            calculateButton.addEventListener('click', calculateCarbs);
+            resetButton.addEventListener('click', resetCalculator);
+            exportButton.addEventListener('click', exportToCSV);
+
+            // Load saved state on page load
+            loadFromLocalStorage();
+
+            // Allow Enter key to trigger calculation
+            [ageInput, heightInput, weightInput].forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        calculateCarbs();
+                    }
+                });
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with animation classes
+        document.querySelectorAll('.tool-hero__left, .tool-hero__right, .blog-section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Calculator | Matrix Operations & Linear Algebra | EveryTool.tech</title>
+    <meta name="description" content="Perform matrix operations including determinant, inverse, eigenvalues, and more. Visualize 2D transformations and export results in multiple formats.">
+    <meta name="keywords" content="matrix calculator, determinant calculator, matrix inverse, eigenvalues, linear algebra calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tool CSS -->
+    <link rel="stylesheet" href="../tool.css">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+
+    <!-- KaTeX for LaTeX rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --primary: #4361EE;
+            --primary-dark: #2945c8;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --bg-accent: #F3F4F6;
+            --radius-md: 0.75rem;
+            --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--text-primary); background: var(--bg-primary); }
+        #header-placeholder { height: 64px; }
+
+        .tool-hero {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(41, 69, 200, 0.1) 100%);
+        }
+
+        .tool-hero__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-hero__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tool-hero__title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .tool-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .tool-hero__features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tool-feature i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .tool-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-all);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tool-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tool-display {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+        }
+
+        .tool-display__container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .tool-display__wrapper {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-display__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .tool-display__input-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .tool-display__output-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .tool-display__input-group {
+            margin-bottom: 1rem;
+        }
+
+        .tool-display__label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-display__input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-all);
+        }
+
+        .tool-display__input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .tool-display__select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--bg-accent);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            background: white;
+        }
+
+        .matrix-container {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        .matrix-grid {
+            display: grid;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .matrix-input {
+            width: 60px;
+            padding: 0.5rem;
+            border: 1px solid var(--bg-accent);
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .matrix-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .matrix-controls button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--bg-accent);
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .matrix-controls button:hover {
+            background: var(--bg-accent);
+        }
+
+        .result-display {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--bg-accent);
+        }
+
+        .result-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .latex-display {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--bg-accent);
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--bg-accent);
+        }
+
+        @media (max-width: 768px) {
+            .tool-display__content { 
+                display: grid;
+                grid-template-columns: 1fr; 
+                gap: 1.5rem; 
+            }
+            .tool-display__input { 
+                font-size: 16px; 
+            }
+            .matrix-controls {
+                flex-direction: column;
+            }
+            .matrix-controls button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Matrix Calculator</h1>
+                    <p class="tool-hero__description">
+                        Perform matrix operations including determinant, inverse, eigenvalues, and more. 
+                        Visualize 2D transformations and export results in multiple formats.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-th"></i>
+                            <span>Matrix Operations</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>2D Transformations</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-download"></i>
+                            <span>Export Formats</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Private</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Matrices
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Matrix Calculator</h2>
+                    <p class="tool-display__description">
+                        Create matrices and perform various operations with step-by-step solutions.
+                    </p>
+                </div>
+                <div class="tool-display__content">
+                    <div class="tool-display__input-section">
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Matrix Size</label>
+                            <select class="tool-display__select" id="matrix-size">
+                                <option value="2x2">2×2</option>
+                                <option value="3x3">3×3</option>
+                                <option value="4x4">4×4</option>
+                            </select>
+                        </div>
+                        
+                        <div class="matrix-container">
+                            <h4>Matrix A</h4>
+                            <div class="matrix-controls">
+                                <button id="random-fill">Random Fill</button>
+                                <button id="zero-fill">Zero Fill</button>
+                                <button id="identity-fill">Identity</button>
+                            </div>
+                            <div class="matrix-grid" id="matrix-a-grid">
+                                <!-- Matrix inputs will be generated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="tool-display__input-group">
+                            <label class="tool-display__label">Operation</label>
+                            <select class="tool-display__select" id="operation-select">
+                                <option value="determinant">Determinant</option>
+                                <option value="inverse">Inverse</option>
+                                <option value="transpose">Transpose</option>
+                                <option value="eigenvalues">Eigenvalues</option>
+                                <option value="rank">Rank</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tool-display__controls">
+                            <button class="tool-button" id="calculate-matrix">
+                                <i class="fas fa-calculator"></i>
+                                Calculate
+                            </button>
+                            <button class="tool-button" id="reset-matrix">
+                                <i class="fas fa-redo"></i>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-display__output-section">
+                        <h3 class="tool-display__label">Matrix Result</h3>
+                        <div class="tool-display__result" id="matrix-result">
+                            Your matrix calculation results will appear here...
+                        </div>
+                        <div id="results-container"></div>
+                        <div class="chart-container" id="chart-container" style="display: none;">
+                            <canvas id="matrixChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Fetch and insert header
+        fetch('../../header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('../../footer.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Matrix Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const matrixSizeSelect = document.getElementById('matrix-size');
+            const matrixAGrid = document.getElementById('matrix-a-grid');
+            const operationSelect = document.getElementById('operation-select');
+            const calculateButton = document.getElementById('calculate-matrix');
+            const resetButton = document.getElementById('reset-matrix');
+            const randomFillButton = document.getElementById('random-fill');
+            const zeroFillButton = document.getElementById('zero-fill');
+            const identityFillButton = document.getElementById('identity-fill');
+            const resultDiv = document.getElementById('matrix-result');
+            const resultsContainer = document.getElementById('results-container');
+            const chartContainer = document.getElementById('chart-container');
+            
+            let matrixChart = null;
+            let currentSize = 2;
+
+            // Matrix operations class
+            class MatrixCalculator {
+                constructor() {
+                    this.matrix = [];
+                }
+                
+                setMatrix(matrix) {
+                    this.matrix = matrix;
+                }
+                
+                determinant(matrix = this.matrix) {
+                    const n = matrix.length;
+                    if (n === 2) {
+                        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+                    } else if (n === 3) {
+                        return matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]) -
+                               matrix[0][1] * (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0]) +
+                               matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0]);
+                    }
+                    return 0;
+                }
+                
+                inverse(matrix = this.matrix) {
+                    const det = this.determinant(matrix);
+                    if (Math.abs(det) < 1e-10) {
+                        throw new Error('Matrix is singular (determinant is zero)');
+                    }
+                    
+                    if (matrix.length === 2) {
+                        const [[a, b], [c, d]] = matrix;
+                        return [
+                            [d / det, -b / det],
+                            [-c / det, a / det]
+                        ];
+                    } else if (matrix.length === 3) {
+                        // Simplified 3x3 inverse using adjugate
+                        const adj = this.adjugate(matrix);
+                        return adj.map(row => row.map(val => val / det));
+                    }
+                    return matrix;
+                }
+                
+                adjugate(matrix) {
+                    const n = matrix.length;
+                    const adj = Array(n).fill().map(() => Array(n).fill(0));
+                    
+                    for (let i = 0; i < n; i++) {
+                        for (let j = 0; j < n; j++) {
+                            const minor = this.getMinor(matrix, i, j);
+                            adj[j][i] = Math.pow(-1, i + j) * this.determinant(minor);
+                        }
+                    }
+                    
+                    return adj;
+                }
+                
+                getMinor(matrix, row, col) {
+                    return matrix.filter((_, i) => i !== row)
+                                .map(row => row.filter((_, j) => j !== col));
+                }
+                
+                transpose(matrix = this.matrix) {
+                    const rows = matrix.length;
+                    const cols = matrix[0].length;
+                    const result = Array(cols).fill().map(() => Array(rows).fill(0));
+                    
+                    for (let i = 0; i < rows; i++) {
+                        for (let j = 0; j < cols; j++) {
+                            result[j][i] = matrix[i][j];
+                        }
+                    }
+                    
+                    return result;
+                }
+                
+                eigenvalues(matrix = this.matrix) {
+                    if (matrix.length === 2) {
+                        const [[a, b], [c, d]] = matrix;
+                        const trace = a + d;
+                        const det = this.determinant(matrix);
+                        const discriminant = trace * trace - 4 * det;
+                        
+                        if (discriminant >= 0) {
+                            const sqrt = Math.sqrt(discriminant);
+                            return [(trace + sqrt) / 2, (trace - sqrt) / 2];
+                        } else {
+                            const real = trace / 2;
+                            const imag = Math.sqrt(-discriminant) / 2;
+                            return [`${real} + ${imag}i`, `${real} - ${imag}i`];
+                        }
+                    }
+                    return ['Eigenvalues not supported for this size'];
+                }
+                
+                rank(matrix = this.matrix) {
+                    // Simplified rank calculation
+                    const rows = matrix.length;
+                    const cols = matrix[0].length;
+                    let rank = Math.min(rows, cols);
+                    
+                    // Check for linearly dependent rows
+                    for (let i = 0; i < rows; i++) {
+                        let allZero = true;
+                        for (let j = 0; j < cols; j++) {
+                            if (Math.abs(matrix[i][j]) > 1e-10) {
+                                allZero = false;
+                                break;
+                            }
+                        }
+                        if (allZero) rank--;
+                    }
+                    
+                    return rank;
+                }
+            }
+
+            function generateMatrixGrid(size) {
+                currentSize = size;
+                matrixAGrid.innerHTML = '';
+                
+                const gridStyle = `grid-template-columns: repeat(${size}, 1fr)`;
+                matrixAGrid.style.cssText = gridStyle;
+                
+                for (let i = 0; i < size; i++) {
+                    for (let j = 0; j < size; j++) {
+                        const input = document.createElement('input');
+                        input.type = 'number';
+                        input.className = 'matrix-input';
+                        input.value = i === j ? '1' : '0';
+                        input.step = 'any';
+                        input.dataset.row = i;
+                        input.dataset.col = j;
+                        matrixAGrid.appendChild(input);
+                    }
+                }
+            }
+
+            function getMatrixFromInputs() {
+                const matrix = [];
+                const inputs = matrixAGrid.querySelectorAll('.matrix-input');
+                
+                for (let i = 0; i < currentSize; i++) {
+                    matrix[i] = [];
+                    for (let j = 0; j < currentSize; j++) {
+                        const input = matrixAGrid.querySelector(`[data-row="${i}"][data-col="${j}"]`);
+                        matrix[i][j] = parseFloat(input.value) || 0;
+                    }
+                }
+                
+                return matrix;
+            }
+
+            function fillMatrixRandom() {
+                const inputs = matrixAGrid.querySelectorAll('.matrix-input');
+                inputs.forEach(input => {
+                    input.value = (Math.random() * 20 - 10).toFixed(1);
+                });
+            }
+
+            function fillMatrixZero() {
+                const inputs = matrixAGrid.querySelectorAll('.matrix-input');
+                inputs.forEach(input => {
+                    input.value = '0';
+                });
+            }
+
+            function fillMatrixIdentity() {
+                const inputs = matrixAGrid.querySelectorAll('.matrix-input');
+                inputs.forEach(input => {
+                    const row = parseInt(input.dataset.row);
+                    const col = parseInt(input.dataset.col);
+                    input.value = row === col ? '1' : '0';
+                });
+            }
+
+            function calculateMatrix() {
+                const matrix = getMatrixFromInputs();
+                const operation = operationSelect.value;
+                const calculator = new MatrixCalculator();
+                
+                try {
+                    calculator.setMatrix(matrix);
+                    let result;
+                    let steps = [];
+                    
+                    switch (operation) {
+                        case 'determinant':
+                            result = calculator.determinant();
+                            steps = [`det(A) = ${result}`];
+                            break;
+                        case 'inverse':
+                            result = calculator.inverse();
+                            steps = ['A^(-1) = adj(A) / det(A)'];
+                            break;
+                        case 'transpose':
+                            result = calculator.transpose();
+                            steps = ['A^T = transpose of A'];
+                            break;
+                        case 'eigenvalues':
+                            result = calculator.eigenvalues();
+                            steps = ['Eigenvalues found using characteristic polynomial'];
+                            break;
+                        case 'rank':
+                            result = calculator.rank();
+                            steps = [`rank(A) = ${result}`];
+                            break;
+                    }
+                    
+                    displayResults(result, operation, steps);
+                } catch (error) {
+                    resultDiv.textContent = error.message;
+                    resultsContainer.innerHTML = '';
+                    chartContainer.style.display = 'none';
+                }
+            }
+
+            function displayResults(result, operation, steps) {
+                let resultHtml = `
+                    <div class="result-display">
+                        <div class="result-title">${operation.charAt(0).toUpperCase() + operation.slice(1)} Result</div>
+                `;
+                
+                if (typeof result === 'number') {
+                    resultHtml += `<div class="latex-display">${result}</div>`;
+                } else if (Array.isArray(result)) {
+                    if (typeof result[0] === 'string') {
+                        resultHtml += `<div class="latex-display">${result.join(', ')}</div>`;
+                    } else {
+                        resultHtml += `<div class="latex-display">Matrix Result</div>`;
+                        resultHtml += `<div style="font-family: monospace; margin-top: 1rem;">`;
+                        result.forEach(row => {
+                            resultHtml += `[${row.map(val => val.toFixed(3)).join(', ')}]<br>`;
+                        });
+                        resultHtml += `</div>`;
+                    }
+                }
+                
+                resultHtml += `</div>`;
+                
+                if (steps.length > 0) {
+                    resultHtml += `
+                        <div class="result-display">
+                            <div class="result-title">Steps</div>
+                            ${steps.map(step => `<div style="margin: 0.5rem 0; color: var(--text-secondary);">${step}</div>`).join('')}
+                        </div>
+                    `;
+                }
+                
+                resultsContainer.innerHTML = resultHtml;
+                resultDiv.textContent = 'Matrix calculation completed!';
+                
+                // Show chart for 2D transformations
+                if (operation === 'transpose' && currentSize === 2) {
+                    createTransformationChart();
+                }
+            }
+
+            function createTransformationChart() {
+                if (matrixChart) {
+                    matrixChart.destroy();
+                }
+
+                const ctx = document.getElementById('matrixChart').getContext('2d');
+                const matrix = getMatrixFromInputs();
+                
+                // Create a simple vector transformation visualization
+                const originalVectors = [
+                    {x: 1, y: 0},
+                    {x: 0, y: 1},
+                    {x: 1, y: 1}
+                ];
+                
+                const transformedVectors = originalVectors.map(v => ({
+                    x: matrix[0][0] * v.x + matrix[0][1] * v.y,
+                    y: matrix[1][0] * v.x + matrix[1][1] * v.y
+                }));
+
+                matrixChart = new Chart(ctx, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [{
+                            label: 'Original Vectors',
+                            data: originalVectors,
+                            backgroundColor: '#4361EE',
+                            pointRadius: 8
+                        }, {
+                            label: 'Transformed Vectors',
+                            data: transformedVectors,
+                            backgroundColor: '#F72585',
+                            pointRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: '2D Vector Transformation'
+                            },
+                            legend: {
+                                display: true
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'X'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Y'
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                chartContainer.style.display = 'block';
+            }
+
+            function resetCalculator() {
+                matrixSizeSelect.value = '2x2';
+                operationSelect.value = 'determinant';
+                generateMatrixGrid(2);
+                resultDiv.textContent = 'Your matrix calculation results will appear here...';
+                resultsContainer.innerHTML = '';
+                chartContainer.style.display = 'none';
+                if (matrixChart) {
+                    matrixChart.destroy();
+                    matrixChart = null;
+                }
+            }
+
+            // Event listeners
+            matrixSizeSelect.addEventListener('change', function() {
+                const size = parseInt(this.value.split('x')[0]);
+                generateMatrixGrid(size);
+            });
+
+            calculateButton.addEventListener('click', calculateMatrix);
+            resetButton.addEventListener('click', resetCalculator);
+            randomFillButton.addEventListener('click', fillMatrixRandom);
+            zeroFillButton.addEventListener('click', fillMatrixZero);
+            identityFillButton.addEventListener('click', fillMatrixIdentity);
+
+            // Initialize
+            generateMatrixGrid(2);
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>

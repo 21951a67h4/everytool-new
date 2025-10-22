@@ -16,7 +16,7 @@
     
     <!-- Back to top button -->
     <link rel="stylesheet" href="back-to-top.css">
-    <script src="back-to-top.js"></script>
+    <script src="/back-to-top.js"></script>
     
     <style>
         :root {
@@ -468,6 +468,18 @@
                     <div class="link-card">
                         <a href="/category-pages/productivity-tools.html" target="_blank"><i class="fas fa-chevron-right"></i>Productivity Tools</a>
                     </div>
+                    <div class="link-card">
+                        <a href="/category-pages/file-conversion-tools.html" target="_blank"><i class="fas fa-chevron-right"></i>File Conversion Tools</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="/category-pages/text-tools.html" target="_blank"><i class="fas fa-chevron-right"></i>Text Tools</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="/category-pages/image-media-tools.html" target="_blank"><i class="fas fa-chevron-right"></i>Image & Media Tools</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="/category-pages/utility-data-tools.html" target="_blank"><i class="fas fa-chevron-right"></i>Utility & Data Tools</a>
+                    </div>
                 </div>
             </section>
 
@@ -578,6 +590,7 @@
 
     <!-- Scripts -->
     <script src="view.js"></script>
+    <script src="/app-loader.js" defer></script>
     <script>
         // Set the last updated timestamp
         document.getElementById('last-updated').textContent = new Date().toLocaleDateString('en-US', {
@@ -586,21 +599,7 @@
             day: 'numeric'
         });
 
-        // Fetch and insert header
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-container').innerHTML = data;
-            })
-            .catch(error => console.error('Error loading header:', error));
-
-        // Fetch and insert footer
-        fetch('footer.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('footer-container').innerHTML = data;
-            })
-            .catch(error => console.error('Error loading footer:', error));
+        // Header/footer handled by app-loader.js
 
         // Enhanced Search functionality
         const searchInput = document.getElementById('searchInput');

@@ -1,0 +1,641 @@
+<!--
+    Title & Description Length Checker Tool Page
+    Built using the EveryTool.tech template.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Title & Description Length Checker | EveryTool.tech</title>
+
+    <meta name="description" content="Check if your meta title and description meet Google's recommended length. Real-time character and pixel width validation.">
+
+    <meta name="keywords" content="meta title checker, meta description length, seo title optimizer, serp snippet">
+
+    <meta name="robots" content="index, follow">
+
+
+    <meta property="og:title" content="Title & Description Length Checker | EveryTool.tech">
+
+    <meta property="og:description" content="Optimize your meta tags for search engines with real-time length validation.">
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:url" content="https://everytool.tech/title-description-length-checker">
+
+
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    <style>
+        #header-placeholder {
+            min-height: 130px;
+            position: relative;
+            z-index: 2000;
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        .meta-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .meta-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            padding: 24px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .meta-card__title {
+            font-size: 1.12rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .meta-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .meta-input-label {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-input-label i {
+            color: #94a3b8;
+            cursor: help;
+        }
+
+        .meta-input,
+        .meta-textarea {
+            border-radius: 12px;
+            border: 2px solid #cbd5f5;
+            padding: 12px 14px;
+            background: #f8f9ff;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .meta-input:focus,
+        .meta-textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.16);
+        }
+
+        .meta-input.valid {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .meta-input.warning {
+            border-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .meta-input.error {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .meta-textarea {
+            min-height: 80px;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .meta-textarea.valid {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .meta-textarea.warning {
+            border-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .meta-textarea.error {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .meta-stats {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 0.88rem;
+        }
+
+        .meta-stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #64748b;
+        }
+
+        .meta-stat__value {
+            font-weight: 600;
+        }
+
+        .meta-stat__value.valid {
+            color: #10b981;
+        }
+
+        .meta-stat__value.warning {
+            color: #f59e0b;
+        }
+
+        .meta-stat__value.error {
+            color: #ef4444;
+        }
+
+        .meta-meter {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .meta-meter__fill {
+            height: 100%;
+            transition: width 0.3s ease, background 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .meta-meter__fill.valid {
+            background: #10b981;
+        }
+
+        .meta-meter__fill.warning {
+            background: #f59e0b;
+        }
+
+        .meta-meter__fill.error {
+            background: #ef4444;
+        }
+
+        .meta-recommendation {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .meta-recommendation.valid {
+            background: #f0fdf4;
+            color: #166534;
+        }
+
+        .meta-recommendation.warning {
+            background: #fffbeb;
+            color: #92400e;
+        }
+
+        .meta-recommendation.error {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .meta-recommendation i {
+            margin-top: 2px;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 280px;
+            background-color: #1e293b;
+            color: #fff;
+            text-align: left;
+            border-radius: 8px;
+            padding: 10px 12px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -140px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            font-weight: 400;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body data-tool-name="Title & Description Length Checker" data-meta-description="Check if your meta title and description meet Google's recommended length.">
+
+    <div id="header-placeholder"></div>
+
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Title & Description Length Checker</h1>
+
+                    <p class="tool-hero__description">
+                        Optimize your meta tags for search engines. Check character and pixel width in real-time to ensure your titles and descriptions display perfectly in search results.
+                    </p>
+
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-ruler"></i> <span>Character & Pixel Count</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-check-circle"></i> <span>Live Validation</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-lightbulb"></i> <span>Google Recommendations</span>
+                        </div>
+                    </div>
+
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-search"></i>
+                            Check Meta Tags
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book-open"></i>
+                            Best Practices
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Meta Tag Length Checker</h2>
+                    <p class="tool-display__description">
+                        Enter your page title and meta description to check if they meet Google's recommended lengths.
+                    </p>
+                </div>
+
+                <div class="meta-container">
+                    <div class="meta-card">
+                        <div class="meta-input-group">
+                            <label class="meta-input-label" for="meta-title">
+                                Page Title
+                                <div class="tooltip">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltiptext">Google typically displays 50-60 characters (~580 pixels) in search results. Longer titles may be truncated.</span>
+                                </div>
+                            </label>
+                            <input type="text" id="meta-title" class="meta-input" placeholder="Enter your page title...">
+                            <div class="meta-meter">
+                                <div id="title-meter" class="meta-meter__fill" style="width: 0%;"></div>
+                            </div>
+                            <div class="meta-stats">
+                                <div class="meta-stat">
+                                    <span>Characters:</span>
+                                    <span id="title-chars" class="meta-stat__value">0</span>
+                                    <span>/ 60</span>
+                                </div>
+                                <div class="meta-stat">
+                                    <span>Pixels:</span>
+                                    <span id="title-pixels" class="meta-stat__value">0</span>
+                                    <span>/ 580</span>
+                                </div>
+                            </div>
+                            <div id="title-recommendation" class="meta-recommendation" style="display: none;">
+                                <i class="fas fa-info-circle"></i>
+                                <span id="title-recommendation-text"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meta-card">
+                        <div class="meta-input-group">
+                            <label class="meta-input-label" for="meta-description">
+                                Meta Description
+                                <div class="tooltip">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltiptext">Google typically displays 120-158 characters (~920 pixels) in search results. Longer descriptions will be cut off with "..."</span>
+                                </div>
+                            </label>
+                            <textarea id="meta-description" class="meta-textarea" placeholder="Enter your meta description..."></textarea>
+                            <div class="meta-meter">
+                                <div id="description-meter" class="meta-meter__fill" style="width: 0%;"></div>
+                            </div>
+                            <div class="meta-stats">
+                                <div class="meta-stat">
+                                    <span>Characters:</span>
+                                    <span id="description-chars" class="meta-stat__value">0</span>
+                                    <span>/ 158</span>
+                                </div>
+                                <div class="meta-stat">
+                                    <span>Pixels:</span>
+                                    <span id="description-pixels" class="meta-stat__value">0</span>
+                                    <span>/ 920</span>
+                                </div>
+                            </div>
+                            <div id="description-recommendation" class="meta-recommendation" style="display: none;">
+                                <i class="fas fa-info-circle"></i>
+                                <span id="description-recommendation-text"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Meta Tag Optimization Guide</h2>
+                <p class="tool-blog__subtitle">Learn how to write effective titles and descriptions for better SEO.</p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Why Length Matters</h3>
+                    <div class="blog-section__content">
+                        <p>Google truncates titles and descriptions that exceed pixel width limits in search results. Truncated content may lose important keywords or fail to convey your message, reducing click-through rates. Staying within recommended limits ensures your full message appears.</p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Title Best Practices</h3>
+                    <div class="blog-section__content">
+                        <ul>
+                            <li><strong>Keep it under 60 characters</strong> (or 580 pixels) to avoid truncation</li>
+                            <li><strong>Front-load keywords</strong> — put important terms at the beginning</li>
+                            <li><strong>Make it unique</strong> for each page to avoid duplicate content issues</li>
+                            <li><strong>Include your brand</strong> at the end if space allows</li>
+                            <li><strong>Write for humans</strong> first, then optimize for search engines</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Description Best Practices</h3>
+                    <div class="blog-section__content">
+                        <ul>
+                            <li><strong>Aim for 120-158 characters</strong> (or 920 pixels) for full display</li>
+                            <li><strong>Include a call-to-action</strong> to encourage clicks</li>
+                            <li><strong>Use active voice</strong> for more engaging, direct language</li>
+                            <li><strong>Incorporate target keywords</strong> naturally without stuffing</li>
+                            <li><strong>Accurately summarize</strong> the page content to reduce bounce rates</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Common questions about meta tag optimization.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Why do pixels matter more than characters?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Google measures display width in pixels, not characters. Wide characters like "W" take more space than narrow ones like "i". A 60-character title with many wide characters might still be truncated, which is why pixel width is a more accurate measure.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Will Google rewrite my meta tags?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sometimes. If Google deems your title or description irrelevant, low-quality, or too long, it may generate its own from your page content. Writing clear, relevant, properly-sized meta tags reduces the chance of rewrites.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What happens if my title is too long?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Google truncates titles that exceed the pixel limit, adding "..." at the end. Important keywords or brand names at the end may be cut off, potentially reducing click-through rates and making your result less attractive.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Should every page have unique meta tags?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Duplicate meta tags across pages can confuse search engines and hurt SEO. Each page should have a unique, descriptive title and description that accurately reflects its specific content.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../FAQ section/faq.js" defer></script>
+    <script src="/universal-search-deploy.js" defer></script>
+    <script>
+        (function () {
+            var elements = {
+                titleInput: document.getElementById('meta-title'),
+                descriptionInput: document.getElementById('meta-description'),
+                titleChars: document.getElementById('title-chars'),
+                titlePixels: document.getElementById('title-pixels'),
+                descriptionChars: document.getElementById('description-chars'),
+                descriptionPixels: document.getElementById('description-pixels'),
+                titleMeter: document.getElementById('title-meter'),
+                descriptionMeter: document.getElementById('description-meter'),
+                titleRecommendation: document.getElementById('title-recommendation'),
+                titleRecommendationText: document.getElementById('title-recommendation-text'),
+                descriptionRecommendation: document.getElementById('description-recommendation'),
+                descriptionRecommendationText: document.getElementById('description-recommendation-text')
+            };
+
+            var limits = {
+                title: { chars: 60, pixels: 580 },
+                description: { chars: 158, pixels: 920 }
+            };
+
+            function estimatePixelWidth(text) {
+                var canvas = document.createElement('canvas');
+                var context = canvas.getContext('2d');
+                context.font = '18px Arial';
+                return Math.round(context.measureText(text).width);
+            }
+
+            function updateTitle() {
+                var text = elements.titleInput.value;
+                var chars = text.length;
+                var pixels = estimatePixelWidth(text);
+
+                elements.titleChars.textContent = chars;
+                elements.titlePixels.textContent = pixels;
+
+                var charPercent = (chars / limits.title.chars) * 100;
+                var pixelPercent = (pixels / limits.title.pixels) * 100;
+                var maxPercent = Math.max(charPercent, pixelPercent);
+
+                elements.titleMeter.style.width = Math.min(maxPercent, 100) + '%';
+
+                if (chars === 0) {
+                    elements.titleInput.className = 'meta-input';
+                    elements.titleMeter.className = 'meta-meter__fill';
+                    elements.titleChars.className = 'meta-stat__value';
+                    elements.titlePixels.className = 'meta-stat__value';
+                    elements.titleRecommendation.style.display = 'none';
+                } else if (chars > limits.title.chars || pixels > limits.title.pixels) {
+                    elements.titleInput.className = 'meta-input error';
+                    elements.titleMeter.className = 'meta-meter__fill error';
+                    elements.titleChars.className = 'meta-stat__value error';
+                    elements.titlePixels.className = 'meta-stat__value error';
+                    elements.titleRecommendation.style.display = 'flex';
+                    elements.titleRecommendation.className = 'meta-recommendation error';
+                    elements.titleRecommendationText.textContent = 'Your title is too long and will be truncated in search results. Consider shortening it.';
+                } else if (chars >= 50 || pixels >= 500) {
+                    elements.titleInput.className = 'meta-input valid';
+                    elements.titleMeter.className = 'meta-meter__fill valid';
+                    elements.titleChars.className = 'meta-stat__value valid';
+                    elements.titlePixels.className = 'meta-stat__value valid';
+                    elements.titleRecommendation.style.display = 'flex';
+                    elements.titleRecommendation.className = 'meta-recommendation valid';
+                    elements.titleRecommendationText.textContent = 'Perfect! Your title length is within Google\'s recommended limits.';
+                } else {
+                    elements.titleInput.className = 'meta-input warning';
+                    elements.titleMeter.className = 'meta-meter__fill warning';
+                    elements.titleChars.className = 'meta-stat__value warning';
+                    elements.titlePixels.className = 'meta-stat__value warning';
+                    elements.titleRecommendation.style.display = 'flex';
+                    elements.titleRecommendation.className = 'meta-recommendation warning';
+                    elements.titleRecommendationText.textContent = 'Your title is a bit short. Consider adding more descriptive keywords (aim for 50-60 characters).';
+                }
+            }
+
+            function updateDescription() {
+                var text = elements.descriptionInput.value;
+                var chars = text.length;
+                var pixels = estimatePixelWidth(text);
+
+                elements.descriptionChars.textContent = chars;
+                elements.descriptionPixels.textContent = pixels;
+
+                var charPercent = (chars / limits.description.chars) * 100;
+                var pixelPercent = (pixels / limits.description.pixels) * 100;
+                var maxPercent = Math.max(charPercent, pixelPercent);
+
+                elements.descriptionMeter.style.width = Math.min(maxPercent, 100) + '%';
+
+                if (chars === 0) {
+                    elements.descriptionInput.className = 'meta-textarea';
+                    elements.descriptionMeter.className = 'meta-meter__fill';
+                    elements.descriptionChars.className = 'meta-stat__value';
+                    elements.descriptionPixels.className = 'meta-stat__value';
+                    elements.descriptionRecommendation.style.display = 'none';
+                } else if (chars > limits.description.chars || pixels > limits.description.pixels) {
+                    elements.descriptionInput.className = 'meta-textarea error';
+                    elements.descriptionMeter.className = 'meta-meter__fill error';
+                    elements.descriptionChars.className = 'meta-stat__value error';
+                    elements.descriptionPixels.className = 'meta-stat__value error';
+                    elements.descriptionRecommendation.style.display = 'flex';
+                    elements.descriptionRecommendation.className = 'meta-recommendation error';
+                    elements.descriptionRecommendationText.textContent = 'Your description is too long and will be cut off in search results. Try to shorten it.';
+                } else if (chars >= 120 || pixels >= 800) {
+                    elements.descriptionInput.className = 'meta-textarea valid';
+                    elements.descriptionMeter.className = 'meta-meter__fill valid';
+                    elements.descriptionChars.className = 'meta-stat__value valid';
+                    elements.descriptionPixels.className = 'meta-stat__value valid';
+                    elements.descriptionRecommendation.style.display = 'flex';
+                    elements.descriptionRecommendation.className = 'meta-recommendation valid';
+                    elements.descriptionRecommendationText.textContent = 'Excellent! Your description length is optimal for search results.';
+                } else {
+                    elements.descriptionInput.className = 'meta-textarea warning';
+                    elements.descriptionMeter.className = 'meta-meter__fill warning';
+                    elements.descriptionChars.className = 'meta-stat__value warning';
+                    elements.descriptionPixels.className = 'meta-stat__value warning';
+                    elements.descriptionRecommendation.style.display = 'flex';
+                    elements.descriptionRecommendation.className = 'meta-recommendation warning';
+                    elements.descriptionRecommendationText.textContent = 'Your description is a bit short. Consider adding more details (aim for 120-158 characters).';
+                }
+            }
+
+            elements.titleInput.addEventListener('input', updateTitle);
+            elements.descriptionInput.addEventListener('input', updateDescription);
+
+            updateTitle();
+            updateDescription();
+        })();
+    </script>
+
+</body>
+</html>
+

@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Hours Calculator | Calculate Hours, Overtime & Pay | EveryTool.tech</title>
+    <meta name="description" content="Calculate work hours, overtime, and wage estimates with break time, rounding rules, and holiday pay. Export timesheets and generate printable reports.">
+    <meta name="keywords" content="work hours calculator, overtime calculator, wage calculator, timesheet, payroll calculator, work time tracker">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Work Hours Calculator | EveryTool.tech">
+    <meta property="og:description" content="Calculate work hours, overtime, and wage estimates with break time, rounding rules, and holiday pay. Export timesheets and generate printable reports.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://everytool.tech/tools/datetime-tools/work-hours-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FAQ section styling -->
+    <link rel="stylesheet" href="../../FAQ section/faq.css">
+    <link rel="stylesheet" href="../tool.css">
+    <!-- Back to top button -->
+    <link rel="stylesheet" href="../../back-to-top.css">
+    <script src="/back-to-top.js"></script>
+    <script src="/app-loader.js" defer></script>
+    
+    <style>
+        /* Mobile optimization - ensure header has space while loading */
+        #header-placeholder {
+            min-height: 130px;
+            position: relative; 
+            z-index: 2000;      
+        }
+        @media (max-width: 768px) {
+            #header-placeholder {
+                min-height: 64px;
+            }
+        }
+
+        /* Work Hours Calculator Specific Styles */
+        .work-calc-container { 
+            padding: 20px; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            background-color: #fdfdfd; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 25px; 
+        }
+        
+        .work-calc-section { 
+            border-bottom: 1px dashed #ddd; 
+            padding-bottom: 20px; 
+        }
+        
+        .work-calc-section:last-child { 
+            border-bottom: none; 
+        }
+        
+        .work-calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .work-form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .work-form-group label { 
+            margin-bottom: 8px; 
+            font-weight: 500; 
+            color: #333; 
+        }
+        
+        .work-form-group input, .work-form-group select { 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+        
+        .work-results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .work-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .summary-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .summary-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        
+        .summary-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .timesheet-table {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .timesheet-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .timesheet-table th,
+        .timesheet-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .timesheet-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .export-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .work-calc-container { 
+                padding: 15px; 
+                gap: 20px; 
+            }
+            .work-calc-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .work-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .export-buttons {
+                flex-direction: column;
+            }
+            .work-form-group input, .work-form-group select { 
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .work-calc-container { 
+                padding: 12px; 
+                gap: 15px; 
+            }
+            .work-summary {
+                grid-template-columns: 1fr;
+            }
+            .work-form-group input, .work-form-group select { 
+                padding: 8px; 
+            }
+        }
+    </style>
+</head>
+
+<body data-tool-name="Work Hours Calculator" data-meta-description="Calculate work hours, overtime, and wage estimates with break time, rounding rules, and holiday pay. Export timesheets and generate printable reports.">
+    <!-- Header will be loaded by page-loader.js -->
+
+    <!-- Tool Hero Section -->
+    <section class="tool-hero">
+        <div class="tool-hero__container">
+            <div class="tool-hero__content">
+                <div class="tool-hero__left">
+                    <h1 class="tool-hero__title">Work Hours Calculator: Hours, Overtime & Pay Estimation</h1>
+                    <p class="tool-hero__description">
+                        Calculate work hours, overtime, and wage estimates with break time, rounding rules, and holiday pay. 
+                        Export timesheets and generate printable reports for accurate payroll.
+                    </p>
+                    <div class="tool-hero__features">
+                        <div class="tool-feature">
+                            <i class="fas fa-clock"></i>
+                            <span>Overtime Rules</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>Wage Estimation</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-file-csv"></i>
+                            <span>Export Timesheet</span>
+                        </div>
+                        <div class="tool-feature">
+                            <i class="fas fa-print"></i>
+                            <span>Printable Reports</span>
+                        </div>
+                    </div>
+                    <div class="tool-hero__cta">
+                        <a href="#tool-display" class="tool-button tool-button--primary">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Hours
+                        </a>
+                        <a href="#learn-more" class="tool-button tool-button--secondary">
+                            <i class="fas fa-book"></i>
+                            Learn About Payroll
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Display Section -->
+    <section id="tool-display" class="tool-display">
+        <div class="tool-display__container">
+            <div class="tool-display__wrapper">
+                <div class="tool-display__header">
+                    <h2 class="tool-display__title">Work Hours Calculator</h2>
+                    <p class="tool-display__description">
+                        Calculate work hours, overtime, and wage estimates with comprehensive payroll features.
+                    </p>
+                </div>
+                
+                <!-- Work Hours Calculator Custom Interface -->
+                <div class="work-calc-container">
+                    <div class="work-calc-section">
+                        <h4>1. Work Schedule</h4>
+                        <div class="work-calc-grid">
+                            <div class="work-form-group">
+                                <label for="start-time">Start Time</label>
+                                <input type="time" id="start-time" value="09:00">
+                            </div>
+                            <div class="work-form-group">
+                                <label for="end-time">End Time</label>
+                                <input type="time" id="end-time" value="17:00">
+                            </div>
+                            <div class="work-form-group">
+                                <label for="break-time">Break Time (minutes)</label>
+                                <input type="number" id="break-time" placeholder="60" min="0" max="480" value="60">
+                            </div>
+                            <div class="work-form-group">
+                                <label for="work-date">Date</label>
+                                <input type="date" id="work-date">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="work-calc-section">
+                        <h4>2. Payroll Settings</h4>
+                        <div class="work-calc-grid">
+                            <div class="work-form-group">
+                                <label for="hourly-rate">Hourly Rate ($)</label>
+                                <input type="number" id="hourly-rate" placeholder="25.00" min="0" step="0.01" value="25.00">
+                            </div>
+                            <div class="work-form-group">
+                                <label for="overtime-threshold">Overtime Threshold (hours)</label>
+                                <input type="number" id="overtime-threshold" placeholder="8" min="1" max="12" value="8">
+                            </div>
+                            <div class="work-form-group">
+                                <label for="overtime-rate">Overtime Rate Multiplier</label>
+                                <select id="overtime-rate">
+                                    <option value="1.5">1.5x (Time and a half)</option>
+                                    <option value="2.0">2.0x (Double time)</option>
+                                    <option value="1.25">1.25x (Custom)</option>
+                                </select>
+                            </div>
+                            <div class="work-form-group">
+                                <label for="rounding-rule">Rounding Rule</label>
+                                <select id="rounding-rule">
+                                    <option value="none">No Rounding</option>
+                                    <option value="15min">15-minute increments</option>
+                                    <option value="30min">30-minute increments</option>
+                                    <option value="1hour">1-hour increments</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="work-calc-section">
+                        <h4>3. Calculate</h4>
+                        <div class="work-calc-grid">
+                            <div class="work-form-group">
+                                <button class="tool-display__button tool-display__button--primary" onclick="calculateWorkHours()">
+                                    <i class="fas fa-calculator"></i>
+                                    Calculate Hours & Pay
+                                </button>
+                            </div>
+                            <div class="work-form-group">
+                                <button class="tool-display__button" onclick="addToTimesheet()">
+                                    <i class="fas fa-plus"></i>
+                                    Add to Timesheet
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="work-results" id="work-results" style="display: none;">
+                        <h4>Calculation Results</h4>
+                        <div class="work-summary" id="work-summary">
+                            <!-- Summary will be added here -->
+                        </div>
+                        
+                        <div class="timesheet-table" id="timesheet-table">
+                            <h5>Timesheet</h5>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                        <th>Break</th>
+                                        <th>Hours</th>
+                                        <th>Overtime</th>
+                                        <th>Pay</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="timesheet-tbody">
+                                    <!-- Timesheet entries will be added here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="export-section">
+                        <h4>4. Export & Reports</h4>
+                        <div class="export-buttons">
+                            <button class="tool-display__button" onclick="exportCSV()">
+                                <i class="fas fa-file-csv"></i> Export CSV
+                            </button>
+                            <button class="tool-display__button" onclick="printReport()">
+                                <i class="fas fa-print"></i> Print Report
+                            </button>
+                            <button class="tool-display__button" onclick="saveTimesheet()">
+                                <i class="fas fa-save"></i> Save Timesheet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="learn-more" class="tool-blog">
+        <div class="tool-blog__container">
+            <div class="tool-blog__header">
+                <h2 class="tool-blog__title">Understanding Work Hours and Payroll Calculations</h2>
+                <p class="tool-blog__subtitle">
+                    Learn about work hour calculations, overtime rules, and wage estimation for accurate payroll management
+                </p>
+            </div>
+            <div class="blog-content">
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Work Hours Calculation</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            Work hours calculation involves determining the actual time worked, excluding breaks and accounting for 
+                            overtime rules. This is essential for accurate payroll processing.
+                        </p>
+                        <p>
+                            <strong>Basic Formula:</strong> Work Hours = End Time - Start Time - Break Time
+                        </p>
+                        <p>
+                            <strong>Key Components:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Regular Hours:</strong> Standard working hours (typically 8 hours/day)</li>
+                            <li><strong>Overtime Hours:</strong> Hours worked beyond the threshold</li>
+                            <li><strong>Break Time:</strong> Unpaid breaks that don't count as work time</li>
+                            <li><strong>Rounding:</strong> Time rounding rules for payroll accuracy</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Overtime Rules</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>Federal Overtime (US):</strong> 1.5x regular rate for hours over 40 per week.
+                        </p>
+                        <p>
+                            <strong>Daily Overtime:</strong> Some states require overtime for hours over 8 per day.
+                        </p>
+                        <p>
+                            <strong>Double Time:</strong> 2x regular rate for hours over 12 per day or holidays.
+                        </p>
+                        <p>
+                            <strong>Custom Rules:</strong> Company-specific policies may vary from legal requirements.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blog-section">
+                    <h3 class="blog-section__title">Time Rounding</h3>
+                    <div class="blog-section__content">
+                        <p>
+                            <strong>No Rounding:</strong> Exact minutes for precise calculations.
+                        </p>
+                        <p>
+                            <strong>15-minute increments:</strong> Round to nearest 15 minutes (most common).
+                        </p>
+                        <p>
+                            <strong>30-minute increments:</strong> Round to nearest 30 minutes.
+                        </p>
+                        <p>
+                            <strong>1-hour increments:</strong> Round to nearest hour (rare).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Move FAQ section above the footer -->
+    <section class="faq-section">
+      <div class="faq-container">
+        <div class="faq-header">
+          <h2 class="faq-title">Work Hours Calculator FAQ</h2>
+          <p class="faq-subtitle">Frequently asked questions about work hours and payroll calculations</p>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question"><h3>How is overtime calculated?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Overtime is calculated based on your threshold setting (default 8 hours). Hours worked beyond the threshold are multiplied by your overtime rate (typically 1.5x). For example, 10 hours at $25/hour = 8 regular hours ($200) + 2 overtime hours ($75) = $275 total.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>What are the different rounding rules?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Rounding rules help standardize time calculations. 15-minute rounding is most common and rounds to the nearest quarter hour. 30-minute rounding rounds to the nearest half hour. Choose the rule that matches your company's payroll policy.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>Can I export my timesheet data?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Yes! You can export your timesheet to CSV format for import into payroll systems or spreadsheets. You can also print reports for physical records or save your timesheet data locally for future reference.</p></div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question"><h3>How accurate are the wage calculations?</h3><i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer"><p>Our calculations are based on standard payroll formulas. However, actual payroll may include additional factors like taxes, benefits, deductions, or company-specific policies. Always verify with your payroll department for final amounts.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be loaded by page-loader.js -->
+
+    <!-- Add before </body> -->
+    <script src="../FAQ section/faq.js"></script>
+
+    <script>
+        // Work Hours Calculator Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const startTime = document.getElementById('start-time');
+            const endTime = document.getElementById('end-time');
+            const breakTime = document.getElementById('break-time');
+            const workDate = document.getElementById('work-date');
+            const hourlyRate = document.getElementById('hourly-rate');
+            const overtimeThreshold = document.getElementById('overtime-threshold');
+            const overtimeRate = document.getElementById('overtime-rate');
+            const roundingRule = document.getElementById('rounding-rule');
+            const workResults = document.getElementById('work-results');
+            const workSummary = document.getElementById('work-summary');
+            const timesheetTbody = document.getElementById('timesheet-tbody');
+            
+            let timesheet = JSON.parse(localStorage.getItem('workTimesheet') || '[]');
+            
+            // Initialize with current date
+            const today = new Date().toISOString().split('T')[0];
+            workDate.value = today;
+            
+            // Event listeners
+            [startTime, endTime, breakTime, hourlyRate, overtimeThreshold, overtimeRate, roundingRule].forEach(element => {
+                element.addEventListener('change', calculateWorkHours);
+            });
+            
+            function calculateWorkHours() {
+                const startTimeValue = startTime.value;
+                const endTimeValue = endTime.value;
+                const breakTimeValue = parseInt(breakTime.value) || 0;
+                const hourlyRateValue = parseFloat(hourlyRate.value) || 0;
+                const overtimeThresholdValue = parseInt(overtimeThreshold.value) || 8;
+                const overtimeRateValue = parseFloat(overtimeRate.value) || 1.5;
+                
+                if (!startTimeValue || !endTimeValue) {
+                    workResults.style.display = 'none';
+                    return;
+                }
+                
+                // Calculate raw hours
+                const start = new Date(`2000-01-01T${startTimeValue}`);
+                const end = new Date(`2000-01-01T${endTimeValue}`);
+                let rawHours = (end - start) / (1000 * 60 * 60);
+                
+                // Subtract break time
+                rawHours -= breakTimeValue / 60;
+                
+                // Apply rounding
+                const roundedHours = applyRounding(rawHours);
+                
+                // Calculate overtime
+                const regularHours = Math.min(roundedHours, overtimeThresholdValue);
+                const overtimeHours = Math.max(0, roundedHours - overtimeThresholdValue);
+                
+                // Calculate pay
+                const regularPay = regularHours * hourlyRateValue;
+                const overtimePay = overtimeHours * hourlyRateValue * overtimeRateValue;
+                const totalPay = regularPay + overtimePay;
+                
+                displayResults({
+                    rawHours: rawHours,
+                    roundedHours: roundedHours,
+                    regularHours: regularHours,
+                    overtimeHours: overtimeHours,
+                    regularPay: regularPay,
+                    overtimePay: overtimePay,
+                    totalPay: totalPay,
+                    hourlyRate: hourlyRateValue,
+                    overtimeRate: overtimeRateValue
+                });
+            }
+            
+            function applyRounding(hours) {
+                const minutes = hours * 60;
+                const roundingRuleValue = roundingRule.value;
+                
+                switch(roundingRuleValue) {
+                    case '15min':
+                        return Math.round(minutes / 15) * 15 / 60;
+                    case '30min':
+                        return Math.round(minutes / 30) * 30 / 60;
+                    case '1hour':
+                        return Math.round(hours);
+                    default:
+                        return hours;
+                }
+            }
+            
+            function displayResults(results) {
+                workResults.style.display = 'block';
+                
+                workSummary.innerHTML = `
+                    <div class="summary-item">
+                        <div class="summary-value">${results.roundedHours.toFixed(2)}</div>
+                        <div class="summary-label">Total Hours</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">${results.regularHours.toFixed(2)}</div>
+                        <div class="summary-label">Regular Hours</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">${results.overtimeHours.toFixed(2)}</div>
+                        <div class="summary-label">Overtime Hours</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">$${results.totalPay.toFixed(2)}</div>
+                        <div class="summary-label">Total Pay</div>
+                    </div>
+                `;
+            }
+            
+            window.addToTimesheet = function() {
+                const startTimeValue = startTime.value;
+                const endTimeValue = endTime.value;
+                const breakTimeValue = parseInt(breakTime.value) || 0;
+                const workDateValue = workDate.value;
+                const hourlyRateValue = parseFloat(hourlyRate.value) || 0;
+                const overtimeThresholdValue = parseInt(overtimeThreshold.value) || 8;
+                const overtimeRateValue = parseFloat(overtimeRate.value) || 1.5;
+                
+                if (!startTimeValue || !endTimeValue || !workDateValue) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+                
+                // Calculate hours and pay
+                const start = new Date(`2000-01-01T${startTimeValue}`);
+                const end = new Date(`2000-01-01T${endTimeValue}`);
+                let rawHours = (end - start) / (1000 * 60 * 60);
+                rawHours -= breakTimeValue / 60;
+                
+                const roundedHours = applyRounding(rawHours);
+                const regularHours = Math.min(roundedHours, overtimeThresholdValue);
+                const overtimeHours = Math.max(0, roundedHours - overtimeThresholdValue);
+                const regularPay = regularHours * hourlyRateValue;
+                const overtimePay = overtimeHours * hourlyRateValue * overtimeRateValue;
+                const totalPay = regularPay + overtimePay;
+                
+                const entry = {
+                    date: workDateValue,
+                    startTime: startTimeValue,
+                    endTime: endTimeValue,
+                    breakTime: breakTimeValue,
+                    totalHours: roundedHours,
+                    regularHours: regularHours,
+                    overtimeHours: overtimeHours,
+                    totalPay: totalPay,
+                    timestamp: Date.now()
+                };
+                
+                timesheet.unshift(entry);
+                timesheet = timesheet.slice(0, 50); // Keep only last 50 entries
+                localStorage.setItem('workTimesheet', JSON.stringify(timesheet));
+                
+                updateTimesheet();
+            };
+            
+            function updateTimesheet() {
+                timesheetTbody.innerHTML = timesheet.map(entry => `
+                    <tr>
+                        <td>${entry.date}</td>
+                        <td>${entry.startTime}</td>
+                        <td>${entry.endTime}</td>
+                        <td>${entry.breakTime} min</td>
+                        <td>${entry.totalHours.toFixed(2)}</td>
+                        <td>${entry.overtimeHours.toFixed(2)}</td>
+                        <td>$${entry.totalPay.toFixed(2)}</td>
+                    </tr>
+                `).join('');
+            }
+            
+            window.exportCSV = function() {
+                if (timesheet.length === 0) {
+                    alert('No timesheet data to export.');
+                    return;
+                }
+                
+                const csv = 'Date,Start Time,End Time,Break Time (min),Total Hours,Overtime Hours,Total Pay\n' + 
+                    timesheet.map(entry => 
+                        `${entry.date},${entry.startTime},${entry.endTime},${entry.breakTime},${entry.totalHours.toFixed(2)},${entry.overtimeHours.toFixed(2)},${entry.totalPay.toFixed(2)}`
+                    ).join('\n');
+                
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'timesheet.csv';
+                link.click();
+                URL.revokeObjectURL(url);
+            };
+            
+            window.printReport = function() {
+                window.print();
+            };
+            
+            window.saveTimesheet = function() {
+                localStorage.setItem('workTimesheet', JSON.stringify(timesheet));
+                alert('Timesheet saved successfully!');
+            };
+            
+            // Initialize
+            calculateWorkHours();
+            updateTimesheet();
+        });
+    </script>
+
+<script src="/universal-search-deploy.js"></script>
+<script src="../../faq.js" defer></script>
+<script src="../../view.js" defer></script>
+
+</body>
+</html>
