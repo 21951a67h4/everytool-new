@@ -50,7 +50,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Styles -->
     <link rel="stylesheet" href="blog.css"/>
-    <link rel="stylesheet" href="back-to-top.css"/>
+    <link rel="stylesheet" href="../../back-to-top.css"/>
     <link rel="stylesheet" href="../../FAQ section/faq.css"/>
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -139,33 +139,28 @@
             <div class="reading-progress">
                 <div class="reading-progress-bar" id="readingProgress"></div>
             </div>
-            <!-- Breadcrumb -->
-            <nav class="breadcrumb" aria-label="Breadcrumb">
-                <div class="breadcrumb-content">
-                    <a href="../../index.html" class="breadcrumb-link"><i class="fas fa-home"></i> <span>Home</span></a>
-                    <span class="breadcrumb-separator"><i class="fas fa-chevron-right"></i></span>
-                    <a href="../index.html" class="breadcrumb-link"><i class="fas fa-blog"></i> <span>Blog</span></a>
-                    <span class="breadcrumb-separator"><i class="fas fa-chevron-right"></i></span>
-                    <span class="breadcrumb-current"><i class="fas fa-coins"></i> <span>Smart Budgeting</span></span>
-                    <span class="breadcrumb-separator"><i class="fas fa-chevron-right"></i></span>
-                    <a href="#faq" class="breadcrumb-link"><i class="fas fa-question-circle"></i> <span>FAQ</span></a>
-                </div>
-            </nav>
-            <!-- Article Header -->
-            <header class="article-header">
-                <div class="article-category"><i class="fas fa-coins"></i> <span>Finance Tools</span></div>
-                <h1 class="article-title">How To Use Free Online Financial Calculators for Smart Budgeting</h1>
-                <div class="article-meta">
-                    <div class="author-info">
-                        <div class="author-avatar"><img src="../../assets/varshith3.png" alt="Varshith Gubba"></div>
-                        <div class="author-details">
-                            <span class="author-name">By <strong>Varshith Gubba</strong></span>
-                            <span class="publish-date">Published on <time datetime="2025-10-19">October 19, 2025</time></span>
+            <!-- Back Button -->
+            <div class="back-button-container">
+                <a href="../index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Blog</span>
+                </a>
+            </div>
+
+            <!-- Top Section: Title/Meta and Featured Image -->
+            <section class="article-top-section">
+                <!-- Left: Title, Author, Date -->
+                <div class="article-header-container">
+                    <div class="article-category"><i class="fas fa-coins"></i> <span>Finance Tools</span></div>
+                    <h1 class="article-title">How To Use Free Online Financial Calculators for Smart Budgeting</h1>
+                    <div class="article-meta">
+                        <div class="author-info">
+                            <div class="author-avatar"><img src="../../assets/varshith3.png" alt="Varshith Gubba"></div>
+                            <div class="author-details">
+                                <span class="author-name">By <strong>Varshith Gubba</strong></span>
+                                <span class="publish-date">Published on <time datetime="2025-10-19">October 19, 2025</time></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="article-stats">
-                        <div class="reading-time"><i class="fas fa-clock"></i> <span>8 min read</span></div>
-                        <div class="word-count"><i class="fas fa-file-word"></i> <span>1510 words</span></div>
                     </div>
                     <div class="article-tags">
                         <span class="tag">Budgeting</span>
@@ -176,38 +171,51 @@
                         <span class="tag">Personal Finance</span>
                     </div>
                 </div>
-            </header>
-            <!-- Featured Image -->
-            <figure class="featured-image">
-                <div class="image-container" style="background-image:url('../blog-images/1.webp')" role="img" aria-label="Financial calculators and budgeting tools">
-                    <img src="../blog-images/1.webp" alt="Illustration of financial calculators and budgeting tools" style="display:none;">
+
+                <!-- Right: Featured Image -->
+                <div class="featured-image-container">
+                    <figure class="featured-image">
+                        <img src="../blog-images/Free-Financial-Calculators-Guide.webp" alt="Various free online financial calculators and digital budgeting tools spread on a desk" class="image-container">
+                    </figure>
                 </div>
-            </figure>
-            <!-- Social Sharing -->
-            <div class="social-sharing">
-                <div class="sharing-label"><i class="fas fa-share-alt"></i> <span>Share this article</span></div>
-                <div class="sharing-buttons">
-                    <button class="share-btn native-share" id="nativeShareBtn" aria-label="Share this article" title="Share this article"><i class="fas fa-share-alt"></i></button>
-                    <button class="share-btn copy-link" id="copyLinkBtn" aria-label="Copy link" title="Copy link to clipboard"><i class="fas fa-link"></i></button>
-                </div>
-            </div>
-            <!-- Table of Contents -->
-            <div class="table-of-contents">
-                <h3 class="toc-title"><i class="fas fa-list"></i> Table of Contents</h3>
-                <nav class="toc-nav">
-                    <ul class="toc-list">
-                        <li><a href="#intro" class="toc-link">Introduction</a></li>
-                        <li><a href="#why-use-online-calculators" class="toc-link">Why Use Online Financial Calculators?</a></li>
-                        <li><a href="#key-calculator-guides" class="toc-link">Key Financial Calculators Step-by-Step</a></li>
-                        <li><a href="#smart-budgeting-strategies" class="toc-link">Smart Budgeting Strategies with Calculators</a></li>
-                        <li><a href="#common-mistakes" class="toc-link">Common Mistakes & How Tools Solve Them</a></li>
-                        <li><a href="#conclusion" class="toc-link">Conclusion</a></li>
-                        <li><a href="#faq" class="toc-link">FAQs</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <!-- Article Content -->
-            <article class="article-content">
+            </section>
+
+            <!-- Article Section: Left Sidebar and Content Combined -->
+            <section class="article-main-section">
+                <div class="article-main-container">
+                    <!-- Left Sidebar: Share and TOC -->
+                    <aside class="article-sidebar">
+                        <div class="sidebar-container">
+                            <!-- Share this Article -->
+                            <div class="social-sharing-sidebar">
+                                <div class="sharing-label"><i class="fas fa-share-alt"></i> <span>Share this Article</span></div>
+                                <div class="sharing-buttons">
+                                    <button class="share-btn native-share" id="nativeShareBtn" aria-label="Share this article" title="Share this article"><i class="fas fa-share-alt"></i></button>
+                                    <button class="share-btn copy-link" id="copyLinkBtn" aria-label="Copy link" title="Copy link to clipboard"><i class="fas fa-link"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Table of Contents -->
+                            <div class="table-of-contents-sidebar">
+                                <h3 class="toc-title"><i class="fas fa-list"></i> <span>In this Article</span></h3>
+                                <nav class="toc-nav">
+                                    <ul class="toc-list">
+                                        <li><a href="#intro" class="toc-link">Introduction</a></li>
+                                        <li><a href="#why-use-online-calculators" class="toc-link">Why Use Online Financial Calculators?</a></li>
+                                        <li><a href="#key-calculator-guides" class="toc-link">Key Financial Calculators Step-by-Step</a></li>
+                                        <li><a href="#smart-budgeting-strategies" class="toc-link">Smart Budgeting Strategies with Calculators</a></li>
+                                        <li><a href="#common-mistakes" class="toc-link">Common Mistakes & How Tools Solve Them</a></li>
+                                        <li><a href="#conclusion" class="toc-link">Conclusion</a></li>
+                                        <li><a href="#faq" class="toc-link">FAQs</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <!-- Right: Article Content -->
+                    <div class="article-content-wrapper">
+                        <article class="article-content">
                 <h2 id="intro">Introduction</h2>
                 <p>
                     Managing your personal finances is no longer just about keeping receipts and tracking expenses on paper. Today, <strong>free online financial calculators</strong> can transform how you plan, budget, and grow your money—no spreadsheets or complex math needed. 
@@ -284,7 +292,10 @@
                 <p>
                     Free online financial calculators are more than just quick math tools. They are your digital assistants for better budgeting, smarter loans, and higher savings. Try them today at <a href="../../index.html">everytool.tech</a>—all free, no registration, and 100% privacy-focused!
                 </p>
-            </article>
+                        </article>
+                    </div>
+                </div>
+            </section>
             <!-- FAQ Section -->
             <section class="faq-section" id="faq">
                 <div class="faq-container">
@@ -355,5 +366,138 @@
 <script src="../../app-loader.js"></script>
 <script src="../../back-to-top.js"></script>
 <script src="../../FAQ section/faq.js"></script>
+<script>
+    // Reading Progress Bar
+    function initReadingProgress() {
+        const progressBar = document.getElementById('readingProgress');
+        if (!progressBar) return;
+
+        function updateProgress() {
+            const article = document.querySelector('.article-content');
+            if (!article) return;
+
+            const articleTop = article.offsetTop;
+            const articleHeight = article.offsetHeight;
+            const windowHeight = window.innerHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            const progress = Math.min(100, Math.max(0, 
+                ((scrollTop - articleTop + windowHeight) / articleHeight) * 100
+            ));
+            
+            progressBar.style.width = progress + '%';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+        updateProgress();
+    }
+
+    // Social Sharing Functionality
+    function initSocialSharing() {
+        const nativeShareBtn = document.getElementById('nativeShareBtn');
+        const copyLinkBtn = document.getElementById('copyLinkBtn');
+        const url = window.location.href;
+        const title = document.title;
+        const text = document.querySelector('meta[name="description"]')?.content || '';
+
+        // Native Share Button
+        if (nativeShareBtn) {
+            nativeShareBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                nativeShareBtn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    nativeShareBtn.style.transform = '';
+                }, 150);
+                
+                try {
+                    if (navigator.share) {
+                        await navigator.share({
+                            title: title,
+                            text: text,
+                            url: url
+                        });
+                    } else {
+                        await copyToClipboard(url);
+                        showCopyPopup(copyLinkBtn, 'Link copied!');
+                    }
+                } catch (error) {
+                    try {
+                        await copyToClipboard(url);
+                        showCopyPopup(copyLinkBtn, 'Link copied!');
+                    } catch (copyError) {
+                        console.error('Copy fallback error:', copyError);
+                    }
+                }
+            });
+        }
+
+        // Copy Link Button
+        if (copyLinkBtn) {
+            copyLinkBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                copyLinkBtn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    copyLinkBtn.style.transform = '';
+                }, 150);
+                
+                try {
+                    await copyToClipboard(url);
+                    showCopyPopup(copyLinkBtn, 'Copied!');
+                } catch (error) {
+                    console.error('Copy error:', error);
+                    showCopyPopup(copyLinkBtn, 'Copy failed');
+                }
+            });
+        }
+    }
+
+    // Copy to clipboard function
+    async function copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+        } else {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+        }
+    }
+
+    // Show copy popup using SweetAlert2
+    function showCopyPopup(button, message) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+
+        Toast.fire({
+            icon: message.includes('failed') ? 'error' : 'success',
+            title: message
+        });
+    }
+
+    // Initialize all functionality when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        initReadingProgress();
+        initSocialSharing();
+    });
+</script>
 </body>
 </html>
