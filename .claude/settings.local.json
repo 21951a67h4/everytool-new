@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(node fix-tool-pages.js:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(test:*)",
+      "Bash(node add-missing-elements.js:*)"
     ],
     "deny": [],
     "ask": []
