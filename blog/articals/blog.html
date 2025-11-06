@@ -123,6 +123,8 @@
     <link rel="icon" type="image/png" href="../../assets/favicon.png">
     
     <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -206,10 +208,6 @@
         <!-- Main Content -->
         <main class="main" role="main">
             <div class="content-wrapper">
-                <!-- Reading Progress Bar -->
-                <div class="reading-progress">
-                    <div class="reading-progress-bar" id="readingProgress"></div>
-                </div>
 
                 <!-- Back Button -->
             <div class="back-button-container">
@@ -234,7 +232,7 @@
                                     <img src="/assets/varshith3.png" alt="Varshith Gubba">
                                 </div>
                                 <div class="author-details">
-                                    <span class="author-name">By <strong><a href="/creators.html" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">{{ARTICLE_AUTHOR}}</a></strong></span>
+                                    <span class="author-name">By <strong><a href="/creators.html">{{ARTICLE_AUTHOR}}</a></strong></span>
                                     <span class="publish-date">Published on <time datetime="{{PUBLISH_DATE}}">{{PUBLISH_DATE_FORMATTED}}</time></span>
                                 </div>
                             </div>
@@ -260,7 +258,7 @@
                         <aside class="article-sidebar">
                             <div class="sidebar-container">
                                 <!-- Share this Article -->
-                                <div class="social-sharing-sidebar">
+                        <div class="social-sharing-sidebar" role="complementary" aria-label="Share this article">
                                     <div class="sharing-label">
                                         <i class="fas fa-share-alt"></i>
                                         <span>Share this Article</span>
@@ -276,17 +274,17 @@
                                 </div>
 
                                 <!-- Table of Contents -->
-                                <div class="table-of-contents-sidebar">
+                                <nav class="table-of-contents-sidebar" aria-label="Table of contents">
                                     <h3 class="toc-title">
                                         <i class="fas fa-list"></i>
                                         <span>In this Article</span>
                                     </h3>
                                     <nav class="toc-nav">
-                                        <ul class="toc-list">
+                                        <ul class="toc-list" role="list">
                                             {{TABLE_OF_CONTENTS}}
                                         </ul>
                                     </nav>
-                                </div>
+                                </nav>
                             </div>
                         </aside>
 
@@ -294,80 +292,73 @@
                         <div class="article-content-wrapper">
                             <article class="article-content">
                                 {{ARTICLE_CONTENT}}
+
+                                <!-- Inline FAQ moved into main article content -->
+                                <section class="faq-section" id="faq">
+                                    <div class="faq-container">
+                                        <div class="faq-header">
+                                            <h2 class="faq-title">Frequently Asked Questions</h2>
+                                            <p class="faq-subtitle">Find answers to common questions about EveryTool and our blog content</p>
+                                        </div>
+                                        <div class="faq-list">
+                                            <div class="faq-item">
+                                                <div class="faq-question">
+                                                    <h3>{{FAQ_QUESTION_1}}</h3>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                                <div class="faq-answer">
+                                                    <p>{{FAQ_ANSWER_1}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="faq-item">
+                                                <div class="faq-question">
+                                                    <h3>{{FAQ_QUESTION_2}}</h3>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                                <div class="faq-answer">
+                                                    <p>{{FAQ_ANSWER_2}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="faq-item">
+                                                <div class="faq-question">
+                                                    <h3>{{FAQ_QUESTION_3}}</h3>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                                <div class="faq-answer">
+                                                    <p>{{FAQ_ANSWER_3}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="faq-item">
+                                                <div class="faq-question">
+                                                    <h3>{{FAQ_QUESTION_4}}</h3>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                                <div class="faq-answer">
+                                                    <p>{{FAQ_ANSWER_4}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="faq-item">
+                                                <div class="faq-question">
+                                                    <h3>{{FAQ_QUESTION_5}}</h3>
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </div>
+                                                <div class="faq-answer">
+                                                    <p>{{FAQ_ANSWER_5}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
                             </article>
                         </div>
                     </div>
                 </section>
 
-                <!-- FAQ Section - Reusable Template Component -->
-                <!-- This FAQ section can be copied and customized for any blog post or page -->
-                <!-- To customize: Edit questions/answers below -->
-                <!-- To remove: Delete this entire section -->
-                <!-- CSS/JS files: faq.css and faq.js are already linked -->
-                <section class="faq-section" id="faq">
-                    <div class="faq-container">
-                        <div class="faq-header">
-                            <h2 class="faq-title">Frequently Asked Questions</h2>
-                            <p class="faq-subtitle">Find answers to common questions about EveryTool and our blog content</p>
-                        </div>
-                        
-                        <div class="faq-list">
-                            <!-- FAQ Item Template - Copy and customize for each question -->
-                            <div class="faq-item">
-                                <div class="faq-question">
-                                    <h3>{{FAQ_QUESTION_1}}</h3>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div class="faq-answer">
-                                    <p>{{FAQ_ANSWER_1}}</p>
-                                </div>
-                            </div>
-
-                            <div class="faq-item">
-                                <div class="faq-question">
-                                    <h3>{{FAQ_QUESTION_2}}</h3>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div class="faq-answer">
-                                    <p>{{FAQ_ANSWER_2}}</p>
-                                </div>
-                            </div>
-
-                            <div class="faq-item">
-                                <div class="faq-question">
-                                    <h3>{{FAQ_QUESTION_3}}</h3>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div class="faq-answer">
-                                    <p>{{FAQ_ANSWER_3}}</p>
-                                </div>
-                            </div>
-
-                            <div class="faq-item">
-                                <div class="faq-question">
-                                    <h3>{{FAQ_QUESTION_4}}</h3>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div class="faq-answer">
-                                    <p>{{FAQ_ANSWER_4}}</p>
-                                </div>
-                            </div>
-
-                            <div class="faq-item">
-                                <div class="faq-question">
-                                    <h3>{{FAQ_QUESTION_5}}</h3>
-                                    <i class="fas fa-chevron-down"></i>
-                                </div>
-                                <div class="faq-answer">
-                                    <p>{{FAQ_ANSWER_5}}</p>
-                                </div>
-                            </div>
-
-                            <!-- Add more FAQ items by copying the template above -->
-                            <!-- Remove unused FAQ items by deleting the entire <div class="faq-item"> block -->
-                        </div>
-                    </div>
-                </section>
+                
             </div>
         </main>
 
@@ -743,9 +734,45 @@
             
             // Wait a bit for footer to load, then initialize back to top
             setTimeout(initBackToTop, 1000);
+
+            // Theme toggle init
+            (function() {
+                var btn = document.getElementById('themeToggle');
+                if (!btn) return;
+                function setMode(mode) {
+                    if (mode === 'dark') {
+                        document.body.classList.add('article-dark');
+                        btn.setAttribute('aria-pressed', 'true');
+                        var i = btn.querySelector('i'); if (i) { i.className = 'fa-solid fa-sun'; }
+                    } else {
+                        document.body.classList.remove('article-dark');
+                        btn.setAttribute('aria-pressed', 'false');
+                        var j = btn.querySelector('i'); if (j) { j.className = 'fa-solid fa-moon'; }
+                    }
+                    try { localStorage.setItem('theme-preference', mode); } catch (e) {}
+                }
+                var saved = null;
+                try { saved = localStorage.getItem('theme-preference'); } catch (e) {}
+                if (saved === 'dark' || saved === 'light') {
+                    setMode(saved);
+                } else {
+                    var prefersDark = false;
+                    try { prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
+                    setMode(prefersDark ? 'dark' : 'light');
+                }
+                btn.addEventListener('click', function() {
+                    var isDark = document.body.classList.contains('article-dark');
+                    setMode(isDark ? 'light' : 'dark');
+                });
+            })();
         });
 
     </script>
+    
+    <!-- Floating Theme Toggle Button -->
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false" title="Toggle dark mode">
+      <i class="fa-solid fa-moon"></i>
+    </button>
     
     <!-- 
     ========================================

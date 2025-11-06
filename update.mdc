@@ -1,0 +1,96 @@
+---
+alwaysApply: true
+---
+
+
+## 2025-05-23 — Initial release (foundational scaffold)
+
+- Overview: First public scaffold of EveryTool.tech with core architecture, shared UI, and initial content directories. Vanilla HTML/CSS/JS only.
+
+### Core Architecture
+- `app-loader.js` — universal loader for `header.html` and `footer.html`
+- `header-search.js` + `universal-search-deploy.js` — global search with Fuse.js and polyfills
+- `search-index.json` — source data for universal search
+- `index.html` — landing page (hero, categories, blog carousel, FAQ hooks)
+- `styles.css` — global styles (tokens-compatible)
+- `view.js`, `script.js` — shared view utilities and landing scripts
+- `back-to-top.js`, `back-to-top.css` — utility component
+- `FAQ section/` — `faq.html`, `faq.css`, `faq.js` accordion component
+
+### Shared Layout
+- `header.html`, `footer.html` (+ `header(blog).html`, `header(backup).html`)
+- Consistent placeholders and deferred script loading across pages
+
+### Tools System
+- `tools/` (category-based, standalone HTML per tool, shared `tools/tool.css`)
+- Categories present from day one (examples below; not exhaustive):
+  - `developer-tools/` — base64, color picker, CSS gradient, JSON formatter, regex tester, text diff, URL tools, UUID
+  - `datetime-tools/` — age, business days, countdown, date duration, time calculator, work hours, timezone converter
+  - `education-tools/` — assignment deadline, CGPA converter, final grade, GPA (standard and weighted), reading time, study time
+  - `file-conversion-tools/` — audio converter, DOCX→PDF, Excel→CSV, PDF split/merge, SVG→PNG/JPG
+  - `financial-tools/` — loan/mortgage calculators and related tools
+  - `health-tools/` — set of 7 health calculators
+  - `math-tools/` — set of 10 math calculators
+  - `productivity-tools/` — set of 6 productivity tools
+  - `seo-tools/` — set of 11 SEO tools
+  - Root tools: `loan-calculator.html`, `mortgage-calculator.html`, `base64-encoder-decoder.html`, `tool.html`
+
+### Tools Hub & Categories
+- `tools-hub/` — `index.html`, `script.js`, `styles.css` (central directory + filters)
+- `category-pages/` — category landing pages for date-time, developer, education, file conversion, finance, health, image/media, math, productivity, SEO, text, utility/data
+- `category-pages/category(search).js` — client-side filtering
+
+### Blog System
+- `blog/` — hub (`index.html`), shared styles (`styles.css`), data loader (`script.js`)
+- `blog/articals/` — `blog.html`, `blog.css`, starter article template(s)
+- `blog/blog-images/` — article media
+
+### Games Hub
+- `game/` — hub (`index.html`, `styles.css`, `script.js`)
+- Playable titles: 2048, Chess, Connect-Four, Minesweeper, Snake, Sudoku, Tic-Tac-Toe
+- `_template/` — bootstrap template for new games
+
+### Site Ops, SEO, and Legal
+- `sitemap.xml`, `sitemap.html`, `robots.txt`
+- `site.webmanifest`
+- Static pages: `about.html`, `contact.html`, `privacy-policy.html`, `terms.html`, `cookie-policy.html`, `support.html`, `creators.html`, `coming-soon*.html`, `404.html`
+- `google636c5a3f0b08dbba.html` — search console verification
+
+### Assets
+- `assets/` — logos (SVG/PNG), favicon, UPI SVG, and profile images
+
+### Notes
+- Baseline established for: card-first UI, design tokens, accessibility focus, and performance budgets to be refined
+
+## 2025-11-04
+
+- Overview: Documentation and blog updates; repository hygiene changes. No breaking changes to tools.
+
+### Added
+- `CLAUDE.md` — project-wide standards and guidelines
+  - Design tokens and UI rules (no heavy gradients, card-first)
+  - Accessibility (WCAG AA), performance budgets (Lighthouse 90+), motion specs
+  - Tech stack constraints (vanilla JS, limited libs), browser/device support
+  - Architecture docs: universal header/footer loader, global search system
+  - Testing workflow via Chrome DevTools MCP
+- `blog/articals/smart-budgeting-with-financial-calculators.html` — new blog article
+
+### Updated
+- Blog system files (styling, index, and script adjustments)
+  - `blog/articals/blog.css`
+  - `blog/articals/blog.html`
+  - `blog/index.html`
+  - `blog/script.js`
+  - `blog/styles.css`
+- `updates.html` — refreshed updates page content
+
+### Removed
+- `.vscode/settings.json` — cleaned editor-specific config from repo
+- `blog/articals/Free Financial Calculators Guide.html` — removed legacy article
+
+### Notes
+- Current branch: `main` (in sync with remote at snapshot time)
+- No detected modifications to existing tools in `tools/` within this update window
+- Continue to follow `CLAUDE.md` for all future additions (UI, accessibility, performance, SEO, testing)
+
+

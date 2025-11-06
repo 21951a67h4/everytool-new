@@ -15,6 +15,45 @@
   --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   --animation-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --animation-smooth-long: cubic-bezier(0.22, 1, 0.36, 1);
+  --color-muted: #64748b;
+}
+
+/* Floating Theme Toggle Button */
+.theme-toggle {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2.5px solid #ffe066;
+  background: #4563EC;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px var(--shadow-light);
+  cursor: pointer;
+  transition: transform 240ms var(--animation-smooth), box-shadow 240ms var(--animation-smooth), background 240ms var(--animation-smooth), color 240ms var(--animation-smooth);
+  z-index: 1000;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-4px) scale(1.2);
+  box-shadow: 0 8px 16px var(--shadow-dark) scale(1.2);
+}
+
+.theme-toggle i {
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .theme-toggle {
+    width: 48px;
+    height: 48px;
+    left: 10px;
+    bottom: 10px;
+  }
 }
 
 /* Reset and Base Styles */
@@ -37,6 +76,172 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-light: var(--background-dark);
+    --text-light: var(--text-dark);
+    --border-light: var(--border-dark);
+    --shadow-light: var(--shadow-dark);
+    --gradient-light: var(--gradient-dark);
+  }
+  body:not(.article-dark) {
+    background: var(--gradient-dark);
+    color: var(--text-dark);
+  }
+  .article-top-section,
+  .article-main-container {
+    background: rgba(30, 41, 59, 0.8);
+    border-color: var(--border-dark);
+  }
+  .article-title,
+  .article-content,
+  .article-content h1,
+  .article-content h2,
+  .article-content h3,
+  .article-content h4,
+  .article-content h5,
+  .article-content h6,
+  .sharing-label,
+  .toc-title,
+  .author-name,
+  .publish-date,
+  .comments-title,
+  .comment-author,
+  .comment-text {
+    color: var(--text-dark);
+  }
+  .article-category { background: rgba(56, 189, 248, 0.12); }
+  .article-tags .tag { background: rgba(56, 189, 248, 0.12); color: var(--text-dark); }
+  .social-sharing-sidebar,
+  .table-of-contents-sidebar,
+  .comments-section,
+  .reactions-section,
+  .comment,
+  .comment-form {
+    background: rgba(17, 24, 39, 0.7);
+    border-color: var(--border-dark);
+  }
+  /* FAQ section */
+  .faq-section .faq-title { color: var(--text-dark); }
+  .faq-section .faq-subtitle { color: var(--text-dark); opacity: 0.8; }
+  .faq-section,
+  .tools-faq { background: linear-gradient(to bottom, rgba(17, 24, 39, 0.94), rgba(17, 24, 39, 0.88)); }
+  .faq-section .faq-list .faq-item {
+    background: rgba(31, 41, 55, 0.6);
+    border-color: #2B3443;
+    box-shadow: none;
+  }
+  .faq-section .faq-question {
+    background: rgba(31, 41, 55, 0.85);
+    color: var(--text-dark);
+    border: 1px solid var(--border-dark);
+  }
+  .faq-section .faq-question:hover { background: rgba(55, 65, 81, 0.88); }
+  .faq-section .faq-question h3 { color: var(--text-dark); }
+  .faq-section .faq-question i { color: #60A5FA; }
+  .faq-section .faq-item.active .faq-question i { color: #38BDF8; }
+  .faq-section .faq-answer {
+    background: rgba(17, 24, 39, 0.85);
+    color: var(--text-dark);
+    border: 1px solid var(--border-dark);
+  }
+  /* Override faq.css tokens for dark */
+  .article-content .faq-section {
+    --bg-primary: rgba(17, 24, 39, 0.92);
+    --bg-secondary: rgba(17, 24, 39, 0.88);
+    --text-primary: #E5E7EB;
+    --text-secondary: #9CA3AF;
+    --border-light: #2B3443;
+  }
+  .share-btn,
+  .reaction-btn { background: rgba(31, 41, 55, 0.8); color: var(--text-dark); }
+  .toc-link { color: var(--text-dark); }
+}
+
+/* Apply same dark palette when manual toggle is active */
+body.article-dark .article-top-section,
+body.article-dark .article-main-container {
+  background: rgba(30, 41, 59, 0.8);
+  border-color: var(--border-dark);
+}
+body.article-dark .article-title,
+body.article-dark .article-content,
+body.article-dark .article-content h1,
+body.article-dark .article-content h2,
+body.article-dark .article-content h3,
+body.article-dark .article-content h4,
+body.article-dark .article-content h5,
+body.article-dark .article-content h6,
+body.article-dark .sharing-label,
+body.article-dark .toc-title,
+body.article-dark .author-name,
+body.article-dark .publish-date,
+body.article-dark .comments-title,
+body.article-dark .comment-author,
+body.article-dark .comment-text { color: var(--text-dark); }
+body.article-dark .article-category { background: rgba(56, 189, 248, 0.12); }
+body.article-dark .article-tags .tag { background: rgba(56, 189, 248, 0.12); color: var(--text-dark); }
+body.article-dark .social-sharing-sidebar,
+body.article-dark .table-of-contents-sidebar,
+body.article-dark .comments-section,
+body.article-dark .reactions-section,
+body.article-dark .comment,
+body.article-dark .comment-form {
+  background: rgba(17, 24, 39, 0.7);
+  border-color: var(--border-dark);
+}
+body.article-dark .share-btn,
+body.article-dark .reaction-btn { background: rgba(31, 41, 55, 0.8); color: var(--text-dark); }
+body.article-dark .toc-link { color: var(--text-dark); }
+/* FAQ dark for manual toggle */
+body.article-dark .faq-section .faq-title { color: var(--text-dark); }
+body.article-dark .faq-section .faq-subtitle { color: var(--text-dark); opacity: 0.8; }
+body.article-dark .faq-section,
+body.article-dark .tools-faq { background: linear-gradient(to bottom, rgba(17, 24, 39, 0.94), rgba(17, 24, 39, 0.88)); }
+body.article-dark .faq-section .faq-list .faq-item {
+  background: rgba(31, 41, 55, 0.6);
+  border-color: #2B3443;
+  box-shadow: none;
+}
+body.article-dark .faq-section .faq-question {
+  background: rgba(31, 41, 55, 0.85);
+  color: var(--text-dark);
+  border: 1px solid var(--border-dark);
+}
+body.article-dark .faq-section .faq-question:hover { background: rgba(55, 65, 81, 0.88); }
+body.article-dark .faq-section .faq-question h3 { color: var(--text-dark); }
+body.article-dark .faq-section .faq-question i { color: #60A5FA; }
+body.article-dark .faq-section .faq-item.active .faq-question i { color: #38BDF8; }
+body.article-dark .faq-section .faq-answer {
+  background: rgba(17, 24, 39, 0.85);
+  color: var(--text-dark);
+  border: 1px solid var(--border-dark);
+}
+/* Override faq.css tokens when manual dark is on */
+body.article-dark .article-content .faq-section {
+  --bg-primary: rgba(17, 24, 39, 0.92);
+  --bg-secondary: rgba(17, 24, 39, 0.88);
+  --text-primary: #E5E7EB;
+  --text-secondary: #9CA3AF;
+  --border-light: #2B3443;
+}
+
+/* Dark theme: remap light tokens to dark equivalents */
+body.article-dark {
+  --primary-color: #1173d4;
+  --secondary-color: #7209b7;
+  --background-light: var(--background-dark);
+  --text-light: var(--text-dark);
+  --border-light: var(--border-dark);
+  --shadow-light: var(--shadow-dark);
+  --gradient-light: var(--gradient-dark);
+}
+
+body.article-dark {
+  background: var(--gradient-dark);
+  color: var(--text-dark);
 }
 
 /* Layout */
@@ -101,10 +306,17 @@ body {
   background: rgba(255, 255, 255, 0.8);
   border-radius: 1rem;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   animation: fadeInUpSmooth 0.7s var(--animation-smooth-long) both;
   transition: box-shadow 0.5s var(--animation-smooth), padding 0.5s var(--animation-smooth);
+}
+
+@supports ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
+  .article-top-section {
+    background: rgba(255, 255, 255, 0.7);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
 }
 
 @media (min-width: 768px) {
@@ -141,7 +353,6 @@ body {
   line-height: 1.2;
   color: var(--text-light);
   margin-bottom: 1rem;
-  transition: color 0.5s var(--animation-smooth), font-size 0.5s var(--animation-smooth);
 }
 
 @media (min-width: 640px) {
@@ -201,10 +412,17 @@ body {
   background: rgba(255, 255, 255, 0.8);
   border-radius: 1rem;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   animation: fadeInUpSmooth 0.7s var(--animation-smooth-long) both;
   transition: box-shadow 0.5s var(--animation-smooth), padding 0.5s var(--animation-smooth);
+}
+
+@supports ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
+  .article-main-container {
+    background: rgba(255, 255, 255, 0.7);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
 }
 
 @media (min-width: 1024px) {
@@ -225,6 +443,55 @@ body {
 
 .sidebar-container {
   padding: 0;
+}
+
+/* Sticky/floating sidebar behavior on larger screens */
+@media (min-width: 1024px) {
+  /* Make the sidebar stick while scrolling */
+  .article-sidebar {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 96px; /* below header */
+    align-self: start;
+    width: 280px;
+    z-index: 3;
+    height: max-content;
+    max-height: calc(100vh - 120px);
+    overflow: auto;
+  }
+  /* Remove internal sidebar column so content fills the card */
+  .article-main-container {
+    grid-template-columns: 1fr;
+  }
+  /* Overlap sidebar and content in the same grid cell to avoid reserving vertical space */
+  .article-content-wrapper {
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
+    z-index: 1;
+  }
+  .article-sidebar {
+    grid-column: 1;
+    grid-row: 1;
+    z-index: 2;
+  }
+  /* Provide visual gap between floating sidebar and content card */
+  .article-sidebar {
+    margin-left: -320px; /* 280 + ~40px spacing */
+  }
+}
+
+/* On wide desktops, visually pull the sidebar out of the article card to the left */
+@media (min-width: 1280px) {
+  .article-main-section { position: relative; }
+  /* Make content span full width of the card (fill removed column) */
+  .article-main-container {
+    grid-template-columns: 1fr;
+  }
+  /* Float the sidebar left of the card with a comfortable separation */
+  .article-sidebar {
+    margin-left: -340px; /* 280px width + 60px gap from card */
+  }
 }
 
 .social-sharing-sidebar {
@@ -426,10 +693,21 @@ body {
   transition: color 0.35s var(--animation-smooth);
 }
 
+/* Author link: no underline, custom colors */
+.author-name a {
+  text-decoration: none;
+  color: var(--primary-color);
+  border-bottom: none;
+  transition: color 0.3s var(--animation-smooth);
+}
+
+.author-name a:hover {
+  color: var(--secondary-color);
+}
+
 .publish-date {
   font-size: 0.875rem;
-  color: #64748b;
-  transition: color 0.4s var(--animation-smooth);
+  color: var(--color-muted);
 }
 
 .publish-date time {
@@ -796,8 +1074,7 @@ body {
 
 .comment-date {
   font-size: 0.875rem;
-  color: #64748b;
-  transition: color 0.4s var(--animation-smooth);
+  color: var(--color-muted);
 }
 
 .comment-text {
@@ -890,24 +1167,6 @@ body {
 /* Footer Container */
 #footer-placeholder {
   margin-top: auto;
-}
-
-/* Reading Progress Bar */
-.reading-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: rgba(17, 115, 212, 0.1);
-  z-index: 1000;
-}
-
-.reading-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  width: 0%;
-  transition: width 0.4s var(--animation-smooth);
 }
 
 /* Back Button */

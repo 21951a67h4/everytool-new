@@ -1,0 +1,10 @@
+{
+  "setup-worktree": [
+    "{",
+    "\"setup-worktree\": [",
+    "\"echo 'Static site worktree initialized'\",",
+    "\"echo 'Open index.html in browser to preview'\"",
+    "]",
+    "}"
+  ]
+}

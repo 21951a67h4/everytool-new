@@ -8,33 +8,32 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://everytool.tech/blog/" />
 
-  <!-- Favicon (optional) -->
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="../assets/favicon.png" />
 
   <!-- Fonts / Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <!-- Open Graph -->
   <meta property="og:title" content="Blog Hub | EveryTool.tech" />
   <meta property="og:description" content="Explore our latest blog articles, tutorials, and insights about tools and technology." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://everytool.tech/blog/" />
   <meta property="og:image" content="https://everytool.tech/blog/blog-images/Free-Financial-Calculators-Guide.webp" />
-  
+
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Blog Hub | EveryTool.tech" />
   <meta name="twitter:description" content="Explore our latest blog articles, tutorials, and insights about tools and technology." />
   <meta name="twitter:image" content="https://everytool.tech/blog/blog-images/Free-Financial-Calculators-Guide.webp" />
-  
+
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
-  
+  <link rel="stylesheet" href="/back-to-top.css">
+
   <!-- Structured Data -->
   <script type="application/ld+json">
   {
@@ -63,583 +62,211 @@
   <div id="header-placeholder"></div>
 
   <!-- HERO SECTION -->
-  <section class="hero-section">
-    <div class="hero-container">
-      <div class="hero-content">
-        <div class="hero-text">
-          <div class="hero-badge">
-            <i class="fas fa-star"></i>
-            <span>Welcome to EveryTool.tech's Blog</span>
-          </div>
-          <h1 class="hero-title">
-            Your Gateway to 
-            <span class="hero-gradient">Digital Excellence</span>
-          </h1>
-          <p class="hero-subtitle">
-            Discover powerful tools, insightful guides, and cutting-edge solutions 
-            that transform the way you work and create. Join thousands of professionals 
-            who trust our platform for their digital needs.
-          </p>
-          <div class="hero-features">
-            <div class="feature-item">
-              <i class="fas fa-check-circle"></i>
-              <span>Expert Reviews</span>
-            </div>
-            <div class="feature-item">
-              <i class="fas fa-check-circle"></i>
-              <span>Free Resources</span>
-            </div>
-            <div class="feature-item">
-              <i class="fas fa-check-circle"></i>
-              <span>Regular Updates</span>
-            </div>
-          </div>
-          <div class="hero-cta">
-            <a href="#blog-section" class="hero-btn primary">
-              <i class="fas fa-rocket"></i>
-              Start Exploring
-            </a>
-          </div>
-          <div class="hero-cta-trending">
-            <a href="#trending-section" class="hero-btn-trending primary glass">
-              <i class="fas fa-rocket"></i>
-              Trending Articles
-            </a>
-          </div>
+  <div id="blog-theme-scope">
+  <section class="blog-hero">
+    <div class="hero-grid">
+      <div class="hero-main">
+        <div class="hero-eyebrow" data-scroll-reveal>
+          <span class="eyebrow-dot"></span>
+          <span class="eyebrow-text">Latest insights</span>
         </div>
-        <div class="hero-visual">
-          <div class="hero-showcase">
-            <div class="showcase-card primary">
-              <div class="showcase-icon">
-                <i class="fas fa-tools"></i>
-              </div>
-              <div class="showcase-content">
-                <h3>Tools & Utilities</h3>
-                <p>Powerful tools for every task</p>
-              </div>
-            </div>
-            <div class="showcase-card secondary">
-              <div class="showcase-icon">
-                <i class="fas fa-book"></i>
-              </div>
-              <div class="showcase-content">
-                <h3>Learn & Grow</h3>
-                <p>Guides and tutorials</p>
-              </div>
-            </div>
-            <div class="showcase-card tertiary">
-              <div class="showcase-icon">
-                <i class="fas fa-chart-line"></i>
-              </div>
-              <div class="showcase-content">
-                <h3>Stay Updated</h3>
-                <p>Latest trends & insights</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="hero-background">
-      <div class="hero-circle circle-1"></div>
-      <div class="hero-circle circle-2"></div>
-      <div class="hero-circle circle-3"></div>
-      <div class="hero-grid"></div>
-    </div>
-  </section>
 
-  <!-- Trending Articles Section -->
-  <section class="trending-articles-section" id="trending-section">
-    <div class="main-container">
-      <h2 class="section-title">Trending Articles</h2>
-      
-      <div class="trending-content-wrapper">
-        <!-- Left Side: Feature Image + Blog Details -->
-        <div class="left-section">
-          <div class="inner-container">
-            <!-- Feature Image -->
-            <div class="feature-image-container">
-              <img src="blog-images/Free-Financial-Calculators-Guide.webp" alt="Featured Blog Image" class="feature-image" id="featureImage">
-            </div>
-            
-            <!-- Blog Details with Auto Scroll -->
-            <div class="blog-details-container">
-              <div class="blog-details-carousel" id="blogDetailsCarousel">
-                
-                <!-- Blog Detail 1 -->
-                <div class="blog-detail-item active" data-image="blog-images/Free-Financial-Calculators-Guide.webp">
-                  <div class="blog-category">
-                    <i class="fas fa-calculator" aria-hidden="true"></i>
-                    <span>Financial Tools</span>
-                  </div>
-                  <h3 class="blog-title">Free Financial Calculators Guide</h3>
-                  <p class="blog-excerpt">Discover the most useful financial calculators available for free and learn how to use them effectively for your financial planning.</p>
-                  <div class="blog-meta">
-                    <span class="publish-date">
-                      <i class="far fa-calendar" aria-hidden="true"></i>
-                      December 2024
-                    </span>
-                    <span class="reading-time">
-                      <i class="far fa-clock" aria-hidden="true"></i>
-                      8 min read
-                    </span>
-                  </div>
-                  <a href="articles/Free Financial Calculators Guide.html" class="read-more-btn" aria-label="Read: Free Financial Calculators Guide">
-                    Read Article <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                  </a>
-                </div>
+        <h1 class="hero-heading" data-scroll-reveal data-delay="100">
+          Discover Tools & Insights
+        </h1>
 
-                <!-- Blog Detail 2 -->
-                <div class="blog-detail-item" data-image="blog-images/Best-Developer-Tools-for-2025.webp">
-                  <div class="blog-category">
-                    <i class="fas fa-calculator" aria-hidden="true"></i>
-                    <span>Developer Tools</span>
-                  </div>
-                  <h3 class="blog-title">Best Developer Tools for 2025</h3>
-                  <p class="blog-excerpt">Discover the best developer tools for 2025 and learn how to use them effectively for your development needs.</p>
-                  <div class="blog-meta">
-                    <span class="publish-date">
-                      <i class="far fa-calendar" aria-hidden="true"></i>
-                      December 2024
-                    </span>
-                    <span class="reading-time">
-                      <i class="far fa-clock" aria-hidden="true"></i>
-                      8 min read
-                    </span>
-                  </div>
-                  <a href="articles/Best Developer Tools for 2025.html" class="read-more-btn" aria-label="Read: Best Developer Tools for 2025">
-                    Read Article <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                  </a>
-                </div>
-
-                <!-- Blog Detail 3 -->
-                <div class="blog-detail-item" data-image="blog-images/Best-Design-Tools-for-2025.webp">
-                  <div class="blog-category">
-                    <i class="fas fa-calculator" aria-hidden="true"></i>
-                    <span>Design Tools</span>
-                  </div>
-                  <h3 class="blog-title">Best Design Tools for 2025</h3>
-                  <p class="blog-excerpt">Discover the best design tools for 2025 and learn how to use them effectively for your design needs.</p>
-                  <div class="blog-meta">
-                    <span class="publish-date">
-                      <i class="far fa-calendar" aria-hidden="true"></i>
-                      December 2024
-                    </span>
-                    <span class="reading-time">
-                      <i class="far fa-clock" aria-hidden="true"></i>
-                      8 min read
-                    </span>
-                  </div>
-                  <a href="articles/Best Design Tools for 2025.html" class="read-more-btn" aria-label="Read: Best Design Tools for 2025">
-                    Read Article <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                  </a>
-                </div>
-              </div>
-              
-              <!-- Carousel Navigation Dots -->
-              <div class="blog-carousel-nav">
-                <button class="carousel-dot active" data-slide="0" aria-label="Go to slide 1"></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Right Side: Category Cards -->
-        <div class="right-section">
-          <div class="category-carousel-wrapper">
-            <!-- Category Carousel Controls - Left -->
-            <div class="category-carousel-controls">
-              <button class="carousel-arrow prev" id="categoryPrevBtn" aria-label="Previous category">
-                <i class="fas fa-chevron-left" aria-hidden="true"></i>
-              </button>
-            </div>
-            
-            <div class="category-cards-container">
-              <div class="category-card-carousel" id="categoryCardCarousel">
-                
-                <!-- Category Card 1 -->
-                <a href="../category-pages/finance-tools.html" class="category-card category-color-1 active" aria-label="Browse Financial Tools">
-                  <div class="category-icon">
-                    <i class="fas fa-calculator" aria-hidden="true"></i>
-                  </div>
-                  <h4 class="category-name">Financial Tools</h4>
-                </a>
-                
-                <!-- Category Card 2 -->
-                <a href="../category-pages/developer-tools.html" class="category-card category-color-2" aria-label="Browse Developer Tools">
-                  <div class="category-icon">
-                    <i class="fas fa-code" aria-hidden="true"></i>
-                  </div>
-                  <h4 class="category-name">Developer Tools</h4>
-                </a>
-
-                <!-- Category Card 3 -->
-                <a href="../category-pages/education-tools.html" class="category-card category-color-1" aria-label="Browse Education Tools">
-                  <div class="category-icon">
-                    <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                  </div>
-                  <h4 class="category-name">Education Tools</h4>
-                </a>
-
-                <!-- Category Card 4 -->
-                <a href="../category-pages/file-conversion-tools.html" class="category-card category-color-2" aria-label="Browse File Conversion Tools">
-                  <div class="category-icon">
-                    <i class="fas fa-file-export" aria-hidden="true"></i>
-                  </div>
-                  <h4 class="category-name">File Conversion</h4>
-                </a>
-
-                <!-- Category Card 5 -->
-                <a href="../category-pages/health-tools.html" class="category-card category-color-1" aria-label="Browse Health Tools">
-                  <div class="category-icon">
-                    <i class="fas fa-heartbeat" aria-hidden="true"></i>
-                  </div>
-                  <h4 class="category-name">Health Tools</h4>
-                </a>
-
-                <!-- Category Card 6 -->
-                <a href="../category-pages/image-media-tools.html" class="category-card category-color-2" aria-label="Browse Image & Media Tools">
-                  <div class="category-icon">
-                    <i class="fas fa-image" aria-hidden="true"></i>
-                  </div>
-                  <h4 class="category-name">Image & Media</h4>
-                </a>
-
-                <!-- Category Card 7 -->
-                <a href="../category-pages/math-tools.html" class="category-card category-color-1" aria-label="Browse Math Tools">
-                  <div class="category-icon">
-                    <i class="fas fa-square-root-variable" aria-hidden="true"></i>
-                  </div>
-                  <h4 class="category-name">Math Tools</h4>
-                </a>
-
-                <!-- Category Card 8 -->
-                <a href="../category-pages/productivity-tools.html" class="category-card category-color-2" aria-label="Browse Productivity Tools">
-                  <div class="category-icon">
-                    <i class="fas fa-tasks" aria-hidden="true"></i>
-                  </div>
-                  <h4 class="category-name">Productivity Tools</h4>
-                </a>
-
-                <!-- Category Card 9 -->
-                <a href="../category-pages/seo-tools.html" class="category-card category-color-1" aria-label="Browse SEO Tools">
-                  <div class="category-icon">
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                  </div>
-                  <h4 class="category-name">SEO Tools</h4>
-                </a>
-
-                <!-- Category Card 10 -->
-                <a href="../category-pages/text-tools.html" class="category-card category-color-2" aria-label="Browse Text Tools">
-                  <div class="category-icon">
-                    <i class="fas fa-font" aria-hidden="true"></i>
-                  </div>
-                  <h4 class="category-name">Text Tools</h4>
-                </a>
-
-                <!-- Category Card 11 -->
-                <a href="../category-pages/utility-data-tools.html" class="category-card category-color-1" aria-label="Browse Utility & Data Tools">
-                  <div class="category-icon">
-                    <i class="fas fa-database" aria-hidden="true"></i>
-                  </div>
-                  <h4 class="category-name">Utility & Data</h4>
-                </a>
-
-                <!-- Category Card 12 -->
-                <a href="../category-pages/date-time-tools.html" class="category-card category-color-2" aria-label="Browse Date & Time Tools">
-                  <div class="category-icon">
-                    <i class="fas fa-clock" aria-hidden="true"></i>
-                  </div>
-                  <h4 class="category-name">Date & Time</h4>
-                </a>
-
-              </div>
-            </div>
-            
-            <!-- Category Carousel Controls - Right -->
-            <div class="category-carousel-controls">
-              <button class="carousel-arrow next" id="categoryNextBtn" aria-label="Next category">
-                <i class="fas fa-chevron-right" aria-hidden="true"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BLOG CARDS SECTION -->
-  <section class="blog-section" id="blog-section">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Latest Articles</h2>
-        <p class="section-subtitle">
-          Dive into our comprehensive collection of articles covering the latest tools, 
-          tutorials, and insights to enhance your digital experience.
+        <p class="hero-lead" data-scroll-reveal data-delay="200">
+          Expert guides, tutorials, and resources to help you work smarter with modern tools and technologies.
         </p>
+
+        <div class="hero-stats" data-scroll-reveal data-delay="300">
+          <div class="stat-item">
+            <div class="stat-value"></div>
+            <div class="stat-label">Articles</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-value">50k+</div>
+            <div class="stat-label">Readers</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-value"></div>
+            <div class="stat-label">categories</div>
+          </div>
+        </div>
       </div>
 
-      <!-- Blog Controls - Redesigned -->
-      <div class="blog-controls">
-        <!-- Search Bar (modern look, unchanged) -->
+      <!-- Decorative Elements with Icons -->
+      <div class="hero-decoration">
+        <div class="deco-card deco-1">
+          <i class="fas fa-pen-nib"></i>
+        </div>
+        <div class="deco-card deco-2">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+        <div class="deco-card deco-3">
+          <i class="fas fa-rocket"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED ARTICLE -->
+  <section class="featured-section">
+    <div class="container-wide">
+      <div class="featured-wrapper" data-scroll-reveal>
+        <div class="featured-badge">
+          <i class="fas fa-fire"></i>
+          <span>Featured Post</span>
+        </div>
+
+        <div class="featured-grid">
+          <div class="featured-visual">
+            <img
+              src="blog-images/smart-budgeting-with-financial-calculators.webp"
+              alt="Smart Budgeting with Financial Calculators"
+              loading="eager"
+            />
+          </div>
+
+          <div class="featured-body">
+            <div class="featured-meta">
+              <span class="meta-category">Finance</span>
+              <span class="meta-dot">•</span>
+              <span class="meta-read">5 min read</span>
+            </div>
+
+            <h2 class="featured-title">
+              Smart Budgeting with Financial Calculators
+            </h2>
+
+            <p class="featured-description">
+              Discover the most useful financial calculators available for free and learn how to use them effectively for your financial planning. From mortgage calculators to investment planners, we cover everything you need.
+            </p>
+
+            <div class="featured-footer">
+              <div class="author-block">
+                <img src="../../assets/varshith3.png" alt="Gubba Varshith" class="author-avatar" loading="lazy">
+                <div class="author-info">
+                  <div class="author-name">Gubba Varshith</div>
+                  <div class="author-date">OCT 19, 2025</div>
+                </div>
+              </div>
+
+              <a href="/blog/articals/smart-budgeting-with-financial-calculators.html" class="featured-btn">
+                Read Full Article
+                <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLES GRID -->
+  <section class="articles-section">
+    <div class="container-wide">
+
+      <div class="section-header" data-scroll-reveal>
+        <h2 class="section-title">Latest Articles</h2>
+        <p class="section-subtitle">Handpicked content to boost your productivity</p>
+      </div>
+
+      <!-- SEARCH & FILTERS MOVED HERE -->
+      <div class="articles-controls" data-scroll-reveal>
+        <!-- Search Bar -->
         <div class="search-container">
-          <div class="search-box">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-field"
+            placeholder="Search articles..."
+            aria-label="Search articles"
+          />
+          <div class="search-icon">
             <i class="fas fa-search"></i>
-            <input type="text" id="blogSearch" placeholder="Search articles..." aria-label="Search articles" autocomplete="off">
-            <button class="search-clear" id="searchClear" style="display: none;" aria-label="Clear search">
-              <i class="fas fa-times"></i>
-            </button>
           </div>
         </div>
-        <!-- Category Filter, Custom Pill Buttons with SVG Icons -->
-        <div class="filter-container">
-          <div class="category-filter" role="toolbar" aria-label="Article categories">
-            <button class="filter-btn active" data-category="all" aria-pressed="true">
-              <!-- Home/All SVG (grid style, sample minimal icon) -->
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="6" height="6" rx="2" fill="#667eea"/><rect x="12" y="2" width="6" height="6" rx="2" fill="#764ba2"/><rect x="2" y="12" width="6" height="6" rx="2" fill="#f093fb"/><rect x="12" y="12" width="6" height="6" rx="2" fill="#a8b5f0"/></svg>
-              <span>All Articles</span>
-            </button>
-            <button class="filter-btn" data-category="design">
-              <!-- Palette icon (minimal) -->
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="8" stroke="#764ba2" stroke-width="2"/><circle cx="6.5" cy="8.5" r="1.2" fill="#f093fb"/><circle cx="13.5" cy="8.5" r="1.2" fill="#667eea"/><circle cx="10" cy="13.5" r="1.2" fill="#a8b5f0"/></svg>
-              <span>Design</span>
-            </button>
-            <button class="filter-btn" data-category="development">
-              <!-- Code brackets icon -->
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 6L3 10L7 14" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 6L17 10L13 14" stroke="#764ba2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>Development</span>
-            </button>
-            <button class="filter-btn" data-category="finance">
-              <!-- Minimal calculator icon -->
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="12" height="12" rx="3" stroke="#764ba2" stroke-width="2"/><circle cx="7" cy="9" r="1" fill="#f093fb"/><circle cx="10" cy="9" r="1" fill="#a8b5f0"/><circle cx="13" cy="9" r="1" fill="#667eea"/><rect x="8" y="12" width="4" height="2" rx="1" fill="#667eea"/></svg>
-              <span>Finance</span>
-            </button>
-            <button class="filter-btn" data-category="technology">
-              <!-- Chip icon (minimal style) -->
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="5" width="10" height="10" rx="2" stroke="#667eea" stroke-width="2"/><rect x="8" y="8" width="4" height="4" rx="1" fill="#f093fb"/></svg>
-              <span>Technology</span>
-            </button>
-          </div>
-        </div>
-      </div>
-      <!-- End Blog Controls Redesign -->
 
-      <!-- Live region for filter announcements -->
-      <div id="filterAnnouncer" aria-live="polite" class="sr-only"></div>
+        <div class="controls-row">
+          <!-- Dynamic Filter Tabs (Generated by JS) -->
+          <div class="filter-tabs" id="filterTabs">
+            <!-- Tabs will be generated dynamically -->
+          </div>
 
-      <!-- Loading state -->
-      <div class="blog-grid-loading" id="blogGridLoading" style="display: none;">
-        <div class="loading-card-skeleton">
-          <div class="skeleton-image"></div>
-          <div class="skeleton-content">
-            <div class="skeleton-title"></div>
-            <div class="skeleton-text"></div>
-            <div class="skeleton-text short"></div>
-          </div>
-        </div>
-        <div class="loading-card-skeleton">
-          <div class="skeleton-image"></div>
-          <div class="skeleton-content">
-            <div class="skeleton-title"></div>
-            <div class="skeleton-text"></div>
-            <div class="skeleton-text short"></div>
-          </div>
-        </div>
-        <div class="loading-card-skeleton">
-          <div class="skeleton-image"></div>
-          <div class="skeleton-content">
-            <div class="skeleton-title"></div>
-            <div class="skeleton-text"></div>
-            <div class="skeleton-text short"></div>
+          <!-- Sort Dropdown -->
+          <div class="sort-container">
+            <select id="sortSelect" class="sort-select" aria-label="Sort articles">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="title-asc">Title (A-Z)</option>
+              <option value="title-desc">Title (Z-A)</option>
+            </select>
+            <i class="fas fa-chevron-down sort-icon"></i>
           </div>
         </div>
       </div>
 
-      <div class="blog-grid" id="blogGrid" style="opacity: 0;">
-        
-        <!-- Blog Card 1 - Finance -->
-        <article class="blog-card" data-category="Finance" data-title="Ultimate Guide to Financial Planning for Beginners" data-excerpt="Learn the fundamentals of financial planning, budgeting strategies, and investment basics to secure your financial future with confidence." data-author="John Anderson" data-date="2025-03-15" data-aos="fade-up" data-aos-delay="100">
-          <div class="blog-card-image">
-            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" width="400" height="240" alt="Financial Planning Guide - Money management charts and graphs" loading="lazy">
-          </div>
-          <div class="blog-card-content">
-            <div class="blog-card-category">Finance</div>
-            <h3 class="blog-card-title">Ultimate Guide to Financial Planning for Beginners</h3>
-            <p class="blog-card-excerpt">
-              Learn the fundamentals of financial planning, budgeting strategies, and investment 
-              basics to secure your financial future with confidence.
-            </p>
-            <div class="blog-card-meta">
-              <div class="blog-card-author">
-                <i class="fas fa-user-circle" aria-hidden="true"></i>
-                <span>John Anderson</span>
-              </div>
-              <div class="blog-card-date">
-                <i class="far fa-calendar" aria-hidden="true"></i>
-                <span>March 15, 2025</span>
-              </div>
-            </div>
-          </div>
-          <a href="articles/financial-planning-guide.html" class="blog-card-link" aria-label="Read: Ultimate Guide to Financial Planning for Beginners"></a>
-        </article>
+      <div class="articles-grid" id="articlesGrid">
 
-        <!-- Blog Card 2 - Design -->
-        <article class="blog-card" data-category="Design" data-title="Mastering CSS Grid and Flexbox" data-excerpt="A comprehensive guide to modern CSS layout techniques, including practical examples and real-world applications for responsive web design." data-author="James Wilson" data-date="2025-03-12" data-aos="fade-up" data-aos-delay="200">
-          <div class="blog-card-image">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" width="400" height="240" alt="CSS Grid and Flexbox Layout Tutorial" loading="lazy">
-          </div>
-          <div class="blog-card-content">
-            <div class="blog-card-category">Design</div>
-            <h3 class="blog-card-title">Mastering CSS Grid and Flexbox</h3>
-            <p class="blog-card-excerpt">
-              A comprehensive guide to modern CSS layout techniques, including practical examples and 
-              real-world applications for responsive web design.
-            </p>
-            <div class="blog-card-meta">
-              <div class="blog-card-author">
-                <i class="fas fa-user-circle" aria-hidden="true"></i>
-                <span>James Wilson</span>
-              </div>
-              <div class="blog-card-date">
-                <i class="far fa-calendar" aria-hidden="true"></i>
-                <span>March 12, 2025</span>
+        <!-- Article 1 -->
+        <article class="article-item" data-category="finance" data-author="Gubba Varshith" data-date="2025-11-02" data-scroll-reveal data-delay="0">
+          <a href="/blog/articals/smart-budgeting-with-financial-calculators.html" class="article-link">
+            <div class="article-thumb">
+              <img src="blog-images/smart-budgeting-with-financial-calculators.webp" alt="Smart Budgeting with Financial Calculators" loading="lazy">
+              <div class="thumb-overlay"></div>
+              <div class="hover-indicator">
+                <div class="indicator-circle">
+                  <i class="fas fa-arrow-right"></i>
+                </div>
               </div>
             </div>
-          </div>
-          <a href="articles/css-grid-flexbox.html" class="blog-card-link" aria-label="Read: Mastering CSS Grid and Flexbox"></a>
-        </article>
 
-        <!-- Blog Card 3 - Technology -->
-        <article class="blog-card" data-category="Technology" data-title="The Future of Remote Work Technology" data-excerpt="Explore emerging technologies and tools that are shaping the future of remote work, from virtual collaboration to AI-powered productivity solutions." data-author="Maria Gonzalez" data-date="2025-03-10" data-aos="fade-up" data-aos-delay="300">
-          <div class="blog-card-image">
-            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" width="400" height="240" alt="Remote Work Technology Future" loading="lazy">
-          </div>
-          <div class="blog-card-content">
-            <div class="blog-card-category">Technology</div>
-            <h3 class="blog-card-title">The Future of Remote Work Technology</h3>
-            <p class="blog-card-excerpt">
-              Explore emerging technologies and tools that are shaping the future of remote work, 
-              from virtual collaboration to AI-powered productivity solutions.
-            </p>
-            <div class="blog-card-meta">
-              <div class="blog-card-author">
-                <i class="fas fa-user-circle" aria-hidden="true"></i>
-                <span>Maria Gonzalez</span>
-              </div>
-              <div class="blog-card-date">
-                <i class="far fa-calendar" aria-hidden="true"></i>
-                <span>March 10, 2025</span>
-              </div>
-            </div>
-          </div>
-          <a href="articles/remote-work-future.html" class="blog-card-link" aria-label="Read: The Future of Remote Work Technology"></a>
-        </article>
+            <div class="article-content">
+              <div class="article-tag">Finance</div>
+              <h3 class="article-title">Smart Budgeting with Financial Calculators</h3>
+              <p class="article-excerpt">Discover the most useful financial calculators available for free and learn how to use them effectively for your financial planning. From mortgage calculators to investment planners, we cover everything you need.</p>
 
-        <!-- Blog Card 4 - Development -->
-        <article class="blog-card" data-category="Development" data-title="Building Scalable APIs with Modern Architecture" data-excerpt="Learn how to design and implement scalable RESTful APIs using the latest architectural patterns and best practices for high-performance applications." data-author="Alex Thompson" data-date="2025-03-08" data-aos="fade-up" data-aos-delay="400">
-          <div class="blog-card-image">
-            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" width="400" height="240" alt="Scalable API Architecture Development" loading="lazy">
-          </div>
-          <div class="blog-card-content">
-            <div class="blog-card-category">Development</div>
-            <h3 class="blog-card-title">Building Scalable APIs with Modern Architecture</h3>
-            <p class="blog-card-excerpt">
-              Learn how to design and implement scalable RESTful APIs using the latest architectural 
-              patterns and best practices for high-performance applications.
-            </p>
-            <div class="blog-card-meta">
-              <div class="blog-card-author">
-                <i class="fas fa-user-circle" aria-hidden="true"></i>
-                <span>Alex Thompson</span>
-              </div>
-              <div class="blog-card-date">
-                <i class="far fa-calendar" aria-hidden="true"></i>
-                <span>March 8, 2025</span>
+              <div class="article-footer">
+                <div class="article-author">
+                  <img src="/assets/varshith3.png" alt="Gubba Varshith" class="author-avatar-small" loading="lazy">
+                  <div class="author-details">
+                    <div class="author-name-small">Gubba Varshith</div>
+                    <div class="author-date-small">OCT 19, 2025</div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <a href="articles/scalable-apis-guide.html" class="blog-card-link" aria-label="Read: Building Scalable APIs with Modern Architecture"></a>
-        </article>
-
-        <!-- Blog Card 5 - Development -->
-        <article class="blog-card" data-category="Development" data-title="JavaScript Performance Optimization Techniques" data-excerpt="Discover proven strategies to optimize JavaScript performance, reduce bundle sizes, and create faster, more efficient web applications." data-author="Sarah Kim" data-date="2025-03-05" data-aos="fade-up" data-aos-delay="500">
-          <div class="blog-card-image">
-            <img src="https://images.unsplash.com/photo-1516116216624-53e697fedbea?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" width="400" height="240" alt="JavaScript Performance Optimization Code" loading="lazy">
-          </div>
-          <div class="blog-card-content">
-            <div class="blog-card-category">Development</div>
-            <h3 class="blog-card-title">JavaScript Performance Optimization Techniques</h3>
-            <p class="blog-card-excerpt">
-              Discover proven strategies to optimize JavaScript performance, reduce bundle sizes, 
-              and create faster, more efficient web applications.
-            </p>
-            <div class="blog-card-meta">
-              <div class="blog-card-author">
-                <i class="fas fa-user-circle" aria-hidden="true"></i>
-                <span>Sarah Kim</span>
-              </div>
-              <div class="blog-card-date">
-                <i class="far fa-calendar" aria-hidden="true"></i>
-                <span>March 5, 2025</span>
-              </div>
-            </div>
-          </div>
-          <a href="articles/js-performance-optimization.html" class="blog-card-link" aria-label="Read: JavaScript Performance Optimization Techniques"></a>
-        </article>
-
-        <!-- Blog Card 6 - Technology -->
-        <article class="blog-card" data-category="Technology" data-title="Cloud Computing Fundamentals for Beginners" data-excerpt="Get started with cloud computing by understanding the core concepts, services, and platforms that power modern applications and businesses." data-author="Robert Chen" data-date="2025-03-02" data-aos="fade-up" data-aos-delay="600">
-          <div class="blog-card-image">
-            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" width="400" height="240" alt="Cloud Computing Infrastructure Technology" loading="lazy">
-          </div>
-          <div class="blog-card-content">
-            <div class="blog-card-category">Technology</div>
-            <h3 class="blog-card-title">Cloud Computing Fundamentals for Beginners</h3>
-            <p class="blog-card-excerpt">
-              Get started with cloud computing by understanding the core concepts, services, 
-              and platforms that power modern applications and businesses.
-            </p>
-            <div class="blog-card-meta">
-              <div class="blog-card-author">
-                <i class="fas fa-user-circle" aria-hidden="true"></i>
-                <span>Robert Chen</span>
-              </div>
-              <div class="blog-card-date">
-                <i class="far fa-calendar" aria-hidden="true"></i>
-                <span>March 2, 2025</span>
-              </div>
-            </div>
-          </div>
-          <a href="articles/cloud-computing-basics.html" class="blog-card-link" aria-label="Read: Cloud Computing Fundamentals for Beginners"></a>
+          </a>
         </article>
       </div>
 
-      <!-- No Results Message -->
-      <div class="no-results-message" id="noResultsMessage" style="display: none;">
-        <div class="no-results-content">
-          <i class="fas fa-search" aria-hidden="true"></i>
-          <h3>No articles found</h3>
-          <p>Try adjusting your search terms or filters</p>
+      <!-- No Results (hidden by default) -->
+      <div class="no-results" id="noResults" style="display: none;">
+        <div class="no-results-icon">
+          <i class="fas fa-inbox"></i>
         </div>
+        <h3 class="no-results-title">No articles found</h3>
+        <p class="no-results-text">Try adjusting your search or filter to find what you're looking for.</p>
       </div>
 
-      <!-- Load More Button -->
-      <div class="blog-actions">
-        <button class="load-more-btn" id="loadMoreBtn" aria-describedby="loadMoreStatus">
-          <i class="fas fa-plus" aria-hidden="true"></i>
-          <span>Load More Articles</span>
-          <span class="load-more-count" id="loadMoreCount" style="display: none;"></span>
-        </button>
-        <div id="loadMoreStatus" class="sr-only" aria-live="polite"></div>
-      </div>
     </div>
   </section>
 
   <!-- GLOBAL FOOTER (INJECTED) -->
+  </div>
   <footer id="footer-placeholder"></footer>
 
   <!-- Scripts -->
   <script src="../app-loader.js" defer></script>
+  <script src="/back-to-top.js" defer></script>
   <script src="script.js"></script>
+  
+  <!-- Floating Theme Toggle Button -->
+  <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false" title="Toggle dark mode">
+    <i class="fa-solid fa-moon"></i>
+  </button>
 </body>
 </html>
