@@ -16,7 +16,7 @@
     <meta property="og:image" content="https://everytool.tech/assets/tool-preview.png">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="../assets/favicon.png"> 
+    <link rel="icon" type="image/png" href="/assets/favicon.png"> 
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -25,9 +25,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- FAQ section styling -->
-    <link rel="stylesheet" href="../FAQ section/faq.css">
+    <link rel="stylesheet" href="/FAQ section/faq.css">
     <link rel="stylesheet" href="tool.css">
-    <link rel="stylesheet" href="../back-to-top.css">
+    <link rel="stylesheet" href="/back-to-top.css">
     <script src="/back-to-top.js"></script>
     <style>
         /* Mobile optimization - ensure header has space while loading */
@@ -638,7 +638,6 @@
     </script>
 
     <script src="/universal-search-deploy.js"></script>
-    <script src="../../faq.js" defer></script>
     <script src="../../view.js" defer></script>
 
     <script>
@@ -698,68 +697,7 @@
         });
     </script>
 
-<script>
-    // =====================================================================
-    // ====== START: MAGIC BLOCK TO COPY FOR EVERY NEW PAGE ======
-    // =====================================================================
-        document.addEventListener('DOMContentLoaded', () => {
-    
-    const loadScript = (src) => {
-        return new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = src;
-            script.onload = () => resolve(script);
-            script.onerror = () => reject(new Error(`Script load error for ${src}`));
-            document.body.appendChild(script);
-        });
-    };
-    
-    const loadHeader = () => {
-        const headerPlaceholder = document.getElementById('header-placeholder');
-        if (!headerPlaceholder) return;
-    
-        // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
-        fetch('/header.html')
-            .then(response => {
-                if (!response.ok) throw new Error('Network response for header.html was not ok.');
-                return response.text();
-            })
-            .then(html => {
-                headerPlaceholder.innerHTML = html;
-                return loadScript('https://cdn.jsdelivr.net/npm/fuse.js@6.6.2');
-            })
-            .then(() => {
-                // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
-                return loadScript('/header-search.js');
-            })
-            .then(() => {
-                if (typeof initializeHeader === 'function') {
-                    initializeHeader(); 
-                } else {
-                    throw new Error('initializeHeader function not found.');
-                }
-            })
-            .catch(error => {
-                console.error('CRITICAL ERROR during header loading process:', error);
-                // Optionally, display an error message in the header placeholder
-                if (headerPlaceholder) {
-                    headerPlaceholder.innerHTML = '<div style="color: red; background: #fff3f3; padding: 1em;">Sorry, the site header could not be loaded.</div>';
-                }
-            });
-    };
-    
-    const loadFooter = () => {
-        const footerPlaceholder = document.getElementById('footer-placeholder');
-        if (footerPlaceholder) {
-            // *** IMPORTANT: ADJUST THIS PATH BASED ON YOUR FILE'S LOCATION ***
-            fetch('/footer.html')
-                .then(response => response.ok ? response.text() : Promise.reject('Failed to load footer'))
-                .then(html => { footerPlaceholder.innerHTML = html; })
-                .catch(error => console.error('Error loading footer:', error));
-        }
-    };
-    
-    loadHeader();
-    loadFooter();
-    });
-    </script>
+    <script src="/app-loader.js" defer></script>
+
+</body>
+</html>
