@@ -1,6 +1,7 @@
 /* Blog Template Styles */
 :root {
   --primary-color: #1173d4;
+  --primary-color-muted: #3e96ee;
   --secondary-color: #7209b7;
   --background-light: #f8fafc;
   --background-dark: #0f172a;
@@ -455,9 +456,9 @@ body.article-dark {
     align-self: start;
     width: 280px;
     z-index: 3;
-    height: max-content;
-    max-height: calc(100vh - 120px);
-    overflow: auto;
+    height: auto;
+    max-height: none;
+    overflow: visible;
   }
   /* Remove internal sidebar column so content fills the card */
   .article-main-container {
@@ -658,6 +659,86 @@ body.article-dark {
   transition: gap 0.4s var(--animation-smooth);
 }
 
+/* Word Count Badge */
+.article-stats {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+  transition: gap 0.3s var(--animation-smooth);
+}
+
+.stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(17, 115, 212, 0.08);
+  border: 1px solid rgba(17, 115, 212, 0.15);
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-light);
+  transition: 
+    background 0.35s var(--animation-smooth),
+    border-color 0.35s var(--animation-smooth),
+    transform 0.3s var(--animation-smooth);
+}
+
+.stat-badge i {
+  font-size: 0.875rem;
+  color: var(--primary-color);
+  transition: color 0.3s var(--animation-smooth);
+}
+
+.stat-badge:hover {
+  background: rgba(17, 115, 212, 0.12);
+  border-color: rgba(17, 115, 212, 0.25);
+  transform: translateY(-1px);
+}
+
+.stat-value {
+  font-weight: 600;
+  color: var(--primary-color);
+  transition: color 0.3s var(--animation-smooth);
+}
+
+/* Dark mode stat badge */
+@media (prefers-color-scheme: dark) {
+  .stat-badge {
+    background: rgba(56, 189, 248, 0.1);
+    border-color: rgba(56, 189, 248, 0.2);
+    color: var(--text-dark);
+  }
+  .stat-badge:hover {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: rgba(56, 189, 248, 0.3);
+  }
+}
+
+body.article-dark .stat-badge {
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.2);
+  color: var(--text-dark);
+}
+
+body.article-dark .stat-badge:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+@media (max-width: 768px) {
+  .article-stats {
+    gap: 0.75rem;
+  }
+  
+  .stat-badge {
+    font-size: 0.8125rem;
+    padding: 0.4rem 0.875rem;
+  }
+}
+
 .author-avatar {
   width: 3rem;
   height: 3rem;
@@ -838,18 +919,19 @@ body.article-dark {
 }
 
 .article-content a {
-  color: var(--primary-color);
-  text-decoration: none;
+  color: var(--primary-color-muted);
+  text-decoration: none !important;
   font-weight: 500;
-  border-bottom: 1px solid transparent;
+  display: inline-block;
   transition: 
     color 0.33s var(--animation-smooth),
-    border-bottom 0.33s var(--animation-smooth);
+    transform 0.33s var(--animation-smooth);
 }
 
 .article-content a:hover {
-  color: var(--secondary-color);
-  border-bottom-color: var(--secondary-color);
+  color: var(--primary-color);
+  text-decoration: none !important;
+  transform: scale(1.02);
 }
 
 /* Code blocks */

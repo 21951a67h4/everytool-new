@@ -474,84 +474,193 @@ kbd {
         </section>
 
         <!-- start of latest blogs carousel -->
-        <section class="blogs" aria-label="Latest Blog Posts">
-            <div class="blogs__container">
-                <div class="blogs__header">
-                    <button class="blogs__arrow blogs__arrow--prev" data-action="prev" aria-label="Previous posts" disabled>
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                    <h2 class="blogs__title">Latest Blog Posts</h2>
-                    <button class="blogs__arrow blogs__arrow--next" data-action="next" aria-label="Next posts">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                    </div>
+        <section class="blog-cascade" aria-label="Latest Blog Posts">
+            <div class="blog-cascade__container">
+                
+                <!-- Floating Particles Background -->
+                <div class="blog-cascade__particles" aria-hidden="true">
+                    <div class="blog-cascade__particle"></div>
+                    <div class="blog-cascade__particle"></div>
+                    <div class="blog-cascade__particle"></div>
+                    <div class="blog-cascade__particle"></div>
+                    <div class="blog-cascade__particle"></div>
+                </div>
 
-                <div id="blog-carousel-viewport" class="blogs__viewport" tabindex="0">
-                    <div class="blogs__track">
-                        <article class="card" role="article">
-                            <div class="card__media">
-                                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Demo">
-                                <span class="card__badge">Other</span>
+                <!-- Magnetic Section Header -->
+                <div class="blog-cascade__header">
+                    <div class="blog-cascade__badge">
+                        <span class="blog-cascade__badge-dot"></span>
+                        <span class="blog-cascade__badge-text">Fresh Content</span>
+                        <span class="blog-cascade__badge-pulse"></span>
                     </div>
-                            <div class="card__body">
-                                <h3 class="card__title">Demo Post 1</h3>
-                                <div class="card__meta"><i class="far fa-calendar"></i> August 28, 2025</div>
-                                <p class="card__excerpt">Planning a loan? Your EMI (Equated Monthly Instalment) is the monthly amount you’ll pay. This guide explains the formula in…</p>
-                                <a class="card__btn" href="#" aria-label="Read more about Demo Post 1">Read More <i class="fas fa-arrow-right"></i></a>
+                    <h2 class="blog-cascade__title">
+                        <span class="blog-cascade__title-line">Latest</span>
+                        <span class="blog-cascade__title-line blog-cascade__title-line--accent">Insights</span>
+                    </h2>
+                    <p class="blog-cascade__subtitle">Curated knowledge for modern professionals</p>
+                </div>
+
+                <!-- Staggered Masonry Cards -->
+                <div class="blog-cascade__masonry">
+                    
+                    <!-- Hero Card with Ribbon -->
+                    <article class="blog-cascade__card blog-cascade__card--hero">
+                        <div class="blog-cascade__card-ribbon">
+                            <i class="fas fa-star"></i>
+                            <span>Featured</span>
+                        </div>
+                        <div class="blog-cascade__card-corner blog-cascade__card-corner--tl"></div>
+                        <div class="blog-cascade__card-corner blog-cascade__card-corner--tr"></div>
+                        <div class="blog-cascade__card-corner blog-cascade__card-corner--bl"></div>
+                        <div class="blog-cascade__card-corner blog-cascade__card-corner--br"></div>
+                        <div class="blog-cascade__card-media">
+                            <img src="/blog/blog-images/smart-budgeting-with-financial-calculators.webp" 
+                                 alt="Smart Budgeting with Financial Calculators" 
+                                 class="blog-cascade__card-img" 
+                                 loading="lazy">
+                            <div class="blog-cascade__card-gradient"></div>
+                        </div>
+                        <div class="blog-cascade__card-body">
+                            <div class="blog-cascade__card-tags">
+                                <span class="blog-cascade__tag blog-cascade__tag--finance">
+                                    <i class="fas fa-chart-line"></i>
+                                    Finance
+                                </span>
+                                <span class="blog-cascade__tag blog-cascade__tag--time">
+                                    <i class="far fa-clock"></i>
+                                    4 min
+                                </span>
+                            </div>
+                            <h3 class="blog-cascade__card-title">Smart Budgeting with Financial Calculators</h3>
+                            <p class="blog-cascade__card-desc">Discover the most useful financial calculators available for free and learn how to use them effectively for your financial planning. From mortgage calculators to investment planners, we cover everything you need.</p>
+                            <div class="blog-cascade__card-footer">
+                                <div class="blog-cascade__author">
+                                    <div class="blog-cascade__author-avatar">
+                                        <img src="/assets/varshith3.png" alt="Gubba varshith" width="32" height="32" style="border-radius:50%;object-fit:cover;" loading="lazy" />
+                                    </div>
+                                    <span class="blog-cascade__author-name">Gubba varshith</span>
+                                </div>
+                                <a href="/blog/articals/smart-budgeting-with-financial-calculators.html" class="blog-cascade__read-btn">
+                                    <span>Read More</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Standard Card 1 -->
+                    <article class="blog-cascade__card blog-cascade__card--standard">
+                        <div class="blog-cascade__card-corner blog-cascade__card-corner--tl"></div>
+                        <div class="blog-cascade__card-corner blog-cascade__card-corner--br"></div>
+                        <div class="blog-cascade__card-media blog-cascade__card-media--small">
+                            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" 
+                                 alt="EMI Calculations" 
+                                 class="blog-cascade__card-img" 
+                                 loading="lazy">
+                            <div class="blog-cascade__card-gradient"></div>
+                        </div>
+                        <div class="blog-cascade__card-body blog-cascade__card-body--compact">
+                            <div class="blog-cascade__card-tags">
+                                <span class="blog-cascade__tag blog-cascade__tag--finance">
+                                    <i class="fas fa-calculator"></i>
+                                    Finance
+                                </span>
+                            </div>
+                            <h3 class="blog-cascade__card-title blog-cascade__card-title--small">EMI Calculations Made Simple</h3>
+                            <p class="blog-cascade__card-desc blog-cascade__card-desc--short">Calculate monthly loan payments with practical examples.</p>
+                            <a href="#" class="blog-cascade__quick-link">
+                                <span>Explore</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Standard Card 2 -->
+                    <article class="blog-cascade__card blog-cascade__card--standard">
+                        <div class="blog-cascade__card-corner blog-cascade__card-corner--tr"></div>
+                        <div class="blog-cascade__card-corner blog-cascade__card-corner--bl"></div>
+                        <div class="blog-cascade__card-media blog-cascade__card-media--small">
+                            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80" 
+                                 alt="Percentage Calculations" 
+                                 class="blog-cascade__card-img" 
+                                 loading="lazy">
+                            <div class="blog-cascade__card-gradient"></div>
+                        </div>
+                        <div class="blog-cascade__card-body blog-cascade__card-body--compact">
+                            <div class="blog-cascade__card-tags">
+                                <span class="blog-cascade__tag blog-cascade__tag--math">
+                                    <i class="fas fa-percent"></i>
+                                    Math
+                                </span>
+                            </div>
+                            <h3 class="blog-cascade__card-title blog-cascade__card-title--small">Master Percentage Calculations</h3>
+                            <p class="blog-cascade__card-desc blog-cascade__card-desc--short">Quick tips for everyday percentage math.</p>
+                            <a href="#" class="blog-cascade__quick-link">
+                                <span>Explore</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Compact Card 1 -->
+                    <article class="blog-cascade__card blog-cascade__card--compact">
+                        <div class="blog-cascade__card-corner blog-cascade__card-corner--tl"></div>
+                        <div class="blog-cascade__card-corner blog-cascade__card-corner--br"></div>
+                        <div class="blog-cascade__card-icon-wrap">
+                            <div class="blog-cascade__card-icon blog-cascade__card-icon--productivity">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                        </div>
+                        <div class="blog-cascade__card-body blog-cascade__card-body--mini">
+                            <span class="blog-cascade__tag blog-cascade__tag--productivity">Productivity</span>
+                            <h3 class="blog-cascade__card-title blog-cascade__card-title--mini">10 Productivity Hacks</h3>
+                            <a href="#" class="blog-cascade__icon-link">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Compact Card 2 -->
+                    <article class="blog-cascade__card blog-cascade__card--compact">
+                        <div class="blog-cascade__card-corner blog-cascade__card-corner--tr"></div>
+                        <div class="blog-cascade__card-corner blog-cascade__card-corner--bl"></div>
+                        <div class="blog-cascade__card-icon-wrap">
+                            <div class="blog-cascade__card-icon blog-cascade__card-icon--collaboration">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="blog-cascade__card-body blog-cascade__card-body--mini">
+                            <span class="blog-cascade__tag blog-cascade__tag--collaboration">Team</span>
+                            <h3 class="blog-cascade__card-title blog-cascade__card-title--mini">Remote Team Tools</h3>
+                            <a href="#" class="blog-cascade__icon-link">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                </div>
+
+                <!-- CTA Banner -->
+                <div class="blog-cascade__cta">
+                    <div class="blog-cascade__cta-pattern" aria-hidden="true"></div>
+                    <div class="blog-cascade__cta-content">
+                        <div class="blog-cascade__cta-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="blog-cascade__cta-text">
+                            <h3 class="blog-cascade__cta-title">Never Miss an Update</h3>
+                            <p class="blog-cascade__cta-subtitle">Join 10,000+ readers receiving expert insights weekly</p>
+                        </div>
                     </div>
-                  </article>
-          
-                        <article class="card" role="article">
-                            <div class="card__media">
-                                <img src="#" alt="Demo">
-                                <span class="card__badge">Finance</span>
-                    </div>
-                            <div class="card__body">
-                                <h3 class="card__title">Demo Post 2</h3>
-                                <div class="card__meta"><i class="far fa-calendar"></i> August 24, 2025</div>
-                                <p class="card__excerpt">Understand compound interest with practical examples and a handy calculator to project your savings overtime…</p>
-                                <a class="card__btn" href="#" aria-label="Read more about Demo Post 2">Read More <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                  </article>
-                        <article class="card" role="article">
-                            <div class="card__media">
-                                <img src="#" alt="Demo">
-                                <span class="card__badge">Math</span>
-                            </div>
-                            <div class="card__body">
-                                <h3 class="card__title">Demo Post 3</h3>
-                                <div class="card__meta"><i class="far fa-calendar"></i> August 20, 2025</div>
-                                <p class="card__excerpt">Master percentage calculations quickly with tips, tricks and solved examples you can use anywhere…</p>
-                                <a class="card__btn" href="#" aria-label="Read more about Demo Post 3">Read More <i class="fas fa-arrow-right"></i></a>
-                            </div>
-                        </article>
-                        <article class="card" role="article">
-                            <div class="card__media">
-                                <img src="#" alt="Demo">
-                                <span class="card__badge">Productivity</span>
-                            </div>
-                            <div class="card__body">
-                                <h3 class="card__title">Demo Post 4</h3>
-                                <div class="card__meta"><i class="far fa-calendar"></i> August 15, 2025</div>
-                                <p class="card__excerpt">Boost your productivity with these simple, actionable tips and the best free tools available online…</p>
-                                <a class="card__btn" href="#" aria-label="Read more about Demo Post 4">Read More <i class="fas fa-arrow-right"></i></a>
-                            </div>
-                        </article>
-                        <article class="card" role="article">
-                            <div class="card__media">
-                                <img src="#" alt="Demo">
-                                <span class="card__badge">Collaboration</span>
-                            </div>
-                            <div class="card__body">
-                                <h3 class="card__title">Demo Post 5</h3>
-                                <div class="card__meta"><i class="far fa-calendar"></i> August 10, 2025</div>
-                                <p class="card__excerpt">Discover the best online collaboration tools for remote teams and how to use them effectively…</p>
-                                <a class="card__btn" href="#" aria-label="Read more about Demo Post 5">Read More <i class="fas fa-arrow-right"></i></a>
-                            </div>
-                        </article>
-                <p class="sr-only" id="blog-carousel-status" aria-live="polite"></p>
-                    </div>
-          </section>
+                    <a href="/blog/index.html" class="blog-cascade__cta-btn">
+                        <span>Browse All Articles</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+        <!-- end of latest blogs carousel -->
           
         <script type="application/ld+json">
         {
