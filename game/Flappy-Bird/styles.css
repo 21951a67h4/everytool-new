@@ -1,0 +1,95 @@
+@import url('../_template/styles.css');
+
+.flappy-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.game-board-container {
+    position: relative;
+    border: 2px solid var(--primary);
+    border-radius: 4px;
+    background: #70c5ce;
+    /* Sky blue */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+[data-theme="dark"] .game-board-container {
+    background: #2c3e50;
+    /* Night sky */
+}
+
+canvas#flappy {
+    display: block;
+}
+
+#score-display {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3rem;
+    font-weight: 800;
+    color: white;
+    text-shadow: 2px 2px 0 #000;
+    z-index: 5;
+    pointer-events: none;
+}
+
+#start-overlay,
+#game-over-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    z-index: 10;
+}
+
+.score-result {
+    background: #ded895;
+    border: 2px solid #543847;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #543847;
+}
+
+.score-result p {
+    margin: 0.5rem 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.best-score {
+    color: #e86101;
+}
+
+.btn-primary {
+    padding: 0.75rem 2rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+}
+
+.hidden {
+    display: none !important;
+}

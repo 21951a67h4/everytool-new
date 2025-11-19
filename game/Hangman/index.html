@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman | EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Top Controls -->
+    <div class="game-controls">
+        <button id="back-btn" class="back-btn" aria-label="Go back">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="switch-track">
+                <span class="switch-thumb"><i class="fas fa-moon"></i></span>
+            </span>
+        </label>
+    </div>
+
+    <!-- Game Container -->
+    <main class="game-container" role="main">
+        <h1 class="game-title">Hangman</h1>
+        <div class="game-stage">
+            <div class="hangman-wrapper">
+                <div class="hangman-drawing">
+                    <svg height="250" width="200" id="hangman-svg">
+                        <!-- Gallows -->
+                        <line x1="20" y1="230" x2="180" y2="230" class="figure-part" />
+                        <line x1="100" y1="230" x2="100" y2="20" class="figure-part" />
+                        <line x1="100" y1="20" x2="150" y2="20" class="figure-part" />
+                        <line x1="150" y1="20" x2="150" y2="50" class="figure-part" />
+
+                        <!-- Body Parts (Hidden initially) -->
+                        <circle cx="150" cy="70" r="20" class="body-part hidden-part" id="head" />
+                        <line x1="150" y1="90" x2="150" y2="150" class="body-part hidden-part" id="body" />
+                        <line x1="150" y1="100" x2="120" y2="130" class="body-part hidden-part" id="arm-l" />
+                        <line x1="150" y1="100" x2="180" y2="130" class="body-part hidden-part" id="arm-r" />
+                        <line x1="150" y1="150" x2="120" y2="190" class="body-part hidden-part" id="leg-l" />
+                        <line x1="150" y1="150" x2="180" y2="190" class="body-part hidden-part" id="leg-r" />
+                    </svg>
+                </div>
+
+                <div class="word-display" id="word-display">
+                    <!-- Letters injected by JS -->
+                </div>
+
+                <div class="keyboard" id="keyboard">
+                    <!-- Keys injected by JS -->
+                </div>
+
+                <div id="game-over-overlay" class="hidden">
+                    <h2 id="game-result">Game Over</h2>
+                    <p>The word was: <span id="final-word"></span></p>
+                    <button id="restart-btn" class="btn-primary">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="game-footer">
+        <p>
+            <span id="copyright-year"></span>
+            <span>EveryTool.tech</span>
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

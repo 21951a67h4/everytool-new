@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Match | EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Top Controls -->
+    <div class="game-controls">
+        <button id="back-btn" class="back-btn" aria-label="Go back">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="switch-track">
+                <span class="switch-thumb"><i class="fas fa-moon"></i></span>
+            </span>
+        </label>
+    </div>
+
+    <!-- Game Container -->
+    <main class="game-container" role="main">
+        <h1 class="game-title">Memory Match</h1>
+        <div class="game-stage">
+            <div class="memory-wrapper">
+                <div class="game-header">
+                    <div class="info-box">
+                        <h3>Moves</h3>
+                        <p id="moves">0</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>Time</h3>
+                        <p id="time">0:00</p>
+                    </div>
+                    <button id="restart-btn" class="btn-primary">Restart</button>
+                </div>
+
+                <div class="memory-grid" id="memory-grid">
+                    <!-- Cards injected by JS -->
+                </div>
+
+                <div id="game-over-overlay" class="hidden">
+                    <h2>Well Done!</h2>
+                    <p>You found all pairs in <span id="final-moves">0</span> moves and <span
+                            id="final-time">0:00</span>!</p>
+                    <button id="play-again-btn" class="btn-primary">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="game-footer">
+        <p>
+            <span id="copyright-year"></span>
+            <span>EveryTool.tech</span>
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

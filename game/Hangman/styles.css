@@ -1,0 +1,141 @@
+@import url('../_template/styles.css');
+
+.hangman-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem;
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.hangman-drawing {
+    height: 250px;
+}
+
+.figure-part {
+    stroke: var(--text-primary);
+    stroke-width: 4;
+    fill: none;
+}
+
+.body-part {
+    stroke: var(--primary);
+    stroke-width: 4;
+    fill: none;
+}
+
+[data-theme="dark"] .figure-part {
+    stroke: #e5e7eb;
+}
+
+[data-theme="dark"] .body-part {
+    stroke: #60a5fa;
+}
+
+.hidden-part {
+    display: none;
+}
+
+.word-display {
+    display: flex;
+    gap: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    min-height: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.letter-slot {
+    border-bottom: 3px solid var(--text-primary);
+    min-width: 30px;
+    text-align: center;
+}
+
+[data-theme="dark"] .letter-slot {
+    border-color: #e5e7eb;
+}
+
+.keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    max-width: 500px;
+}
+
+.key-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border-color);
+    background: white;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .key-btn {
+    background: #374151;
+    border-color: #4b5563;
+    color: white;
+}
+
+.key-btn:hover:not(:disabled) {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.key-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #e5e7eb;
+}
+
+[data-theme="dark"] .key-btn:disabled {
+    background: #1f2937;
+}
+
+#game-over-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    z-index: 10;
+    border-radius: 12px;
+}
+
+[data-theme="dark"] #game-over-overlay {
+    background: rgba(15, 23, 42, 0.95);
+    color: white;
+}
+
+.btn-primary {
+    padding: 0.75rem 2rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-top: 1rem;
+}
+
+.hidden {
+    display: none !important;
+}

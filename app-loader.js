@@ -11,6 +11,25 @@
         });
     }
 
+    function ensureAdsenseScript() {
+        try {
+            if (document.querySelector('script[data-adsbygoogle-loader]') || document.querySelector('script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]')) {
+                return;
+            }
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7497952829371080';
+            script.crossOrigin = 'anonymous';
+            script.setAttribute('data-adsbygoogle-loader', 'true');
+            script.onerror = function(err){
+                console.warn('AdSense script failed to load', err);
+            };
+            document.head.appendChild(script);
+        } catch (err) {
+            console.warn('AdSense script injection skipped:', err && err.message ? err.message : err);
+        }
+    }
+
     function injectHTML(targetId, html) {
         var el = document.getElementById(targetId);
         if (el) el.innerHTML = html;
@@ -52,6 +71,7 @@
 
     document.addEventListener('DOMContentLoaded', function(){
         setCurrentYear();
+        ensureAdsenseScript();
         // Best-effort, non-breaking loader
         loadHeader();
         loadFooter();
