@@ -87,15 +87,18 @@ body {
     --shadow-light: var(--shadow-dark);
     --gradient-light: var(--gradient-dark);
   }
+
   body:not(.article-dark) {
     background: var(--gradient-dark);
     color: var(--text-dark);
   }
+
   .article-top-section,
   .article-main-container {
     background: rgba(30, 41, 59, 0.8);
     border-color: var(--border-dark);
   }
+
   .article-title,
   .article-content,
   .article-content h1,
@@ -113,8 +116,16 @@ body {
   .comment-text {
     color: var(--text-dark);
   }
-  .article-category { background: rgba(56, 189, 248, 0.12); }
-  .article-tags .tag { background: rgba(56, 189, 248, 0.12); color: var(--text-dark); }
+
+  .article-category {
+    background: rgba(56, 189, 248, 0.12);
+  }
+
+  .article-tags .tag {
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--text-dark);
+  }
+
   .social-sharing-sidebar,
   .table-of-contents-sidebar,
   .comments-section,
@@ -124,30 +135,56 @@ body {
     background: rgba(17, 24, 39, 0.7);
     border-color: var(--border-dark);
   }
+
   /* FAQ section */
-  .faq-section .faq-title { color: var(--text-dark); }
-  .faq-section .faq-subtitle { color: var(--text-dark); opacity: 0.8; }
+  .faq-section .faq-title {
+    color: var(--text-dark);
+  }
+
+  .faq-section .faq-subtitle {
+    color: var(--text-dark);
+    opacity: 0.8;
+  }
+
   .faq-section,
-  .tools-faq { background: linear-gradient(to bottom, rgba(17, 24, 39, 0.94), rgba(17, 24, 39, 0.88)); }
+  .tools-faq {
+    background: linear-gradient(to bottom, rgba(17, 24, 39, 0.94), rgba(17, 24, 39, 0.88));
+  }
+
   .faq-section .faq-list .faq-item {
     background: rgba(31, 41, 55, 0.6);
     border-color: #2B3443;
     box-shadow: none;
   }
+
   .faq-section .faq-question {
     background: rgba(31, 41, 55, 0.85);
     color: var(--text-dark);
     border: 1px solid var(--border-dark);
   }
-  .faq-section .faq-question:hover { background: rgba(55, 65, 81, 0.88); }
-  .faq-section .faq-question h3 { color: var(--text-dark); }
-  .faq-section .faq-question i { color: #60A5FA; }
-  .faq-section .faq-item.active .faq-question i { color: #38BDF8; }
+
+  .faq-section .faq-question:hover {
+    background: rgba(55, 65, 81, 0.88);
+  }
+
+  .faq-section .faq-question h3 {
+    color: var(--text-dark);
+  }
+
+  .faq-section .faq-question i {
+    color: #60A5FA;
+  }
+
+  .faq-section .faq-item.active .faq-question i {
+    color: #38BDF8;
+  }
+
   .faq-section .faq-answer {
     background: rgba(17, 24, 39, 0.85);
     color: var(--text-dark);
     border: 1px solid var(--border-dark);
   }
+
   /* Override faq.css tokens for dark */
   .article-content .faq-section {
     --bg-primary: rgba(17, 24, 39, 0.92);
@@ -156,9 +193,16 @@ body {
     --text-secondary: #9CA3AF;
     --border-light: #2B3443;
   }
+
   .share-btn,
-  .reaction-btn { background: rgba(31, 41, 55, 0.8); color: var(--text-dark); }
-  .toc-link { color: var(--text-dark); }
+  .reaction-btn {
+    background: rgba(31, 41, 55, 0.8);
+    color: var(--text-dark);
+  }
+
+  .toc-link {
+    color: var(--text-dark);
+  }
 }
 
 /* Apply same dark palette when manual toggle is active */
@@ -167,6 +211,7 @@ body.article-dark .article-main-container {
   background: rgba(30, 41, 59, 0.8);
   border-color: var(--border-dark);
 }
+
 body.article-dark .article-title,
 body.article-dark .article-content,
 body.article-dark .article-content h1,
@@ -181,9 +226,19 @@ body.article-dark .author-name,
 body.article-dark .publish-date,
 body.article-dark .comments-title,
 body.article-dark .comment-author,
-body.article-dark .comment-text { color: var(--text-dark); }
-body.article-dark .article-category { background: rgba(56, 189, 248, 0.12); }
-body.article-dark .article-tags .tag { background: rgba(56, 189, 248, 0.12); color: var(--text-dark); }
+body.article-dark .comment-text {
+  color: var(--text-dark);
+}
+
+body.article-dark .article-category {
+  background: rgba(56, 189, 248, 0.12);
+}
+
+body.article-dark .article-tags .tag {
+  background: rgba(56, 189, 248, 0.12);
+  color: var(--text-dark);
+}
+
 body.article-dark .social-sharing-sidebar,
 body.article-dark .table-of-contents-sidebar,
 body.article-dark .comments-section,
@@ -193,33 +248,66 @@ body.article-dark .comment-form {
   background: rgba(17, 24, 39, 0.7);
   border-color: var(--border-dark);
 }
+
 body.article-dark .share-btn,
-body.article-dark .reaction-btn { background: rgba(31, 41, 55, 0.8); color: var(--text-dark); }
-body.article-dark .toc-link { color: var(--text-dark); }
+body.article-dark .reaction-btn {
+  background: rgba(31, 41, 55, 0.8);
+  color: var(--text-dark);
+}
+
+body.article-dark .toc-link {
+  color: var(--text-dark);
+}
+
 /* FAQ dark for manual toggle */
-body.article-dark .faq-section .faq-title { color: var(--text-dark); }
-body.article-dark .faq-section .faq-subtitle { color: var(--text-dark); opacity: 0.8; }
+body.article-dark .faq-section .faq-title {
+  color: var(--text-dark);
+}
+
+body.article-dark .faq-section .faq-subtitle {
+  color: var(--text-dark);
+  opacity: 0.8;
+}
+
 body.article-dark .faq-section,
-body.article-dark .tools-faq { background: linear-gradient(to bottom, rgba(17, 24, 39, 0.94), rgba(17, 24, 39, 0.88)); }
+body.article-dark .tools-faq {
+  background: linear-gradient(to bottom, rgba(17, 24, 39, 0.94), rgba(17, 24, 39, 0.88));
+}
+
 body.article-dark .faq-section .faq-list .faq-item {
   background: rgba(31, 41, 55, 0.6);
   border-color: #2B3443;
   box-shadow: none;
 }
+
 body.article-dark .faq-section .faq-question {
   background: rgba(31, 41, 55, 0.85);
   color: var(--text-dark);
   border: 1px solid var(--border-dark);
 }
-body.article-dark .faq-section .faq-question:hover { background: rgba(55, 65, 81, 0.88); }
-body.article-dark .faq-section .faq-question h3 { color: var(--text-dark); }
-body.article-dark .faq-section .faq-question i { color: #60A5FA; }
-body.article-dark .faq-section .faq-item.active .faq-question i { color: #38BDF8; }
+
+body.article-dark .faq-section .faq-question:hover {
+  background: rgba(55, 65, 81, 0.88);
+}
+
+body.article-dark .faq-section .faq-question h3 {
+  color: var(--text-dark);
+}
+
+body.article-dark .faq-section .faq-question i {
+  color: #60A5FA;
+}
+
+body.article-dark .faq-section .faq-item.active .faq-question i {
+  color: #38BDF8;
+}
+
 body.article-dark .faq-section .faq-answer {
   background: rgba(17, 24, 39, 0.85);
   color: var(--text-dark);
   border: 1px solid var(--border-dark);
 }
+
 /* Override faq.css tokens when manual dark is on */
 body.article-dark .article-content .faq-section {
   --bg-primary: rgba(17, 24, 39, 0.92);
@@ -391,7 +479,7 @@ body.article-dark {
     margin-bottom: 0;
     transition: margin 0.4s var(--animation-smooth);
   }
-  
+
   .featured-image-container {
     order: -1;
     margin-top: 0;
@@ -448,11 +536,14 @@ body.article-dark {
 
 /* Sticky/floating sidebar behavior on larger screens */
 @media (min-width: 1024px) {
+
   /* Make the sidebar stick while scrolling */
   .article-sidebar {
-    position: -webkit-sticky; /* Safari */
+    position: -webkit-sticky;
+    /* Safari */
     position: sticky;
-    top: 96px; /* below header */
+    top: 96px;
+    /* below header */
     align-self: start;
     width: 280px;
     z-index: 3;
@@ -460,10 +551,12 @@ body.article-dark {
     max-height: none;
     overflow: visible;
   }
+
   /* Remove internal sidebar column so content fills the card */
   .article-main-container {
     grid-template-columns: 1fr;
   }
+
   /* Overlap sidebar and content in the same grid cell to avoid reserving vertical space */
   .article-content-wrapper {
     grid-column: 1;
@@ -471,27 +564,35 @@ body.article-dark {
     position: relative;
     z-index: 1;
   }
+
   .article-sidebar {
     grid-column: 1;
     grid-row: 1;
     z-index: 2;
   }
+
   /* Provide visual gap between floating sidebar and content card */
   .article-sidebar {
-    margin-left: -320px; /* 280 + ~40px spacing */
+    margin-left: -320px;
+    /* 280 + ~40px spacing */
   }
 }
 
 /* On wide desktops, visually pull the sidebar out of the article card to the left */
 @media (min-width: 1280px) {
-  .article-main-section { position: relative; }
+  .article-main-section {
+    position: relative;
+  }
+
   /* Make content span full width of the card (fill removed column) */
   .article-main-container {
     grid-template-columns: 1fr;
   }
+
   /* Float the sidebar left of the card with a comfortable separation */
   .article-sidebar {
-    margin-left: -340px; /* 280px width + 60px gap from card */
+    margin-left: -340px;
+    /* 280px width + 60px gap from card */
   }
 }
 
@@ -538,7 +639,7 @@ body.article-dark {
   color: var(--primary-color);
   border: 1px solid rgba(17, 115, 212, 0.2);
   cursor: pointer;
-  transition: 
+  transition:
     background 0.35s var(--animation-smooth),
     color 0.3s var(--animation-smooth),
     box-shadow 0.45s var(--animation-smooth),
@@ -599,7 +700,7 @@ body.article-dark {
   color: var(--text-light);
   text-decoration: none;
   border-radius: 0.5rem;
-  transition: 
+  transition:
     background 0.32s var(--animation-smooth),
     color 0.32s var(--animation-smooth),
     transform 0.4s var(--animation-smooth);
@@ -611,9 +712,9 @@ body.article-dark {
   content: '→';
   opacity: 0;
   transform: translateX(-4px);
-  transition: 
-    opacity 0.4s var(--animation-smooth), 
-    transform 0.4s var(--animation-smooth), 
+  transition:
+    opacity 0.4s var(--animation-smooth),
+    transform 0.4s var(--animation-smooth),
     color 0.4s var(--animation-smooth);
   color: var(--primary-color);
   font-size: 1.125rem;
@@ -680,7 +781,7 @@ body.article-dark {
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-light);
-  transition: 
+  transition:
     background 0.35s var(--animation-smooth),
     border-color 0.35s var(--animation-smooth),
     transform 0.3s var(--animation-smooth);
@@ -711,6 +812,7 @@ body.article-dark {
     border-color: rgba(56, 189, 248, 0.2);
     color: var(--text-dark);
   }
+
   .stat-badge:hover {
     background: rgba(56, 189, 248, 0.15);
     border-color: rgba(56, 189, 248, 0.3);
@@ -732,7 +834,7 @@ body.article-dark .stat-badge:hover {
   .article-stats {
     gap: 0.75rem;
   }
-  
+
   .stat-badge {
     font-size: 0.8125rem;
     padding: 0.4rem 0.875rem;
@@ -809,7 +911,7 @@ body.article-dark .stat-badge:hover {
   border-radius: 1rem;
   font-size: 0.75rem;
   font-weight: 500;
-  transition: 
+  transition:
     background 0.35s var(--animation-smooth),
     color 0.35s var(--animation-smooth);
 }
@@ -864,7 +966,7 @@ body.article-dark .stat-badge:hover {
   font-weight: 700;
   color: var(--text-light);
   line-height: 1.3;
-  transition: 
+  transition:
     color 0.4s var(--animation-smooth),
     margin 0.4s var(--animation-smooth);
 }
@@ -923,7 +1025,7 @@ body.article-dark .stat-badge:hover {
   text-decoration: none !important;
   font-weight: 500;
   display: inline-block;
-  transition: 
+  transition:
     color 0.33s var(--animation-smooth),
     transform 0.33s var(--animation-smooth);
 }
@@ -1023,9 +1125,9 @@ body.article-dark .stat-badge:hover {
   color: var(--primary-color);
   border: 1px solid rgba(17, 115, 212, 0.2);
   cursor: pointer;
-  transition: 
+  transition:
     background 0.35s var(--animation-smooth),
-    color 0.35s var(--animation-smooth), 
+    color 0.35s var(--animation-smooth),
     box-shadow 0.45s var(--animation-smooth),
     transform 0.45s var(--animation-smooth);
   font-weight: 500;
@@ -1068,7 +1170,7 @@ body.article-dark .stat-badge:hover {
   color: var(--primary-color);
   border: 1px solid rgba(17, 115, 212, 0.2);
   cursor: pointer;
-  transition: 
+  transition:
     background 0.35s var(--animation-smooth),
     color 0.35s var(--animation-smooth),
     box-shadow 0.45s var(--animation-smooth),
@@ -1194,8 +1296,8 @@ body.article-dark .stat-badge:hover {
   font-size: 1rem;
   color: var(--text-light);
   resize: vertical;
-  transition: 
-    background 0.4s var(--animation-smooth), 
+  transition:
+    background 0.4s var(--animation-smooth),
     border-color 0.4s var(--animation-smooth),
     box-shadow 0.4s var(--animation-smooth),
     color 0.4s var(--animation-smooth);
@@ -1230,7 +1332,7 @@ body.article-dark .stat-badge:hover {
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  transition: 
+  transition:
     background 0.4s var(--animation-smooth),
     box-shadow 0.45s var(--animation-smooth),
     color 0.4s var(--animation-smooth),
@@ -1284,7 +1386,7 @@ body.article-dark .stat-badge:hover {
   background: var(--primary-color);
   color: white;
   transform: translateX(-4px);
-  box-shadow: 0 2px 16px 0 rgba(17,115,212,0.18), 0 0 20px 6px rgba(17,115,212,0.10);
+  box-shadow: 0 2px 16px 0 rgba(17, 115, 212, 0.18), 0 0 20px 6px rgba(17, 115, 212, 0.10);
   /* Smooth color transition for inner icon */
 }
 
@@ -1304,29 +1406,29 @@ body.article-dark .stat-badge:hover {
     padding: 1rem 0.5rem;
     transition: padding 0.4s var(--animation-smooth);
   }
-  
+
   .article-top-section {
     grid-template-columns: 1fr;
     padding: 1.5rem;
     gap: 1.5rem;
     transition: padding 0.4s var(--animation-smooth), gap 0.4s var(--animation-smooth);
   }
-  
+
   .featured-image-container {
     order: -1;
   }
-  
+
   .article-main-container {
     padding: 1.5rem;
     gap: 1.5rem;
     transition: padding 0.4s var(--animation-smooth), gap 0.4s var(--animation-smooth);
   }
-  
+
   .article-title {
     font-size: 1.75rem;
     transition: font-size 0.4s var(--animation-smooth);
   }
-  
+
   .sharing-buttons {
     justify-content: center;
     transition: justify-content 0.4s var(--animation-smooth);
@@ -1338,39 +1440,39 @@ body.article-dark .stat-badge:hover {
     padding: 0.5rem;
     transition: padding 0.4s var(--animation-smooth);
   }
-  
+
   .content-wrapper {
     padding: 0.5rem;
     transition: padding 0.4s var(--animation-smooth);
   }
-  
+
   .article-top-section {
     padding: 1rem;
     transition: padding 0.4s var(--animation-smooth);
   }
-  
+
   .article-main-container {
     padding: 1rem;
     transition: padding 0.4s var(--animation-smooth);
   }
-  
+
   .article-title {
     font-size: 1.5rem;
     transition: font-size 0.4s var(--animation-smooth);
   }
-  
+
   .author-avatar {
     width: 2.5rem;
     height: 2.5rem;
     transition: width 0.3s var(--animation-smooth), height 0.3s var(--animation-smooth);
   }
-  
+
   .sharing-buttons {
     flex-direction: column;
     width: 100%;
     transition: flex-direction 0.4s var(--animation-smooth), width 0.4s var(--animation-smooth);
   }
-  
+
   .share-btn {
     width: 100%;
     border-radius: 0.5rem;
@@ -1384,10 +1486,12 @@ body.article-dark .stat-badge:hover {
     opacity: 0;
     transform: translateY(36px);
   }
+
   60% {
     opacity: 0.7;
     transform: translateY(6px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -1398,6 +1502,7 @@ body.article-dark .stat-badge:hover {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -1428,30 +1533,31 @@ body.article-dark .stat-badge:hover {
 
 /* Print styles */
 @media print {
+
   .reactions-section,
   .comments-section,
   #footer-placeholder {
     display: none;
   }
-  
+
   body {
     background: white !important;
     color: black !important;
     transition: none !important;
   }
-  
+
   .content-wrapper {
     background: white !important;
     box-shadow: none !important;
     border: none !important;
     animation: none !important;
   }
-  
+
   .article-content {
     color: black !important;
     transition: none !important;
   }
-  
+
   .article-title {
     -webkit-text-fill-color: black !important;
     color: black !important;
