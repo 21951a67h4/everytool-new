@@ -19,6 +19,8 @@
     function loadHeader() {
         var placeholder = document.getElementById('site-header') || document.getElementById('header-placeholder');
         if (!placeholder) return Promise.resolve();
+        // Avoid fetch errors when opened via file:// protocol
+        if (location.protocol === 'file:') return Promise.resolve();
         return fetch('/header.html')
             .then(function(r){ if(!r.ok) throw new Error('header.html'); return r.text(); })
             .then(function(html){ injectHTML(placeholder.id, html); })
@@ -33,6 +35,8 @@
     function loadFooter() {
         var placeholder = document.getElementById('site-footer') || document.getElementById('footer-placeholder');
         if (!placeholder) return Promise.resolve();
+        // Avoid fetch errors when opened via file:// protocol
+        if (location.protocol === 'file:') return Promise.resolve();
         return fetch('/footer.html')
             .then(function(r){ if(!r.ok) throw new Error('footer.html'); return r.text(); })
             .then(function(html){ injectHTML(placeholder.id, html); })

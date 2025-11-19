@@ -1,3 +1,5 @@
+<!-- blog templete {1} -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -207,107 +209,95 @@
                 <!-- Reading Progress Bar -->
                 <div class="reading-progress">
                     <div class="reading-progress-bar" id="readingProgress"></div>
-</div>
+                </div>
 
-                <!-- Breadcrumb -->
-                <nav class="breadcrumb" aria-label="Breadcrumb">
-                    <div class="breadcrumb-content">
-                        <a href="/blog/index.html" class="breadcrumb-link">
-                            <i class="fas fa-home"></i>
-                            <span>Home</span>
-                        </a>
-                        <span class="breadcrumb-separator">
-                            <i class="fas fa-chevron-right"></i>
-                        </span>
-                        <a href="/blog/index.html" class="breadcrumb-link">
-                            <i class="fas fa-blog"></i>
-                            <span>Blog</span>
-                        </a>
-                        <span class="breadcrumb-separator">
-                            <i class="fas fa-chevron-right"></i>
-                        </span>
-                        <span class="breadcrumb-current">
+                <!-- Back Button -->
+            <div class="back-button-container">
+                <a href="../index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Blog</span>
+                </a>
+            </div>
+
+                <!-- Top Section: Title/Meta and Featured Image -->
+                <section class="article-top-section">
+                    <!-- Left: Title, Author, Date -->
+                    <div class="article-header-container">
+                        <div class="article-category">
                             <i class="{{CATEGORY_ICON}}"></i>
-                            <span>{{ARTICLE_SHORT_TITLE}}</span>
-                        </span>
-                        <span class="breadcrumb-separator">
-                            <i class="fas fa-chevron-right"></i>
-                        </span>
-                        <a href="#faq" class="breadcrumb-link">
-                            <i class="fas fa-question-circle"></i>
-                            <span>FAQ</span>
-                        </a>
-</div>
-</nav>
+                            <span>{{ARTICLE_CATEGORY}}</span>
+                        </div>
+                        <h1 class="article-title">{{ARTICLE_TITLE}}</h1>
+                        <div class="article-meta">
+                            <div class="author-info">
+                                <div class="author-avatar">
+                                    <img src="/assets/varshith3.png" alt="Varshith Gubba">
+                                </div>
+                                <div class="author-details">
+                                    <span class="author-name">By <strong><a href="/creators.html" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">{{ARTICLE_AUTHOR}}</a></strong></span>
+                                    <span class="publish-date">Published on <time datetime="{{PUBLISH_DATE}}">{{PUBLISH_DATE_FORMATTED}}</time></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="article-tags">
+                            {{ARTICLE_TAGS_HTML}}
+                        </div>
+                    </div>
 
-                <!-- Article Header -->
-                <header class="article-header">
-                    <div class="article-category">
-                        <i class="{{CATEGORY_ICON}}"></i>
-                        <span>{{ARTICLE_CATEGORY}}</span>
-</div>
-                    <h1 class="article-title">{{ARTICLE_TITLE}}</h1>
-                    <div class="article-meta">
-                        <div class="author-info">
-                            <div class="author-avatar">
-                                <img src="/assets/varshith3.png"alt="Varshith Gubba">
-</div>
-                            <div class="author-details">
-                                <span class="author-name">By <strong>Varshith Gubba</strong></span>
-                                <span class="publish-date">Published on <time datetime="{{PUBLISH_DATE}}">{{PUBLISH_DATE_FORMATTED}}</time></span>
-</div>
-</div>
-                        <div class="article-stats">
-                            <div class="reading-time">
-                                <i class="fas fa-clock"></i>
-                                <span>{{READING_TIME}} min read</span>
-</div>
-</div>
-</div>
-                    <div class="article-tags">
-                        {{ARTICLE_TAGS_HTML}}
-</div>
-                </header>
+                    <!-- Right: Featured Image -->
+                    <div class="featured-image-container">
+                        <figure class="featured-image">
+                            <div class="image-container" style='background-image: url("{{ARTICLE_FEATURED_IMAGE}}");' role="img" aria-label="{{IMAGE_ALT_TEXT}}"></div>
+                            <figcaption class="image-caption">{{IMAGE_CAPTION}}</figcaption>
+                        </figure>
+                    </div>
+                </section>
 
-                <!-- Featured Image -->
-                <figure class="featured-image">
-                    <div class="image-container" style='background-image: url("{{ARTICLE_FEATURED_IMAGE}}");' role="img" aria-label="{{IMAGE_ALT_TEXT}}"></div>
-                    <figcaption class="image-caption">{{IMAGE_CAPTION}}</figcaption>
-                </figure>
+                <!-- Article Section: Left Sidebar and Content Combined -->
+                <section class="article-main-section">
+                    <div class="article-main-container">
+                        <!-- Left Sidebar: Share and TOC -->
+                        <aside class="article-sidebar">
+                            <div class="sidebar-container">
+                                <!-- Share this Article -->
+                                <div class="social-sharing-sidebar">
+                                    <div class="sharing-label">
+                                        <i class="fas fa-share-alt"></i>
+                                        <span>Share this Article</span>
+                                    </div>
+                                    <div class="sharing-buttons">
+                                        <button class="share-btn native-share" id="nativeShareBtn" aria-label="Share this article" title="Share this article">
+                                            <i class="fas fa-share-alt"></i>
+                                        </button>
+                                        <button class="share-btn copy-link" id="copyLinkBtn" aria-label="Copy link" title="Copy link to clipboard">
+                                            <i class="fas fa-link"></i>
+                                        </button>
+                                    </div>
+                                </div>
 
-                <!-- Social Sharing -->
-                <div class="social-sharing">
-                    <div class="sharing-label">
-                        <i class="fas fa-share-alt"></i>
-                        <span>Share this article</span>
-</div>
-                    <div class="sharing-buttons">
-                        <button class="share-btn native-share" id="nativeShareBtn" aria-label="Share this article" title="Share this article">
-                            <i class="fas fa-share-alt"></i>
-                        </button>
-                        <button class="share-btn copy-link" id="copyLinkBtn" aria-label="Copy link" title="Copy link to clipboard">
-                            <i class="fas fa-link"></i>
-                    </button>
-</div>
-</div>
+                                <!-- Table of Contents -->
+                                <div class="table-of-contents-sidebar">
+                                    <h3 class="toc-title">
+                                        <i class="fas fa-list"></i>
+                                        <span>In this Article</span>
+                                    </h3>
+                                    <nav class="toc-nav">
+                                        <ul class="toc-list">
+                                            {{TABLE_OF_CONTENTS}}
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </aside>
 
-                <!-- Table of Contents -->
-                <div class="table-of-contents">
-                    <h3 class="toc-title">
-                        <i class="fas fa-list"></i>
-                        Table of Contents
-                    </h3>
-                    <nav class="toc-nav">
-                        <ul class="toc-list">
-                            {{TABLE_OF_CONTENTS}}
-                        </ul>
-                    </nav>
-</div>
-
-                <!-- Article Content -->
-                <article class="article-content">
-                    {{ARTICLE_CONTENT}}
-                </article>
+                        <!-- Right: Article Content -->
+                        <div class="article-content-wrapper">
+                            <article class="article-content">
+                                {{ARTICLE_CONTENT}}
+                            </article>
+                        </div>
+                    </div>
+                </section>
 
                 <!-- FAQ Section - Reusable Template Component -->
                 <!-- This FAQ section can be copied and customized for any blog post or page -->
