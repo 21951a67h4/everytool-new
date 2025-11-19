@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breakout | EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Top Controls -->
+    <div class="game-controls">
+        <button id="back-btn" class="back-btn" aria-label="Go back">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="switch-track">
+                <span class="switch-thumb"><i class="fas fa-moon"></i></span>
+            </span>
+        </label>
+    </div>
+
+    <!-- Game Container -->
+    <main class="game-container" role="main">
+        <h1 class="game-title">Breakout</h1>
+        <div class="game-stage">
+            <div class="breakout-wrapper">
+                <div class="game-board-container">
+                    <canvas id="breakout" width="480" height="320"></canvas>
+                    <div id="start-overlay">
+                        <h2>Breakout</h2>
+                        <p>Destroy all bricks!</p>
+                        <button id="start-btn" class="btn-primary">Start Game</button>
+                    </div>
+                    <div id="game-over-overlay" class="hidden">
+                        <h2 id="game-over-title">Game Over</h2>
+                        <p>Score: <span id="final-score">0</span></p>
+                        <button id="restart-btn" class="btn-primary">Play Again</button>
+                    </div>
+                </div>
+                <div class="game-info">
+                    <div class="info-box">
+                        <h3>Score</h3>
+                        <p id="score">0</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>Lives</h3>
+                        <p id="lives">3</p>
+                    </div>
+                    <div class="controls-info">
+                        <h3>Controls</h3>
+                        <p><i class="fas fa-arrow-left"></i> <i class="fas fa-arrow-right"></i> Move Paddle</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="game-footer">
+        <p>
+            <span id="copyright-year"></span>
+            <span>EveryTool.tech</span>
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

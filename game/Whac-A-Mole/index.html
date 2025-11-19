@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whac-A-Mole | EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Top Controls -->
+    <div class="game-controls">
+        <button id="back-btn" class="back-btn" aria-label="Go back">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="switch-track">
+                <span class="switch-thumb"><i class="fas fa-moon"></i></span>
+            </span>
+        </label>
+    </div>
+
+    <!-- Game Container -->
+    <main class="game-container" role="main">
+        <h1 class="game-title">Whac-A-Mole</h1>
+        <div class="game-stage">
+            <div class="mole-wrapper">
+                <div class="game-header">
+                    <div class="info-box">
+                        <h3>Score</h3>
+                        <p id="score">0</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>Time</h3>
+                        <p id="time-left">30</p>
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="hole" id="hole1">
+                        <div class="mole"></div>
+                    </div>
+                    <div class="hole" id="hole2">
+                        <div class="mole"></div>
+                    </div>
+                    <div class="hole" id="hole3">
+                        <div class="mole"></div>
+                    </div>
+                    <div class="hole" id="hole4">
+                        <div class="mole"></div>
+                    </div>
+                    <div class="hole" id="hole5">
+                        <div class="mole"></div>
+                    </div>
+                    <div class="hole" id="hole6">
+                        <div class="mole"></div>
+                    </div>
+                    <div class="hole" id="hole7">
+                        <div class="mole"></div>
+                    </div>
+                    <div class="hole" id="hole8">
+                        <div class="mole"></div>
+                    </div>
+                    <div class="hole" id="hole9">
+                        <div class="mole"></div>
+                    </div>
+                </div>
+
+                <div id="start-overlay">
+                    <h2>Whac-A-Mole</h2>
+                    <p>Whack as many moles as you can!</p>
+                    <button id="start-btn" class="btn-primary">Start Game</button>
+                </div>
+
+                <div id="game-over-overlay" class="hidden">
+                    <h2>Game Over</h2>
+                    <p>Final Score: <span id="final-score">0</span></p>
+                    <button id="restart-btn" class="btn-primary">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="game-footer">
+        <p>
+            <span id="copyright-year"></span>
+            <span>EveryTool.tech</span>
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

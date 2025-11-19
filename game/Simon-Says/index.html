@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simon Says | EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Top Controls -->
+    <div class="game-controls">
+        <button id="back-btn" class="back-btn" aria-label="Go back">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="switch-track">
+                <span class="switch-thumb"><i class="fas fa-moon"></i></span>
+            </span>
+        </label>
+    </div>
+
+    <!-- Game Container -->
+    <main class="game-container" role="main">
+        <h1 class="game-title">Simon Says</h1>
+        <div class="game-stage">
+            <div class="simon-wrapper">
+                <div class="game-header">
+                    <div class="info-box">
+                        <h3>Level</h3>
+                        <p id="level">0</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>High Score</h3>
+                        <p id="high-score">0</p>
+                    </div>
+                </div>
+
+                <div class="simon-board">
+                    <div class="simon-row">
+                        <button class="simon-btn green" data-color="green" id="green"></button>
+                        <button class="simon-btn red" data-color="red" id="red"></button>
+                    </div>
+                    <div class="simon-row">
+                        <button class="simon-btn yellow" data-color="yellow" id="yellow"></button>
+                        <button class="simon-btn blue" data-color="blue" id="blue"></button>
+                    </div>
+                    <div class="simon-center">
+                        <button id="start-btn" class="btn-start">START</button>
+                        <p id="status-text">Press Start</p>
+                    </div>
+                </div>
+
+                <div id="game-over-overlay" class="hidden">
+                    <h2>Game Over</h2>
+                    <p>You reached Level <span id="final-level">0</span></p>
+                    <button id="restart-btn" class="btn-primary">Try Again</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="game-footer">
+        <p>
+            <span id="copyright-year"></span>
+            <span>EveryTool.tech</span>
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

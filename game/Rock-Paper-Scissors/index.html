@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors | EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Top Controls -->
+    <div class="game-controls">
+        <button id="back-btn" class="back-btn" aria-label="Go back">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="switch-track">
+                <span class="switch-thumb"><i class="fas fa-moon"></i></span>
+            </span>
+        </label>
+    </div>
+
+    <!-- Game Container -->
+    <main class="game-container" role="main">
+        <h1 class="game-title">Rock Paper Scissors</h1>
+        <div class="game-stage">
+            <div class="rps-wrapper">
+                <div class="score-board">
+                    <div class="score-box">
+                        <h3>You</h3>
+                        <p id="player-score">0</p>
+                    </div>
+                    <div class="score-box">
+                        <h3>CPU</h3>
+                        <p id="cpu-score">0</p>
+                    </div>
+                </div>
+
+                <div class="battle-area">
+                    <div class="hand-container">
+                        <i class="fas fa-hand-rock" id="player-hand"></i>
+                    </div>
+                    <div class="vs-text">VS</div>
+                    <div class="hand-container">
+                        <i class="fas fa-hand-rock" id="cpu-hand"></i>
+                    </div>
+                </div>
+
+                <div class="result-text" id="result-text">Choose your weapon!</div>
+
+                <div class="options">
+                    <button class="option-btn" data-choice="rock">
+                        <i class="fas fa-hand-rock"></i>
+                        <span>Rock</span>
+                    </button>
+                    <button class="option-btn" data-choice="paper">
+                        <i class="fas fa-hand-paper"></i>
+                        <span>Paper</span>
+                    </button>
+                    <button class="option-btn" data-choice="scissors">
+                        <i class="fas fa-hand-scissors"></i>
+                        <span>Scissors</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="game-footer">
+        <p>
+            <span id="copyright-year"></span>
+            <span>EveryTool.tech</span>
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

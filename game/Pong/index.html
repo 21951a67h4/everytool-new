@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong | EveryTool.tech</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Top Controls -->
+    <div class="game-controls">
+        <button id="back-btn" class="back-btn" aria-label="Go back">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <label class="theme-switch" role="switch" aria-checked="false" aria-label="Toggle theme">
+            <input type="checkbox" id="theme-toggle" />
+            <span class="switch-track">
+                <span class="switch-thumb"><i class="fas fa-moon"></i></span>
+            </span>
+        </label>
+    </div>
+
+    <!-- Game Container -->
+    <main class="game-container" role="main">
+        <h1 class="game-title">Pong</h1>
+        <div class="game-stage">
+            <div class="pong-wrapper">
+                <div class="game-board-container">
+                    <canvas id="pong" width="600" height="400"></canvas>
+                    <div id="start-overlay">
+                        <h2>Pong</h2>
+                        <p>First to 5 wins!</p>
+                        <div class="difficulty-select">
+                            <button class="btn-difficulty active" data-diff="easy">Easy</button>
+                            <button class="btn-difficulty" data-diff="medium">Medium</button>
+                            <button class="btn-difficulty" data-diff="hard">Hard</button>
+                        </div>
+                        <button id="start-btn" class="btn-primary">Start Game</button>
+                    </div>
+                    <div id="game-over-overlay" class="hidden">
+                        <h2 id="winner-text">You Win!</h2>
+                        <button id="restart-btn" class="btn-primary">Play Again</button>
+                    </div>
+                </div>
+                <div class="game-info">
+                    <div class="score-board">
+                        <div class="score-box player">
+                            <h3>You</h3>
+                            <p id="player-score">0</p>
+                        </div>
+                        <div class="score-divider">:</div>
+                        <div class="score-box cpu">
+                            <h3>CPU</h3>
+                            <p id="cpu-score">0</p>
+                        </div>
+                    </div>
+                    <div class="controls-info">
+                        <h3>Controls</h3>
+                        <p><i class="fas fa-mouse-pointer"></i> Mouse to move</p>
+                        <p><strong>OR</strong></p>
+                        <p><i class="fas fa-arrow-up"></i> <i class="fas fa-arrow-down"></i> Keys</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="game-footer">
+        <p>
+            <span id="copyright-year"></span>
+            <span>EveryTool.tech</span>
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
